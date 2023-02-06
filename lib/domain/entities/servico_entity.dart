@@ -1,7 +1,4 @@
-import '../../core/utils/bool_utils.dart';
-import '../../core/utils/date_utils.dart';
-import '../../core/utils/double_utils.dart';
-import '../../core/utils/list_utils.dart';
+import '../../core/core.dart';
 
 class ServicoEntity {
   final String id;

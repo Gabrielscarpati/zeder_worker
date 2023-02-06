@@ -23,13 +23,15 @@ void main() {
   });
 
   test('DateUtils.toDateTimeDefaultDateZero: deve retornar dateZero se for passado String', () {
-    expect(DateUtil.toDateTimeDefaultDateZero("null"), DateUtil.dateZero);
+    expect(DateUtil.toDateTimeDefaultDateZero("fkalsdfjas;ldfja;sdfkja"), DateUtil.dateZero);
+  });
+
+  test('DateUtils.toDateTimeDefaultDateZero: deve retornar dateZero se for passado um objeto que nao pode ser convertido em dada', () {
+    expect(DateUtil.toDateTimeDefaultDateZero(['1', '2', '3']), DateUtil.dateZero);
   });
 
   test('DateUtils.toJsonString: deve retornar a data toString() da data', () {
     DateTime date = DateTime(2020, 1, 1);
     expect(date.toJsonString(), date.toString());
   });
-
-
 }
