@@ -8,4 +8,4 @@ reportPath="$(pwd)/coverage/html/index.html"
 
 echo "See the coverage here:"
 echo $reportPath
-open -a "Google Chrome" file:///$reportPath
+open -a "Brave Browser" file:///$reportPath
