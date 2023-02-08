@@ -1,15 +1,13 @@
 import '../../core/core.dart';
 
-
-class ChatMensagemEntity {
-  final String id;
+class ChatMensagemEntity extends Entity {
   final String idChat;
   final String idProprietario;
   final DateTime dataCriacao;
   final DateTime dataLeitura;
 
   ChatMensagemEntity({
-    required this.id,
+    required super.id,
     required this.idChat,
     required this.idProprietario,
     required this.dataCriacao,
@@ -42,7 +40,6 @@ class ChatMensagemEntity {
     String? idProprietario,
     DateTime? dataCriacao,
     DateTime? dataLeitura,
-
   }) {
     return ChatMensagemEntity(
       id: id ?? this.id,
@@ -51,5 +48,19 @@ class ChatMensagemEntity {
       dataCriacao: dataCriacao ?? this.dataCriacao,
       dataLeitura: dataLeitura ?? this.dataLeitura,
     );
+  }
+}
+
+abstract class ChatMensagemRepository extends Repository<ChatMensagemEntity> {}
+
+class ChatMensagemAdapter extends Adapter<ChatMensagemEntity> {
+  @override
+  ChatMensagemEntity fromJson(Map<String, dynamic> json) {
+    return ChatMensagemEntity.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(ChatMensagemEntity entity) {
+    return entity.toJson();
   }
 }

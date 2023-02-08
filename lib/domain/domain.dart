@@ -1,0 +1,11 @@
+export 'entities/avaliacao_prestador_entity.dart';
+export 'entities/chat_entity.dart';
+export 'entities/chat_mensagem_entity.dart';
+export 'entities/cidade_entity.dart';
+export 'entities/cliente_entity.dart';
+export 'entities/disputa_entity.dart';
+export 'entities/prestador_entity.dart';
+export 'entities/prestador_servico_entity.dart';
+export 'entities/proposta_entity.dart';
+export 'entities/servico_entity.dart';
+export 'entities/tipo_servico_entity.dart';

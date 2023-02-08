@@ -1,7 +1,6 @@
 import '../../core/core.dart';
 
-class PropostaEntity {
-  final String id;
+class PropostaEntity extends Entity {
   final String idPrestador;
   final String idServico;
   final DateTime dataInicio;
@@ -11,7 +10,7 @@ class PropostaEntity {
   final bool flgAvisoPrestador;
 
   PropostaEntity({
-    required this.id,
+    required super.id,
     required this.idPrestador,
     required this.idServico,
     required this.dataInicio,
@@ -67,5 +66,19 @@ class PropostaEntity {
       flgAvisoCliente: flgAvisoCliente ?? this.flgAvisoCliente,
       flgAvisoPrestador: flgAvisoPrestador ?? this.flgAvisoPrestador,
     );
+  }
+}
+
+abstract class PropostaRepository extends Repository<PropostaEntity> {}
+
+class PropostaAdapter extends Adapter<PropostaEntity> {
+  @override
+  PropostaEntity fromJson(Map<String, dynamic> json) {
+    return PropostaEntity.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(PropostaEntity entity) {
+    return entity.toJson();
   }
 }

@@ -1,12 +1,13 @@
-class ClienteEntity {
-  final String id;
+import '../../core/core.dart';
+
+class ClienteEntity extends Entity {
   final String nome;
   final String email;
   final String cpfCnpj;
   final String tipoPessoa;
 
   ClienteEntity({
-    required this.id,
+    required super.id,
     required this.nome,
     required this.email,
     required this.cpfCnpj,
@@ -47,5 +48,19 @@ class ClienteEntity {
       cpfCnpj: cpfCnpj ?? this.cpfCnpj,
       tipoPessoa: tipoPessoa ?? this.tipoPessoa,
     );
+  }
+}
+
+abstract class ClienteRepository extends Repository<ClienteEntity> {}
+
+class ClienteAdapter extends Adapter<ClienteEntity> {
+  @override
+  ClienteEntity fromJson(Map<String, dynamic> json) {
+    return ClienteEntity.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(ClienteEntity entity) {
+    return entity.toJson();
   }
 }

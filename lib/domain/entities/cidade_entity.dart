@@ -1,10 +1,11 @@
-class CidadeEntity {
-  final String id;
+import '../../core/core.dart';
+
+class CidadeEntity extends Entity {
   final String nome;
   final String uf;
 
   CidadeEntity({
-    required this.id,
+    required super.id,
     required this.nome,
     required this.uf,
   });
@@ -35,5 +36,19 @@ class CidadeEntity {
       nome: nome ?? this.nome,
       uf: uf ?? this.uf,
     );
+  }
+}
+
+abstract class CidadeRepository extends Repository<CidadeEntity> {}
+
+class CidadeAdapter extends Adapter<CidadeEntity> {
+  @override
+  CidadeEntity fromJson(Map<String, dynamic> json) {
+    return CidadeEntity.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(CidadeEntity entity) {
+    return entity.toJson();
   }
 }

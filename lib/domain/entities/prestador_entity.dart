@@ -1,7 +1,6 @@
 import '../../core/core.dart';
 
-class PrestadorEntity {
-  final String id;
+class PrestadorEntity extends Entity {
   final String nome;
   final String email;
   final int qtdeNotas1;
@@ -17,7 +16,7 @@ class PrestadorEntity {
   double get nota => qtdeNotas == 0 ? 0 : ((qtdeNotas1 * 1) + (qtdeNotas2 * 2) + (qtdeNotas3 * 3) + (qtdeNotas4 * 4) + (qtdeNotas5 * 5)) / qtdeNotas;
 
   PrestadorEntity({
-    required this.id,
+    required super.id,
     required this.nome,
     required this.email,
     required this.qtdeNotas1,
@@ -73,5 +72,19 @@ class PrestadorEntity {
       qtdeNotas4: qtdeNotas4 ?? this.qtdeNotas4,
       qtdeNotas5: qtdeNotas5 ?? this.qtdeNotas5,
     );
+  }
+}
+
+abstract class PrestadorRepository extends Repository<PrestadorEntity> {}
+
+class PrestadorAdapter extends Adapter<PrestadorEntity> {
+  @override
+  PrestadorEntity fromJson(Map<String, dynamic> json) {
+    return PrestadorEntity.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(PrestadorEntity entity) {
+    return entity.toJson();
   }
 }

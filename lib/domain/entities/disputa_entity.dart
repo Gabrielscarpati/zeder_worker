@@ -1,54 +1,66 @@
-import '../../core/utils/date_utils.dart';
-import '../../core/utils/double_utils.dart';
+import '../../core/core.dart';
 
-class DisputaEntity {
-  final String id;
-  final String id_chat;
-  final String id_proprietario;
-  final DateTime data_criacao;
-  final DateTime data_leitura;
+class DisputaEntity extends Entity {
+  final String idChat;
+  final String idProprietario;
+  final DateTime dataCriacao;
+  final DateTime dataLeitura;
 
   DisputaEntity({
-    required this.id,
-    required this.id_chat,
-    required this.id_proprietario,
-    required this.data_criacao,
-    required this.data_leitura,
+    required super.id,
+    required this.idChat,
+    required this.idProprietario,
+    required this.dataCriacao,
+    required this.dataLeitura,
   });
 
   factory DisputaEntity.fromJson(Map<String, dynamic> json) {
     return DisputaEntity(
       id: json['id'] ?? '',
-      id_chat: json['id_chat'] ?? '',
-      id_proprietario: json['id_proprietario'] ?? '',
-      data_criacao: json['data_criacao'] ?? DoubleUtil.toDoubleDefaultZero(json['data_criacao']),
-      data_leitura: json['data_leitura'] ?? DoubleUtil.toDoubleDefaultZero(json['data_leitura']),
+      idChat: json['idChat'] ?? '',
+      idProprietario: json['idProprietario'] ?? '',
+      dataCriacao: DateUtil.toDateTimeDefaultDateZero(json['dataCriacao']),
+      dataLeitura: DateUtil.toDateTimeDefaultDateZero(json['dataLeitura']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'id_chat': id_chat,
-      'id_proprietario': id_proprietario,
-      'data_criacao': data_criacao,
-      'data_leitura': data_leitura,
+      'idChat': idChat,
+      'idProprietario': idProprietario,
+      'dataCriacao': dataCriacao.toJsonString(),
+      'dataLeitura': dataLeitura.toJsonString(),
     };
   }
 
   DisputaEntity copyWith({
     String? id,
-    String? id_chat,
-    String? id_proprietario,
-    DateTime? data_criacao,
-    DateTime? data_leitura,
+    String? idChat,
+    String? idProprietario,
+    DateTime? dataCriacao,
+    DateTime? dataLeitura,
   }) {
     return DisputaEntity(
       id: id ?? this.id,
-      id_chat: id_chat ?? this.id_chat,
-      id_proprietario: id_proprietario ?? this.id_proprietario,
-      data_criacao: data_criacao ?? this.data_criacao,
-      data_leitura: data_leitura ?? this.data_leitura,
+      idChat: idChat ?? this.idChat,
+      idProprietario: idProprietario ?? this.idProprietario,
+      dataCriacao: dataCriacao ?? this.dataCriacao,
+      dataLeitura: dataLeitura ?? this.dataLeitura,
     );
+  }
+}
+
+abstract class DisputaRepository extends Repository<DisputaEntity> {}
+
+class DisputaAdapter extends Adapter<DisputaEntity> {
+  @override
+  DisputaEntity fromJson(Map<String, dynamic> json) {
+    return DisputaEntity.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(DisputaEntity entity) {
+    return entity.toJson();
   }
 }

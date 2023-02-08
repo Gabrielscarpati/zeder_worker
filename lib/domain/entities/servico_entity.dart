@@ -1,7 +1,6 @@
 import '../../core/core.dart';
 
-class ServicoEntity {
-  final String id;
+class ServicoEntity extends Entity {
   final DateTime dataCadastro;
   final String idTipoServico;
   final String idCliente;
@@ -22,7 +21,7 @@ class ServicoEntity {
   final String idDisputa;
 
   ServicoEntity({
-    required this.id,
+    required super.id,
     required this.dataCadastro,
     required this.idTipoServico,
     required this.idCliente,
@@ -133,5 +132,19 @@ class ServicoEntity {
       flgAvisoPrestador: flgAvisoPrestador ?? this.flgAvisoPrestador,
       idDisputa: idDisputa ?? this.idDisputa,
     );
+  }
+}
+
+abstract class ServicoRepository extends Repository<ServicoEntity> {}
+
+class ServicoAdapter extends Adapter<ServicoEntity> {
+  @override
+  ServicoEntity fromJson(Map<String, dynamic> json) {
+    return ServicoEntity.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(ServicoEntity entity) {
+    return entity.toJson();
   }
 }

@@ -1,8 +1,6 @@
 import '../../core/core.dart';
 
-
-class ChatEntity {
-  final String id;
+class ChatEntity extends Entity {
   final String idCliente;
   final String idPrestador;
   final String ultMsgEnviadaCliente;
@@ -11,7 +9,7 @@ class ChatEntity {
   final int qtdMsgNaoLidaPrestador;
 
   ChatEntity({
-    required this.id,
+    required super.id,
     required this.idCliente,
     required this.idPrestador,
     required this.ultMsgEnviadaCliente,
@@ -54,14 +52,27 @@ class ChatEntity {
     int? qtdMsgNaoLidaPrestador,
   }) {
     return ChatEntity(
-      id: id ?? this.id ,
-      idCliente: idCliente ??  this.idCliente,
-      idPrestador: idPrestador ??  this.idPrestador,
-      ultMsgEnviadaCliente: ultMsgEnviadaCliente ??  this.ultMsgEnviadaCliente,
-      ultMsgEnviadaPrestador: ultMsgEnviadaPrestador ??  this.ultMsgEnviadaPrestador,
-      qtdMsgNaoLidaCliente: qtdMsgNaoLidaCliente ??  this.qtdMsgNaoLidaCliente,
-      qtdMsgNaoLidaPrestador: qtdMsgNaoLidaPrestador ??  this.qtdMsgNaoLidaPrestador,
-
+      id: id ?? this.id,
+      idCliente: idCliente ?? this.idCliente,
+      idPrestador: idPrestador ?? this.idPrestador,
+      ultMsgEnviadaCliente: ultMsgEnviadaCliente ?? this.ultMsgEnviadaCliente,
+      ultMsgEnviadaPrestador: ultMsgEnviadaPrestador ?? this.ultMsgEnviadaPrestador,
+      qtdMsgNaoLidaCliente: qtdMsgNaoLidaCliente ?? this.qtdMsgNaoLidaCliente,
+      qtdMsgNaoLidaPrestador: qtdMsgNaoLidaPrestador ?? this.qtdMsgNaoLidaPrestador,
     );
+  }
+}
+
+abstract class ChatRepository extends Repository<ChatEntity> {}
+
+class ChatAdapter extends Adapter<ChatEntity> {
+  @override
+  ChatEntity fromJson(Map<String, dynamic> json) {
+    return ChatEntity.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic> toJson(ChatEntity entity) {
+    return entity.toJson();
   }
 }

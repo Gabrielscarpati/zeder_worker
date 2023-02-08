@@ -2,17 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:zeder/domain/entities/chat_entity.dart';
 
 void main() {
-  test(
-      'ChatEntity.constructor: deve criar um objeto com os respectivos valores',
-      () {
-    ChatEntity entity = ChatEntity(
-        id: "1",
-        idCliente: "2",
-        idPrestador: "3",
-        qtdMsgNaoLidaCliente: 1,
-        qtdMsgNaoLidaPrestador: 2,
-        ultMsgEnviadaCliente: "ultMsgEnviadaCliente",
-        ultMsgEnviadaPrestador: "ultMsgEnviadaPrestador");
+  test('ChatEntity.constructor: deve criar um objeto com os respectivos valores', () {
+    ChatEntity entity = ChatEntity(id: "1", idCliente: "2", idPrestador: "3", qtdMsgNaoLidaCliente: 1, qtdMsgNaoLidaPrestador: 2, ultMsgEnviadaCliente: "ultMsgEnviadaCliente", ultMsgEnviadaPrestador: "ultMsgEnviadaPrestador");
     expect(entity.id, "1");
     expect(entity.idCliente, "2");
     expect(entity.idPrestador, "3");
@@ -22,18 +13,8 @@ void main() {
     expect(entity.ultMsgEnviadaPrestador, "ultMsgEnviadaPrestador");
   });
 
-  test(
-      'ChatEntity.fromJson: deve criar um objeto com os respectivos valores passados no json',
-      () {
-    ChatEntity entity = ChatEntity.fromJson({
-      "id": "1",
-      "idCliente": "2",
-      "idPrestador": "3",
-      "qtdMsgNaoLidaCliente": 1,
-      "qtdMsgNaoLidaPrestador": 2,
-      "ultMsgEnviadaCliente": "ultMsgEnviadaCliente",
-      "ultMsgEnviadaPrestador": "ultMsgEnviadaPrestador"
-    });
+  test('ChatEntity.fromJson: deve criar um objeto com os respectivos valores passados no json', () {
+    ChatEntity entity = ChatEntity.fromJson({"id": "1", "idCliente": "2", "idPrestador": "3", "qtdMsgNaoLidaCliente": 1, "qtdMsgNaoLidaPrestador": 2, "ultMsgEnviadaCliente": "ultMsgEnviadaCliente", "ultMsgEnviadaPrestador": "ultMsgEnviadaPrestador"});
     expect(entity.id, "1");
     expect(entity.idCliente, "2");
     expect(entity.idPrestador, "3");
@@ -43,9 +24,7 @@ void main() {
     expect(entity.ultMsgEnviadaPrestador, "ultMsgEnviadaPrestador");
   });
 
-  test(
-      'ChatEntity.fromJson: deve criar um objeto com os respectivos valores "default" quando o json for vazio',
-      () {
+  test('ChatEntity.fromJson: deve criar um objeto com os respectivos valores "default" quando o json for vazio', () {
     ChatEntity entity = ChatEntity.fromJson({});
     expect(entity.id, "");
     expect(entity.idCliente, "");
@@ -56,9 +35,7 @@ void main() {
     expect(entity.ultMsgEnviadaPrestador, "");
   });
 
-  test(
-      'ChatEntity.toJson: deve retornar um json com os respectivos valores do obje',
-      () {
+  test('ChatEntity.toJson: deve retornar um json com os respectivos valores do obje', () {
     ChatEntity entity = ChatEntity.fromJson({
       "id": "1",
       "idCliente": "2",
@@ -78,9 +55,7 @@ void main() {
     expect(map['ultMsgEnviadaPrestador'], "ultMsgEnviadaPrestador");
   });
 
-  test(
-      'ChatEntity.copyWith: deve retornar uma copia do objeto com os respectivos valores passados nos paramentros',
-      () {
+  test('ChatEntity.copyWith: deve retornar uma copia do objeto com os respectivos valores passados nos paramentros', () {
     ChatEntity entity = ChatEntity.fromJson({
       "id": "1",
       "idCliente": "2",
