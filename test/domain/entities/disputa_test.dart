@@ -82,4 +82,39 @@ void main() {
     expect(entity.copyWith().dataLeitura, DateTime(2023, 02, 05));
     expect(entity.copyWith(dataLeitura: DateTime(2023, 02, 06)).dataLeitura, DateTime(2023, 02, 06));
   });
+
+  test('DisputaAdapter.fromJson: deve retornar um objeto criado apartir de um Json', () {
+    DisputaAdapter adapter = DisputaAdapter();
+    var entity = adapter.fromJson({
+      "id": '1',
+      "idChat": '1234',
+      "idProprietario": '4567',
+      "dataCriacao": DateTime(2023, 02, 05).toJsonString(),
+      "dataLeitura": DateTime(2023, 02, 05).toJsonString(),
+    });
+    expect(entity.id, "1");
+    expect(entity.idChat, "1234");
+    expect(entity.idProprietario, "4567");
+    expect(entity.dataCriacao, DateTime(2023, 02, 05));
+    expect(entity.dataLeitura, DateTime(2023, 02, 05));
+  });
+
+  test('DisputaAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
+    DisputaAdapter adapter = DisputaAdapter();
+    DisputaEntity entity = DisputaEntity.fromJson({
+      "id": '1',
+      "idChat": '1234',
+      "idProprietario": '4567',
+      "dataCriacao": DateTime(2023, 02, 05).toJsonString(),
+      "dataLeitura": DateTime(2023, 02, 05).toJsonString(),
+    });
+
+    Map<String, dynamic> map = adapter.toJson(entity);
+    expect(map['id'], "1");
+    expect(map['idChat'], "1234");
+    expect(map['idProprietario'], "4567");
+    expect(map['dataCriacao'], DateTime(2023, 02, 05).toJsonString());
+    expect(map['dataLeitura'], DateTime(2023, 02, 05).toJsonString());
+  });
+
 }

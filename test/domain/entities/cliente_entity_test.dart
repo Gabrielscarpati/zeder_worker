@@ -60,6 +60,27 @@ void main() {
     expect(entity.copyWith(tipoPessoa:'J').tipoPessoa, "J");
   });
 
+   test('ClienteAdapter.fromJson: deve retornar um objeto criado apartir de um Json', () {
+            ClienteAdapter adapter = ClienteAdapter();
+            var entity = adapter.fromJson({'id': '1', 'nome': 'Gabriel', 'email': 'gabriel@', 'cpfCnpj': '12345.456', 'tipoPessoa': 'F'});
+            expect(entity.id, "1");
+            expect(entity.nome, "Gabriel");
+            expect(entity.email, "gabriel@");
+            expect(entity.cpfCnpj, "12345.456");
+            expect(entity.tipoPessoa, "F");
+   });
+
+    test('ClienteAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
+        ClienteAdapter adapter = ClienteAdapter();
+        ClienteEntity entity = ClienteEntity.fromJson({'id': '1', 'nome': 'Gabriel', 'email': 'gabriel@', 'cpfCnpj': '12345.456', 'tipoPessoa': 'F'});
+        Map<String, dynamic> map = adapter.toJson(entity);
+        expect(map['id'], "1");
+        expect(map['nome'], "Gabriel");
+        expect(map['email'], "gabriel@");
+        expect(map['cpfCnpj'], "12345.456");
+        expect(map['tipoPessoa'], "F");
+    });
+
 }
 
 

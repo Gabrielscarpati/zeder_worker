@@ -45,6 +45,24 @@ void main() {
     expect(entity.copyWith(uf:'ES').uf, "ES");
   });
 
+   test('CidadeAdapter.fromJson: deve retornar um objeto criado apartir de um Json', () {
+            CidadeAdapter adapter = CidadeAdapter();
+            var entity = adapter.fromJson({"id":"1", "nome":"São Paulo", "uf":"SP"});
+            expect(entity.id, "1");
+            expect(entity.nome, "São Paulo");
+            expect(entity.uf, "SP");
+   });
+
+    test('CidadeAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
+        CidadeAdapter adapter = CidadeAdapter();
+        CidadeEntity entity = CidadeEntity.fromJson({"id":"1", "nome":"São Paulo", "uf":"SP"});
+        Map<String, dynamic> map = adapter.toJson(entity);
+        expect(map['id'], "1");
+        expect(map['nome'], "São Paulo");
+        expect(map['uf'], "SP");
+    });
+
+
 }
 
 

@@ -138,4 +138,69 @@ void main() {
 
     expect(entity.nota, 5.0);
   });
+
+  test('PrestadorAdapter.fromJson: deve retornar um objeto criado apartir de um Json', () {
+    PrestadorAdapter adapter = PrestadorAdapter();
+
+    var entity = adapter.fromJson({
+      "id": "1",
+      "nome": "Pedro",
+      "email": "pedro@gmail",
+      "qtdeNotas1": 1,
+      "qtdeNotas2": 1,
+      "qtdeNotas3": 1,
+      "qtdeNotas4": 1,
+      "qtdeNotas5": 1,
+    });
+
+    expect(entity.copyWith().id, "1");
+    expect(entity.copyWith(id: '2').id, "2");
+
+    expect(entity.copyWith().nome, "Pedro");
+    expect(entity.copyWith(nome: 'João').nome, "João");
+
+    expect(entity.copyWith().email, "pedro@gmail");
+    expect(entity.copyWith(email: 'pedro@hotmail').email, "pedro@hotmail");
+
+    expect(entity.copyWith().qtdeNotas1, 1);
+    expect(entity.copyWith(qtdeNotas1: 2).qtdeNotas1, 2);
+
+    expect(entity.copyWith().qtdeNotas2, 1);
+    expect(entity.copyWith(qtdeNotas2: 3).qtdeNotas2, 3);
+
+    expect(entity.copyWith().qtdeNotas3, 1);
+    expect(entity.copyWith(qtdeNotas3: 4).qtdeNotas3, 4);
+
+    expect(entity.copyWith().qtdeNotas4, 1);
+    expect(entity.copyWith(qtdeNotas4: 5).qtdeNotas4, 5);
+
+    expect(entity.copyWith().qtdeNotas5, 1);
+    expect(entity.copyWith(qtdeNotas5: 6).qtdeNotas5, 6);
+
+  });
+
+  test('PrestadorAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
+    PrestadorAdapter adapter = PrestadorAdapter();
+    PrestadorEntity entity = PrestadorEntity.fromJson({
+      "id": "1",
+      "nome": "Pedro",
+      "email": "pedro@gmail",
+      "qtdeNotas1": 1,
+      "qtdeNotas2": 1,
+      "qtdeNotas3": 1,
+      "qtdeNotas4": 1,
+      "qtdeNotas5": 1,
+    });
+    Map<String, dynamic> map = adapter.toJson(entity);
+
+    expect(map['id'], "1");
+    expect(map['nome'], "Pedro");
+    expect(map['email'], "pedro@gmail");
+    expect(map['qtdeNotas1'], 1);
+    expect(map['qtdeNotas2'], 1);
+    expect(map['qtdeNotas3'], 1);
+    expect(map['qtdeNotas4'], 1);
+    expect(map['qtdeNotas5'], 1);
+
+  });
 }

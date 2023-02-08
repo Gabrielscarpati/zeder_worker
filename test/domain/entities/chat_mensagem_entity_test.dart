@@ -82,4 +82,39 @@ void main() {
     expect(entity.copyWith().dataLeitura, DateTime(2023, 02, 06));
     expect(entity.copyWith(dataLeitura: DateTime(2023, 02, 07)).dataLeitura, DateTime(2023, 02, 07));
   });
+
+
+  test('ChatMensagemAdapter.fromJson: deve retornar um objeto criado apartir de um Json', () {
+          ChatMensagemAdapter adapter = ChatMensagemAdapter();
+          var entity = adapter.fromJson({
+                                              "id": "1",
+                                              "idChat": "2",
+                                              "idProprietario": "3",
+                                              "dataCriacao": "2023-02-05",
+                                              "dataLeitura": "2023-02-06",
+                                            });
+                                            expect(entity.id, "1");
+                                            expect(entity.idChat, "2");
+                                            expect(entity.idProprietario, "3");
+                                            expect(entity.dataCriacao, DateTime(2023, 02, 05));
+                                            expect(entity.dataLeitura, DateTime(2023, 02, 06));
+        });
+
+        test('ChatMensagemAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
+          ChatMensagemAdapter adapter = ChatMensagemAdapter();
+          ChatMensagemEntity entity = ChatMensagemEntity.fromJson({
+                                                                        "id": "1",
+                                                                        "idChat": "2",
+                                                                        "idProprietario": "3",
+                                                                        "dataCriacao": "2023-02-05",
+                                                                        "dataLeitura": "2023-02-06",
+                                                                      });
+         Map<String, dynamic> map = adapter.toJson(entity);
+         expect(map['id'], "1");
+             expect(map['idChat'], "2");
+             expect(map['idProprietario'], "3");
+             expect(map['dataCriacao'], DateTime(2023, 02, 05).toJsonString());
+             expect(map['dataLeitura'], DateTime(2023, 02, 06).toJsonString());
+        });
+
 }
