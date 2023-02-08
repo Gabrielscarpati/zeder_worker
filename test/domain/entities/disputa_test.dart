@@ -116,5 +116,4 @@ void main() {
     expect(map['dataCriacao'], DateTime(2023, 02, 05).toJsonString());
     expect(map['dataLeitura'], DateTime(2023, 02, 05).toJsonString());
   });
-
 }

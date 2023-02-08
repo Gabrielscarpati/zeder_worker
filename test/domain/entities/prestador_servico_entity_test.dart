@@ -76,6 +76,4 @@ void main() {
     expect(map['idServico'], "2");
     expect(map['dataInicio'], DateTime(2023, 02, 05).toJsonString());
   });
-  
-     
 }

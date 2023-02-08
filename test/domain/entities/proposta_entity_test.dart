@@ -134,7 +134,6 @@ void main() {
 
     expect(entity.copyWith().flgAvisoCliente, false);
     expect(entity.copyWith(flgAvisoCliente: true).flgAvisoCliente, true);
-
   });
 
   test('PropostaAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
@@ -159,6 +158,5 @@ void main() {
     expect(map['consideracoes'], "consideracoes");
     expect(map['flgAvisoPrestador'], true);
     expect(map['flgAvisoCliente'], false);
-
   });
 }

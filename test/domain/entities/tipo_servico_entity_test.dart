@@ -50,7 +50,6 @@ void main() {
     expect(entity.id, "1");
     expect(entity.nome, "Eletricista");
     expect(entity.icone, "clear");
-
   });
 
   test('TipoServicoAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {

@@ -176,7 +176,6 @@ void main() {
 
     expect(entity.copyWith().qtdeNotas5, 1);
     expect(entity.copyWith(qtdeNotas5: 6).qtdeNotas5, 6);
-
   });
 
   test('PrestadorAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
@@ -201,6 +200,5 @@ void main() {
     expect(map['qtdeNotas3'], 1);
     expect(map['qtdeNotas4'], 1);
     expect(map['qtdeNotas5'], 1);
-
   });
 }

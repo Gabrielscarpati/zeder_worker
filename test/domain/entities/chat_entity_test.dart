@@ -87,30 +87,29 @@ void main() {
     expect(entity.copyWith().ultMsgEnviadaPrestador, "ultMsgEnviadaPrestador");
     expect(entity.copyWith(ultMsgEnviadaPrestador: "asdfasfasf").ultMsgEnviadaPrestador, "asdfasfasf");
   });
-  
-    test('ChatAdapter.fromJson: deve retornar um objeto criado apartir de um Json', () {
-        ChatAdapter adapter = ChatAdapter();
-        var entity = adapter.fromJson({"id": "1", "idCliente": "2", "idPrestador": "3", "qtdMsgNaoLidaCliente": 1, "qtdMsgNaoLidaPrestador": 2, "ultMsgEnviadaCliente": "ultMsgEnviadaCliente", "ultMsgEnviadaPrestador": "ultMsgEnviadaPrestador"});
-         expect(entity.id, "1");
-         expect(entity.idCliente, "2");
-         expect(entity.idPrestador, "3");
-         expect(entity.qtdMsgNaoLidaCliente, 1);
-         expect(entity.qtdMsgNaoLidaPrestador, 2);
-         expect(entity.ultMsgEnviadaCliente, "ultMsgEnviadaCliente");
-         expect(entity.ultMsgEnviadaPrestador, "ultMsgEnviadaPrestador");
-      });
-  
-      test('ChatAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
-        ChatAdapter adapter = ChatAdapter();
-        ChatEntity entity = ChatEntity.fromJson({"id": "1", "idCliente": "2", "idPrestador": "3", "qtdMsgNaoLidaCliente": 1, "qtdMsgNaoLidaPrestador": 2, "ultMsgEnviadaCliente": "ultMsgEnviadaCliente", "ultMsgEnviadaPrestador": "ultMsgEnviadaPrestador"});
-       Map<String, dynamic> map = adapter.toJson(entity);
-       expect(map['id'], "1");
-       expect(map['idCliente'], "2");
-       expect(map['idPrestador'], "3");
-       expect(map['qtdMsgNaoLidaCliente'], 1);
-       expect(map['qtdMsgNaoLidaPrestador'], 2);
-       expect(map['ultMsgEnviadaCliente'], "ultMsgEnviadaCliente");
-       expect(map['ultMsgEnviadaPrestador'], "ultMsgEnviadaPrestador");
-      });
-  
+
+  test('ChatAdapter.fromJson: deve retornar um objeto criado apartir de um Json', () {
+    ChatAdapter adapter = ChatAdapter();
+    var entity = adapter.fromJson({"id": "1", "idCliente": "2", "idPrestador": "3", "qtdMsgNaoLidaCliente": 1, "qtdMsgNaoLidaPrestador": 2, "ultMsgEnviadaCliente": "ultMsgEnviadaCliente", "ultMsgEnviadaPrestador": "ultMsgEnviadaPrestador"});
+    expect(entity.id, "1");
+    expect(entity.idCliente, "2");
+    expect(entity.idPrestador, "3");
+    expect(entity.qtdMsgNaoLidaCliente, 1);
+    expect(entity.qtdMsgNaoLidaPrestador, 2);
+    expect(entity.ultMsgEnviadaCliente, "ultMsgEnviadaCliente");
+    expect(entity.ultMsgEnviadaPrestador, "ultMsgEnviadaPrestador");
+  });
+
+  test('ChatAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
+    ChatAdapter adapter = ChatAdapter();
+    ChatEntity entity = ChatEntity.fromJson({"id": "1", "idCliente": "2", "idPrestador": "3", "qtdMsgNaoLidaCliente": 1, "qtdMsgNaoLidaPrestador": 2, "ultMsgEnviadaCliente": "ultMsgEnviadaCliente", "ultMsgEnviadaPrestador": "ultMsgEnviadaPrestador"});
+    Map<String, dynamic> map = adapter.toJson(entity);
+    expect(map['id'], "1");
+    expect(map['idCliente'], "2");
+    expect(map['idPrestador'], "3");
+    expect(map['qtdMsgNaoLidaCliente'], 1);
+    expect(map['qtdMsgNaoLidaPrestador'], 2);
+    expect(map['ultMsgEnviadaCliente'], "ultMsgEnviadaCliente");
+    expect(map['ultMsgEnviadaPrestador'], "ultMsgEnviadaPrestador");
+  });
 }

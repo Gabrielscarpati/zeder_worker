@@ -279,7 +279,6 @@ void main() {
     expect(entity.flgAvisoCliente, true);
     expect(entity.flgAvisoPrestador, false);
     expect(entity.idDisputa, "8");
-
   });
 
   test('ServicoAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
@@ -326,6 +325,5 @@ void main() {
     expect(map['flgAvisoCliente'], true);
     expect(map['flgAvisoPrestador'], false);
     expect(map['idDisputa'], "8");
-
   });
 }

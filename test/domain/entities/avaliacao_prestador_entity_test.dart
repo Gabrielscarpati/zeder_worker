@@ -72,7 +72,7 @@ void main() {
       "idCliente": '4567',
       "nota": 4.5656,
       "comentario": 'muito bom',
-      "data": DateTime(2023, 02, 05).toJsonString(),
+      "data": DateTime(2023, 02, 05),
     });
 
     expect(entity.copyWith().id, "1");
@@ -95,41 +95,39 @@ void main() {
   });
 
   test('AvaliacaoPrestadorAdapter.fromJson: deve retornar um objeto criado apartir de um Json', () {
-      AvaliacaoPrestadorAdapter adapter = AvaliacaoPrestadorAdapter();
-      var entity = adapter.fromJson({
-                                 "id": '1',
-                                 "idPrestador": '1234',
-                                 "idCliente": '4567',
-                                 "nota": 4.5656,
-                                 "comentario": 'muito bom',
-                                 "data": DateTime(2023, 02, 05).toJsonString(),
-                               });
-       expect(entity.id, "1");
-       expect(entity.idPrestador, "1234");
-       expect(entity.idCliente, "4567");
-       expect(entity.nota, 4.5656);
-       expect(entity.comentario, "muito bom");
-       expect(entity.data, DateTime(2023, 02, 05));
+    AvaliacaoPrestadorAdapter adapter = AvaliacaoPrestadorAdapter();
+    var entity = adapter.fromJson({
+      "id": '1',
+      "idPrestador": '1234',
+      "idCliente": '4567',
+      "nota": 4.5656,
+      "comentario": 'muito bom',
+      "data": DateTime(2023, 02, 05),
     });
+    expect(entity.id, "1");
+    expect(entity.idPrestador, "1234");
+    expect(entity.idCliente, "4567");
+    expect(entity.nota, 4.5656);
+    expect(entity.comentario, "muito bom");
+    expect(entity.data, DateTime(2023, 02, 05));
+  });
 
-    test('AvaliacaoPrestadorAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
-      AvaliacaoPrestadorAdapter adapter = AvaliacaoPrestadorAdapter();
-      AvaliacaoPrestadorEntity entity = AvaliacaoPrestadorEntity.fromJson({
-           "id": '1',
-           "idPrestador": '1234',
-           "idCliente": '4567',
-           "nota": 4.5656,
-           "comentario": 'muito bom',
-           "data": DateTime(2023, 02, 05).toJsonString(),
-         }); 
-
-     Map<String, dynamic> map = adapter.toJson(entity);
-     expect(map['id'], "1");
-     expect(map['idPrestador'], "1234");
-     expect(map['idCliente'], "4567");
-     expect(map['nota'], 4.5656);
-     expect(map['comentario'], "muito bom");
-     expect(map['data'], DateTime(2023, 02, 05).toJsonString());
+  test('AvaliacaoPrestadorAdapter.toJson: deve retornar um Json do objeto passado no parametro', () {
+    AvaliacaoPrestadorAdapter adapter = AvaliacaoPrestadorAdapter();
+    AvaliacaoPrestadorEntity entity = AvaliacaoPrestadorEntity.fromJson({
+      "id": '1',
+      "idPrestador": '1234',
+      "idCliente": '4567',
+      "nota": 4.5656,
+      "comentario": 'muito bom',
+      "data": DateTime(2023, 02, 05),
     });
-
+    Map<String, dynamic> map = adapter.toJson(entity);
+    expect(map['id'], "1");
+    expect(map['idPrestador'], "1234");
+    expect(map['idCliente'], "4567");
+    expect(map['nota'], 4.5656);
+    expect(map['comentario'], "muito bom");
+    expect(map['data'], DateTime(2023, 02, 05).toJsonString());
+  });
 }
