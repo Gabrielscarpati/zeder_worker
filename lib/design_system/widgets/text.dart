@@ -1,6 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 
+/// titleBold
+
+class DSTextTitleBoldPrimary extends _DSTextTitleBold {
+  const DSTextTitleBoldPrimary({super.key, required super.text});
+
+  @override
+  Color get textColor => DSColors.primary;
+}
+
+class DSTextTitleBoldSecondary extends _DSTextTitleBold {
+  const DSTextTitleBoldSecondary({super.key, required super.text});
+
+  @override
+  Color get textColor => DSColors.secondary;
+}
+
+class DSTextTitleBoldTertiary extends _DSTextTitleBold {
+  const DSTextTitleBoldTertiary({super.key, required super.text});
+
+  @override
+  Color get textColor => DSColors.tertiary;
+}
+
+/// title
+
 class DSTextTitlePrimary extends _DSTextTitle {
   const DSTextTitlePrimary({super.key, required super.text});
 
@@ -21,6 +46,8 @@ class DSTextTitleTertiary extends _DSTextTitle {
   @override
   Color get textColor => DSColors.tertiary;
 }
+
+/// subtitle
 
 class DSTextSubtitlePrimary extends _DSTextSubtitle {
   const DSTextSubtitlePrimary({super.key, required super.text});
@@ -54,6 +81,13 @@ class DSTextButton extends _DSTextBodyLarge {
 }
 
 /// abtract classes
+
+abstract class _DSTextTitleBold extends _DSTextTitleMedium {
+  const _DSTextTitleBold({super.key, required super.text});
+
+  @override
+  TextStyle? textStyle(BuildContext context) => super.textStyle(context)?.copyWith(fontWeight: FontWeight.bold);
+}
 
 abstract class _DSTextTitle extends _DSTextTitleMedium {
   const _DSTextTitle({super.key, required super.text});

@@ -6,8 +6,7 @@ class DSColors {
   static const Color tertiary = Color(0xFFAAA6B9);
 
   static const Color textButtonColor = Colors.white;
-
   static const Color cardColor = Colors.white;
-
+  static const Color iconColor = Colors.white;
   static const Color scaffoldBackground = Color(0xFFF0F0F0);
 }

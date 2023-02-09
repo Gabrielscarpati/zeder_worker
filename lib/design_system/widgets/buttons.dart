@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
-import 'package:zeder/design_system/widgets/text.dart';
 
 abstract class DSButton extends StatelessWidget {
   final VoidCallback? onPressed;
