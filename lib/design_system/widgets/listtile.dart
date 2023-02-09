@@ -7,20 +7,22 @@ class DSCardListTile extends StatelessWidget {
   final Widget? subtitle;
   final Widget? trailing;
   final VoidCallback? onTap;
+  Color? color;
 
-  const DSCardListTile({
+  DSCardListTile({
     super.key,
     required this.leading,
     required this.title,
     this.subtitle,
     this.trailing,
     this.onTap,
+    this.color = DSColors.cardColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: DSColors.cardColor,
+      color: color ,
       surfaceTintColor: DSColors.cardColor,
       elevation: 0.0,
       child: ListTile(
