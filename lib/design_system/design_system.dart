@@ -5,3 +5,4 @@ export 'widgets/buttons.dart';
 export 'widgets/icons.dart';
 export 'widgets/listtile.dart';
 export 'widgets/text.dart';
+export 'widgets/infoCard.dart';
