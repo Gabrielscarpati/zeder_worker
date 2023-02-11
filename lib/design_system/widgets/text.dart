@@ -47,6 +47,30 @@ class DSTextTitleTertiary extends _DSTextTitle {
   Color get textColor => DSColors.tertiary;
 }
 
+
+/// subtitle Bold
+
+class DSTextSubtitleBoldPrimary extends _DSTextSubtitleBold {
+  const DSTextSubtitleBoldPrimary({super.key, required super.text});
+
+  @override
+  Color get textColor => DSColors.primary;
+}
+
+class DSTextSubtitleBoldSecondary extends _DSTextSubtitleBold {
+  const DSTextSubtitleBoldSecondary({super.key, required super.text});
+
+  @override
+  Color get textColor => DSColors.secondary;
+}
+
+class DSTextSubtitleBoldTertiary extends _DSTextSubtitleBold {
+  const DSTextSubtitleBoldTertiary({super.key, required super.text});
+
+  @override
+  Color get textColor => DSColors.tertiary;
+}
+
 /// subtitle
 
 class DSTextSubtitlePrimary extends _DSTextSubtitle {
@@ -70,11 +94,14 @@ class DSTextSubtitleTertiary extends _DSTextSubtitle {
   Color get textColor => DSColors.tertiary;
 }
 
+
+
+///body
 class DSTextButton extends _DSTextBodyLarge {
   const DSTextButton({super.key, required super.text});
 
   @override
-  TextStyle? textStyle(BuildContext context) => super.textStyle(context)?.copyWith(fontWeight: FontWeight.bold, fontFamily: DSFonts.buttonTextFontFamily);
+  TextStyle? textStyle(BuildContext context) => super.textStyle(context)?.copyWith(fontWeight: FontWeight.bold,fontSize: 18, fontFamily: DSFonts.buttonTextFontFamily);
 
   @override
   Color get textColor => DSColors.textButtonColor;
@@ -95,6 +122,12 @@ abstract class _DSTextTitle extends _DSTextTitleMedium {
 
 abstract class _DSTextSubtitle extends _DSTextLabelMedium {
   const _DSTextSubtitle({super.key, required super.text});
+}
+
+abstract class _DSTextSubtitleBold extends _DSTextLabelMedium {
+  const _DSTextSubtitleBold({super.key, required super.text});
+  @override
+  TextStyle? textStyle(BuildContext context) => super.textStyle(context)?.copyWith(fontWeight: FontWeight.bold);
 }
 
 abstract class _DSText extends StatelessWidget {

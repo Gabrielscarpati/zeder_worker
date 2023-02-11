@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/ui.dart';
+import 'package:zeder/ui/widgets/icone_servicos_nessa_cidade.dart';
+import 'package:zeder/ui/widgets/rodape.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,9 +45,19 @@ class _MyHomePageState extends State<MyHomePage> {
               texto: "FAZER ORÇAMENTO",
               onPressed: () => print("TESTE"),
             ),
-            ServicoListTile(),
-            ServicoListTile(),
+            BotaoPadraoPequeno(
+              textoOrangeButton: 'RECUSAR',
+              onPressedOrange: () {  },
+              textoBlueButton: 'ACEITAR',
+              onPressedBlue: () {  },),
+            BotoesEnviarMidia(),
+            BotaoEscolherData(),
+            IconeServicosNessaCidade(),
             OrcamentoListTile(),
+            Rodape(buttonText: 'Peça orçamento gratuito',
+                onPressed: () {  },
+                priceRange: 'R\$ 100 - 622',
+                description: 'Preço médio estimado',),
             const DSDiferencialInfo()
           ],
         ),

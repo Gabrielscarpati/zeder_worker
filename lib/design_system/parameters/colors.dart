@@ -9,4 +9,5 @@ class DSColors {
   static const Color cardColor = Colors.white;
   static const Color iconColor = Colors.white;
   static const Color scaffoldBackground = Color(0xFFF0F0F0);
+
 }

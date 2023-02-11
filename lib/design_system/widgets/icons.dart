@@ -24,6 +24,27 @@ class DSIconFilledTertiary extends _DSIconFilled {
   Color get color => DSColors.tertiary;
 }
 
+class DSIconFilledPrimaryLarge extends _DSIconFilledLarge {
+  const DSIconFilledPrimaryLarge({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.primary;
+}
+
+class DSIconFilledSecondaryLarge extends _DSIconFilledLarge {
+  const DSIconFilledSecondaryLarge({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.secondary;
+}
+
+class DSIconFilledTertiaryLarge extends _DSIconFilledLarge {
+  const DSIconFilledTertiaryLarge({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.tertiary;
+}
+
 class DSIconPrimary extends _DSIcon {
   const DSIconPrimary({super.key, required super.iconName});
 
@@ -66,6 +87,34 @@ class DSIconSmallTertiary extends _DSIconSmall {
   Color get color => DSColors.tertiary;
 }
 
+class DSIconLargePrimary extends _DSIconLarge {
+  const DSIconLargePrimary({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.primary;
+}
+
+class DSIconLargeSecondary extends _DSIconLarge {
+  const DSIconLargeSecondary({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.secondary;
+}
+
+class DSIconLargeTertiary extends _DSIconLarge {
+  const DSIconLargeTertiary({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.tertiary;
+}
+
+class DSIconLargeWhite extends _DSIconLarge {
+  const DSIconLargeWhite({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.iconColor;
+}
+
 /// abstract classes
 
 abstract class _DSIconFilled extends StatelessWidget {
@@ -90,6 +139,30 @@ abstract class _DSIconFilled extends StatelessWidget {
   }
 }
 
+
+abstract class _DSIconFilledLarge extends StatelessWidget {
+  const _DSIconFilledLarge({super.key, required this.iconName});
+
+  final String iconName;
+  Color get color;
+
+  IconData get icon => MdiIcons.fromString(iconName) ?? MdiIcons.exclamation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60.0,
+      width: 60.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30.0),
+        color: DSColors.secondary,
+      ),
+      child: Icon(icon, color: DSColors.iconColor, size: 40,),
+    );
+  }
+}
+
+
 abstract class _DSIcon extends StatelessWidget {
   const _DSIcon({super.key, required this.iconName});
 
@@ -112,3 +185,11 @@ abstract class _DSIconSmall extends _DSIcon {
   @override
   double get size => 24.0;
 }
+
+abstract class _DSIconLarge extends _DSIcon {
+  const _DSIconLarge({super.key, required super.iconName});
+
+  @override
+  double get size => 40.0;
+}
+
