@@ -3,6 +3,7 @@ import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -68,8 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
               textoBlueButton: 'ACEITAR',
               onPressedBlue: () {},
             ),
-            BotoesEnviarMidia(),
-            BotaoEscolherData(),
+            aa(),
             IconeServicosNessaCidade(),
             OrcamentoListTile(),
             Rodape(

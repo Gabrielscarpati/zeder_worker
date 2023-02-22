@@ -28,6 +28,9 @@ class PlayerFotos extends StatelessWidget {
         height: 200,
         child: CarouselSlider(
           options: CarouselOptions(
+            height: 224,
+            enlargeCenterPage: true,
+            enlargeFactor: 0.32,
             autoPlay: false,
             disableCenter: false,
           ),
@@ -53,39 +56,39 @@ class PlayerFotosFoto extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(5.0),
       child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
           child: Stack(
             children: <Widget>[
               Image.network(urlFoto, fit: BoxFit.cover, width: 1000.0),
               Positioned(
                 bottom: 0.0,
                 left: 0.0,
-                right: 0.0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+
+                child: Padding(
+                  padding: EdgeInsets.only(top:0 , bottom: 14, left: 9, right: 0),
                   child: Container(
-                    height: 20,
-                    width: 20,
-                    decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.all(Radius.circular(10))),
+                    height: 28,
+                    width: 28,
+                    decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.all(Radius.circular(14))),
                     child: Center(
                         child: Text(
                       "${indexFoto + 1}",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16 ),
                     )),
                   ),
                 ),
               ),
-              IconButton(
-                onPressed: () => onExcluirFoto(urlFoto),
-                icon: DSIconFilledSecondary(iconName: 'delete'),
+              Positioned(
+                top: 0.0,
+                left: 0.0,
+                  child:  IconButton(
+                      onPressed: () => onExcluirFoto(urlFoto),
+                      icon: DSIconFilledSecondarySmall(iconName: 'delete'),
+                    ),
+
+
               ),
+
             ],
           )),
     );
@@ -103,19 +106,39 @@ class PlayerFotosAdicionar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(5.0),
-      child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          child: Stack(
-            children: <Widget>[
-              Center(
-                child: IconButton(
-                  onPressed: () => onAdicionarFoto,
-                  icon: DSIconSecondary(iconName: 'plus'),
-                ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(16))
+      ),
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              SizedBox(height: 8,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DSTextTitleBoldSecondary(text: 'ADICIONE UMA FOTO',),
+                ],
               ),
             ],
-          )),
+          ),
+          Center(
+            child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                child: Stack(
+                  children: <Widget>[
+                    Center(
+                      child: IconButton(
+                        onPressed: () => onAdicionarFoto,
+                        icon: const DSIconFilledSecondaryLarge(iconName: 'plus'),
+                      ),
+                    ),
+                  ],
+                )),
+          ),
+        ],
+      ),
     );
   }
 }

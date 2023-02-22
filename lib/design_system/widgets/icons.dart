@@ -24,6 +24,27 @@ class DSIconFilledTertiary extends _DSIconFilled {
   Color get color => DSColors.tertiary;
 }
 
+class DSIconFilledPrimarySmall extends _DSIconFilledSmall {
+  const DSIconFilledPrimarySmall({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.primary;
+}
+
+class DSIconFilledSecondarySmall extends _DSIconFilledSmall {
+  const DSIconFilledSecondarySmall({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.secondary;
+}
+
+class DSIconFilledTertiarySmall extends _DSIconFilledSmall {
+  const DSIconFilledTertiarySmall({super.key, required super.iconName});
+
+  @override
+  Color get color => DSColors.tertiary;
+}
+
 class DSIconFilledPrimaryLarge extends _DSIconFilledLarge {
   const DSIconFilledPrimaryLarge({super.key, required super.iconName});
 
@@ -139,6 +160,28 @@ abstract class _DSIconFilled extends StatelessWidget {
   }
 }
 
+abstract class _DSIconFilledSmall extends StatelessWidget {
+  const _DSIconFilledSmall({super.key, required this.iconName});
+
+  final String iconName;
+  Color get color;
+
+  IconData get icon => MdiIcons.fromString(iconName) ?? MdiIcons.exclamation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 28.0,
+      width: 28.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14.0),
+        color: DSColors.secondary,
+      ),
+      child: Icon(icon, color: DSColors.iconColor, size: 20,),
+    );
+  }
+}
+
 
 abstract class _DSIconFilledLarge extends StatelessWidget {
   const _DSIconFilledLarge({super.key, required this.iconName});
@@ -157,7 +200,7 @@ abstract class _DSIconFilledLarge extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
         color: DSColors.secondary,
       ),
-      child: Icon(icon, color: DSColors.iconColor, size: 40,),
+      child: Icon(icon, color: DSColors.iconColor, size: 60,),
     );
   }
 }
