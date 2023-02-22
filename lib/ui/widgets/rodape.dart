@@ -14,10 +14,15 @@ class Rodape extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Footer(
-      button: BotaoPadrao(texto: buttonText, onPressed: onPressed,
-      ),
-      priceRange: DSTextTitleBoldSecondary(text: priceRange,),
-      description: DSTextTitleSecondary(text: description,)
-    );
+        button: BotaoPadraoGrande(
+          texto: buttonText,
+          onPressed: onPressed,
+        ),
+        priceRange: DSTextTitleBoldSecondary(
+          text: priceRange,
+        ),
+        description: DSTextTitleSecondary(
+          text: description,
+        ));
   }
 }

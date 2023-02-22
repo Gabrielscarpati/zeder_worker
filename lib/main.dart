@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
-import 'package:zeder/ui/ui.dart';
-import 'package:zeder/ui/widgets/icone_servicos_nessa_cidade.dart';
-import 'package:zeder/ui/widgets/rodape.dart';
+import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
+import 'package:zeder/ui/templates/botoes_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,27 +37,49 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: <Widget>[
+            ListTile(
+              title: const Text("Botoes"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BotoesScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Botoes Media"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BarraBotoesMediaScreen()),
+              ),
+            ),
+
+            /*
+
             BotaoPadrao(
               texto: "FAZER ORÇAMENTO",
               onPressed: () => print("TESTE"),
             ),
             BotaoPadraoPequeno(
               textoOrangeButton: 'RECUSAR',
-              onPressedOrange: () {  },
+              onPressedOrange: () {},
               textoBlueButton: 'ACEITAR',
-              onPressedBlue: () {  },),
+              onPressedBlue: () {},
+            ),
             BotoesEnviarMidia(),
             BotaoEscolherData(),
             IconeServicosNessaCidade(),
             OrcamentoListTile(),
-            Rodape(buttonText: 'Peça orçamento gratuito',
-                onPressed: () {  },
-                priceRange: 'R\$ 100 - 622',
-                description: 'Preço médio estimado',),
+            Rodape(
+              buttonText: 'Peça orçamento gratuito',
+              onPressed: () {},
+              priceRange: 'R\$ 100 - 622',
+              description: 'Preço médio estimado',
+            ),
             const DSDiferencialInfo()
+             */
           ],
         ),
       ),
