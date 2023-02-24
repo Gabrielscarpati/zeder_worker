@@ -24,6 +24,13 @@ class BarraBotoesMediaScreenState extends State<BarraBotoesMediaScreen> {
       fotos.remove(url);
     });
   }
+  String audio = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+  bool enviaAudio = true;
+  void onExcluirAudio(String url) {
+    setState(() {
+      enviaAudio = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +59,10 @@ class BarraBotoesMediaScreenState extends State<BarraBotoesMediaScreen> {
             const Divider(),
             const SizedBox(height: 8),
             BarraBotoesMedia(
-              urlAudio: "asdfasdf",
-              permiteEnviarAudio: true,
+              urlAudio: audio,
+              permiteEnviarAudio: enviaAudio,
               onEnviarAudio: () {},
-              onExcluirAudio: (url) {},
+              onExcluirAudio: onExcluirAudio,
               urlsFotos: fotos,
               permiteEnviarFotos: true,
               onEnviarFotos: () {},

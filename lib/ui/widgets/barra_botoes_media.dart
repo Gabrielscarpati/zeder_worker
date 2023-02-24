@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zeder/ui/widgets/player_fotos.dart';
 
 import '../../design_system/widgets/buttons.dart';
-
+import '../ui.dart';
 class BarraBotoesMedia extends StatelessWidget {
   final String? urlAudio;
   final VoidCallback onEnviarAudio;
@@ -37,7 +37,7 @@ class BarraBotoesMedia extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        urlAudio != null ? PlayerAudio(urlAudio: urlAudio!) : BotaoEnviaMedia.audio(isEnabled: permiteEnviarAudio, onPressed: onEnviarAudio),
+        urlAudio != null ? PlayerAudio(urlAudio: urlAudio!,  onExcluirAudio: onExcluirAudio,) : BotaoEnviaMedia.audio(isEnabled: permiteEnviarAudio, onPressed: onEnviarAudio),
         const SizedBox(height: 20),
         urlsFotos.isNotEmpty ? PlayerFotos(urlsFotos: urlsFotos!, onExcluirFoto: onExcluirFoto, onAdicionarFoto: onEnviarFotos) : BotaoEnviaMedia.foto(isEnabled: permiteEnviarFotos, onPressed: onEnviarFotos),
         const SizedBox(height: 20),
@@ -104,19 +104,4 @@ class BotaoEnviaMedia extends StatelessWidget {
   }
 }
 
-class PlayerAudio extends StatelessWidget {
-  final String urlAudio;
-  const PlayerAudio({
-    super.key,
-    required this.urlAudio,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      width: 200,
-      color: Colors.red,
-    );
-  }
-}

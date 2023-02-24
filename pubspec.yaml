@@ -17,6 +17,8 @@ dependencies:
   google_fonts: ^4.0.3
   material_design_icons_flutter: ^6.0.7096
   carousel_slider: ^4.2.1
+  audioplayers: ^3.0.1
+  flutter_audio_waveforms: ^1.2.1+8
 
 dev_dependencies:
   flutter_test:
