@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/barra_botoes_media.dart';
+import '../widgets/players/barra_botoes_media.dart';
 
 class BarraBotoesMediaScreen extends StatefulWidget {
   const BarraBotoesMediaScreen({Key? key}) : super(key: key);

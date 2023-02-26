@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:zeder/ui/widgets/player_audio.dart';
-import 'package:zeder/ui/widgets/player_fotos.dart';
-import 'package:zeder/ui/widgets/player_videos.dart';
+import 'package:zeder/ui/widgets/players/player_audio.dart';
+import 'package:zeder/ui/widgets/players/player_fotos.dart';
+import 'package:zeder/ui/widgets/players/player_videos.dart';
 
-import '../../design_system/widgets/buttons.dart';
+import '../../../design_system/widgets/buttons.dart';
 
 class BarraBotoesMedia extends StatelessWidget {
   final String? urlAudio;

@@ -67,7 +67,7 @@ abstract class DSButtonSmall extends StatelessWidget {
         backgroundColor: backgroundColor,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
       ),
-      child: Container(height: 50, width: 100, child: Center(child: DSTextButton(text: text))),
+      child: SizedBox(height: 50, width: 100, child: Center(child: DSTextButton(text: text))),
     );
   }
 }

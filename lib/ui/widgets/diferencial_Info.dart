@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/cupertino.dart';
 import 'package:zeder/design_system/design_system.dart';
 
@@ -16,3 +17,4 @@ class DSDiferencialInfo extends StatelessWidget {
     return DSInfoCard(topinfo: topinfo, bottoninfo: bottoninfo);
   }
 }
+*/
