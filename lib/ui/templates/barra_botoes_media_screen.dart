@@ -19,11 +19,22 @@ class BarraBotoesMediaScreenState extends State<BarraBotoesMediaScreen> {
     'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
   ];
 
+  List<String> videos = [
+    'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+  ];
+
   void onExcluirFoto(String url) {
     setState(() {
       fotos.remove(url);
     });
   }
+
+  void onExcluirVideo(String url) {
+    setState(() {
+      videos.remove(url);
+    });
+  }
+
   String audio = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
   bool enviaAudio = true;
   void onExcluirAudio(String url) {
@@ -39,39 +50,43 @@ class BarraBotoesMediaScreenState extends State<BarraBotoesMediaScreen> {
         title: const Text("Barra Botoes Media"),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BarraBotoesMedia(
-              urlAudio: null,
-              permiteEnviarAudio: false,
-              onEnviarAudio: () {},
-              onExcluirAudio: (url) {},
-              urlsFotos: [],
-              permiteEnviarFotos: true,
-              onEnviarFotos: () {},
-              onExcluirFoto: onExcluirFoto,
-              urlsVideos: null,
-              permiteEnviarVideos: true,
-              onEnviarVideos: () {},
-            ),
-            const SizedBox(height: 8),
-            const Divider(),
-            const SizedBox(height: 8),
-            BarraBotoesMedia(
-              urlAudio: audio,
-              permiteEnviarAudio: enviaAudio,
-              onEnviarAudio: () {},
-              onExcluirAudio: onExcluirAudio,
-              urlsFotos: fotos,
-              permiteEnviarFotos: true,
-              onEnviarFotos: () {},
-              onExcluirFoto: onExcluirFoto,
-              urlsVideos: null,
-              permiteEnviarVideos: true,
-              onEnviarVideos: () {},
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BarraBotoesMedia(
+                urlAudio: null,
+                permiteEnviarAudio: false,
+                onEnviarAudio: () {},
+                onExcluirAudio: (url) {},
+                urlsFotos: [],
+                permiteEnviarFotos: true,
+                onEnviarFotos: () {},
+                onExcluirFoto: onExcluirFoto,
+                urlsVideos: [],
+                onExcluirVideo: onExcluirVideo,
+                permiteEnviarVideos: true,
+                onEnviarVideos: () {},
+              ),
+              const SizedBox(height: 8),
+              const Divider(),
+              const SizedBox(height: 8),
+              BarraBotoesMedia(
+                urlAudio: audio,
+                permiteEnviarAudio: enviaAudio,
+                onEnviarAudio: () {},
+                onExcluirAudio: onExcluirAudio,
+                urlsFotos: fotos,
+                permiteEnviarFotos: true,
+                onEnviarFotos: () {},
+                onExcluirFoto: onExcluirFoto,
+                urlsVideos: videos,
+                onExcluirVideo: onExcluirVideo,
+                permiteEnviarVideos: true,
+                onEnviarVideos: () {},
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:zeder/ui/widgets/player_audio.dart';
 import 'package:zeder/ui/widgets/player_fotos.dart';
+import 'package:zeder/ui/widgets/player_videos.dart';
 
 import '../../design_system/widgets/buttons.dart';
-import '../ui.dart';
+
 class BarraBotoesMedia extends StatelessWidget {
   final String? urlAudio;
   final VoidCallback onEnviarAudio;
@@ -14,8 +16,9 @@ class BarraBotoesMedia extends StatelessWidget {
   final Function(String) onExcluirFoto;
   final bool permiteEnviarFotos;
 
-  final List<String>? urlsVideos;
+  final List<String> urlsVideos;
   final VoidCallback onEnviarVideos;
+  final Function(String) onExcluirVideo;
   final bool permiteEnviarVideos;
 
   const BarraBotoesMedia({
@@ -30,6 +33,7 @@ class BarraBotoesMedia extends StatelessWidget {
     required this.permiteEnviarFotos,
     required this.urlsVideos,
     required this.onEnviarVideos,
+    required this.onExcluirVideo,
     required this.permiteEnviarVideos,
   });
 
@@ -37,11 +41,11 @@ class BarraBotoesMedia extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        urlAudio != null ? PlayerAudio(urlAudio: urlAudio!,  onExcluirAudio: onExcluirAudio,) : BotaoEnviaMedia.audio(isEnabled: permiteEnviarAudio, onPressed: onEnviarAudio),
+        urlAudio != null ? PlayerAudio(urlAudio: urlAudio!, onExcluirAudio: onExcluirAudio) : BotaoEnviaMedia.audio(isEnabled: permiteEnviarAudio, onPressed: onEnviarAudio),
         const SizedBox(height: 20),
         urlsFotos.isNotEmpty ? PlayerFotos(urlsFotos: urlsFotos!, onExcluirFoto: onExcluirFoto, onAdicionarFoto: onEnviarFotos) : BotaoEnviaMedia.foto(isEnabled: permiteEnviarFotos, onPressed: onEnviarFotos),
         const SizedBox(height: 20),
-        BotaoEnviaMedia.video(isEnabled: permiteEnviarVideos, onPressed: onEnviarVideos),
+        urlsVideos.isNotEmpty ? PlayerVideos(urlsVideos: urlsVideos!, onExcluirVideo: onExcluirVideo, onAdicionarVideo: onEnviarVideos) : BotaoEnviaMedia.video(isEnabled: permiteEnviarVideos, onPressed: onEnviarVideos),
       ],
     );
   }
@@ -103,5 +107,3 @@ class BotaoEnviaMedia extends StatelessWidget {
           );
   }
 }
-
-

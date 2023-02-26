@@ -19,6 +19,7 @@ dependencies:
   carousel_slider: ^4.2.1
   audioplayers: ^3.0.1
   flutter_audio_waveforms: ^1.2.1+8
+  video_player: ^2.5.2
 
 dev_dependencies:
   flutter_test:
