@@ -8,6 +8,8 @@ import 'package:zeder/ui/templates/rodape_solicitar_orcamento_screen.dart';
 import 'package:zeder/ui/templates/servico_do_app_listtile_screen.dart';
 import 'package:zeder/ui/templates/servico_listtile_screen.dart';
 
+import 'ui/templates/rodape_confirmar_proposta_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -100,6 +102,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => const RodapeSolicitarOrcamentoGratuitoScreen()),
               ),
             ),
+            ListTile(
+              title: const Text("Rodape Confirmar Proposta"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeConfirmarPropostaScreen()),
+              ),
+            ),
+
 
             /*
 
