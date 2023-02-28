@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
+import 'package:zeder/domain/domain.dart';
+import 'package:zeder/ui/widgets/footer/confirmar_proposta/confirmar_proposta_viewmodel.dart';
 
 import '../widgets/footer/confirmar_proposta/confirmar_proposta_footer.dart';
 import '../widgets/footer/orcamento_gratuito/orcamento_gratuito_footer.dart';
@@ -23,7 +25,22 @@ class _RodapeConfirmarPropostaScreenState extends State<RodapeConfirmarPropostaS
       appBar: AppBar(
         title: const Text("Rodape Confirmar Proposta"),
       ),
-      bottomSheet: ConfirmarPropostaFooter(onClickConfirmarProsta: () {  },)
+      bottomSheet: ConfirmarPropostaFooter(
+        SelectCardRadioButtonSecondaryAction: () {
+          print("SelectCardRadioButtonSecondaryAction");
+        },
+        onClickConfirmarProsta: () {
+          print("onClickConfirmarProsta");
+        },
+        onSelectCardRadioButton: (p0) {
+          print("onSelectCardRadioButton");
+        },
+        onSelectPixRadioButton: (p0) {
+          print("onSelectPixRadioButton");
+        },
+        selectedType: PaymentTypeEntity.card(),
+        viewModel: ConfirmarPropostaFooterViewModel(selectCardRadioButtonTextSecondary: 'Escolha um novo cartão' , selectCardRadioButtonSubtitle: 'Cartão com final 000'),
+        )
         
     );
   }
