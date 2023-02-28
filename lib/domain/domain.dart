@@ -9,3 +9,4 @@ export 'entities/prestador_servico_entity.dart';
 export 'entities/proposta_entity.dart';
 export 'entities/servico_entity.dart';
 export 'entities/tipo_servico_entity.dart';
+export 'entities/payment_type_entity.dart';
