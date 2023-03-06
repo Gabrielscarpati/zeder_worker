@@ -46,7 +46,7 @@ class ConfirmarPropostaFooter extends  StatelessWidget {
 
   Widget? get body => null;
 
-  Widget get title => const Padding(
+  Widget get title =>  Padding(
         padding:  EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
