@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
 
 import '../widgets/footer/solicitar_orcamento/solicitar_orcamento_footer.dart';
 import '../widgets/footer/solicitar_orcamento/solicitar_orcamento_viewmodel.dart';
@@ -12,8 +11,6 @@ class RodapeSolicitarOrcamentoScreen extends StatefulWidget {
 }
 
 class _RodapeSolicitarOrcamentoScreenState extends State<RodapeSolicitarOrcamentoScreen> {
-  SolidController _controller = SolidController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
