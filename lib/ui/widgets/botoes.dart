@@ -1,6 +1,63 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import '../../design_system/widgets/buttons.dart';
+import '../../core/core.dart';
+import '../../design_system/design_system.dart';
+
+class ButtonLink extends StatelessWidget {
+  final VoidCallback? onPressed;
+  final String text;
+
+  const ButtonLink({
+    super.key,
+    required this.onPressed,
+    required this.text,
+  });
+
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      child: DSTextSubtitleBoldPrimary(text: text),
+    );
+  }
+}
+
+class RadioButton extends StatelessWidget {
+
+  final String title;
+  final String? subtitle;
+  final Object? groupValue;
+  final Object value;
+  final void Function(Object?)? onChanged;
+  
+  final Widget? secondary;
+
+  const RadioButton({
+    super.key,
+    required this.title,
+    this.subtitle,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+    this.secondary,
+
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return  RadioListTile(
+          title: DSTextTitleBoldSecondary(text: title),
+          secondary: secondary,
+          subtitle: subtitle != null ? DSTextSubtitleSecondary(text: subtitle!) : null,
+          activeColor: DSColors.primary,
+          value: value, 
+          groupValue: groupValue, 
+          onChanged: onChanged,
+      );
+  }
+ }
 
 class BotaoPadraoGrande extends StatelessWidget {
   final String texto;
