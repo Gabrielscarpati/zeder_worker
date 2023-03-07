@@ -3,6 +3,11 @@ import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
 import 'package:zeder/ui/templates/orcamento_listtile_screen.dart';
+import 'package:zeder/ui/templates/rodape_aceite_proposta_orcamento_screen.dart';
+import 'package:zeder/ui/templates/rodape_confirmar_abertura_disputa_screen.dart';
+import 'package:zeder/ui/templates/rodape_confirmar_execucao_servico_screen.dart';
+import 'package:zeder/ui/templates/rodape_contactar_prestador_servico_screen.dart';
+import 'package:zeder/ui/templates/rodape_liberar_pagamento_servico_screen.dart';
 import 'package:zeder/ui/templates/rodape_orcamento_proposta_screen.dart';
 import 'package:zeder/ui/templates/rodape_solicitar_orcamento_gratuito_screen.dart';
 import 'package:zeder/ui/templates/rodape_solicitar_orcamento_screen.dart';
@@ -128,8 +133,49 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => const RodapeOrcamentoPropostaScreen()),
               ),
             ),
-            
+            ListTile(
+              title: const Text("Rodape Aceite Proposta Orcamento"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeAceitePropostaOrcamentoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Liberar Pagamento Servico"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeLiberarPagamentoServicoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Contactar Presatador Servico"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeContactarPrestadorServicoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Confirmar execucao Servico"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeConfirmarExecucaoServicoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Confirmar Abertura Disputa"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeConfirmarAberturaDisputaScreen()),
+              ),
+            ),
 
+
+            //ConfirmarAberturaDispulta
             /*
 
             BotaoPadrao(
