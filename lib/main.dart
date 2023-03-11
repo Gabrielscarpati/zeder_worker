@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
+import 'package:zeder/ui/templates/diferenciais_card_screen.dart';
 import 'package:zeder/ui/templates/orcamento_listtile_screen.dart';
 import 'package:zeder/ui/templates/rodape_solicitar_orcamento_gratuito_screen.dart';
 import 'package:zeder/ui/templates/rodape_solicitar_orcamento_screen.dart';
@@ -117,6 +118,14 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const RodapeConfirmarPropostaScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Diferenciais Card"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DiferenciaisCardScreen()),
               ),
             ),
             
