@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
+import 'package:zeder/ui/templates/diferenciais_card_screen.dart';
 import 'package:zeder/ui/templates/card_avaliacao_screen.dart';
 import 'package:zeder/ui/templates/card_prazo_execucao_servico_screen.dart';
 import 'package:zeder/ui/templates/detalhe_prestador_avaliacao_screen.dart';
@@ -208,6 +209,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => const CardPrazoExecucaoServicoScreen()),
               ),
             ),
+            ListTile(
+              title: const Text("Diferenciais Card"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DiferenciaisCardScreen()),
+              ),
+            ),            
           ],
         ),
       ),

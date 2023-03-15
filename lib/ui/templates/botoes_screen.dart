@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
+import 'package:zeder/ui/widgets/selecionar_data/selecionar_data.dart';
 
 import '../widgets/botoes.dart';
 
@@ -40,6 +41,10 @@ class _BotoesScreenState extends State<BotoesScreen> {
               setState((){});
             }, value: "teste2",),
             ],),
+            const SizedBox(height: 20,),
+            SelecionarData(title: "Descrição", onSelectDate: (DateTime? data){
+
+            }),
             
             const SizedBox(height: 60),
             Padding(
