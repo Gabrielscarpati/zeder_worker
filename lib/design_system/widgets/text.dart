@@ -56,6 +56,12 @@ class DSTextSubtitleBoldPrimary extends _DSTextSubtitleBold {
   @override
   Color get textColor => DSColors.primary;
 }
+class DSTextSubtitleBoldPrimaryUnderline extends _DSTextSubtitleBoldUnderline {
+  const DSTextSubtitleBoldPrimaryUnderline({super.key, required super.text});
+
+  @override
+  Color get textColor => DSColors.primary;
+}
 
 class DSTextSubtitleBoldSecondary extends _DSTextSubtitleBold {
   const DSTextSubtitleBoldSecondary({super.key, required super.text});
@@ -128,6 +134,12 @@ abstract class _DSTextSubtitleBold extends _DSTextLabelMedium {
   const _DSTextSubtitleBold({super.key, required super.text});
   @override
   TextStyle? textStyle(BuildContext context) => super.textStyle(context)?.copyWith(fontWeight: FontWeight.bold);
+}
+
+abstract class _DSTextSubtitleBoldUnderline extends _DSTextLabelMedium {
+  const _DSTextSubtitleBoldUnderline({super.key, required super.text});
+  @override
+  TextStyle? textStyle(BuildContext context) => super.textStyle(context)?.copyWith(fontWeight: FontWeight.bold, decoration: TextDecoration.underline, decorationThickness: 4);
 }
 
 abstract class _DSText extends StatelessWidget {

@@ -3,12 +3,21 @@ import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
 import 'package:zeder/ui/templates/diferenciais_card_screen.dart';
+import 'package:zeder/ui/templates/card_avaliacao_screen.dart';
+import 'package:zeder/ui/templates/card_prazo_execucao_servico_screen.dart';
+import 'package:zeder/ui/templates/detalhe_prestador_avaliacao_screen.dart';
 import 'package:zeder/ui/templates/orcamento_listtile_screen.dart';
+import 'package:zeder/ui/templates/rodape_aceite_proposta_orcamento_screen.dart';
+import 'package:zeder/ui/templates/rodape_confirmar_abertura_disputa_screen.dart';
+import 'package:zeder/ui/templates/rodape_confirmar_execucao_servico_screen.dart';
+import 'package:zeder/ui/templates/rodape_contactar_prestador_servico_screen.dart';
+import 'package:zeder/ui/templates/rodape_liberar_pagamento_servico_screen.dart';
+import 'package:zeder/ui/templates/rodape_orcamento_proposta_screen.dart';
 import 'package:zeder/ui/templates/rodape_solicitar_orcamento_gratuito_screen.dart';
 import 'package:zeder/ui/templates/rodape_solicitar_orcamento_screen.dart';
 import 'package:zeder/ui/templates/servico_do_app_listtile_screen.dart';
 import 'package:zeder/ui/templates/servico_listtile_screen.dart';
-
+import 'package:zeder/ui/templates/type_comentario_screen.dart';
 import 'ui/templates/rodape_confirmar_proposta_screen.dart';
 import 'ui/templates/rodape_fazer_orcamento_screen.dart';
 
@@ -121,41 +130,103 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             ListTile(
+              title: const Text("Rodape Orcamento Proposta"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeOrcamentoPropostaScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Rodape Aceite Proposta Orcamento"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeAceitePropostaOrcamentoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Liberar Pagamento Servico"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeLiberarPagamentoServicoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Contactar Presatador Servico"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeContactarPrestadorServicoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Confirmar execucao Servico"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeConfirmarExecucaoServicoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Confirmar Abertura Disputa"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const RodapeConfirmarAberturaDisputaScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Type Comentario"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TypeComentarioScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Card Avaliacao"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CardAvaliacaoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Detalhe Prestador Avaliacao"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DetalhePrestadorAvaliacaoScreen()),
+              ),
+            ),
+            ListTile(
+              title: const Text("Card Prazo Execucao Servico"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CardPrazoExecucaoServicoScreen()),
+              ),
+            ),
+            ListTile(
               title: const Text("Diferenciais Card"),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const DiferenciaisCardScreen()),
               ),
-            ),
-            
-
-            /*
-
-            BotaoPadrao(
-              texto: "FAZER ORÇAMENTO",
-              onPressed: () => print("TESTE"),
-            ),
-            BotaoPadraoPequeno(
-              textoOrangeButton: 'RECUSAR',
-              onPressedOrange: () {},
-              textoBlueButton: 'ACEITAR',
-              onPressedBlue: () {},
-            ),
-            aa(),
-            IconeServicosNessaCidade(),
-            OrcamentoListTile(),
-            Rodape(
-              buttonText: 'Peça orçamento gratuito',
-              onPressed: () {},
-              priceRange: 'R\$ 100 - 622',
-              description: 'Preço médio estimado',
-            ),
-            const DSDiferencialInfo()
-             */
+            ),            
           ],
         ),
       ),
     );
   }
 }
+
+/*
+ prazo para a execucao do servico
+ detalhes prestador
+ card avaliacao
+ tela avaliacao
+ */

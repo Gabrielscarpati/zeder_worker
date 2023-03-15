@@ -54,7 +54,7 @@ class SolicitarOrcamentoFooter extends StatelessWidget {
 
   Widget get botao => Padding(
         padding: const EdgeInsets.only(bottom: 24.0),
-        child: BotaoPadraoGrande(texto: "Soliciar Orçamento", onPressed: onClickSolicitarOrcamento),
+        child: BotaoPadraoGrande(texto: "Solicitar Orçamento", onPressed: onClickSolicitarOrcamento),
       );
 
   Widget get divider => const Padding(

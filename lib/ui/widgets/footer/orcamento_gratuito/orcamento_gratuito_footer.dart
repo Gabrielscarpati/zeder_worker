@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
-import 'package:zeder/ui/widgets/footer/solicitar_orcamento/solicitar_orcamento_viewmodel.dart';
 
 import '../../../../design_system/widgets/footer.dart';
-import '../../../../design_system/widgets/text.dart';
 import '../../botoes.dart';
 import 'orcamento_gratuito_viewmodel.dart';
 
@@ -47,10 +45,9 @@ class OrcamentoGratuitoFooter extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const DSIconLargeSecondary(iconName: 'seal'),
+                const DSIconLargePrimary(iconName: 'seal'),
                 const SizedBox(width: 24),
                 DSTextTitleBoldSecondary(text: viewModel.nota),
-                
               ],
             ),
           ],
