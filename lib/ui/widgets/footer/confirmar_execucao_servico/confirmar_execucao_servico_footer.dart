@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/ui/widgets/footer/confirmar_execucao_servico/confirmar_execucao_servico_footer_viewmodel.dart';
+
 import '../../../../design_system/widgets/footer.dart';
+import '../../../../design_system/widgets/label_text.dart';
 import '../../../../design_system/widgets/text.dart';
 import '../../botoes.dart';
 import '../../players/barra_botoes_media.dart';
@@ -36,45 +38,50 @@ class ConfirmarExecucaoServicoFooter extends StatelessWidget {
     required this.permiteEnviarVideos,
   }) : super(key: key);
 
+  static const double headerHeight = 340;
+
   @override
   Widget build(BuildContext context) {
     return Footer(
       header: header,
       body: body,
+      maxHeight: (MediaQuery.of(context).size.height) * 0.85 - headerHeight,
     );
   }
 
-  Widget get header => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [barraBotoes, descricao, valorData],
+  Widget get header => SizedBox(
+        height: headerHeight,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [barraBotoes, descricao, valorData],
+        ),
       );
 
   Widget get barraBotoes => Padding(
-    padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const DSTextTitleBoldSecondary(text: "Confirme a execução do serviço"),
-        const SizedBox(height: 4,),
-        const DSTextSubtitleSecondary(text: "Liberar o pagamento do serviço para o prestador"),
-        const SizedBox(height: 24,),
-        BotaoPadraoGrande(texto: 'CONFIRMAR',
-          onPressed: onPressedBotaoPadrao,
+        padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const DSTextTitleBoldSecondary(text: "Confirme a execução do serviço"),
+            const SizedBox(
+              height: 4,
+            ),
+            const DSTextSubtitleSecondary(text: "Liberar o pagamento do serviço para o prestador"),
+            const SizedBox(
+              height: 24,
+            ),
+            BotaoPadraoGrande(
+              texto: 'CONFIRMAR',
+              onPressed: onPressedBotaoPadrao,
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   Widget get descricao => Padding(
-    padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const DSTextTitleBoldSecondary(text: "Descrição"),
-        DSTextSubtitleSecondary(text: viewModel.descricao),
-      ],
-    ),
-  );
+        padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
+        child: DSLabelText(label: "Descrição", text: viewModel.descricao),
+      );
 
   Widget get valorData => Padding(
         padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 24),
@@ -100,26 +107,24 @@ class ConfirmarExecucaoServicoFooter extends StatelessWidget {
       );
 
   Widget? get body => SingleChildScrollView(
-    child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          BarraBotoesMedia(
-            urlAudio: viewModel.urlAudio,
-            onEnviarAudio: () {  },
-            onExcluirAudio: (String ) {  },
-            permiteEnviarAudio: false,
-            urlsFotos: viewModel.urlsFotos ?? [],
-            onEnviarFotos: () {  },
-            onExcluirFoto: (String ) {  },
-            permiteEnviarFotos: false,
-            urlsVideos: viewModel.urlsVideos ?? [],
-            onEnviarVideos: () {  },
-            onExcluirVideo: (String ) {  },
-            permiteEnviarVideos: false,
-          ),
-        ],
-      ),
-  );
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            BarraBotoesMedia(
+              urlAudio: viewModel.urlAudio,
+              onEnviarAudio: () {},
+              onExcluirAudio: (String) {},
+              permiteEnviarAudio: false,
+              urlsFotos: viewModel.urlsFotos ?? [],
+              onEnviarFotos: () {},
+              onExcluirFoto: (String) {},
+              permiteEnviarFotos: false,
+              urlsVideos: viewModel.urlsVideos ?? [],
+              onEnviarVideos: () {},
+              onExcluirVideo: (String) {},
+              permiteEnviarVideos: false,
+            ),
+          ],
+        ),
+      );
 }
-
-
