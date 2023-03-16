@@ -47,7 +47,6 @@ class DSTextTitleTertiary extends _DSTextTitle {
   Color get textColor => DSColors.tertiary;
 }
 
-
 /// subtitle Bold
 
 class DSTextSubtitleBoldPrimary extends _DSTextSubtitleBold {
@@ -56,6 +55,7 @@ class DSTextSubtitleBoldPrimary extends _DSTextSubtitleBold {
   @override
   Color get textColor => DSColors.primary;
 }
+
 class DSTextSubtitleBoldPrimaryUnderline extends _DSTextSubtitleBoldUnderline {
   const DSTextSubtitleBoldPrimaryUnderline({super.key, required super.text});
 
@@ -87,7 +87,7 @@ class DSTextSubtitlePrimary extends _DSTextSubtitle {
 }
 
 class DSTextSubtitleSecondary extends _DSTextSubtitle {
-  const DSTextSubtitleSecondary({super.key, required super.text});
+  const DSTextSubtitleSecondary({super.key, required super.text, super.maxLines});
 
   @override
   Color get textColor => DSColors.secondary;
@@ -100,14 +100,12 @@ class DSTextSubtitleTertiary extends _DSTextSubtitle {
   Color get textColor => DSColors.tertiary;
 }
 
-
-
 ///body
 class DSTextButton extends _DSTextBodyLarge {
   const DSTextButton({super.key, required super.text});
 
   @override
-  TextStyle? textStyle(BuildContext context) => super.textStyle(context)?.copyWith(fontWeight: FontWeight.bold,fontSize: 18, fontFamily: DSFonts.buttonTextFontFamily);
+  TextStyle? textStyle(BuildContext context) => super.textStyle(context)?.copyWith(fontWeight: FontWeight.bold, fontSize: 18, fontFamily: DSFonts.buttonTextFontFamily);
 
   @override
   Color get textColor => DSColors.textButtonColor;
@@ -127,7 +125,7 @@ abstract class _DSTextTitle extends _DSTextTitleMedium {
 }
 
 abstract class _DSTextSubtitle extends _DSTextLabelMedium {
-  const _DSTextSubtitle({super.key, required super.text});
+  const _DSTextSubtitle({super.key, required super.text, super.maxLines});
 }
 
 abstract class _DSTextSubtitleBold extends _DSTextLabelMedium {
@@ -144,17 +142,19 @@ abstract class _DSTextSubtitleBoldUnderline extends _DSTextLabelMedium {
 
 abstract class _DSText extends StatelessWidget {
   final String text;
+  final int? maxLines;
 
   const _DSText({
     super.key,
     required this.text,
+    this.maxLines,
   });
 
   TextStyle? textStyle(BuildContext context);
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: textStyle(context));
+    return Text(text, style: textStyle(context), maxLines: maxLines);
   }
 }
 
@@ -257,7 +257,7 @@ abstract class _DSTextLabelLarge extends _DSText {
 }
 
 abstract class _DSTextLabelMedium extends _DSText {
-  const _DSTextLabelMedium({super.key, required super.text});
+  const _DSTextLabelMedium({super.key, required super.text, super.maxLines});
 
   Color get textColor;
 

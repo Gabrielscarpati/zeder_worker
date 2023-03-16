@@ -49,7 +49,7 @@ class FooterState extends State<Footer> {
     return SolidBottomSheet(
       controller: controller,
       headerBar: header,
-      maxHeight: widget.body == null ? 1 : (widget.maxHeight ?? 500),
+      maxHeight: widget.body == null ? 0 : (widget.maxHeight ?? MediaQuery.of(context).size.height * 0.5),
       body: body,
     );
   }
