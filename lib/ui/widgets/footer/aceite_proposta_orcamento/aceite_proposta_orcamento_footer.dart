@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../design_system/widgets/footer.dart';
+import '../../../../design_system/widgets/label_text.dart';
 import '../../../../design_system/widgets/text.dart';
 import '../../botoes.dart';
 import '../../players/barra_botoes_media.dart';
@@ -77,16 +78,7 @@ class AceitePropostaOrcamentoFooter extends StatelessWidget {
 
   Widget get descricao => Padding(
         padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const DSTextTitleBoldSecondary(text: "Descrição"),
-            SizedBox(
-              height: 60,
-              child: SingleChildScrollView(child: DSTextSubtitleSecondary(text: viewModel.descricao)),
-            ),
-          ],
-        ),
+        child: DSLabelText(label: "Descrição", text: viewModel.descricao),
       );
 
   Widget get valorData => Padding(

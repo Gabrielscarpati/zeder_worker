@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../../../design_system/widgets/footer.dart';
+import '../../../../design_system/widgets/label_text.dart';
 import '../../../../design_system/widgets/text.dart';
 import '../../botoes.dart';
 import '../../players/barra_botoes_media.dart';
@@ -48,36 +50,32 @@ class LiberarPagamentoServicoFooter extends StatelessWidget {
 
   Widget get header => Column(
         mainAxisSize: MainAxisSize.min,
-        children: [barraBotoes,descricao, valorData],
+        children: [barraBotoes, descricao, valorData],
       );
 
   Widget get barraBotoes => Padding(
-    padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const DSTextSubtitleSecondary(text: "O prestador concluiu o serviço. Você aceita liberar o pagamento para o pretador?"),
-        SizedBox(height: 24,),
-        BarraBotoesPadraoPequeno(
-          textoBotaoPadrao: 'RECUSAR',
-          onPressedBotaoPadrao: onPressedBotaoPadrao,
-          textoBotaoSecundario: 'ACEITAR',
-          onPressedBotaoSecundario: onPressedBotaoSecundario,
+        padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const DSTextSubtitleSecondary(text: "O prestador concluiu o serviço. Você aceita liberar o pagamento para o pretador?"),
+            SizedBox(
+              height: 24,
+            ),
+            BarraBotoesPadraoPequeno(
+              textoBotaoPadrao: 'RECUSAR',
+              onPressedBotaoPadrao: onPressedBotaoPadrao,
+              textoBotaoSecundario: 'ACEITAR',
+              onPressedBotaoSecundario: onPressedBotaoSecundario,
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   Widget get descricao => Padding(
-    padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const DSTextTitleBoldSecondary(text: "Descrição"),
-        DSTextSubtitleSecondary(text: viewModel.descricao),
-      ],
-    ),
-  );
+        padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
+        child: DSLabelText(label: "Descrição", text: viewModel.descricao),
+      );
 
   Widget get valorData => Padding(
         padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 24),
@@ -103,26 +101,24 @@ class LiberarPagamentoServicoFooter extends StatelessWidget {
       );
 
   Widget? get body => SingleChildScrollView(
-    child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          BarraBotoesMedia(
-            urlAudio: viewModel.urlAudio,
-            onEnviarAudio: () {  },
-            onExcluirAudio: (String ) {  },
-            permiteEnviarAudio: false,
-            urlsFotos: viewModel.urlsFotos ?? [],
-            onEnviarFotos: () {  },
-            onExcluirFoto: (String ) {  },
-            permiteEnviarFotos: false,
-            urlsVideos: viewModel.urlsVideos ?? [],
-            onEnviarVideos: () {  },
-            onExcluirVideo: (String ) {  },
-            permiteEnviarVideos: false,
-          ),
-        ],
-      ),
-  );
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            BarraBotoesMedia(
+              urlAudio: viewModel.urlAudio,
+              onEnviarAudio: () {},
+              onExcluirAudio: (String) {},
+              permiteEnviarAudio: false,
+              urlsFotos: viewModel.urlsFotos ?? [],
+              onEnviarFotos: () {},
+              onExcluirFoto: (String) {},
+              permiteEnviarFotos: false,
+              urlsVideos: viewModel.urlsVideos ?? [],
+              onEnviarVideos: () {},
+              onExcluirVideo: (String) {},
+              permiteEnviarVideos: false,
+            ),
+          ],
+        ),
+      );
 }
-
-
