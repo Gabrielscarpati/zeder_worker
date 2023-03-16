@@ -40,17 +40,23 @@ class LiberarPagamentoServicoFooter extends StatelessWidget {
     required this.permiteEnviarVideos,
   }) : super(key: key);
 
+  static const double headerHeight = 340;
+
   @override
   Widget build(BuildContext context) {
     return Footer(
       header: header,
       body: body,
+      maxHeight: (MediaQuery.of(context).size.height) * 0.85 - headerHeight,
     );
   }
 
-  Widget get header => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [barraBotoes, descricao, valorData],
+  Widget get header => SizedBox(
+        height: headerHeight,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [barraBotoes, descricao, valorData],
+        ),
       );
 
   Widget get barraBotoes => Padding(
@@ -59,9 +65,7 @@ class LiberarPagamentoServicoFooter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const DSTextSubtitleSecondary(text: "O prestador concluiu o serviço. Você aceita liberar o pagamento para o pretador?"),
-            SizedBox(
-              height: 24,
-            ),
+            const SizedBox(height: 24),
             BarraBotoesPadraoPequeno(
               textoBotaoPadrao: 'RECUSAR',
               onPressedBotaoPadrao: onPressedBotaoPadrao,
