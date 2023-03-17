@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zeder/ui/widgets/players/player_fotos.dart';
-import 'package:zeder/ui/widgets/players/player_videos.dart';
 import '../../../../design_system/widgets/footer.dart';
-import '../../../../design_system/widgets/text.dart';
-import '../../botoes.dart';
-import '../../players/barra_botoes_media.dart';
-import '../../players/player_audio.dart';
+import '../footer_padrao/footer_padrao.dart';
+import '../footer_padrao/footer_padrao_viewmodel.dart';
 import 'orcamento_proposta_viewmodel.dart';
 
 class OrcamentoPropostaFooter extends StatelessWidget {
@@ -39,71 +35,26 @@ class OrcamentoPropostaFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Footer(
-      header: header,
-      body: body,
+      header: FooterPadraoFooter(
+          viewModel: FooterPadraoFooterViewModel(
+            descricao: viewModel.descricao,
+            valor: viewModel.valor,
+            data: viewModel.data,
+          ),
+        onEnviarAudio: () {  },
+        onExcluirAudio: (String ) { },
+        permiteEnviarAudio: false,
+        onEnviarFotos: () {  },
+        onExcluirFoto: (String ) {  },
+        permiteEnviarFotos: true,
+        onEnviarVideos: () {  },
+        onExcluirVideo: (String ) {  },
+        permiteEnviarVideos: true,
+        widgetBotaoTexto: Container(),
+        headerHeight: 0,
+      ),
     );
   }
-
-  Widget get header => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [descricao, valorData],
-      );
-
-  Widget get descricao => Padding(
-    padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const DSTextTitleBoldSecondary(text: "Descrição"),
-        DSTextSubtitleSecondary(text: viewModel.descricao),
-      ],
-    ),
-  );
-
-  Widget get valorData => Padding(
-        padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 24),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DSTextTitleBoldSecondary(text: viewModel.valor),
-                const DSTextSubtitleSecondary(text: "Valor Total do Orçamento"),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                DSTextTitleBoldSecondary(text: viewModel.data),
-                const DSTextSubtitleSecondary(text: "Data"),
-              ],
-            ),
-          ],
-        ),
-      );
-
-  Widget? get body => SingleChildScrollView(
-    child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          BarraBotoesMedia(
-            urlAudio: viewModel.urlAudio,
-            onEnviarAudio: () {  },
-            onExcluirAudio: (String ) {  },
-            permiteEnviarAudio: false,
-            urlsFotos: viewModel.urlsFotos ?? [],
-            onEnviarFotos: () {  },
-            onExcluirFoto: (String ) {  },
-            permiteEnviarFotos: false,
-            urlsVideos: viewModel.urlsVideos ?? [],
-            onEnviarVideos: () {  },
-            onExcluirVideo: (String ) {  },
-            permiteEnviarVideos: false,
-          ),
-        ],
-      ),
-  );
 }
 
 
