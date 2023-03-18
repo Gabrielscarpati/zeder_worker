@@ -5,4 +5,12 @@ class DoubleUtil {
   }
 }
 
-extension DoubleUtils on double {}
+extension DoubleUtils on double {
+  String get asCurrency {
+    return 'R\$${toStringAsFixed(2)}';
+  }
+
+  String get asCurrencyWithNoDecimal {
+    return 'R\$${toInt()}';
+  }
+}

@@ -6,61 +6,58 @@ class DateUtil {
     return DateTime.tryParse(value.toString()) ?? dateZero;
   }
 
-  static String getExibitionDate(DateTime date){
+  static String getExibitionDate(DateTime date) {
     int day = date.day;
     int month = date.month;
     String year = date.year.toString();
-    
+
     String sday = '';
     String smonth = '';
     String syear = '';
-    if(day < 10){
+    if (day < 10) {
       sday = '0$day';
-    }else{
+    } else {
       sday = day.toString();
     }
 
-    if(month == 1){
+    if (month == 1) {
       smonth = 'Janeiro';
     }
-    if(month == 2){
+    if (month == 2) {
       smonth = 'Fevereiro';
     }
-    if(month == 3){
+    if (month == 3) {
       smonth = 'Março';
     }
-    if(month == 4){
+    if (month == 4) {
       smonth = 'Abril';
     }
-    if(month == 5){
+    if (month == 5) {
       smonth = 'Maio';
     }
-    if(month == 6){
+    if (month == 6) {
       smonth = 'Junho';
     }
-    if(month == 7){
+    if (month == 7) {
       smonth = 'Julho';
     }
-    if(month == 8){
+    if (month == 8) {
       smonth = 'Agosto';
     }
-    if(month == 9){
+    if (month == 9) {
       smonth = 'Setembro';
     }
-    if(month == 10){
+    if (month == 10) {
       smonth = 'Outubro';
     }
-    if(month == 11){
+    if (month == 11) {
       smonth = 'Novembro';
     }
-    if(month == 12){
+    if (month == 12) {
       smonth = 'Dezembro';
     }
 
     return '$sday $smonth $year';
-
-    
-    
   }
 }
 

@@ -1,54 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:zeder/ui/widgets/players/player_audio.dart';
-import 'package:zeder/ui/widgets/players/player_fotos.dart';
-import 'package:zeder/ui/widgets/players/player_videos.dart';
 
 import '../../../design_system/widgets/buttons.dart';
+import 'player_audio.dart';
+import 'player_fotos.dart';
+import 'player_videos.dart';
 
 class BarraBotoesMedia extends StatelessWidget {
-  final String? urlAudio;
-  final VoidCallback onEnviarAudio;
-  final Function(String) onExcluirAudio;
-  final bool permiteEnviarAudio;
-
-  final List<String> urlsFotos;
-  final VoidCallback onEnviarFotos;
-  final Function(String) onExcluirFoto;
-  final bool permiteEnviarFotos;
-
-  final List<String> urlsVideos;
-  final VoidCallback onEnviarVideos;
-  final Function(String) onExcluirVideo;
-  final bool permiteEnviarVideos;
+  final BarraBotoesMediaController controller;
 
   const BarraBotoesMedia({
     super.key,
-    required this.urlAudio,
-    required this.onEnviarAudio,
-    required this.onExcluirAudio,
-    required this.permiteEnviarAudio,
-    required this.urlsFotos,
-    required this.onEnviarFotos,
-    required this.onExcluirFoto,
-    required this.permiteEnviarFotos,
-    required this.urlsVideos,
-    required this.onEnviarVideos,
-    required this.onExcluirVideo,
-    required this.permiteEnviarVideos,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        urlAudio != null ? PlayerAudio(urlAudio: urlAudio!, onExcluirAudio: onExcluirAudio) : BotaoEnviaMedia.audio(isEnabled: permiteEnviarAudio, onPressed: onEnviarAudio),
+        controller.urlAudio != null ? PlayerAudio(urlAudio: controller.urlAudio!, onExcluirAudio: controller.onExcluirAudio) : BotaoEnviaMedia.audio(isEnabled: controller.permiteEnviarAudio, onPressed: controller.onEnviarAudio),
         const SizedBox(height: 20),
-        urlsFotos.isNotEmpty ? PlayerFotos(urlsFotos: urlsFotos!, onExcluirFoto: onExcluirFoto, onAdicionarFoto: onEnviarFotos) : BotaoEnviaMedia.foto(isEnabled: permiteEnviarFotos, onPressed: onEnviarFotos),
+        controller.urlsFotos.isNotEmpty ? PlayerFotos(urlsFotos: controller.urlsFotos!, onExcluirFoto: controller.onExcluirFoto, onAdicionarFoto: controller.onEnviarFotos) : BotaoEnviaMedia.foto(isEnabled: controller.permiteEnviarFotos, onPressed: controller.onEnviarFotos),
         const SizedBox(height: 20),
-        urlsVideos.isNotEmpty ? PlayerVideos(urlsVideos: urlsVideos!, onExcluirVideo: onExcluirVideo, onAdicionarVideo: onEnviarVideos) : BotaoEnviaMedia.video(isEnabled: permiteEnviarVideos, onPressed: onEnviarVideos),
+        controller.urlsVideos.isNotEmpty ? PlayerVideos(urlsVideos: controller.urlsVideos!, onExcluirVideo: controller.onExcluirVideo, onAdicionarVideo: controller.onEnviarVideos) : BotaoEnviaMedia.video(isEnabled: controller.permiteEnviarVideos, onPressed: controller.onEnviarVideos),
       ],
     );
   }
+}
+
+mixin BarraBotoesMediaController {
+  String? get urlAudio;
+  void onEnviarAudio();
+  void onExcluirAudio(String urlAudio);
+  bool get permiteEnviarAudio;
+
+  List<String> get urlsFotos;
+  void onEnviarFotos();
+  void onExcluirFoto(String urlFoto);
+  bool get permiteEnviarFotos;
+
+  List<String> get urlsVideos;
+  void onEnviarVideos();
+  void onExcluirVideo(String urlVideo);
+  bool get permiteEnviarVideos;
 }
 
 class BotaoEnviaMedia extends StatelessWidget {

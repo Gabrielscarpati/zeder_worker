@@ -66,6 +66,31 @@ class ServicoEntity extends Entity {
     );
   }
 
+  factory ServicoEntity.test() {
+    return ServicoEntity.fromJson({
+      'id': '1',
+      'dataCadastro': DateTime(2022, 12, 1),
+      'idTipoServico': '2',
+      'idCliente': '3',
+      'idCidade': '4',
+      'descricao': 'adfadsf adsf asdf asdf asdf asdf asdf asdf asdf asdfasdfa sdf asfasdfasdf fa sdfa sdf asdf asdf asdf asdf asdf asdf asdf asdf  sadfa sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf',
+      'valorInicial': 100.0,
+      'valorFinal': 600.0,
+      'dataInicial': DateTime(2023, 12, 1),
+      'dataFinal': DateTime(2024, 12, 1),
+      'flgDatasFlexiveis': true,
+      'status': 'teste',
+      'idsPropostasRecebidas': ['1'],
+      'idPropostaAceita': '5',
+      'idPrestador': '6',
+      'dataPropostaAceita': DateTime(2025, 12, 1),
+      'flgAvisoCliente': true,
+      'flgAvisoPrestador': false,
+      'idDisputa': '8',
+    });
+  }
+
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
