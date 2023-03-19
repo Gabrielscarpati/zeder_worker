@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
+import 'package:zeder/ui/features/home/home_screen.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
 import 'package:zeder/ui/templates/diferenciais_card_screen.dart';
@@ -57,6 +58,15 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: ListView(
           children: <Widget>[
+            ListTile(
+              title: const Text("Home Screen"),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              ),
+            ),
+
             ListTile(
               title: const Text("Botoes"),
               trailing: const Icon(Icons.arrow_forward_ios),
