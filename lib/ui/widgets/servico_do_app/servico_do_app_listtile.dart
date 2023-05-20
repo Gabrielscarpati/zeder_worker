@@ -22,8 +22,8 @@ class ServicoDoAppListTile extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DSTextTitleBoldSecondary(text: viewModel.nota),
-              DSTextSubtitleSecondary(text: viewModel.qtdeAvaliacoes),
+              DSTextTitleBoldSecondary(text: viewModel.qtdeAvaliacoes),//nota
+             // DSTextSubtitleSecondary(text: viewModel.qtdeAvaliacoes),
             ],
           )
         ],
@@ -31,12 +31,15 @@ class ServicoDoAppListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DSCardListTileHorizontal(
-      leading: icone,
-      title: titulo,
-      subtitle: valor,
-      trailing: notaAvaliacoes,
-      onTap: onTap,
+    return Container(
+      height: 80,
+      child: DSCardListTileHorizontal(
+        leading: icone,
+        title: titulo,
+        subtitle: valor,
+        trailing: notaAvaliacoes,
+        onTap: onTap,
+      ),
     );
   }
 }

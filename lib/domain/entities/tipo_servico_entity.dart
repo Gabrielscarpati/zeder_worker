@@ -3,8 +3,10 @@ import '../../core/core.dart';
 class TipoServicoEntity extends Entity {
   final String nome;
   final String icone;
+  final String numero_de_servicos;
 
   TipoServicoEntity({
+    required this.numero_de_servicos,
     required super.id,
     required this.nome,
     required this.icone,
@@ -15,6 +17,7 @@ class TipoServicoEntity extends Entity {
       id: json['id'] ?? '',
       nome: json['nome'] ?? '',
       icone: json['icone'] ?? '',
+      numero_de_servicos: json['numero_de_servicos'] ?? '',
     );
   }
 
@@ -23,6 +26,7 @@ class TipoServicoEntity extends Entity {
       'id': id,
       'nome': nome,
       'icone': icone,
+      'numero_de_servicos': numero_de_servicos,
     };
   }
 
@@ -30,11 +34,13 @@ class TipoServicoEntity extends Entity {
     String? id,
     String? nome,
     String? icone,
+    String? numero_de_servicos,
   }) {
     return TipoServicoEntity(
       id: id ?? this.id,
       nome: nome ?? this.nome,
       icone: icone ?? this.icone,
+      numero_de_servicos: numero_de_servicos ?? this.numero_de_servicos,
     );
   }
 }

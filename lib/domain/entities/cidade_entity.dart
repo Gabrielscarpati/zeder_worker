@@ -4,6 +4,7 @@ class CidadeEntity extends Entity {
   final String nome;
   final String uf;
 
+
   CidadeEntity({
     required super.id,
     required this.nome,

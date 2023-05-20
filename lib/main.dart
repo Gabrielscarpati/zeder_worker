@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/home/home_screen.dart';
+import 'package:zeder/ui/features/navigation_bar/navigation_bar.dart';
+import 'package:zeder/ui/features/select_city/select_city_screen.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
 import 'package:zeder/ui/templates/diferenciais_card_screen.dart';
@@ -19,11 +21,25 @@ import 'package:zeder/ui/templates/rodape_solicitar_orcamento_screen.dart';
 import 'package:zeder/ui/templates/servico_do_app_listtile_screen.dart';
 import 'package:zeder/ui/templates/servico_listtile_screen.dart';
 import 'package:zeder/ui/templates/type_comentario_screen.dart';
+import 'application/provider/client_provider.dart';
+import 'application/provider/home_screen_provider.dart';
+import 'application/provider/pesquisa_cidade_provider.dart';
+import 'application/provider/tipo_servico_repo.dart';
 import 'ui/templates/rodape_confirmar_proposta_screen.dart';
 import 'ui/templates/rodape_fazer_orcamento_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(  MultiProvider(
+    providers: [
+      ChangeNotifierProvider( create: (context) => HomeScreenProvider() ,),
+      ChangeNotifierProvider( create: (context) => PesquisaCidadeProvider() ,),
+      ChangeNotifierProvider( create: (context) => TipoServicoProvider() ,),
+      ChangeNotifierProvider( create: (context) => ClientProvider() ,),
+    ],
+    child: const MyApp(),
+  ),);
+
 }
 
 class MyApp extends StatelessWidget {
@@ -34,10 +50,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: DSTheme.theme(context),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: NavigationBarScreen(),
     );
   }
 }
+
+
+
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

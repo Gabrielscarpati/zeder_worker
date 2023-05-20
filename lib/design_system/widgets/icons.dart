@@ -198,9 +198,9 @@ abstract class _DSIconFilledLarge extends StatelessWidget {
       width: 60.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30.0),
-        color: DSColors.secondary,
+        color: DSColors.primary,
       ),
-      child: Icon(icon, color: DSColors.iconColor, size: 60,),
+      child: Icon(icon, color: DSColors.iconColor, size: 44,),
     );
   }
 }

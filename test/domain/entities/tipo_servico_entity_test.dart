@@ -3,7 +3,7 @@ import 'package:zeder/domain/entities/tipo_servico_entity.dart';
 
 void main() {
   test('TipoServicoEntity.constructor: deve criar um objeto com os respectivos valores', () {
-    TipoServicoEntity entity = TipoServicoEntity(id: "1", nome: "Eletricista", icone: "clear");
+    TipoServicoEntity entity = TipoServicoEntity(id: "1", nome: "Eletricista", icone: "clear", numero_de_servicos: '123');
     expect(entity.id, "1");
     expect(entity.nome, "Eletricista");
     expect(entity.icone, "clear");

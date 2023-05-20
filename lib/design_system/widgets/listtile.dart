@@ -5,7 +5,7 @@ class DSCardListTileHorizontal extends StatelessWidget {
   final Widget leading;
   final Widget title;
   final Widget? subtitle;
-  final Widget? trailing;
+  final Widget trailing;
   final VoidCallback? onTap;
   final Color? color;
 
@@ -14,7 +14,7 @@ class DSCardListTileHorizontal extends StatelessWidget {
     required this.leading,
     required this.title,
     this.subtitle,
-    this.trailing,
+    required this.trailing,
     this.onTap,
     this.color = DSColors.cardColor,
   });
@@ -29,7 +29,14 @@ class DSCardListTileHorizontal extends StatelessWidget {
         leading: leading,
         title: title,
         subtitle: subtitle,
-        trailing: trailing,
+        trailing: Container(
+            width: 85,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  trailing,
+          ],
+        )),
         onTap: onTap,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
@@ -58,22 +65,25 @@ class DSCardListTileVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 160,
-      child: Card(
-        color: color,
-        surfaceTintColor: DSColors.cardColor,
-        elevation: 0.0,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              header,
-              icon,
-              title,
-              footer,
-            ],
+      width: 140,
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Card(
+          color: color,
+          surfaceTintColor: DSColors.cardColor,
+          elevation: 0.0,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                header,
+                icon,
+                title,
+                footer,
+              ],
+            ),
           ),
         ),
       ),

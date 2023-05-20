@@ -32,20 +32,15 @@ class ServicoDoAppListTileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Servico do App ListTile"),
-      ),
-      body: Center(
+    return Center(
         child: Column(
           children: [
             ListView.builder(
               shrinkWrap: true,
               itemCount: viewModels.length,
               itemBuilder: (context, index) => ServicoDoAppListTile(viewModel: viewModels[index], onTap: () => print('Tapped ${viewModels[index].servico}')),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

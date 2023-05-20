@@ -35,7 +35,7 @@ class DiferenciaisCardHorizontal extends DiferenciaisCard {
     return DSCardListTileHorizontal(
       leading: icone,
       title: titulo,
-      onTap: onTap,
+      onTap: onTap, trailing: Text(''),
     );
   }
 

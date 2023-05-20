@@ -3,7 +3,7 @@ import 'package:zeder/domain/entities/cliente_entity.dart';
 
 void main() {
   test('ClienteEntity.constructor: deve criar um objeto com os respectivos valores', () {
-    ClienteEntity entity = ClienteEntity(id: '1', nome: 'Gabriel', email: 'gabriel@', cpfCnpj: '12345.456', tipoPessoa: 'F');
+    ClienteEntity entity = ClienteEntity(id: '1', nome: 'Gabriel', email: 'gabriel@', cpfCnpj: '12345.456', tipoPessoa: 'F', profile_picture: '');
     expect(entity.id, "1");
     expect(entity.nome, "Gabriel");
     expect(entity.email, "gabriel@");
