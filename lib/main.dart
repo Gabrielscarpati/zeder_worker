@@ -61,7 +61,6 @@ Future<void> main() async {
     child: const MyApp(),
    ),
   );
-  await PathController().buscarPath();
 }
 
 class MyApp extends StatelessWidget {
