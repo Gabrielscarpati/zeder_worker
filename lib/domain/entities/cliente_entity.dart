@@ -6,15 +6,17 @@ class ClienteEntity extends Entity {
   final String cpfCnpj;
   final String tipoPessoa;
   final String profile_picture;
+  final String phone;
 
 
-  ClienteEntity({
+  ClienteEntity( {
     required super.id,
     required this.nome,
     required this.email,
     required this.cpfCnpj,
     required this.tipoPessoa,
     required this.profile_picture,
+    required this.phone,
   });
 
   factory ClienteEntity.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class ClienteEntity extends Entity {
       cpfCnpj: json['cpfCnpj'] ?? '',
       tipoPessoa: json['tipoPessoa'] ?? '',
       profile_picture: json['profile_picture'] ?? '',
+      phone: json['phone'] ?? '',
     );
   }
 
@@ -36,6 +39,7 @@ class ClienteEntity extends Entity {
       'cpfCnpj': cpfCnpj,
       'tipoPessoa': tipoPessoa,
       'profile_picture': profile_picture,
+      'phone': phone,
     };
   }
 
@@ -46,6 +50,7 @@ class ClienteEntity extends Entity {
     String? cpfCnpj,
     String? tipoPessoa,
     String? profile_picture,
+    String? phone,
   }) {
     return ClienteEntity(
       id: id ?? this.id,
@@ -54,6 +59,7 @@ class ClienteEntity extends Entity {
       cpfCnpj: cpfCnpj ?? this.cpfCnpj,
       tipoPessoa: tipoPessoa ?? this.tipoPessoa,
       profile_picture: profile_picture ?? this.profile_picture,
+      phone: phone ?? this.phone,
     );
   }
 }

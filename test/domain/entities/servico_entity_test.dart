@@ -17,13 +17,15 @@ void main() {
       dataFinal: DateTime(2024, 12, 1),
       flgDatasFlexiveis: true,
       status: 'teste',
-      idsPropostasRecebidas: ['1'],
+      idsPropostasRecebidas: ['1', '2', '3'],
       idPropostaAceita: '5',
       idPrestador: '6',
       dataPropostaAceita: DateTime(2025, 12, 1),
       flgAvisoCliente: true,
       flgAvisoPrestador: false,
       idDisputa: '8',
+      servico: '',
+      icone: '',
     );
     expect(entity.id, "1");
     expect(entity.dataCadastro, DateTime(2022, 12, 1));
@@ -37,7 +39,7 @@ void main() {
     expect(entity.dataFinal, DateTime(2024, 12, 1));
     expect(entity.flgDatasFlexiveis, true);
     expect(entity.status, "teste");
-    expect(entity.idsPropostasRecebidas, ["1"]);
+    expect(entity.idsPropostasRecebidas, ["1", "2", "3"]);
     expect(entity.idPropostaAceita, "5");
     expect(entity.idPrestador, "6");
     expect(entity.dataPropostaAceita, DateTime(2025, 12, 1));

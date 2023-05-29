@@ -1,35 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zeder/domain/domain.dart';
-import 'package:zeder/ui/widgets/orcamento/orcamento_viewmodel.dart';
 
-import '../../infra/repo/proposta_entity.dart';
+import '../../data/propostas/proposta_controller.dart';
+import '../../domain/entities/proposta_entity.dart';
+import '../../ui/widgets/proposta/proposta_viewmodel.dart';
 
+class PropostaProvider with ChangeNotifier {
 
-class HomeScreenProvider with ChangeNotifier {
+  static final PropostaProvider provider = PropostaProvider._internal();
 
-  static final HomeScreenProvider provider = HomeScreenProvider._internal();
-
-  factory HomeScreenProvider() {
+  factory PropostaProvider() {
     return provider;
   }
+  PropostaProvider._internal();
 
-    HomeScreenProvider._internal();
-  /*
-  List<Map<String, dynamic>> list_all_propostas = ServicoRepo().prestador_servico_repo;
-  //List<OrcamentoViewModel> list_orcamentos_screen = [];
-  String user_chosen_city ='';
-
-  List<OrcamentoViewModel> getListaDeOrcamentosViewModel(){
-    List<OrcamentoViewModel> orcamentosViewModel = [];
-    for(int i = 0; i < list_all_propostas.length; i++ ) {
-      PropostaEntity tipoServicoEntity = PropostaEntity.fromJson(list_all_propostas[i]);
-      orcamentosViewModel.add(OrcamentoViewModel(icone: tipoServicoEntity., servico: '', status: '', valor: '', data: '', emDestaque: null));
+  Future<List<PropostaViewModel>> getListPropostas(List<dynamic> list_propostas_id) async {
+    List<PropostaViewModel> list_propostas = [];
+    print(list_propostas_id.length.toString()+" propostas");
+    for(int i = 0; i < list_propostas_id.length; i++){
+      PropostaEntity propostaEntity = await PropostasController().buscarProposta(list_propostas_id[i]);
+      print(propostaEntity.idPrestador);
+      PropostaViewModel servicoViewModel = PropostaViewModel(
+          idPrestador: propostaEntity.idPrestador,
+          idServico: propostaEntity.idServico,
+          dataInicio: propostaEntity.dataInicio,
+          valor: propostaEntity.valor,
+          consideracoes: propostaEntity.consideracoes,
+          flgAvisoCliente: propostaEntity.flgAvisoCliente,
+          flgAvisoPrestador: propostaEntity.flgAvisoPrestador ,
+      );
+      list_propostas.add(servicoViewModel);
     }
-    notifyListeners();
-    return orcamentosViewModel;
+
+    Future.delayed(Duration.zero, () {
+      notifyListeners();
+    });
+    return list_propostas;
   }
-  */
+
 
 
 }

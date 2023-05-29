@@ -18,7 +18,7 @@ class PropostaEntity extends Entity {
     required this.consideracoes,
     required this.flgAvisoCliente,
     required this.flgAvisoPrestador,
-  });
+  });//lG72vV9GqWyIVWlMl1jR
 
   factory PropostaEntity.fromJson(Map<String, dynamic> json) {
     return PropostaEntity(

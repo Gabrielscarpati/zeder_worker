@@ -4,37 +4,37 @@ class TipoServiceRepo {
     {
       "id": "1",
       "nome": "Plumber",
-      "icone": "icone_limpeza.png",
+      "icone": "hammer-screwdriver",
       "numero_de_servicos": "133",
     },
     {
       "id": "2",
       "nome": "Pest Control",
-      "icone": "icone_jardinagem.png",
+      "icone": "bee",
       "numero_de_servicos": "100",
     },
     {
       "id": "3",
       "nome": "Roofing",
-      "icone": "icone_encanador.png",
+      "icone": "home-roof",
       "numero_de_servicos": "20",
     },
     {
       "id": "4",
       "nome": "Salon",
-      "icone": "icone_eletricista.png",
+      "icone": "hair-dryer",
       "numero_de_servicos": "400",
     },
     {
       "id": "5",
       "nome": "Computer Repair",
-      "icone": "icone_pintor.png",
+      "icone": "laptop",
       "numero_de_servicos": "323",
     },
     {
       "id": "6",
       "nome": "Ac Repair",
-      "icone": "icone_pintor.png",
+      "icone": "air-conditioner",
       "numero_de_servicos": "10",
     }
 

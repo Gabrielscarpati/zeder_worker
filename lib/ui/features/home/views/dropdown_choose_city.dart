@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/application/provider/pesquisa_cidade_provider.dart';
+import 'package:zeder/design_system/widgets/icons.dart';
 import 'package:zeder/ui/features/select_city/select_city_screen.dart';
 import '../../../../design_system/parameters/colors.dart';
 
@@ -19,41 +20,24 @@ class _DropdownChooseCityState extends State<DropdownChooseCity> {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.7,
       height: 50,
-      child: TextButton(
-        onPressed: () {
+      child: InkWell(
+        onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const SelectCityScreen()),
           );
         },
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0), // Adjust the border radius as per your preference
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.location_on,
-                size: 30.0,
-                color: DSColors.primary,
-              ),
-              const SizedBox(width: 4,),
-              SizedBox(child: Text(city, style: const TextStyle(color: DSColors.primary, fontSize: 15, decoration: TextDecoration.underline),)),
-              const SizedBox(width: 4,),
-              const Icon(
-                Icons.arrow_downward_outlined,
-                size: 30.0,
-                color: DSColors.primary,
-              ),
-            ],
-          ),
+        splashColor: DSColors.primary,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const DSIconPrimary(iconName: 'map-marker'),
+            const SizedBox(width: 4,),
+            SizedBox(child: Text(city, style: const TextStyle(color: DSColors.primary, fontSize: 15, decoration: TextDecoration.underline),)),
+            const SizedBox(width: 4,),
+            const DSIconPrimary(iconName: 'arrow-down'),
+          ],
         ),
       ),
     );

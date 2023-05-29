@@ -35,11 +35,7 @@ class OrcamentoListTileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Orcamento ListTile"),
-      ),
-      body: Center(
+    return Center(
         child: Column(
           children: [
             ListView.builder(
@@ -58,7 +54,6 @@ class OrcamentoListTileScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
     );
   }
 }

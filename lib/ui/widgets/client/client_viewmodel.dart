@@ -4,6 +4,8 @@ class ClientsViewModel {
   final String cpfCnpj;
   final String tipoPessoa;
   final String profile_picture;
+  final String phone;
+  final List servicos_id;
 
 
 
@@ -13,6 +15,12 @@ class ClientsViewModel {
     required this.cpfCnpj,
     required this.tipoPessoa,
     required this.profile_picture,
+    required this.phone,
+    required this.servicos_id,
   });
 }
+
+
+
+
 

@@ -12,13 +12,15 @@ class ServicoEntity extends Entity {
   final DateTime dataFinal;
   final bool flgDatasFlexiveis;
   final String status;
-  final List<String> idsPropostasRecebidas;
+  final List idsPropostasRecebidas;
   final String idPropostaAceita;
   final String idPrestador;
   final DateTime dataPropostaAceita;
   final bool flgAvisoCliente;
   final bool flgAvisoPrestador;
   final String idDisputa;
+  final String servico;
+  final String icone;
 
   ServicoEntity({
     required super.id,
@@ -40,6 +42,8 @@ class ServicoEntity extends Entity {
     required this.flgAvisoCliente,
     required this.flgAvisoPrestador,
     required this.idDisputa,
+    required this.servico,
+    required this.icone,
   });
 
   factory ServicoEntity.fromJson(Map<String, dynamic> json) {
@@ -56,13 +60,15 @@ class ServicoEntity extends Entity {
       dataFinal: DateUtil.toDateTimeDefaultDateZero(json['dataFinal']),
       flgDatasFlexiveis: BoolUtil.toBoolDefaultFalse(json['flgDatasFlexiveis']),
       status: json['status'] ?? '',
-      idsPropostasRecebidas: ListUtil.toListDefaultEmpty<String>(json['idsPropostasRecebidas']),
+      idsPropostasRecebidas: json['idsPropostasRecebidas'] ?? [],
       idPropostaAceita: json['idPropostaAceita'] ?? '',
       idPrestador: json['idPrestador'] ?? '',
       dataPropostaAceita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaAceita']),
       flgAvisoCliente: BoolUtil.toBoolDefaultFalse(json['flgAvisoCliente']),
       flgAvisoPrestador: BoolUtil.toBoolDefaultFalse(json['flgAvisoPrestador']),
       idDisputa: json['idDisputa'] ?? '',
+      servico: json['servico'] ?? '',
+      icone: json['icone'] ?? '',
     );
   }
 
@@ -80,13 +86,15 @@ class ServicoEntity extends Entity {
       'dataFinal': DateTime(2024, 12, 1),
       'flgDatasFlexiveis': true,
       'status': 'teste',
-      'idsPropostasRecebidas': ['1'],
+      'idsPropostasRecebidas': ['1', '2', '3'],
       'idPropostaAceita': '5',
       'idPrestador': '6',
       'dataPropostaAceita': DateTime(2025, 12, 1),
       'flgAvisoCliente': true,
       'flgAvisoPrestador': false,
       'idDisputa': '8',
+      'servico': '9',
+      'icone': '10',
     });
   }
 
@@ -112,6 +120,8 @@ class ServicoEntity extends Entity {
       'flgAvisoCliente': flgAvisoCliente,
       'flgAvisoPrestador': flgAvisoPrestador,
       'idDisputa': idDisputa,
+      'servico': servico,
+      'icone': icone,
     };
   }
 
@@ -128,13 +138,16 @@ class ServicoEntity extends Entity {
     DateTime? dataFinal,
     bool? flgDatasFlexiveis,
     String? status,
-    List<String>? idsPropostasRecebidas,
+    List? idsPropostasRecebidas,
     String? idPropostaAceita,
     String? idPrestador,
     DateTime? dataPropostaAceita,
     bool? flgAvisoCliente,
     bool? flgAvisoPrestador,
     String? idDisputa,
+    String? servico,
+    String? icone,
+    List? propostas,
   }) {
     return ServicoEntity(
       id: id ?? this.id,
@@ -156,6 +169,8 @@ class ServicoEntity extends Entity {
       flgAvisoCliente: flgAvisoCliente ?? this.flgAvisoCliente,
       flgAvisoPrestador: flgAvisoPrestador ?? this.flgAvisoPrestador,
       idDisputa: idDisputa ?? this.idDisputa,
+      servico: servico ?? this.servico,
+      icone: icone ?? this.icone,
     );
   }
 }
@@ -173,3 +188,11 @@ class ServicoAdapter extends Adapter<ServicoEntity> {
     return entity.toJson();
   }
 }
+
+
+/*install
+  flutter_modular: ^5.0.3
+   main:  return runApp(ModularApp(module: AppModule(), child: AppWidget()));
+    inside of app folder app moduler and app widget
+
+* */

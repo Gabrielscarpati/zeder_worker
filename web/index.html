@@ -55,4 +55,29 @@
     });
   </script>
 </body>
+
+<script>
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyCfogb_y9Sd9ODU2eJxf7X2HxMj6H1g_No",
+    authDomain: "zeder-8cd2c.firebaseapp.com",
+    projectId: "zeder-8cd2c",
+    storageBucket: "zeder-8cd2c.appspot.com",
+    messagingSenderId: "520371543372",
+    appId: "1:520371543372:web:adbcddabd1ccd6473583e9",
+    measurementId: "G-QWLTB813E6"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
 </html>

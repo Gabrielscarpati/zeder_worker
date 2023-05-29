@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "520371543372",
+    "project_id": "zeder-8cd2c",
+    "storage_bucket": "zeder-8cd2c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520371543372:android:2e7402cc6dcfe3da3583e9",
+        "android_client_info": {
+          "package_name": "com.example.zeder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520371543372-jjhrmu3rdfd9k9tvdvtbnnta8as6m6j2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB679jCyFI5AUTG-1IaMUY6xdKSQjqc8oc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520371543372-jjhrmu3rdfd9k9tvdvtbnnta8as6m6j2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -41,7 +41,7 @@ class _SearchBarButtonState extends State<SearchBarButton> {
                 color: DSColors.tertiary,
               ),
               SizedBox(width: 12,),
-              Text('Pesquisar tipo de serviço', style: TextStyle(color: DSColors.tertiary),),
+              Text('Search service', style: TextStyle(color: DSColors.tertiary),),
             ],
           ),
         ),

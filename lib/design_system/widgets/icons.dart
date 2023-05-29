@@ -214,7 +214,7 @@ abstract class _DSIcon extends StatelessWidget {
 
   IconData get icon => MdiIcons.fromString(iconName) ?? MdiIcons.exclamation;
 
-  double get size => 40.0;
+  double get size => 32.0;
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zeder/design_system/parameters/colors.dart';
 import 'package:zeder/ui/features/select_service/list_service.dart';
 import '../../../application/provider/pesquisa_cidade_provider.dart';
-import '../../../application/provider/tipo_servico_repo.dart';
+import '../../../application/provider/tipo_servico_provider.dart';
 import '../home/views/dropdown_choose_city.dart';
 
 class SelectServiceScreen extends StatefulWidget {
@@ -23,11 +23,14 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
         children: [
           Stack(
             children: [
-              SizedBox(
-                width: double.infinity, // Set the width to occupy the whole screen width
-                child: Image.asset(
-                  'assets/cabecario.png',
-                  fit: BoxFit.fitWidth, // Set the fit property to cover the whole space
+              Transform.scale(
+                scaleY: 1.2,
+                child: SizedBox(
+                  width: double.infinity, // Set the width to occupy the whole screen width
+                  child: Image.asset(
+                    'assets/cabecario.png',
+                    fit: BoxFit.fitWidth, // Set the fit property to cover the whole space
+                  ),
                 ),
               ),
                Column(
@@ -80,7 +83,7 @@ class _CityControllterState extends State<CityControllter> {
   Widget build(BuildContext context) {
     final TipoServicoProvider _Provider = context.watch<TipoServicoProvider>();
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.only(left: 16),
       child: SizedBox(
         height: 56,
         child: TextField(

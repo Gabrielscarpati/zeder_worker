@@ -1,8 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
+import 'package:zeder/ui/features/SignUp/viewSignUp.dart';
 import 'package:zeder/ui/features/home/home_screen.dart';
-import 'package:zeder/ui/features/navigation_bar/navigation_bar.dart';
-import 'package:zeder/ui/features/select_city/select_city_screen.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
 import 'package:zeder/ui/templates/diferenciais_card_screen.dart';
@@ -23,23 +23,45 @@ import 'package:zeder/ui/templates/servico_listtile_screen.dart';
 import 'package:zeder/ui/templates/type_comentario_screen.dart';
 import 'application/provider/client_provider.dart';
 import 'application/provider/home_screen_provider.dart';
+import 'application/provider/logInSignUpProvider.dart';
 import 'application/provider/pesquisa_cidade_provider.dart';
-import 'application/provider/tipo_servico_repo.dart';
+import 'application/provider/proposta_provider.dart';
+import 'application/provider/servico_provider.dart';
+import 'application/provider/tipo_servico_provider.dart';
+import 'data/path_servicos/path_controller.dart';
+import 'infra/repo/path_find_job_repo.dart';
 import 'ui/templates/rodape_confirmar_proposta_screen.dart';
 import 'ui/templates/rodape_fazer_orcamento_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(  MultiProvider(
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      name: 'name-here',
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyCfogb_y9Sd9ODU2eJxf7X2HxMj6H1g_No",
+        authDomain: "zeder-8cd2c.firebaseapp.com",
+        projectId: "zeder-8cd2c",
+        storageBucket: "zeder-8cd2c.appspot.com",
+        messagingSenderId: "520371543372",
+        appId: "1:520371543372:web:adbcddabd1ccd6473583e9",
+        measurementId: "G-QWLTB813E6"
+    )
+  );
+  runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider( create: (context) => HomeScreenProvider() ,),
       ChangeNotifierProvider( create: (context) => PesquisaCidadeProvider() ,),
       ChangeNotifierProvider( create: (context) => TipoServicoProvider() ,),
       ChangeNotifierProvider( create: (context) => ClientProvider() ,),
+      ChangeNotifierProvider( create: (context) => ServicoProvider() ,),
+      ChangeNotifierProvider( create: (context) => PropostaProvider() ,),
+      ChangeNotifierProvider( create: (context) => LogInSignUpProvider() ,),
     ],
     child: const MyApp(),
-  ),);
-
+   ),
+  );
+  await PathController().buscarPath();
 }
 
 class MyApp extends StatelessWidget {
@@ -50,7 +72,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: DSTheme.theme(context),
-      home: NavigationBarScreen(),
+      home: const ViewSignUp(),
     );
   }
 }

@@ -72,13 +72,15 @@ class ServicoListTileVertical extends ServicoListTile {
 
   @override
   Widget build(BuildContext context) {
-    return DSCardListTileVertical(
-      header: status,
-      title: titulo,
-      icon: icone,
-      footer: valorData,
-      color: viewModel.emDestaque ? DSColors.primary : null,
-      onTap: onTap,
+    return SizedBox(
+      child: DSCardListTileVertical(
+        header: status,
+        title: titulo,
+        icon: icone,
+        footer: valorData,
+        color: viewModel.emDestaque ? DSColors.primary : null,
+        onTap: onTap,
+      ),
     );
   }
 

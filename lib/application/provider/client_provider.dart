@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zeder/domain/domain.dart';
+import 'package:zeder/data/user/user_controller.dart';
 import 'package:zeder/ui/widgets/client/client_viewmodel.dart';
-import 'package:zeder/ui/widgets/orcamento/orcamento_viewmodel.dart';
-
-import '../../infra/repo/client_repo.dart';
-import '../../infra/repo/proposta_entity.dart';
-import '../../ui/widgets/cities/cities_viewmodel.dart.dart';
-
+import '../../data/firebase/firebase_controller.dart';
+import '../../data/user/user_entity.dart';
 
 class ClientProvider with ChangeNotifier {
 
@@ -18,34 +14,31 @@ class ClientProvider with ChangeNotifier {
   }
 
   ClientProvider._internal();
-  Map<String, dynamic> client = ClientRepo().client;
-  ClientsViewModel getClientInfo(){
-    ClienteEntity clienteEntity = ClienteEntity.fromJson(client);
+
+  List get_servicos({required List servicos}) {
+    return servicos;
+  }
+  FirebaseController firebaseController = FirebaseController();
+
+  Future<ClientsViewModel> getClient() async {
+    UserEntity clienteEntity = await UserController().buscarUsuario(firebaseController.getCurrentUser()!.uid);
+
     ClientsViewModel clienteViewModel = ClientsViewModel(
       nome: clienteEntity.nome,
       email: clienteEntity.email,
       cpfCnpj: clienteEntity.cpfCnpj,
       tipoPessoa: clienteEntity.tipoPessoa,
       profile_picture: clienteEntity.profile_picture,
+      phone: clienteEntity.phone,
+      servicos_id: clienteEntity.servicos,
     );
+    get_servicos(servicos: clienteEntity.servicos);
     notifyListeners();
     return clienteViewModel;
   }
-/*
-  List<Map<String, dynamic>> list_all_propostas = ServicoRepo().prestador_servico_repo;
-  //List<OrcamentoViewModel> list_orcamentos_screen = [];
-  String user_chosen_city ='';
 
-  List<OrcamentoViewModel> getListaDeOrcamentosViewModel(){
-    List<OrcamentoViewModel> orcamentosViewModel = [];
-    for(int i = 0; i < list_all_propostas.length; i++ ) {
-      PropostaEntity tipoServicoEntity = PropostaEntity.fromJson(list_all_propostas[i]);
-      orcamentosViewModel.add(OrcamentoViewModel(icone: tipoServicoEntity., servico: '', status: '', valor: '', data: '', emDestaque: null));
-    }
-    notifyListeners();
-    return orcamentosViewModel;
-  }
-  */
+
+
 }
 
 

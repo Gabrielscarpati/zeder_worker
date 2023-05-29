@@ -27,7 +27,9 @@ class TipoServicoProvider with ChangeNotifier {
       tiposServicoViewModel.add(ServicoDoAppViewModel(icone: tipoServicoEntity.icone, servico: tipoServicoEntity.nome, valor: '', nota: '0', qtdeAvaliacoes: tipoServicoEntity.numero_de_servicos));
     }
     list_servicos_screen= tiposServicoViewModel;
-    notifyListeners();
+    Future.delayed(Duration.zero, () {
+      notifyListeners();
+    });
     return tiposServicoViewModel;
   }
 
@@ -40,11 +42,14 @@ class TipoServicoProvider with ChangeNotifier {
       }
     }
     list_servicos_screen = novalista_servicos;
-    notifyListeners();
-  }
+    Future.delayed(Duration.zero, () {
+      notifyListeners();
+    });  }
   void set_user_chonsen_servico(String city_name){
     user_chosen_servico = city_name;
-    notifyListeners();
+    Future.delayed(Duration.zero, () {
+      notifyListeners();
+    });
   }
   String get_user_chonsen_servico(){
     return user_chosen_servico;

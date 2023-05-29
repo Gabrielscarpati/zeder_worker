@@ -5,6 +5,7 @@ class ServicoViewModel {
   final String valor;
   final String data;
   final bool emDestaque;
+  final List<dynamic> list_propostas;
 
   const ServicoViewModel({
     required this.icone,
@@ -13,5 +14,6 @@ class ServicoViewModel {
     required this.valor,
     required this.data,
     required this.emDestaque,
+    required this.list_propostas,
   });
 }

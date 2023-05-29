@@ -14,6 +14,7 @@ class ServicoListTileScreen extends StatelessWidget {
           valor: 'R\$ 50',
           data: '1 dia',
           emDestaque: false,
+          list_propostas: [],
         ),
         const ServicoViewModel(
           icone: 'lightning-bolt',
@@ -22,6 +23,7 @@ class ServicoListTileScreen extends StatelessWidget {
           valor: 'R\$ 150',
           data: '2 dias',
           emDestaque: true,
+          list_propostas: [],
         ),
         const ServicoViewModel(
           icone: 'lightning-bolt',
@@ -30,6 +32,7 @@ class ServicoListTileScreen extends StatelessWidget {
           valor: 'R\$ 300',
           data: 'Hoje',
           emDestaque: false,
+          list_propostas: [],
         ),
       ];
 
