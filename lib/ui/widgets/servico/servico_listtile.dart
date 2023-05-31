@@ -46,13 +46,15 @@ class ServicoListTileHorizontal extends ServicoListTile {
 
   @override
   Widget build(BuildContext context) {
-    return DSCardListTileHorizontal(
-      leading: icone,
-      title: titulo,
-      subtitle: status,
-      trailing: valorData,
-      color: viewModel.emDestaque ? DSColors.primary : null,
-      onTap: onTap,
+    return SizedBox(
+      child: DSCardListTileHorizontal(
+        leading: icone,
+        title: titulo,
+        subtitle: status,
+        trailing: valorData,
+        color: viewModel.emDestaque ? DSColors.primary : null,
+        onTap: onTap,
+      ),
     );
   }
 

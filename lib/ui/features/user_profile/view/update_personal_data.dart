@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
-import '../../../../application/provider/client_provider.dart';
 import '../../../widgets/botoes.dart';
 import '../../../widgets/client/client_viewmodel.dart';
 import 'app_bar_profile.dart';
-import 'display_image.dart';
-import 'edit_name.dart';
 
 class UpdatePersonalData extends StatefulWidget {
-  final ClientsViewModel user;
+  final WorkerViewModel user;
   const UpdatePersonalData({Key? key, required this.user}) : super(key: key);
 
   @override

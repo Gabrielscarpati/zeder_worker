@@ -6,6 +6,9 @@ class PropostaViewModel {
   final String consideracoes;
   final bool flgAvisoCliente;
   final bool flgAvisoPrestador;
+  final String idCliente;
+  final DateTime dataPropostaEnviada;
+  final String nomeServico;
 
   PropostaViewModel({
     required this.idPrestador,
@@ -15,5 +18,8 @@ class PropostaViewModel {
     required this.consideracoes,
     required this.flgAvisoCliente,
     required this.flgAvisoPrestador,
+    required this.idCliente,
+    required this.dataPropostaEnviada,
+    required this.nomeServico,
   });
 }

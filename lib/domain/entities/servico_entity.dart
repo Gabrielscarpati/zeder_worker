@@ -21,6 +21,8 @@ class ServicoEntity extends Entity {
   final String idDisputa;
   final String servico;
   final String icone;
+  final List idsPrestadoresBid;
+  final Map<String, dynamic> service_details;
 
   ServicoEntity({
     required super.id,
@@ -44,6 +46,8 @@ class ServicoEntity extends Entity {
     required this.idDisputa,
     required this.servico,
     required this.icone,
+    required this.idsPrestadoresBid,
+    required this.service_details,
   });
 
   factory ServicoEntity.fromJson(Map<String, dynamic> json) {
@@ -69,6 +73,8 @@ class ServicoEntity extends Entity {
       idDisputa: json['idDisputa'] ?? '',
       servico: json['servico'] ?? '',
       icone: json['icone'] ?? '',
+      idsPrestadoresBid: json['idsPrestadoresBid'] ?? [],
+      service_details: json['service_details'] ?? {},
     );
   }
 
@@ -95,6 +101,8 @@ class ServicoEntity extends Entity {
       'idDisputa': '8',
       'servico': '9',
       'icone': '10',
+      'idsPrestadoresBid': ['11', '12', '13'],
+      'service_details': {'1': '1', '2': '2', '3': '3'},
     });
   }
 
@@ -122,6 +130,8 @@ class ServicoEntity extends Entity {
       'idDisputa': idDisputa,
       'servico': servico,
       'icone': icone,
+      'idsPrestadoresBid': idsPrestadoresBid,
+      'service_details': service_details,
     };
   }
 
@@ -148,6 +158,8 @@ class ServicoEntity extends Entity {
     String? servico,
     String? icone,
     List? propostas,
+    List? idsPrestadoresBid,
+    Map<String, dynamic>? service_details,
   }) {
     return ServicoEntity(
       id: id ?? this.id,
@@ -171,6 +183,9 @@ class ServicoEntity extends Entity {
       idDisputa: idDisputa ?? this.idDisputa,
       servico: servico ?? this.servico,
       icone: icone ?? this.icone,
+      idsPrestadoresBid: idsPrestadoresBid ?? this.idsPrestadoresBid,
+      service_details: service_details ?? this.service_details,
+
     );
   }
 }

@@ -4,14 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../firebase/firebase_controller.dart';
 import '../shared/name_collections.dart';
 
-class UserController {
+class WorkerController {
   final _firebase = FirebaseController();
-  final _collection = NameCollections.userCollection;
+  final _collection = NameCollections.workerCollection;
 
-  Future<bool> cadastrarUsuario(UserEntity user) async {
+  Future<bool> cadastrarWorker(WorkerEntity user) async {
     try {
-
-      
        await _firebase.atualizarDado(
         data: user,
         id: user.id,
@@ -25,7 +23,7 @@ class UserController {
     }
   }
 
-  Future<void> atualizarUsuario(UserEntity user) async {
+  Future<void> atualizarWorker(WorkerEntity user) async {
     try {
       await _firebase.atualizarDado(
         collection: _collection,
@@ -38,25 +36,26 @@ class UserController {
     }
   }
 
-  Future<UserEntity> buscarUsuario(String userId) async {
+  Future<WorkerEntity> buscarWorker(String userId) async {
     try {
       final dado = await _firebase.buscarDado(
         collection: _collection,
         id: userId,
       );
-      final user = UserEntity.fromJson(dado);
+      final user = WorkerEntity.fromJson(dado);
       return user;
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);
     }
   }
 
-  Future<List<UserEntity>> buscarUserComCondicao(String cond, String condName )async{
-    List<UserEntity> retorno = [];
+  Future<List<WorkerEntity>> buscarWorkerComCondicao(String cond, String condName )async{
+    List<WorkerEntity> retorno = [];
     try {
       final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
+      print(dado);
       dado.forEach((element) {
-        retorno.add(UserEntity.fromJson(element));
+        retorno.add(WorkerEntity.fromJson(element));
        });
      
       return retorno;

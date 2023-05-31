@@ -6,6 +6,21 @@ class PropostasController {
   final _firebase = FirebaseController();
   final _collection = NameCollections.propostasCollection;
 
+  Future<bool> cadastrarProposta(PropostaEntity user) async {
+    try {
+      await _firebase.atualizarDado(
+        data: user,
+        id: user.id,
+        collection: _collection,
+      );
+
+      return true;
+    } catch (e, stackTrace) {
+      return Future.error(
+          "Erro ao tentar cadastrar o usuario ${e.toString()}{", stackTrace);
+    }
+  }
+
   Future<void> atualizarProposta(PropostaEntity proposta) async {
     try {
       await _firebase.atualizarDado(
@@ -32,7 +47,7 @@ class PropostasController {
     }
   }
 
-  Future<List<PropostaEntity>> buscarPropostaComCondicao(String cond, String condName )async{
+  Future<List<PropostaEntity>> buscarPropostaComCondicao({required String cond, required String condName})async{
     List<PropostaEntity> retorno = [];
     try {
       final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );

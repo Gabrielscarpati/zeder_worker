@@ -107,14 +107,16 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
   }
 
 
-  Future<List<Map<String, dynamic>>> buscarDadoComCondicao(
-      {String collection = '', String condName = '', String cond = ''}) async {
-    if (cond.isEmpty || collection.isEmpty) {
+  Future<List<Map<String, dynamic>>> buscarDadoComCondicao({required String collection, required String condName,required String cond}) async {
+    print("collection: $collection, condName: $condName, cond: $cond");
+  if (cond.isEmpty || collection.isEmpty) {
       return Future.error("Dados Inváidos para buscar", StackTrace.current);
     }
     try {
       List<Map<String, dynamic>> res = [];
       final response = await _db.collection(collection).where(condName, isEqualTo: cond).get();
+
+      //final response = await _db.collection(collection).where(condName, isEqualTo: cond).get();
       response.docs.forEach((element) { 
         if (element.exists && element.data() != null) {
         res.add(element.data());

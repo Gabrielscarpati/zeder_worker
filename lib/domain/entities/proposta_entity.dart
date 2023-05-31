@@ -8,7 +8,9 @@ class PropostaEntity extends Entity {
   final String consideracoes;
   final bool flgAvisoCliente;
   final bool flgAvisoPrestador;
-
+  final String idCliente;
+  final DateTime dataPropostaEnviada;
+  final String nomeServico;
   PropostaEntity({
     required super.id,
     required this.idPrestador,
@@ -18,7 +20,10 @@ class PropostaEntity extends Entity {
     required this.consideracoes,
     required this.flgAvisoCliente,
     required this.flgAvisoPrestador,
-  });//lG72vV9GqWyIVWlMl1jR
+    required this.idCliente,
+    required this.dataPropostaEnviada,
+    required this.nomeServico,
+  });
 
   factory PropostaEntity.fromJson(Map<String, dynamic> json) {
     return PropostaEntity(
@@ -30,6 +35,9 @@ class PropostaEntity extends Entity {
       consideracoes: json['consideracoes'] ?? '',
       flgAvisoCliente: BoolUtil.toBoolDefaultFalse(json['flgAvisoCliente']),
       flgAvisoPrestador: BoolUtil.toBoolDefaultFalse(json['flgAvisoPrestador']),
+      idCliente: json['idCliente'] ?? '',
+      dataPropostaEnviada: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaEnviada']),
+      nomeServico: json['nomeServico'] ?? '',
     );
   }
 
@@ -43,6 +51,9 @@ class PropostaEntity extends Entity {
       'consideracoes': consideracoes,
       'flgAvisoCliente': flgAvisoCliente,
       'flgAvisoPrestador': flgAvisoPrestador,
+      'idCliente': idCliente,
+      'dataPropostaEnviada': dataPropostaEnviada.toJsonString(),
+      'nomeServico': nomeServico,
     };
   }
 
@@ -55,6 +66,10 @@ class PropostaEntity extends Entity {
     String? consideracoes,
     bool? flgAvisoCliente,
     bool? flgAvisoPrestador,
+    String? idCliente,
+    DateTime? dataPropostaEnviada,
+    String? nomeServico,
+
   }) {
     return PropostaEntity(
       id: id ?? this.id,
@@ -65,6 +80,9 @@ class PropostaEntity extends Entity {
       consideracoes: consideracoes ?? this.consideracoes,
       flgAvisoCliente: flgAvisoCliente ?? this.flgAvisoCliente,
       flgAvisoPrestador: flgAvisoPrestador ?? this.flgAvisoPrestador,
+      idCliente: idCliente ?? this.idCliente,
+      dataPropostaEnviada: dataPropostaEnviada ?? this.dataPropostaEnviada,
+      nomeServico: nomeServico ?? this.nomeServico,
     );
   }
 }

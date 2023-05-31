@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:zeder/design_system/design_system.dart';
-
 import '../../../../../design_system/parameters/colors.dart';
 
 class StandardController extends StatefulWidget {
@@ -86,6 +84,7 @@ class _StandardControllerState extends State<StandardController> {
   }
 }
 
+/*
 class EmailController extends StatelessWidget {
   final TextEditingController emailController;
   final String hint;
@@ -259,3 +258,4 @@ class _AdditionalMedicalConditionsState extends State<AdditionalMedicalCondition
     );
   }
 }
+*/

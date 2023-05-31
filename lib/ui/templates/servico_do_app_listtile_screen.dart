@@ -38,7 +38,7 @@ class ServicoDoAppListTileScreen extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               itemCount: viewModels.length,
-              itemBuilder: (context, index) => ServicoDoAppListTile(viewModel: viewModels[index], onTap: () => print('Tapped ${viewModels[index].servico}')),
+              itemBuilder: (context, index) => ServicosDoPrestadorListTile(viewModel: viewModels[index], onTap: () => print('Tapped ${viewModels[index].servico}')),
           ),
         ],
       ),

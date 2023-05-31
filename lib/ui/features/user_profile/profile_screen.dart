@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/ui/features/user_profile/view/user_profile_screen.dart';
-
-import '../../../application/provider/client_provider.dart';
+import '../../../application/provider/worker_provider.dart';
 import '../../widgets/client/client_viewmodel.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -14,17 +13,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late Future<ClientsViewModel> clientFuture;
+  late Future<WorkerViewModel> clientFuture;
 
   @override
   void initState() {
     super.initState();
-    final ClientProvider _provider = context.read<ClientProvider>();
-    clientFuture = _provider.getClient();
+    final WorkerProvider _provider = context.read<WorkerProvider>();
+    clientFuture = _provider.getWorker();
   }
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ClientsViewModel>(
+    return FutureBuilder<WorkerViewModel>(
       future: clientFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {

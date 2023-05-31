@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 
 import '../widgets/servico/servico_listtile.dart';
@@ -15,6 +16,9 @@ class ServicoListTileScreen extends StatelessWidget {
           data: '1 dia',
           emDestaque: false,
           list_propostas: [],
+          idsPrestadoresBid: [],
+          service_details: {},
+
         ),
         const ServicoViewModel(
           icone: 'lightning-bolt',
@@ -24,6 +28,8 @@ class ServicoListTileScreen extends StatelessWidget {
           data: '2 dias',
           emDestaque: true,
           list_propostas: [],
+          idsPrestadoresBid: [],
+          service_details: {},
         ),
         const ServicoViewModel(
           icone: 'lightning-bolt',
@@ -33,6 +39,8 @@ class ServicoListTileScreen extends StatelessWidget {
           data: 'Hoje',
           emDestaque: false,
           list_propostas: [],
+          idsPrestadoresBid: [],
+          service_details: {},
         ),
       ];
 
@@ -65,3 +73,4 @@ class ServicoListTileScreen extends StatelessWidget {
     );
   }
 }
+*/

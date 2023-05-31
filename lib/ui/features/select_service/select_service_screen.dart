@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/parameters/colors.dart';
 import 'package:zeder/ui/features/select_service/list_service.dart';
-import '../../../application/provider/pesquisa_cidade_provider.dart';
 import '../../../application/provider/tipo_servico_provider.dart';
-import '../home/views/dropdown_choose_city.dart';
+import '../home/views/show_worker_cities.dart';
 
 class SelectServiceScreen extends StatefulWidget {
   const SelectServiceScreen({Key? key}) : super(key: key);
@@ -53,7 +52,6 @@ class _SelectServiceScreenState extends State<SelectServiceScreen> {
                     ),
                   ),
                   CityControllter(cityController: passwordController, hint: "Type the service's name", iconData: Icons.search,),
-                  const DropdownChooseCity(),
                 ],
               ),
             ],

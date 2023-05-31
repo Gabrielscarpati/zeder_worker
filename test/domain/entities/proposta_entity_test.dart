@@ -4,7 +4,7 @@ import 'package:zeder/domain/entities/proposta_entity.dart';
 
 void main() {
   test('PropostaEntity.constructor: deve criar um objeto com os respectivos valores', () {
-    PropostaEntity entity = PropostaEntity(id: '1', idPrestador: '2', idServico: '3', dataInicio: DateTime(2023, 02, 01), valor: 150.50, consideracoes: 'consideracoes', flgAvisoPrestador: true, flgAvisoCliente: false);
+    PropostaEntity entity = PropostaEntity(id: '1', idPrestador: '2', idServico: '3', dataInicio: DateTime(2023, 02, 01), valor: 150.50, consideracoes: 'consideracoes', flgAvisoPrestador: true, flgAvisoCliente: false, idCliente: '', dataPropostaEnviada: DateTime.now(), nomeServico: '');
     expect(entity.id, "1");
     expect(entity.idPrestador, "2");
     expect(entity.idServico, "3");

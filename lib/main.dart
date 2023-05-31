@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/SignUp/viewSignUp.dart';
 import 'package:zeder/ui/features/home/home_screen.dart';
+import 'package:zeder/ui/features/navigation_bar/navigation_bar.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
 import 'package:zeder/ui/templates/diferenciais_card_screen.dart';
@@ -21,13 +24,13 @@ import 'package:zeder/ui/templates/rodape_solicitar_orcamento_screen.dart';
 import 'package:zeder/ui/templates/servico_do_app_listtile_screen.dart';
 import 'package:zeder/ui/templates/servico_listtile_screen.dart';
 import 'package:zeder/ui/templates/type_comentario_screen.dart';
-import 'application/provider/client_provider.dart';
 import 'application/provider/home_screen_provider.dart';
+import 'application/provider/lead_provider.dart';
 import 'application/provider/logInSignUpProvider.dart';
 import 'application/provider/pesquisa_cidade_provider.dart';
-import 'application/provider/proposta_provider.dart';
 import 'application/provider/servico_provider.dart';
 import 'application/provider/tipo_servico_provider.dart';
+import 'application/provider/worker_provider.dart';
 import 'data/path_servicos/path_controller.dart';
 import 'infra/repo/path_find_job_repo.dart';
 import 'ui/templates/rodape_confirmar_proposta_screen.dart';
@@ -37,7 +40,7 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      name: 'name-here',
+      name: 'name',
       options: const FirebaseOptions(
         apiKey: "AIzaSyCfogb_y9Sd9ODU2eJxf7X2HxMj6H1g_No",
         authDomain: "zeder-8cd2c.firebaseapp.com",
@@ -46,16 +49,20 @@ Future<void> main() async {
         messagingSenderId: "520371543372",
         appId: "1:520371543372:web:adbcddabd1ccd6473583e9",
         measurementId: "G-QWLTB813E6"
-    )
+      )
   );
+
+  //final fcmToken = await FirebaseMessaging.instance.getToken();
+  //print("FirebaseMessaging token: $fcmToken");
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider( create: (context) => HomeScreenProvider() ,),
       ChangeNotifierProvider( create: (context) => PesquisaCidadeProvider() ,),
       ChangeNotifierProvider( create: (context) => TipoServicoProvider() ,),
-      ChangeNotifierProvider( create: (context) => ClientProvider() ,),
+      ChangeNotifierProvider( create: (context) => WorkerProvider() ,),
       ChangeNotifierProvider( create: (context) => ServicoProvider() ,),
-      ChangeNotifierProvider( create: (context) => PropostaProvider() ,),
+      ChangeNotifierProvider( create: (context) => LeadProvider() ,),
       ChangeNotifierProvider( create: (context) => LogInSignUpProvider() ,),
     ],
     child: const MyApp(),
@@ -132,14 +139,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => const OrcamentoListTileScreen()),
               ),
             ),
-            ListTile(
+            /*ListTile(
               title: const Text("Servico ListTile"),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const ServicoListTileScreen()),
               ),
-            ),
+            ),*/
             ListTile(
               title: const Text("Servico do App ListTile"),
               trailing: const Icon(Icons.arrow_forward_ios),

@@ -3,13 +3,13 @@ import '../data/user/user_controller.dart';
 
 
 class VerificaUserERedireciona{
-  final UserController userController = UserController();
+  final WorkerController userController = WorkerController();
   //final TutorController tutorController = TutorController();
 
   
   Future<void> action(String uid)async{
     final users =
-            await userController.buscarUserComCondicao(uid, 'user_id');
+            await userController.buscarWorkerComCondicao(uid, 'user_id');
        // final tutors = await tutorController.buscarTutorComCondicao(uid, 'user_id');
 
         if (users.isEmpty) {

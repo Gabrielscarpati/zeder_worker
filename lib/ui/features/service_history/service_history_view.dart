@@ -69,7 +69,7 @@ class _ServiceHistoryViewState extends State<ServiceHistoryView> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Propostas_service(list_propostas_id: servicosList[index].list_propostas,)),
+                          MaterialPageRoute(builder: (context) => Propostas_service(servico: servicosList[index],)),
                         );
                       },
                     ),

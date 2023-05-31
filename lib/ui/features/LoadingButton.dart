@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:zeder/design_system/design_system.dart';
 
-import '../../design_system/widgets/text.dart';
-
 
 class LoadingButton extends StatelessWidget {
   final String buttonText;

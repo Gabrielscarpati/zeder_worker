@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:zeder/ui/features/home/views/dropdown_choose_city.dart';
-import 'package:zeder/ui/features/home/views/list_servicos.dart';
 import '../../../design_system/parameters/colors.dart';
-import '../../../design_system/widgets/search_bar_button.dart';
-import '../../templates/diferenciais_card_screen.dart';
 import '../chat/chat_screen.dart';
 import '../home/home_screen.dart';
 import '../select_city/select_city_screen.dart';

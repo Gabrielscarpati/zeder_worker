@@ -7,7 +7,7 @@ import 'app_bar_profile.dart';
 import 'display_image.dart';
 
 class ProfilePage extends StatefulWidget {
-  final ClientsViewModel user;
+  final WorkerViewModel user;
   const ProfilePage({Key? key, required this.user}) : super(key: key);
   @override
   _ProfilePageState createState() => _ProfilePageState();

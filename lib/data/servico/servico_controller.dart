@@ -49,12 +49,13 @@ class ServicoController {
     }
   }
 
-  Future<List<UserEntity>> buscarUserComServico(String cond, String condName )async{
-    List<UserEntity> retorno = [];
+  Future<List<ServicoEntity>> buscarServicoComCondicao({required String cond, required String condName })async{
+    List<ServicoEntity> retorno = [];
     try {
-      final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
+      final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond,  condName: condName  );
+      //final response = await _db.collection('servico').where('idTipoServico', isEqualTo: '1').get();
       dado.forEach((element) {
-        retorno.add(UserEntity.fromJson(element));
+        retorno.add(ServicoEntity.fromJson(element));
        });
      
       return retorno;

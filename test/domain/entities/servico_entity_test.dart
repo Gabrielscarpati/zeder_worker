@@ -26,6 +26,8 @@ void main() {
       idDisputa: '8',
       servico: '',
       icone: '',
+      idsPrestadoresBid: ['11', '12', '13'],
+      service_details: {'1': '1', '2': '2', '3': '3'},
     );
     expect(entity.id, "1");
     expect(entity.dataCadastro, DateTime(2022, 12, 1));

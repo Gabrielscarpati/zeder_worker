@@ -54,7 +54,7 @@ class LogInSignUpProvider with ChangeNotifier {
   }
 
   Future<void> signupUser({required String? userId, required String profilePicture}) async {
-    UserEntity new_user = UserEntity(
+    WorkerEntity new_user = WorkerEntity(
       id: userId!,
       nome: signUpName.text.trim(),
       email: signUpEmail.text.trim(),
@@ -63,8 +63,9 @@ class LogInSignUpProvider with ChangeNotifier {
       profile_picture: profilePicture,
       phone: signUpPhone.text.trim(),
       servicos: [],
+      my_cities: [],
     );
-    await UserController().cadastrarUsuario(new_user);
+    await WorkerController().cadastrarWorker(new_user);
 
     notifyListeners();
   }
