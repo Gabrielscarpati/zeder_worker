@@ -14,8 +14,8 @@ abstract class ServicoListTile extends StatelessWidget {
   });
 
   Widget get icone => DSIconFilledSecondary(iconName: viewModel.icone);
-  Widget get titulo => DSTextTitleBoldSecondary(text: viewModel.servico);
-  Widget get status => viewModel.emDestaque ? DSTextSubtitleSecondary(text: viewModel.status) : DSTextSubtitleTertiary(text: viewModel.status);
+  Widget get titulo => DSTextTitleBoldSecondary(text: viewModel.service);
+  Widget get status => viewModel.flgWorkerSaw ? DSTextSubtitleSecondary(text: 'viewModel.status') : DSTextSubtitleTertiary(text: 'viewModel.status');
   Widget get valorData => Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -23,8 +23,8 @@ abstract class ServicoListTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: valorTempoCrossAxisAlignment,
             children: [
-              DSTextTitleBoldSecondary(text: viewModel.valor),
-              DSTextSubtitleSecondary(text: viewModel.data),
+              DSTextTitleBoldSecondary(text: viewModel.acceptedValue.toString()),
+              DSTextSubtitleSecondary(text: viewModel.clientGivenDate.toString()),
             ],
           ),
           const SizedBox(width: 8),
@@ -52,7 +52,7 @@ class ServicoListTileHorizontal extends ServicoListTile {
         title: titulo,
         subtitle: status,
         trailing: valorData,
-        color: viewModel.emDestaque ? DSColors.primary : null,
+        color: viewModel.flgWorkerSaw ? DSColors.primary : null,
         onTap: onTap,
       ),
     );
@@ -80,7 +80,7 @@ class ServicoListTileVertical extends ServicoListTile {
         title: titulo,
         icon: icone,
         footer: valorData,
-        color: viewModel.emDestaque ? DSColors.primary : null,
+        color: viewModel.flgWorkerSaw ? DSColors.primary : null,
         onTap: onTap,
       ),
     );

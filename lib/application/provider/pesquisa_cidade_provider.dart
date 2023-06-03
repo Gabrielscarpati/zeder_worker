@@ -4,7 +4,6 @@ import 'package:zeder/domain/domain.dart';
 import '../../infra/repo/cidade_repo.dart';
 import '../../ui/widgets/cities/cities_viewmodel.dart.dart';
 
-
 class PesquisaCidadeProvider with ChangeNotifier {
 
   static final PesquisaCidadeProvider provider = PesquisaCidadeProvider._internal();
@@ -26,7 +25,6 @@ class PesquisaCidadeProvider with ChangeNotifier {
       tiposServicoViewModel.add(CitiesViewModel(icon: 'city',city_name: "${tipoServicoEntity.nome}, ${tipoServicoEntity.uf}"));
     }
     list_cities_screen= tiposServicoViewModel;
-    notifyListeners();
     return tiposServicoViewModel;
   }
 

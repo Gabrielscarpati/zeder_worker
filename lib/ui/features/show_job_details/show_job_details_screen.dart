@@ -12,7 +12,7 @@ class ShowJobDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(servicoViewModel.servico), backgroundColor: DSColors.tertiary,),
+      appBar: AppBar(title: Text(servicoViewModel.service), backgroundColor: DSColors.tertiary,),
         body: ShowJobDetaisBody(servicoViewModel: servicoViewModel),
       bottomNavigationBar: GetTheLeadBottomBar(servico: servicoViewModel, allowGetLeads: allowGetLeads,),
     );

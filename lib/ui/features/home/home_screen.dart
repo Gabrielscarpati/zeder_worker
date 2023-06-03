@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/application/provider/servico_provider.dart';
@@ -6,6 +7,10 @@ import 'package:zeder/ui/features/home/views/list_all_servicos.dart';
 import 'package:zeder/ui/features/home/views/list_leads_accepted.dart';
 import 'package:zeder/ui/features/home/views/list_servicos_do_prestador.dart';
 import '../../../application/provider/worker_provider.dart';
+import '../../../core/utils/bool_utils.dart';
+import '../../../core/utils/date_utils.dart';
+import '../../../data/firebase/firebase_controller.dart';
+import '../../../data/servico/servico_controller.dart';
 import '../../widgets/client/client_viewmodel.dart';
 import '../../widgets/servico/servico_viewmodel.dart';
 
@@ -21,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<ServicoViewModel>> servicosFuture;
   late Future<List<ServicoViewModel>> listLeadsNotAcceptedYetFuture;
   late Future<List<ServicoViewModel>> listLeadsAccepted;
+  late Stream<Map<String ,List<ServicoViewModel>>> servicosStream;
 
   @override
   void initState() {
@@ -31,8 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
     servicosFuture = _ServicosProvider.getListServicos();
     listLeadsNotAcceptedYetFuture = _ServicosProvider.getlistLeadsNotAcceptedYet();
     listLeadsAccepted = _ServicosProvider.getlistLeadsAccepted();
-  }
+    servicosStream = ServicoController().fetchServicosStream();
 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 24,),
+              const SizedBox(height: 24,),
               FutureBuilder<WorkerViewModel>(
                 future: clientFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: SizedBox(height: 50, width: 50,
+                    return const Center(child: SizedBox(height: 50, width: 50,
                         child: CircularProgressIndicator())
                     );
                   } else if (snapshot.hasError) {
@@ -59,9 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 },
               ),
-
-               SizedBox(
-                 height: 194,
+               /*SizedBox(
+                 height: 200,
                  child: FutureBuilder<List<ServicoViewModel>>(
                   future: servicosFuture,
                   builder: (context, snapshot) {
@@ -76,9 +82,59 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                   ),
-               ),
-              SizedBox(
+               ),*/
+              Container(
+                height: 514,
+                child: StreamBuilder<Map<String, List<ServicoViewModel>>>(
+                  stream: servicosStream,
+                  builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoViewModel>>> snapshot) {
+
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text("Loading");
+                    }
+                    Map<String, List<ServicoViewModel>>? servicosMap = snapshot.data;
+
+                    // Access the list from the map using the desired key
+                    List<ServicoViewModel>? servicosList = servicosMap?['allAvailableJobs'];
+                    List<ServicoViewModel>? workerWaitingResponse = servicosMap?['workerWaitingResponse'];
+
+                    return Column(
+                      children: [
+                         ListAllServicos(servicos: servicosList!),
+                        const SizedBox(height: 20,),
+                        ListLeadsNotAcceptedYet(servicos: workerWaitingResponse!),
+                      ],
+                    );
+                  },
+                ),
+              ),
+
+             /*Container(
                 height: 200,
+                child: StreamBuilder<Map<String, List<ServicoViewModel>>>(
+                  stream: servicosStream,
+                  builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoViewModel>>> snapshot) {
+
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text("Loading");
+                    }
+                    Map<String, List<ServicoViewModel>>? servicosMap = snapshot.data;
+
+                    // Access the list from the map using the desired key
+                    List<ServicoViewModel>? servicosList = servicosMap?['allAvailableJobs'];
+
+                    return ListLeadsNotAcceptedYet(servicos: servicosList!);
+                  },
+                ),
+              ),*/
+              /*SizedBox(
+                height: 300,
                 child: FutureBuilder<List<ServicoViewModel>>(
                   future: listLeadsNotAcceptedYetFuture,
                   builder: (context, snapshot) {
@@ -93,8 +149,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
                   },
                 ),
-              ),
-            SizedBox(
+              ),*/
+           /* SizedBox(
                 height: 194,
                 child: FutureBuilder<List<ServicoViewModel>>(
                   future: listLeadsAccepted,
@@ -110,8 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
                   },
                 ),
-              ),
-
+              ),*/
             ],
           ),
         ),
@@ -119,6 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
 
 
 /*

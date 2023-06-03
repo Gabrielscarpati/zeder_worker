@@ -11,7 +11,7 @@ class ShowJobDetaisBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ShowJobDetailsListviewbuilder(servicoDetails: servicoViewModel.service_details),
+        ShowJobDetailsListviewbuilder(servicoDetails: servicoViewModel.serviceDetails),
       ],
     );
   }

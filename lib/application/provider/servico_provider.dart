@@ -2,13 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zeder/application/provider/worker_provider.dart';
 import 'package:zeder/data/firebase/firebase_controller.dart';
-import 'package:zeder/data/user/user_controller.dart';
 import 'package:zeder/ui/widgets/client/client_viewmodel.dart';
 import '../../data/servico/servico_controller.dart';
-import '../../data/user/user_entity.dart';
 import '../../domain/entities/servico_entity.dart';
 import '../../ui/widgets/servico/servico_viewmodel.dart';
-import '../../ui/widgets/servico_viewmodel.dart';
 
 class ServicoProvider with ChangeNotifier {
 
@@ -24,61 +21,142 @@ class ServicoProvider with ChangeNotifier {
   List<ServicoViewModel> list_servicos = [];  // plumber pest control
   List<ServicoViewModel> listLeadsNotAcceptedYet = [];
   List<ServicoViewModel> listLeadsAccepted = [];
+  ServicoController servicoController = ServicoController();
 
+  void criarServico(){
+    final dataPropostaFeita = DateTime.now();
+    final dataPropostaAceita = DateTime.now().add(Duration(days: 1));
+    final dataPagamento = DateTime.now().add(Duration(days: 2));
+    final clientGivenDate = DateTime.now().add(Duration(days: 3));
+    final descricao = "Sample description";
+    final flgClientSaw = true;
+    final flgWorkerSaw = false;
+    final icone = "sample_icon.png";
+    final idCity = "sample_city_id";
+    final idClient = "sample_client_id";
+    final idDisputa = "sample_dispute_id";
+    final idWorker = "sample_worker_id";
+    final idAcceptedLead = "sample_lead_id";
+    final idsWorkersBid = [1, 2, 3];
+    final serviceDetails = {"detail1": "value1", "detail2": "value2"};
+    final service = "sample_service";
+    final idService = "sample_service_id";
+    final smallerValue = "10";
+    final greaterValue = "20";
+    final acceptedValue = "15";
+    final areThereBids = true;
+    final clientAcceptedABid = true;
+    final waitingPayment = false;
+    final payed = false;
+    final doing = true;
+    final concluded = false;
+    final emDisputa = false;
+    final reembolsado = false;
+    final disputaFinalizada = false;
+
+    final servicoEntity = ServicoEntity(
+      dataPropostaFeita: dataPropostaFeita,
+      dataPropostaAceita: dataPropostaAceita,
+      dataPagamento: dataPagamento,
+      clientGivenDate: clientGivenDate,
+      descricao: descricao,
+      flgClientSaw: flgClientSaw,
+      flgWorkerSaw: flgWorkerSaw,
+      icone: icone,
+      idCity: idCity,
+      idClient: idClient,
+      idDisputa: idDisputa,
+      idWorker: idWorker,
+      idAcceptedLead: idAcceptedLead,
+      idsWorkersBid: idsWorkersBid,
+      serviceDetails: serviceDetails,
+      service: service,
+      idService: idService,
+      smallerValue: smallerValue,
+      greaterValue: greaterValue,
+      acceptedValue: acceptedValue,
+      areThereBids: areThereBids,
+      clientAcceptedABid: clientAcceptedABid,
+      waitingPayment: waitingPayment,
+      payed: payed,
+      doing: doing,
+      concluded: concluded,
+      emDisputa: emDisputa,
+      reembolsado: reembolsado,
+      disputaFinalizada: disputaFinalizada,
+      id: firebaseController.getRandomGeneratedId(),
+    );
+    servicoController.cadastrarServico(servicoEntity);
+  }
 
     Future<List<ServicoViewModel>> getListServicos() async {
-      List<ServicoViewModel> list_all_servicos = [];  // plumber pest control
+    List<ServicoViewModel> list_all_servicos = [];  // plumber pest control
 
       WorkerViewModel worker = await WorkerProvider().getWorker();
 
     List<dynamic> list_servicos_ids = worker.my_services;
 
     for(int i = 0; i < list_servicos_ids.length; i++){
-        List<ServicoEntity> servicoEntities = await ServicoController().buscarServicoComCondicao(cond: list_servicos_ids[i], condName: "idTipoServico");
+        List<ServicoEntity> servicoEntities = await ServicoController().buscarServicoComCondicao(cond: list_servicos_ids[i], condName: "id");
         for(int j = 0; j < servicoEntities.length; j++){
           ServicoViewModel servicoViewModel = ServicoViewModel(
             icone: servicoEntities[i].icone,
-            servico: servicoEntities[i].servico,
-            status: servicoEntities[i].status,
-            valor: '${servicoEntities[i].valorFinal}',
-            data: servicoEntities[i].dataInicial.toString().substring(0,6),
-            emDestaque: servicoEntities[i].flgAvisoPrestador,
-            list_propostas: servicoEntities[i].idsPropostasRecebidas,
-            idsPrestadoresBid: servicoEntities[i].idsPrestadoresBid,
-            service_details: servicoEntities[i].service_details,
-            dataCadastro: servicoEntities[i].dataCadastro,
-            idTipoServico: servicoEntities[i].idTipoServico,
-            idCliente: servicoEntities[i].idCliente,
-            idCidade: servicoEntities[i].idCidade,
-            descricao: servicoEntities[i].descricao,
-            valorInicial: servicoEntities[i].valorInicial,
-            valorFinal: servicoEntities[i].valorFinal,
-            dataInicial: servicoEntities[i].dataInicial,
-            dataFinal: servicoEntities[i].dataFinal,
-            flgDatasFlexiveis: servicoEntities[i].flgDatasFlexiveis,
-            flgAvisoPrestador: servicoEntities[i].flgAvisoPrestador,
-            flgAvisoCliente: servicoEntities[i].flgAvisoCliente,
-            idsPropostasRecebidas: servicoEntities[i].idsPropostasRecebidas,
-            idPropostaAceita: servicoEntities[i].idPropostaAceita,
-            idPrestador: servicoEntities[i].idPrestador,
-            dataPropostaAceita: servicoEntities[i].dataPropostaAceita,
+            dataPropostaAceita: servicoEntities[i].dataPropostaAceita.toString().substring(0,5),
             idDisputa: servicoEntities[i].idDisputa,
             id: servicoEntities[i].id,
+            dataPropostaFeita: servicoEntities[i].dataPropostaFeita.toString().substring(0,5),
+            dataPagamento: servicoEntities[i].dataPagamento.toString().substring(0,5),
+            descricao: servicoEntities[i].descricao,
+            flgClientSaw: servicoEntities[i].flgClientSaw,
+            flgWorkerSaw: servicoEntities[i].flgWorkerSaw,
+            idCity: servicoEntities[i].idCity,
+            idClient: servicoEntities[i].idClient,
+            idWorker: servicoEntities[i].idWorker,
+            idAcceptedLead: servicoEntities[i].idAcceptedLead,
+            idsWorkersBid: servicoEntities[i].idsWorkersBid,
+            serviceDetails: servicoEntities[i].serviceDetails,
+            service: servicoEntities[i].service,
+            idService: servicoEntities[i].idService,
+            smallerValue: servicoEntities[i].smallerValue,
+            greaterValue: servicoEntities[i].greaterValue,
+            acceptedValue: servicoEntities[i].acceptedValue,
+            areThereBids: servicoEntities[i].areThereBids,
+            clientAcceptedABid: servicoEntities[i].clientAcceptedABid,
+            waitingPayment: servicoEntities[i].waitingPayment,
+            payed: servicoEntities[i].payed,
+            doing: servicoEntities[i].doing,
+            concluded: servicoEntities[i].concluded,
+            emDisputa: servicoEntities[i].emDisputa,
+            reembolsado: servicoEntities[i].reembolsado,
+            disputaFinalizada: servicoEntities[i].disputaFinalizada,
+            clientGivenDate: servicoEntities[i].clientGivenDate.toString().substring(0,5),
           );
           list_all_servicos.add(servicoViewModel);
         }
       }
-
     list_servicos = list_all_servicos;
-    return list_all_servicos;
+
+      return list_all_servicos;
   }
+
+/*  Stream<List<ServicoViewModel>> getListServicoss() {
+    Stream<List<ServicoViewModel>> servicosStream = ServicoController().fetchServicosStream();
+
+    Stream<List<ServicoViewModel>> filteredStream = servicosStream.map((servicos) {
+      return servicos
+          .where((servico) => servico.descricao =="Sampe description" )
+          .toList();
+    });
+
+    return filteredStream;
+  }*/
 
   Future<List<ServicoViewModel>> getlistLeadsNotAcceptedYet() async {
       List <ServicoViewModel> notAcceptedYet = [];
       List<ServicoViewModel> list_all_servicos = await getListServicos();
       for(int i = 0; i < list_all_servicos.length; i++){
-        for(int j = 0; j < list_all_servicos[i].idsPrestadoresBid.length; j++){
-          if(list_all_servicos[i].idsPrestadoresBid[j] == firebaseController.getCurrentUser()!.uid){
+        for(int j = 0; j < list_all_servicos[i].idsWorkersBid.length; j++){
+          if(list_all_servicos[i].idsWorkersBid[j] == firebaseController.getCurrentUser()!.uid){
             notAcceptedYet.add(list_all_servicos[i]);
             }
           }
@@ -92,7 +170,7 @@ class ServicoProvider with ChangeNotifier {
       listLeadsAccepted.clear();
       List<ServicoViewModel> listLeadsAccepetedOrNot = await getlistLeadsNotAcceptedYet();
       for(int i = 0; i < listLeadsAccepetedOrNot.length; i++){
-        if(listLeadsAccepetedOrNot[i].idPrestador == firebaseController.getCurrentUser()!.uid){
+        if(listLeadsAccepetedOrNot[i].idWorker == firebaseController.getCurrentUser()!.uid){
           listLeadsAccepted.add(listLeadsAccepetedOrNot[i]);
         }
       }
@@ -100,5 +178,7 @@ class ServicoProvider with ChangeNotifier {
     }
 
 }
+
+
 
 

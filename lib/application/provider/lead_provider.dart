@@ -77,9 +77,9 @@ class LeadProvider with ChangeNotifier {
         consideracoes: '',
         flgAvisoCliente: true,
         flgAvisoPrestador: true,
-        idCliente: servico.idCliente,
+        idCliente: servico.idClient,
         dataPropostaEnviada: DateTime.now(),
-        nomeServico: servico.servico,
+        nomeServico: servico.service,
     );
     await PropostasController().cadastrarProposta(new_lead);
 

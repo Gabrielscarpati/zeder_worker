@@ -175,7 +175,7 @@ abstract class _DSIconFilledSmall extends StatelessWidget {
       width: 28.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14.0),
-        color: DSColors.secondary,
+        color: color,
       ),
       child: Icon(icon, color: DSColors.iconColor, size: 20,),
     );

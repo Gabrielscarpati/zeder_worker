@@ -64,6 +64,12 @@ class LogInSignUpProvider with ChangeNotifier {
       phone: signUpPhone.text.trim(),
       servicos: [],
       my_cities: [],
+      numberRating1: 0,
+      numberRating2: 0,
+      numberRating3: 0,
+      numberRating4: 0,
+      numberRating5: 0,
+
     );
     await WorkerController().cadastrarWorker(new_user);
 

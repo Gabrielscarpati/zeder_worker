@@ -31,6 +31,7 @@ import 'application/provider/pesquisa_cidade_provider.dart';
 import 'application/provider/servico_provider.dart';
 import 'application/provider/tipo_servico_provider.dart';
 import 'application/provider/worker_provider.dart';
+import 'data/firebase/firebase_controller.dart';
 import 'data/path_servicos/path_controller.dart';
 import 'infra/repo/path_find_job_repo.dart';
 import 'ui/templates/rodape_confirmar_proposta_screen.dart';
@@ -40,7 +41,7 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      name: 'name',
+      //name: 'name',
       options: const FirebaseOptions(
         apiKey: "AIzaSyCfogb_y9Sd9ODU2eJxf7X2HxMj6H1g_No",
         authDomain: "zeder-8cd2c.firebaseapp.com",
@@ -52,9 +53,11 @@ Future<void> main() async {
       )
   );
 
+  FirebaseManager manager = FirebaseManager();
+  manager.loginUser(email: 'gabrielbrsc15@gmail.com', password: 'Gabriel1234');
+
   //final fcmToken = await FirebaseMessaging.instance.getToken();
   //print("FirebaseMessaging token: $fcmToken");
-
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider( create: (context) => HomeScreenProvider() ,),
@@ -67,7 +70,9 @@ Future<void> main() async {
     ],
     child: const MyApp(),
    ),
+
   );
+
 }
 
 class MyApp extends StatelessWidget {
@@ -76,9 +81,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: DSTheme.theme(context),
-      home: const ViewSignUp(),
+        title: 'Flutter Demo',
+        theme: DSTheme.theme(context),
+        home: StreamBuilder(
+            stream: FirebaseManager().firebaseAuth.authStateChanges(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return NavigationBarScreen();
+              }
+              return  ViewSignUp();
+        }
+      )
     );
   }
 }
@@ -109,10 +122,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text("Home Screen"),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () => Navigator.push(
+              /*onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const HomeScreen()),
-              ),
+              ),*/
             ),
 
             ListTile(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/ui/features/home/views/see_all_services_button.dart';
 import 'package:zeder/ui/widgets/servico/servico_listtile.dart';
+import '../../../../design_system/widgets/icons.dart';
 import '../../../widgets/servico/servico_viewmodel.dart';
 import '../../show_job_details/show_job_details_screen.dart';
 
@@ -18,9 +19,20 @@ class ListLeadsNotAcceptedYet extends StatelessWidget {
                      crossAxisAlignment: CrossAxisAlignment.end,
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(top: 8, bottom: 4, left: 8),
-                        child: Text("Open Services", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                       Row(
+                        children: [
+                          Text("Open Services", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                          SizedBox(width: 2,),
+                          Transform.scale(
+                            scale: 0.7,
+                            child: InkWell(
+                              child: DSIconFilledSecondarySmall(iconName: 'help'),
+                              onTap: (){
+
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 8,),
@@ -30,7 +42,7 @@ class ListLeadsNotAcceptedYet extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    height: 166,
+                    height: 266,
                     width: MediaQuery.of(context).size.width,
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,

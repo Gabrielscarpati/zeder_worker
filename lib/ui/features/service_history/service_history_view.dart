@@ -20,7 +20,7 @@ class _ServiceHistoryViewState extends State<ServiceHistoryView> {
   void initState() {
     super.initState();
     final ServicoProvider _ServicosProvider = context.read<ServicoProvider>();
-    servicosFuture = _ServicosProvider.getListServicos();
+    servicosFuture = _ServicosProvider.getlistLeadsAccepted();
   }
 
 

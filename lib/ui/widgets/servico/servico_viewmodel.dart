@@ -1,59 +1,66 @@
 class ServicoViewModel {
   final String id;
-  final String icone;
-  final String servico;
-  final String status;
-  final String valor;
-  final String data;
-  final bool emDestaque;
-  final List<dynamic> list_propostas;
-  final List<dynamic> idsPrestadoresBid;
-  final Map<String, dynamic> service_details;
-  final DateTime dataCadastro;
-  final String idTipoServico;
-  final String idCliente;
-  final String idCidade;
+  final String dataPropostaFeita;
+  final String dataPropostaAceita;
+  final String dataPagamento;
+  final String clientGivenDate;
   final String descricao;
-  final double valorInicial;
-  final double valorFinal;
-  final DateTime dataInicial;
-  final DateTime dataFinal;
-  final bool flgDatasFlexiveis;
-  final List idsPropostasRecebidas;
-  final String idPropostaAceita;
-  final String idPrestador;
-  final DateTime dataPropostaAceita;
-  final bool flgAvisoCliente;
-  final bool flgAvisoPrestador;
+  final bool flgClientSaw;
+  final bool flgWorkerSaw;
+  final String icone;
+  final String idCity;
+  final String idClient;
   final String idDisputa;
+  final String idWorker;
+  final String idAcceptedLead;
+  final List idsWorkersBid;
+  final Map serviceDetails;
+  final String service;
+  final String idService;
+  final String smallerValue;
+  final String greaterValue;
+  final String acceptedValue;
+  final bool areThereBids;
+  final bool clientAcceptedABid;
+  final bool waitingPayment;
+  final bool payed;
+  final bool doing;
+  final bool concluded;
+  final bool emDisputa;
+  final bool reembolsado;
+  final bool disputaFinalizada;
 
-  const ServicoViewModel({
+
+  ServicoViewModel({
     required this.id,
-    required this.icone,
-    required this.servico,
-    required this.status,
-    required this.valor,
-    required this.data,
-    required this.emDestaque,
-    required this.list_propostas,
-    required this.idsPrestadoresBid,
-    required this.service_details,
-    required this.dataCadastro,
-    required this.idTipoServico,
-    required this.idCliente,
-    required this.idCidade,
-    required this.descricao,
-    required this.valorInicial,
-    required this.valorFinal,
-    required this.dataInicial,
-    required this.dataFinal,
-    required this.flgDatasFlexiveis,
-    required this.idsPropostasRecebidas,
-    required this.idPropostaAceita,
-    required this.idPrestador,
+    required this.dataPropostaFeita,
     required this.dataPropostaAceita,
-    required this.flgAvisoCliente,
-    required this.flgAvisoPrestador,
+    required this.clientGivenDate,
+    required this.dataPagamento,
+    required this.descricao,
+    required this.flgClientSaw,
+    required this.flgWorkerSaw,
+    required this.icone,
+    required this.idCity,
+    required this.idClient,
     required this.idDisputa,
+    required this.idWorker,
+    required this.idAcceptedLead,
+    required this.idsWorkersBid,
+    required this.serviceDetails,
+    required this.service,
+    required this.idService,
+    required this.smallerValue,
+    required this.greaterValue,
+    required this.acceptedValue,
+    required this.areThereBids,
+    required this.clientAcceptedABid,
+    required this.waitingPayment,
+    required this.payed,
+    required this.doing,
+    required this.concluded,
+    required this.emDisputa,
+    required this.reembolsado,
+    required this.disputaFinalizada,
   });
 }

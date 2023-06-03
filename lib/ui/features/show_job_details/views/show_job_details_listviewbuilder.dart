@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:zeder/ui/features/show_job_details/views/show_job_details_Listtitle.dart';
 
 class ShowJobDetailsListviewbuilder extends StatefulWidget {
-  final Map<String, dynamic> servicoDetails;
+  final Map<dynamic, dynamic> servicoDetails;
   const ShowJobDetailsListviewbuilder({Key? key, required this.servicoDetails}) : super(key: key);
 
   @override
@@ -13,7 +13,7 @@ class _ShowJobDetailsListviewbuilderState extends State<ShowJobDetailsListviewbu
   @override
   Widget build(BuildContext context) {
     {
-      Map<String, dynamic> details = widget.servicoDetails;
+      Map<dynamic, dynamic> details = widget.servicoDetails;
       return Expanded(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

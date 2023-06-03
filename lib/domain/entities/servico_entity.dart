@@ -1,108 +1,136 @@
 import '../../core/core.dart';
 
 class ServicoEntity extends Entity {
-  final DateTime dataCadastro;
-  final String idTipoServico;
-  final String idCliente;
-  final String idCidade;
-  final String descricao;
-  final double valorInicial;
-  final double valorFinal;
-  final DateTime dataInicial;
-  final DateTime dataFinal;
-  final bool flgDatasFlexiveis;
-  final String status;
-  final List idsPropostasRecebidas;
-  final String idPropostaAceita;
-  final String idPrestador;
-  final DateTime dataPropostaAceita;
-  final bool flgAvisoCliente;
-  final bool flgAvisoPrestador;
-  final String idDisputa;
-  final String servico;
-  final String icone;
-  final List idsPrestadoresBid;
-  final Map<String, dynamic> service_details;
+   final DateTime dataPropostaFeita;
+   final DateTime dataPropostaAceita ;
+   final DateTime dataPagamento ;
+   final DateTime clientGivenDate;
+   final String descricao;
+   final bool flgClientSaw;
+   final bool flgWorkerSaw;
+   final String icone;
+   final String idCity;
+   final String idClient;
+   final String idDisputa;
+   final String idWorker;
+   final String idAcceptedLead;
+   final List idsWorkersBid;
+   final Map serviceDetails;
+   final String service;
+   final String idService;
+   final String smallerValue;
+   final String greaterValue;
+   final String acceptedValue;
+   final bool areThereBids;
+   final bool clientAcceptedABid;
+   final bool waitingPayment;
+   final bool payed;
+   final bool doing;
+   final bool concluded;
+   final bool emDisputa;
+   final bool reembolsado;
+   final bool disputaFinalizada;
 
   ServicoEntity({
-    required super.id,
-    required this.dataCadastro,
-    required this.idTipoServico,
-    required this.idCliente,
-    required this.idCidade,
-    required this.descricao,
-    required this.valorInicial,
-    required this.valorFinal,
-    required this.dataInicial,
-    required this.dataFinal,
-    required this.flgDatasFlexiveis,
-    required this.status,
-    required this.idsPropostasRecebidas,
-    required this.idPropostaAceita,
-    required this.idPrestador,
+    required this.dataPropostaFeita,
     required this.dataPropostaAceita,
-    required this.flgAvisoCliente,
-    required this.flgAvisoPrestador,
-    required this.idDisputa,
-    required this.servico,
+    required this.dataPagamento,
+    required this.clientGivenDate,
+    required this.descricao,
+    required this.flgClientSaw,
+    required this.flgWorkerSaw,
     required this.icone,
-    required this.idsPrestadoresBid,
-    required this.service_details,
+    required this.idCity,
+    required this.idClient,
+    required this.idDisputa,
+    required this.idWorker,
+    required this.idAcceptedLead,
+    required this.idsWorkersBid,
+    required this.serviceDetails,
+    required this.service,
+    required this.idService,
+    required this.smallerValue,
+    required this.greaterValue,
+    required this.acceptedValue,
+    required this.areThereBids,
+    required this.clientAcceptedABid,
+    required this.waitingPayment,
+    required this.payed,
+    required this.doing,
+    required this.concluded,
+    required this.emDisputa,
+    required this.reembolsado,
+    required this.disputaFinalizada,
+    required super.id,
   });
+
+
 
   factory ServicoEntity.fromJson(Map<String, dynamic> json) {
     return ServicoEntity(
       id: json['id'] ?? '',
-      dataCadastro: DateUtil.toDateTimeDefaultDateZero(json['dataCadastro']),
-      idTipoServico: json['idTipoServico'] ?? '',
-      idCliente: json['idCliente'] ?? '',
-      idCidade: json['idCidade'] ?? '',
-      descricao: json['descricao'] ?? '',
-      valorInicial: DoubleUtil.toDoubleDefaultZero(json['valorInicial']),
-      valorFinal: DoubleUtil.toDoubleDefaultZero(json['valorFinal']),
-      dataInicial: DateUtil.toDateTimeDefaultDateZero(json['dataInicial']),
-      dataFinal: DateUtil.toDateTimeDefaultDateZero(json['dataFinal']),
-      flgDatasFlexiveis: BoolUtil.toBoolDefaultFalse(json['flgDatasFlexiveis']),
-      status: json['status'] ?? '',
-      idsPropostasRecebidas: json['idsPropostasRecebidas'] ?? [],
-      idPropostaAceita: json['idPropostaAceita'] ?? '',
-      idPrestador: json['idPrestador'] ?? '',
+      dataPropostaFeita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaFeita']),
       dataPropostaAceita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaAceita']),
-      flgAvisoCliente: BoolUtil.toBoolDefaultFalse(json['flgAvisoCliente']),
-      flgAvisoPrestador: BoolUtil.toBoolDefaultFalse(json['flgAvisoPrestador']),
-      idDisputa: json['idDisputa'] ?? '',
-      servico: json['servico'] ?? '',
+      dataPagamento: DateUtil.toDateTimeDefaultDateZero(json['dataPagamento']),
+      clientGivenDate: DateUtil.toDateTimeDefaultDateZero(json['clientGivenDate']),
+      descricao: json['descricao'] ?? '',
+      flgClientSaw: BoolUtil.toBoolDefaultFalse(json['flgClientSaw']),
+      flgWorkerSaw: BoolUtil.toBoolDefaultFalse(json['flgWorkerSaw']),
       icone: json['icone'] ?? '',
-      idsPrestadoresBid: json['idsPrestadoresBid'] ?? [],
-      service_details: json['service_details'] ?? {},
+      idCity: json['idCity'] ?? '',
+      idClient: json['idClient'] ?? '',
+      idDisputa: json['idDisputa'] ?? '',
+      idWorker: json['idWorker'] ?? '',
+      idAcceptedLead: json['idAcceptedLead'] ?? '',
+      idsWorkersBid: json['idsWorkersBid'] ?? [],
+      serviceDetails: json['serviceDetails'] ?? {},
+      service: json['service'] ?? '',
+      idService: json['idService'] ?? '',
+      smallerValue: json['smallerValue'] ?? '',
+      greaterValue: json['greaterValue'] ?? '',
+      acceptedValue: json['acceptedValue'] ?? '',
+      areThereBids: BoolUtil.toBoolDefaultFalse(json['areThereBids']),
+      clientAcceptedABid: BoolUtil.toBoolDefaultFalse(json['clientAcceptedABid']),
+      waitingPayment: BoolUtil.toBoolDefaultFalse(json['waitingPayment']),
+      payed: BoolUtil.toBoolDefaultFalse(json['payed']),
+      doing: BoolUtil.toBoolDefaultFalse(json['doing']),
+      concluded: BoolUtil.toBoolDefaultFalse(json['concluded']),
+      emDisputa: BoolUtil.toBoolDefaultFalse(json['emDisputa']),
+      reembolsado: BoolUtil.toBoolDefaultFalse(json['reembolsado']),
+      disputaFinalizada: BoolUtil.toBoolDefaultFalse(json['disputaFinalizada']),
     );
   }
 
   factory ServicoEntity.test() {
     return ServicoEntity.fromJson({
       'id': '1',
-      'dataCadastro': DateTime(2022, 12, 1),
-      'idTipoServico': '2',
-      'idCliente': '3',
-      'idCidade': '4',
-      'descricao': 'adfadsf adsf asdf asdf asdf asdf asdf asdf asdf asdfasdfa sdf asfasdfasdf fa sdfa sdf asdf asdf asdf asdf asdf asdf asdf asdf  sadfa sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf',
-      'valorInicial': 100.0,
-      'valorFinal': 600.0,
-      'dataInicial': DateTime(2023, 12, 1),
-      'dataFinal': DateTime(2024, 12, 1),
-      'flgDatasFlexiveis': true,
-      'status': 'teste',
-      'idsPropostasRecebidas': ['1', '2', '3'],
-      'idPropostaAceita': '5',
-      'idPrestador': '6',
-      'dataPropostaAceita': DateTime(2025, 12, 1),
-      'flgAvisoCliente': true,
-      'flgAvisoPrestador': false,
-      'idDisputa': '8',
-      'servico': '9',
-      'icone': '10',
-      'idsPrestadoresBid': ['11', '12', '13'],
-      'service_details': {'1': '1', '2': '2', '3': '3'},
+      'dataPropostaFeita': DateTime(2022, 12, 1),
+      'dataPropostaAceita': '2',
+      'dataPagamento': '3',
+      'descricao': '4',
+      'flgClientSaw': 'adfadsf adsf asdf asdf asdf asdf asdf asdf asdf asdfasdfa sdf asfasdfasdf fa sdfa sdf asdf asdf asdf asdf asdf asdf asdf asdf  sadfa sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf',
+      'flgWorkerSaw': 100.0,
+      'icone': 600.0,
+      'idCity': DateTime(2023, 12, 1),
+      'idClient': DateTime(2024, 12, 1),
+      'idDisputa': true,
+      'idWorker': 'teste',
+      'idAcceptedLead': ['1', '2', '3'],
+      'idsWorkersBid': '5',
+      'serviceDetails': '6',
+      'service': DateTime(2025, 12, 1),
+      'idService': true,
+      'smallerValue': false,
+      'greaterValue': '8',
+      'areThereBids': '9',
+      'clientAcceptedABid': '10',
+      'waitingPayment': ['11', '12', '13'],
+      'payed': {'1': '1', '2': '2', '3': '3'},
+      'doing': '10',
+      'concluded': '10',
+      'emDisputa': '10',
+      'reembolsado': '10',
+      'disputaFinalizada': '10',
     });
   }
 
@@ -110,84 +138,141 @@ class ServicoEntity extends Entity {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'dataCadastro': dataCadastro.toJsonString(),
-      'idTipoServico': idTipoServico,
-      'idCliente': idCliente,
-      'idCidade': idCidade,
-      'descricao': descricao,
-      'valorInicial': valorInicial,
-      'valorFinal': valorFinal,
-      'dataInicial': dataInicial.toJsonString(),
-      'dataFinal': dataFinal.toJsonString(),
-      'flgDatasFlexiveis': flgDatasFlexiveis,
-      'status': status,
-      'idsPropostasRecebidas': idsPropostasRecebidas,
-      'idPropostaAceita': idPropostaAceita,
-      'idPrestador': idPrestador,
+      'dataPropostaFeita': dataPropostaFeita.toJsonString(),
       'dataPropostaAceita': dataPropostaAceita.toJsonString(),
-      'flgAvisoCliente': flgAvisoCliente,
-      'flgAvisoPrestador': flgAvisoPrestador,
-      'idDisputa': idDisputa,
-      'servico': servico,
+      'dataPagamento': dataPagamento.toJsonString(),
+      'descricao': descricao,
+      'flgClientSaw': flgClientSaw,
+      'flgWorkerSaw': flgWorkerSaw,
       'icone': icone,
-      'idsPrestadoresBid': idsPrestadoresBid,
-      'service_details': service_details,
+      'idCity': idCity,
+      'idClient': idClient,
+      'idDisputa': idDisputa,
+      'idWorker': idWorker,
+      'idAcceptedLead': idAcceptedLead,
+      'idsWorkersBid': idsWorkersBid,
+      'serviceDetails': serviceDetails,
+      'service': service,
+      'idService': idService,
+      'smallerValue': smallerValue,
+      'greaterValue': greaterValue,
+      'areThereBids': areThereBids,
+      'clientAcceptedABid': clientAcceptedABid,
+      'waitingPayment': waitingPayment,
+      'payed': payed,
+      'doing': doing,
+      'concluded': concluded,
+      'emDisputa': emDisputa,
+      'reembolsado': reembolsado,
+      'disputaFinalizada': disputaFinalizada,
+
     };
   }
 
   ServicoEntity copyWith({
     String? id,
-    DateTime? dataCadastro,
-    String? idTipoServico,
-    String? idCliente,
-    String? idCidade,
-    String? descricao,
-    double? valorInicial,
-    double? valorFinal,
-    DateTime? dataInicial,
-    DateTime? dataFinal,
-    bool? flgDatasFlexiveis,
-    String? status,
-    List? idsPropostasRecebidas,
-    String? idPropostaAceita,
-    String? idPrestador,
+    DateTime? dataPropostaFeita,
     DateTime? dataPropostaAceita,
-    bool? flgAvisoCliente,
-    bool? flgAvisoPrestador,
-    String? idDisputa,
-    String? servico,
+    DateTime? dataPagamento,
+    DateTime? clientGivenDate,
+    String? descricao,
+    bool? flgClientSaw,
+    bool? flgWorkerSaw,
     String? icone,
-    List? propostas,
-    List? idsPrestadoresBid,
-    Map<String, dynamic>? service_details,
+    String? idCity,
+    String? idClient,
+    String? idDisputa,
+    String? idWorker,
+    String? idAcceptedLead,
+    List? idsWorkersBid,
+    Map? serviceDetails,
+    String? service,
+    String? idService,
+    String? smallerValue,
+    String? greaterValue,
+    String? acceptedValue,
+    bool? areThereBids,
+    bool? clientAcceptedABid,
+    bool? waitingPayment,
+    bool? payed,
+    bool? doing,
+    bool? concluded,
+    bool? emDisputa,
+    bool? reembolsado,
+    bool? disputaFinalizada,
   }) {
     return ServicoEntity(
       id: id ?? this.id,
-      dataCadastro: dataCadastro ?? this.dataCadastro,
-      idTipoServico: idTipoServico ?? this.idTipoServico,
-      idCliente: idCliente ?? this.idCliente,
-      idCidade: idCidade ?? this.idCidade,
-      descricao: descricao ?? this.descricao,
-      valorInicial: valorInicial ?? this.valorInicial,
-      valorFinal: valorFinal ?? this.valorFinal,
-      dataInicial: dataInicial ?? this.dataInicial,
-      dataFinal: dataFinal ?? this.dataFinal,
-      flgDatasFlexiveis: flgDatasFlexiveis ?? this.flgDatasFlexiveis,
-      status: status ?? this.status,
-      idsPropostasRecebidas: idsPropostasRecebidas ?? this.idsPropostasRecebidas,
-      idPropostaAceita: idPropostaAceita ?? this.idPropostaAceita,
-      idPrestador: idPrestador ?? this.idPrestador,
+       dataPropostaFeita: dataPropostaFeita ?? this.dataPropostaFeita,
       dataPropostaAceita: dataPropostaAceita ?? this.dataPropostaAceita,
-      flgAvisoCliente: flgAvisoCliente ?? this.flgAvisoCliente,
-      flgAvisoPrestador: flgAvisoPrestador ?? this.flgAvisoPrestador,
-      idDisputa: idDisputa ?? this.idDisputa,
-      servico: servico ?? this.servico,
+      dataPagamento: dataPagamento ?? this.dataPagamento,
+      clientGivenDate: clientGivenDate ?? this.clientGivenDate,
+      descricao: descricao ?? this.descricao,
+      flgClientSaw: flgClientSaw ?? this.flgClientSaw,
+      flgWorkerSaw: flgWorkerSaw ?? this.flgWorkerSaw,
       icone: icone ?? this.icone,
-      idsPrestadoresBid: idsPrestadoresBid ?? this.idsPrestadoresBid,
-      service_details: service_details ?? this.service_details,
+      idCity: idCity ?? this.idCity,
+      idClient: idClient ?? this.idClient,
+      idDisputa: idDisputa ?? this.idDisputa,
+      idWorker: idWorker ?? this.idWorker,
+      idAcceptedLead: idAcceptedLead ?? this.idAcceptedLead,
+      idsWorkersBid: idsWorkersBid ?? this.idsWorkersBid,
+      serviceDetails: serviceDetails ?? this.serviceDetails,
+      service: service ?? this.service,
+      idService: idService ?? this.idService,
+      smallerValue: smallerValue ?? this.smallerValue,
+      greaterValue: greaterValue ?? this.greaterValue,
+      acceptedValue: acceptedValue ?? this.acceptedValue,
+      areThereBids: areThereBids ?? this.areThereBids,
+      clientAcceptedABid: clientAcceptedABid ?? this.clientAcceptedABid,
+      waitingPayment: waitingPayment ?? this.waitingPayment,
+      payed: payed ?? this.payed,
+      doing: doing ?? this.doing,
+      concluded: concluded ?? this.concluded,
+      emDisputa: emDisputa ?? this.emDisputa,
+      reembolsado: reembolsado ?? this.reembolsado,
+      disputaFinalizada: disputaFinalizada ?? this.disputaFinalizada,
 
     );
   }
+
+  @override
+  ServicoEntity fromJson(Map<String, dynamic> json) {
+    return ServicoEntity(
+      id: json['id'] ?? '',
+      dataPropostaFeita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaFeita']),
+      dataPropostaAceita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaAceita']),
+      dataPagamento: DateUtil.toDateTimeDefaultDateZero(json['dataPagamento']),
+      clientGivenDate: DateUtil.toDateTimeDefaultDateZero(json['clientGivenDate']),
+      descricao: json['descricao'] ?? '',
+      flgClientSaw: BoolUtil.toBoolDefaultFalse(json['flgClientSaw']),
+      flgWorkerSaw: BoolUtil.toBoolDefaultFalse(json['flgWorkerSaw']),
+      icone: json['icone'] ?? '',
+      idCity: json['idCity'] ?? '',
+      idClient: json['idClient'] ?? '',
+      idDisputa: json['idDisputa'] ?? '',
+      idWorker: json['idWorker'] ?? '',
+      idAcceptedLead: json['idAcceptedLead'] ?? '',
+      idsWorkersBid: json['idsWorkersBid'] ?? [],
+      serviceDetails: json['serviceDetails'] ?? {},
+      service: json['service'] ?? '',
+      idService: json['idService'] ?? '',
+      smallerValue: json['smallerValue'] ?? '',
+      greaterValue: json['greaterValue'] ?? '',
+      acceptedValue: json['acceptedValue'] ?? '',
+      areThereBids: BoolUtil.toBoolDefaultFalse(json['areThereBids']),
+      clientAcceptedABid: BoolUtil.toBoolDefaultFalse(json['clientAcceptedABid']),
+      waitingPayment: BoolUtil.toBoolDefaultFalse(json['waitingPayment']),
+      payed: BoolUtil.toBoolDefaultFalse(json['payed']),
+      doing: BoolUtil.toBoolDefaultFalse(json['doing']),
+      concluded: BoolUtil.toBoolDefaultFalse(json['concluded']),
+      emDisputa: BoolUtil.toBoolDefaultFalse(json['emDisputa']),
+      reembolsado: BoolUtil.toBoolDefaultFalse(json['reembolsado']),
+      disputaFinalizada: BoolUtil.toBoolDefaultFalse(json['disputaFinalizada']),
+    );
+  }
+
+
 }
 
 abstract class ServicoRepository extends Repository<ServicoEntity> {}
