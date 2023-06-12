@@ -168,53 +168,63 @@ class ServicoController {
     List<ServicoViewModel> allAvailableJobs = [];
     List<ServicoViewModel> currentServices = [];
     List<ServicoViewModel> pastJobs = [];
+    Map<String, List<ServicoViewModel>> map_padrao_empty = {
+      'allAvailableJobs': [],
+      'currentServices': [],
+      'pastJobs': [],
+    };
 
     StreamController<Map<String, List<ServicoViewModel>>> controller = StreamController<Map<String, List<ServicoViewModel>>>();
 
     servicos.listen((List<ServicoViewModel> snapshot) {
       WorkerProvider workerProvider = WorkerProvider();
-
       for (var serviceSnapshot in snapshot) {
         bool addServiceCity = false;
         bool addServiceServiceId = false;
-
+        /*print(workerProvider.my_cities);
+         print(workerProvider.my_services);*/
         for (CitiesViewModel city in workerProvider.my_cities) {
           if (city.city_name == serviceSnapshot.idCity) {
-              addServiceCity = true;
-              break;
-            }
+            addServiceCity = true;
+            break;
           }
+        }
         for (WorkerServicesViewModel service in workerProvider.my_services) {
-          if (service.servico == workerProvider.getServicesByID(id: serviceSnapshot.idService)) {
+          if (service.servico ==
+              workerProvider.getServicesByID(id: serviceSnapshot.idService)) {
             addServiceServiceId = true;
             break;
-            }
           }
+        }
 
         if (addServiceCity == true && addServiceServiceId == true) {
-            if (serviceSnapshot.idWorker == '') {
-              allAvailableJobs.add(serviceSnapshot);
-            }
-
-            if (serviceSnapshot.idWorker == firebaseController.getCurrentUser()!.uid) {
-              currentServices.add(serviceSnapshot);
-            }
-
-            if (serviceSnapshot.concluded == true && serviceSnapshot.idWorker == firebaseController.getCurrentUser()!.uid) {
-              pastJobs.add(serviceSnapshot);
+          if (serviceSnapshot.idWorker == '') {
+            allAvailableJobs.add(serviceSnapshot);
           }
 
+          if (serviceSnapshot.idWorker ==
+              firebaseController.getCurrentUser()!.uid) {
+            currentServices.add(serviceSnapshot);
+          }
+
+          if (serviceSnapshot.concluded == true && serviceSnapshot.idWorker ==
+              firebaseController.getCurrentUser()!.uid) {
+            pastJobs.add(serviceSnapshot);
+          }
           Map<String, List<ServicoViewModel>> map_all_Status = {
             'allAvailableJobs': allAvailableJobs,
             'currentServices': currentServices,
             'pastJobs': pastJobs,
           };
+
           controller.add(map_all_Status);
+        }
+        else {
+          controller.add(map_padrao_empty);
           }
         }
       }
     );
-
     return controller.stream;
   }
 
@@ -247,10 +257,14 @@ class ServicoController {
   ServicoViewModel createServicoViewModel(Map<String, dynamic> data,) {
     ServicoViewModel newServico =  ServicoViewModel(
       id: data['id'],
-      dataPropostaFeita: DateUtil.toDateTimeDefaultDateZero(data['id']).toString().substring(0, 5),
-      dataPropostaAceita: DateUtil.toDateTimeDefaultDateZero(data['id']).toString().substring(0, 5),
-      dataPagamento: DateUtil.toDateTimeDefaultDateZero(data['id']).toString().substring(0, 5),
-      clientGivenDate: DateUtil.toDateTimeDefaultDateZero(data['id']).toString().substring(0, 5),
+      dataPropostaFeitaDateTime: data['dataPropostaFeita'] ?? Timestamp.now().toDate(),
+      dataPropostaAceitaDateTime: data['dataPropostaAceita'] ?? Timestamp.now().toDate(),
+      dataPagamentoDateTime:data['dataPagamento'] ?? Timestamp.now().toDate(),
+      clientGivenDateDateTime: data['clientGivenDate'] ?? Timestamp.now().toDate(),
+      dataPropostaFeitaString: DateUtil.toDateTimeDefaultDateZero(data['dataPropostaFeita']).toString().substring(0, 5),
+      dataPropostaAceitaString: DateUtil.toDateTimeDefaultDateZero(data['dataPropostaAceita']).toString().substring(0, 5),
+      dataPagamentoString: DateUtil.toDateTimeDefaultDateZero(data['dataPagamento']).toString().substring(0, 5),
+      clientGivenDateString: DateUtil.toDateTimeDefaultDateZero(data['clientGivenDate']).toString().substring(0, 5),
       descricao: data['descricao'] ?? '',
       flgClientSaw: BoolUtil.toBoolDefaultFalse(data['flgClientSaw']),
       flgWorkerSaw: BoolUtil.toBoolDefaultFalse(data['flgWorkerSaw']),

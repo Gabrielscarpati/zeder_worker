@@ -41,6 +41,8 @@ class WorkerProvider with ChangeNotifier {
     );
     get_servicos(servicos: workerEntity.servicos);
     my_cities.clear();
+    my_services.clear();
+
     for(int i = 0; i < workerViewModel.my_services.length; i++){
       my_services.add(WorkerServicesViewModel(icone: 'city', servico: getServicesByID(id:workerViewModel.my_services[i])));
     }

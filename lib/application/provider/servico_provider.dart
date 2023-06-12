@@ -90,17 +90,13 @@ class ServicoProvider with ChangeNotifier {
     servicoController.cadastrarServico(servicoEntity);
   }
 
-  atualizarServico(ServicoViewModel servicoViewModel) {
+  atualizarServico(ServicoViewModel servicoViewModel) async {
     ServicoEntity updatedService = ServicoEntity(
-      dataPropostaFeita: DateTime.now()/*DateTime.parse(servicoViewModel.dataPropostaFeita)*/,
-      dataPropostaAceita: DateTime.now(),
-      dataPagamento: DateTime.now(),
-      clientGivenDate: DateTime.now(),
       descricao: servicoViewModel.descricao,
       flgClientSaw: servicoViewModel.flgClientSaw,
       flgWorkerSaw: servicoViewModel.flgWorkerSaw,
       icone: servicoViewModel.icone,
-      idCity:servicoViewModel.icone,
+      idCity:servicoViewModel.idCity,
       idClient: servicoViewModel.idClient,
       idDisputa: servicoViewModel.idDisputa,
       idWorker: firebaseController.getCurrentUser()!.uid,
@@ -121,10 +117,10 @@ class ServicoProvider with ChangeNotifier {
       emDisputa: servicoViewModel.emDisputa,
       reembolsado: servicoViewModel.reembolsado,
       disputaFinalizada: servicoViewModel.disputaFinalizada,
-      id: '',
+      id: servicoViewModel.id,
     );
 
-    servicoController.atualizarServico(updatedService);
+    await servicoController.atualizarServico(updatedService);
   }
 
 /*    Future<List<ServicoViewModel>> getListServicos() async {
@@ -222,7 +218,7 @@ class ServicoProvider with ChangeNotifier {
 
   Future showExplanationOpenServices(context) => showDialog(
     context: context,
-    builder: (context) =>  PopUpExplainNameHomeScreen(title: "These are the services you\n waitng for the client to\naccept or not ",),
+    builder: (context) =>  PopUpExplainNameHomeScreen(title: "These are the services you\n are working on right now",),
   );
 }
 

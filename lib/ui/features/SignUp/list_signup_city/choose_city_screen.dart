@@ -6,6 +6,7 @@ import 'package:zeder/ui/features/SignUp/list_signup_city/standard_list_builder_
 import 'package:zeder/ui/features/home/home_screen.dart';
 import '../../../../application/provider/pesquisa_cidade_provider.dart';
 import '../../../device_type.dart';
+import '../list_signup_service/choose_service_screen.dart';
 import '../views/widgets/snackbars.dart';
 
 class ChooseCityScreen extends StatefulWidget {
@@ -86,7 +87,7 @@ class _ChooseCityScreenState extends State<ChooseCityScreen> {
                   else{
                     Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    MaterialPageRoute(builder: (context) => const ChooseServiceScreen()),
                   );
                   }
                 },

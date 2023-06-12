@@ -25,10 +25,8 @@ class _ButtonSwitchScreensState extends State<ButtonSwitchScreens> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         LoadingButton(
-          goNextScreen:() async{
-            provider.checkConditionsSignUpUser(context);
-            //ChooseCityScreen
-
+          goNextScreen:() async {
+             await provider.goSelectCitiesScreen(context: context);
             _controller.reset();
           },
           buttonText: "Sign Up",
@@ -59,7 +57,8 @@ class _ButtonSwitchScreensState extends State<ButtonSwitchScreens> {
                   builder: (context) {
                     return const ViewLogin();
                   },
-                ));
+                )
+            );
           },
         ),
       ],

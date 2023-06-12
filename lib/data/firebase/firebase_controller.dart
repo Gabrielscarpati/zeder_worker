@@ -13,6 +13,7 @@ import '../../core/utils/bool_utils.dart';
 import '../../core/utils/date_utils.dart';
 import '../../ui/features/SignUp/views/widgets/snackbars.dart';
 import '../../ui/features/navigation_bar/navigation_bar.dart';
+import '../../ui/features/navigation_bar/viewNavigationBarScren.dart';
 import '../../ui/widgets/client/client_viewmodel.dart';
 import '../../ui/widgets/servico/servico_viewmodel.dart';
 
@@ -251,11 +252,7 @@ class FirebaseManager{
     try {
       UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(
           email: email,
-          password: password);
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => NavigationBarScreen()),
-            (Route<dynamic> route) => false,
+          password: password
       );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {

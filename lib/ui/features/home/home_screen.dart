@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoViewModel>>> snapshot) {
 
                     if (snapshot.hasError) {
-                      return Text('Something went wrong');
+                      return const Text('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: SizedBox(height: 50, width: 50,

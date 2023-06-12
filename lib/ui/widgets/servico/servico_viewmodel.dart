@@ -1,9 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ServicoViewModel {
   final String id;
-  final String dataPropostaFeita;
-  final String dataPropostaAceita;
-  final String dataPagamento;
-  final String clientGivenDate;
+  final Timestamp dataPropostaFeitaDateTime;
+  final Timestamp dataPropostaAceitaDateTime;
+  final Timestamp dataPagamentoDateTime;
+  final Timestamp clientGivenDateDateTime;
+  final String dataPropostaFeitaString;
+  final String dataPropostaAceitaString;
+  final String dataPagamentoString;
+  final String clientGivenDateString;
   final String descricao;
   final bool flgClientSaw;
   final bool flgWorkerSaw;
@@ -33,10 +39,14 @@ class ServicoViewModel {
 
   ServicoViewModel({
     required this.id,
-    required this.dataPropostaFeita,
-    required this.dataPropostaAceita,
-    required this.clientGivenDate,
-    required this.dataPagamento,
+    required this.dataPropostaFeitaDateTime,
+    required this.dataPropostaAceitaDateTime,
+    required this.clientGivenDateDateTime,
+    required this.dataPagamentoDateTime,
+    required this.dataPropostaFeitaString,
+    required this.dataPropostaAceitaString,
+    required this.clientGivenDateString,
+    required this.dataPagamentoString,
     required this.descricao,
     required this.flgClientSaw,
     required this.flgWorkerSaw,

@@ -14,6 +14,7 @@ class SendProposalBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final LeadProvider provider = context.watch<LeadProvider>();
     final ServicoProvider servicoProvider = context.watch<ServicoProvider>();
+
     return  Container(
         height: 80,
         color: DSColors.cardColor,

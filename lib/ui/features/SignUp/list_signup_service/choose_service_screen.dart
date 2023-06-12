@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:zeder/application/provider/logInSignUpProvider.dart';
 import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/domain/domain.dart';
@@ -9,6 +11,7 @@ import 'package:zeder/ui/features/home/home_screen.dart';
 import '../../../../application/provider/pesquisa_cidade_provider.dart';
 import '../../../device_type.dart';
 import '../../../widgets/servico_do_app/servico_do_app_viewmodel.dart';
+import '../../LoadingButton.dart';
 
 class ChooseServiceScreen extends StatefulWidget {
   const ChooseServiceScreen({Key? key}) : super(key: key);
@@ -18,6 +21,8 @@ class ChooseServiceScreen extends StatefulWidget {
 }
 
 class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
+  RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -26,6 +31,7 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
     deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
 
     final TipoServicoProvider _Provider = context.watch<TipoServicoProvider>();
+    final LogInSignUpProvider logInSignUpProvider = context.watch<LogInSignUpProvider>();
     _Provider.getListaDeServicosViewModel();
     return Scaffold(
       body: Column(
@@ -80,20 +86,19 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              DSButtonLargePrimary(
-                onPressed: (){
+
+              LoadingButton(
+                goNextScreen:() async {
                   if(_Provider.selected_servicos.isEmpty){
                     mostrarCompleteInfo(context);
                   }
                   else{
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
+                    await logInSignUpProvider.checkConditionsSignUpUser(context);
                   }
                 },
-                text: "FINISH"
-              )
+                buttonText: "FINISH",
+                controller: btnController,
+              ),
             ],
           ),
         ),

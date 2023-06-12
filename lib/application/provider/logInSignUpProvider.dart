@@ -12,7 +12,10 @@ import '../../data/user/user_entity.dart';
 import '../../ui/features/SignUp/list_signup_city/choose_city_screen.dart';
 import '../../ui/features/SignUp/save_image.dart';
 import '../../ui/features/SignUp/views/widgets/popUpTermsAndConditions.dart';
+import '../../ui/features/SignUp/views/widgets/snackbars.dart';
 import '../../ui/features/navigation_bar/navigation_bar.dart';
+import '../../ui/features/navigation_bar/viewNavigationBarScren.dart';
+import '../../ui/widgets/cities/cities_viewmodel.dart.dart';
 import '../../ui/widgets/servico_do_app/servico_do_app_viewmodel.dart';
 
 class LogInSignUpProvider with ChangeNotifier {
@@ -67,7 +70,7 @@ class LogInSignUpProvider with ChangeNotifier {
       profile_picture: profilePicture,
       phone: signUpPhone.text.trim(),
       servicos: getServicesIds(),
-      my_cities: PesquisaCidadeProvider().selected_cities,
+      my_cities: getNameByCities(PesquisaCidadeProvider().selected_cities),
       numberRating1: 0,
       numberRating2: 0,
       numberRating3: 0,
@@ -80,13 +83,21 @@ class LogInSignUpProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  List<String> getNameByCities(List<CitiesViewModel> lista_cidades){
+    List<String> cidadeNames = [];
+    for(var cidade in lista_cidades){
+      cidadeNames.add(cidade.city_name);
+    }
+    return cidadeNames;
+  }
+
+
   List<String> getServicesIds(){
     List<String> serviceIds = [];
     List<ServicoDoAppViewModel> servicos= TipoServicoProvider().selected_servicos;
     for (var servico in servicos){
       serviceIds.add(getIdByServices(service: servico.servico));
     }
-    print(serviceIds);
     return serviceIds;
   }
 
@@ -111,16 +122,6 @@ class LogInSignUpProvider with ChangeNotifier {
 
 
   Future<void> checkConditionsSignUpUser(BuildContext context) async {
-    final form = provider.formKeyAuthenticationSignUp.currentState!;
-
-    if(provider.isChecked == false) {
-      showDialog(
-        context: context,
-        builder: (context) => PopUpTermsAndConditions()
-      );
-    }
-    else if (form.validate()){
-
       await FirebaseManager().registerUser(
         email: provider.signUpEmail.text.trim(),
         password: provider.signUpPassword.text.trim(),
@@ -132,14 +133,13 @@ class LogInSignUpProvider with ChangeNotifier {
 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => NavigationBarScreen()),
+        MaterialPageRoute(builder: (context) => ViewNavegationBarScreen()),
             (Route<dynamic> route) => false,
       );
-    }
     notifyListeners();
   }
 
-  void goSelectCitiesScreen({required BuildContext context}) {
+  Future<void> goSelectCitiesScreen({required BuildContext context}) async {
     final form = provider.formKeyAuthenticationSignUp.currentState!;
 
     if(provider.isChecked == false) {
@@ -147,6 +147,9 @@ class LogInSignUpProvider with ChangeNotifier {
           context: context,
           builder: (context) => PopUpTermsAndConditions()
       );
+    }
+    else if( await checkIfEmailInUse(provider.signUpEmail.text.trim()) == false){
+      ShowSnackBar(context: context).showErrorSnackBar(message: 'This email is already registered.');
     }
     else if (form.validate()){
       Navigator.of(context).push(
@@ -156,6 +159,19 @@ class LogInSignUpProvider with ChangeNotifier {
             },
           )
       );
+    }
+  }
+
+  Future<bool> checkIfEmailInUse(String emailAddress) async {
+    try {
+      List<String> list = await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
+      if (list.isEmpty) {
+        return true;
+      } else {
+        return false;
+      }
+    }catch (error) {
+      return true;
     }
   }
 

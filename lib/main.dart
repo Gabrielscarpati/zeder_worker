@@ -59,8 +59,8 @@ Future<void> main() async {
   //print("FirebaseMessaging token: $fcmToken");
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider( create: (context) => HomeScreenProvider() ,),
-      ChangeNotifierProvider( create: (context) => PesquisaCidadeProvider() ,),
+      ChangeNotifierProvider( create: (context) => HomeScreenProvider(),),
+      ChangeNotifierProvider( create: (context) => PesquisaCidadeProvider(),),
       ChangeNotifierProvider( create: (context) => TipoServicoProvider() ,),
       ChangeNotifierProvider( create: (context) => WorkerProvider() ,),
       ChangeNotifierProvider( create: (context) => ServicoProvider() ,),
@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
             stream: FirebaseManager().firebaseAuth.authStateChanges(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                return const ViewNavegationBarScreen();//NavigationBarScreen();
+                return const ViewNavegationBarScreen();//ViewNavegationBarScreen();
               }
               return const ViewSignUp();
         }
@@ -96,10 +96,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -120,9 +116,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: ListView(
           children: <Widget>[
-            ListTile(
-              title: const Text("Home Screen"),
-              trailing: const Icon(Icons.arrow_forward_ios),
+            const ListTile(
+              title:  Text("Home Screen"),
+              trailing: Icon(Icons.arrow_forward_ios),
               /*onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const HomeScreen()),

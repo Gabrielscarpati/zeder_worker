@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:zeder/data/firebase/firebase_controller.dart';
 import 'package:zeder/design_system/design_system.dart';
+import 'package:zeder/ui/features/LogIn/viewLogIn.dart';
 import 'package:zeder/ui/features/user_profile/view/update_personal_data.dart';
 import '../../../device_type.dart';
 import '../../../widgets/botoes.dart';
@@ -90,16 +92,24 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       InkWell(
-                        child: const Icon(
-                          Icons.power_settings_new_outlined,
-                          color: DSColors.primary,
+                        child: const Row(
+                          children: [
+                             Icon(
+                              Icons.power_settings_new_outlined,
+                              color: DSColors.primary,
+                            ),
+                             SizedBox(width: 8),
+                             DSTextTitleBoldPrimary(text: 'Logout'),
+                          ],
                         ),
-                        onTap: () {
-
+                        onTap: () async {
+                          await FirebaseManager().signOut();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const ViewLogin()),
+                          );
                         },
                       ),
-                      const SizedBox(width: 8),
-                      const DSTextTitleBoldPrimary(text: 'Logout'),
                     ],
                   ),
                 ),

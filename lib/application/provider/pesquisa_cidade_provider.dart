@@ -34,8 +34,9 @@ class PesquisaCidadeProvider with ChangeNotifier {
     List<CitiesViewModel> tiposServicoViewModel = [];
     for(int i = 0; i < list_all_cities.length; i++ ) {
       CidadeEntity tipoServicoEntity = CidadeEntity.fromJson(list_all_cities[i]);
-      tiposServicoViewModel.add(CitiesViewModel(icon: 'city',city_name: "${tipoServicoEntity.nome}, ${tipoServicoEntity.uf}"));
+      tiposServicoViewModel.add(CitiesViewModel(icon: 'city',city_name: "${tipoServicoEntity.nome}"));
     }
+    /*, ${tipoServicoEntity.uf}*/
     if(!listInitialized){
       list_cities_screen= tiposServicoViewModel;
     }

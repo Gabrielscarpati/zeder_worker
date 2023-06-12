@@ -24,7 +24,7 @@ abstract class ServicoListTile extends StatelessWidget {
             crossAxisAlignment: valorTempoCrossAxisAlignment,
             children: [
               DSTextTitleBoldSecondary(text: viewModel.acceptedValue.toString()),
-              DSTextSubtitleSecondary(text: viewModel.clientGivenDate.toString()),
+              DSTextSubtitleSecondary(text: viewModel.clientGivenDateDateTime.toString()),
             ],
           ),
           const SizedBox(width: 8),
