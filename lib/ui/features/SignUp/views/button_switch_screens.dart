@@ -27,6 +27,8 @@ class _ButtonSwitchScreensState extends State<ButtonSwitchScreens> {
         LoadingButton(
           goNextScreen:() async{
             provider.checkConditionsSignUpUser(context);
+            //ChooseCityScreen
+
             _controller.reset();
           },
           buttonText: "Sign Up",

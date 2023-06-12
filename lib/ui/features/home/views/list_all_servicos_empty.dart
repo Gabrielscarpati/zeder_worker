@@ -11,15 +11,15 @@ import '../../../widgets/servico/servico_listtile.dart';
 import '../../../widgets/servico/servico_viewmodel.dart';
 import '../Widgets/pop_up_explain_names_home_screen.dart';
 
-class ListAllServicos extends StatefulWidget {
-  final List<ServicoViewModel> servicos;
-  const ListAllServicos({Key? key, required this.servicos}) : super(key: key);
+class ListAllServicosEmpty extends StatefulWidget {
+  final String title;
+  const ListAllServicosEmpty({Key? key, required this.title}) : super(key: key);
 
   @override
-  State<ListAllServicos> createState() => _ListAllServicosState();
+  State<ListAllServicosEmpty> createState() => _ListAllServicosEmptyState();
 }
 
-class _ListAllServicosState extends State<ListAllServicos> {
+class _ListAllServicosEmptyState extends State<ListAllServicosEmpty> {
 
 
   @override
@@ -54,27 +54,15 @@ class _ListAllServicosState extends State<ListAllServicos> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'All Available Services', servicos: widget.servicos, allowGetLeads: allowGetLeads,),
+              child: SeeAllServicesButton(title: 'All Available Services', servicos: [], allowGetLeads: allowGetLeads,),
             ),
             //const SizedBox(width: 8,),
           ],
         ),
         Container(
           height: 160,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: widget.servicos.length,
-            itemBuilder: (context, index) {
-              return ServicoListTileVertical(
-                  viewModel: widget.servicos[index],
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ShowJobDetailsScreen(servicoViewModel: widget.servicos[index], allowGetLeads: allowGetLeads,)),
-                    );
-                  },
-              );
-            },
+          child: Center(
+            child: Text(widget.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
           ),
         ),
       ],

@@ -1,62 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/parameters/colors.dart';
-import 'package:zeder/ui/features/select_service/list_service.dart';
+import 'package:zeder/ui/features/my_cities/list_city.dart';
 import '../../../application/provider/tipo_servico_provider.dart';
-import '../home/views/show_worker_cities.dart';
+import '../../device_type.dart';
+import '../my_service/list_service.dart';
 
-class SelectServiceScreen extends StatefulWidget {
-  const SelectServiceScreen({Key? key}) : super(key: key);
+class MyCities extends StatefulWidget {
+  const MyCities({Key? key}) : super(key: key);
 
   @override
-  State<SelectServiceScreen> createState() => _SelectServiceScreenState();
+  State<MyCities> createState() => _MyCitiesState();
 }
 
-class _SelectServiceScreenState extends State<SelectServiceScreen> {
+class _MyCitiesState extends State<MyCities> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController passwordController = TextEditingController();
+    double screenWidth = MediaQuery.of(context).size.width;
+    double padding;
+    DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
+    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Stack(
             children: [
-              Transform.scale(
-                scaleY: 1.2,
-                child: SizedBox(
-                  width: double.infinity, // Set the width to occupy the whole screen width
-                  child: Image.asset(
-                    'assets/cabecario.png',
-                    fit: BoxFit.fitWidth, // Set the fit property to cover the whole space
-                  ),
+              SizedBox(
+                height: 140,
+                width: double.infinity, // Set the width to occupy the whole screen width
+                child: Image.asset(
+                  'assets/cabecario.png',
+                  fit: BoxFit.cover, // Set the fit property to cover the whole space
                 ),
               ),
-               Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Select a service', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only( left: 16, right: 16),
-                    child:Divider(
-                      color: Colors.white,
-                      thickness: 1,
+               Padding(
+                 padding: EdgeInsets.only(right: padding, left: padding),
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 40,
                     ),
-                  ),
-                  CityControllter(cityController: passwordController, hint: "Type the service's name", iconData: Icons.search,),
-                ],
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('My Cities', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only( left: 16, right: 16),
+                      child:Divider(
+                        color: Colors.white,
+                        thickness: 1,
+                      ),
+                    ),
+                  ],
               ),
+               ),
             ],
           ),
-          const ListService(),
+          const ListCity(),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
+import '../../../device_type.dart';
 import '../../../widgets/botoes.dart';
 import '../../../widgets/client/client_viewmodel.dart';
 import 'app_bar_profile.dart';
@@ -14,6 +15,12 @@ class UpdatePersonalData extends StatefulWidget {
 class _UpdatePersonalDataState extends State<UpdatePersonalData> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double padding;
+    DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
+    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
+
+
 
     return Scaffold(
       appBar: PreferredSize(
@@ -25,7 +32,7 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(right: padding, left: padding),
         child: SingleChildScrollView(
           child: Column(
             children: [

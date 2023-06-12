@@ -3,12 +3,16 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zeder/domain/domain.dart';
 import '../../application/provider/worker_provider.dart';
 import '../../core/framework/entity.dart';
 import '../../core/utils/bool_utils.dart';
 import '../../core/utils/date_utils.dart';
+import '../../ui/features/SignUp/views/widgets/snackbars.dart';
+import '../../ui/features/navigation_bar/navigation_bar.dart';
 import '../../ui/widgets/client/client_viewmodel.dart';
 import '../../ui/widgets/servico/servico_viewmodel.dart';
 
@@ -123,19 +127,41 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
       final response = await _db.collection(collection).where(condName, isEqualTo: cond).get();
 
       //final response = await _db.collection(collection).where(condName, isEqualTo: cond).get();
-      response.docs.forEach((element) { 
+      response.docs.forEach((element) {
         if (element.exists && element.data() != null) {
         res.add(element.data());
       }
        });
-     
+
         return res;
-      
-    
+
+
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);
     }
   }
+
+
+/*  Future<void> atualizarDadoComCondicao(
+      {String collection = '', String id = '', Entity? data}) async {
+    if (data == null || id.isEmpty || collection.isEmpty) {
+      return Future.error("Dados Inválidos para atualizar", StackTrace.current);
+    }
+    try {
+      var json = data.toJson();
+      json["update_at"] = DateTime.now();
+      await _db.collection(collection).where("id", isEqualTo: "1112xv").get().then((snapshot) {
+        if (snapshot.docs.isNotEmpty) {
+          snapshot.docs.first.reference.set(json, SetOptions(merge: true));
+        } else {
+          // Handle the case when no document with the given id is found
+        }
+      });
+    } catch (e, stackTrace) {
+      return Future.error(e.toString(), stackTrace);
+    }
+  }*/
+
 
   Future<void> atualizarDado(
       {String collection = '', String id = '', Entity? data}) async {
@@ -208,10 +234,10 @@ class FirebaseManager{
     return firebaseAuth.currentUser!.uid;
   }
 
-  Future<User?> registerUser ({required String email, required String password}) async {
+  Future<User?> registerUser ({required String email, required String password, required BuildContext context}) async {
     try {
       UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      await loginUser(email: email, password: password);
+      await loginUser(email: email, password: password, context: context);
       return userCredential.user;
     } on FirebaseAuthException catch(e){
       print(e);
@@ -221,17 +247,24 @@ class FirebaseManager{
     return null;
   }
 
-  Future<User?> loginUser ({required String email, required String password}) async {
+  Future<User?> loginUser ({required String email, required String password, required BuildContext context}) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(
           email: email,
           password: password);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => NavigationBarScreen()),
+            (Route<dynamic> route) => false,
+      );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        ShowSnackBar(context: context).showErrorSnackBar(message: 'No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        ShowSnackBar(context: context).showErrorSnackBar(message: 'Wrong password provided for that user.');
+      }else if (e.code == 'too-many-requests') {
+        ShowSnackBar(context: context).showErrorSnackBar(message: 'Too many requests, please try again later.');
       }
     }
     return null;

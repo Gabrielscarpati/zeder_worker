@@ -5,6 +5,7 @@ import 'package:zeder/data/firebase/firebase_controller.dart';
 import 'package:zeder/ui/widgets/client/client_viewmodel.dart';
 import '../../data/servico/servico_controller.dart';
 import '../../domain/entities/servico_entity.dart';
+import '../../ui/features/home/Widgets/pop_up_explain_names_home_screen.dart';
 import '../../ui/widgets/servico/servico_viewmodel.dart';
 
 class ServicoProvider with ChangeNotifier {
@@ -35,12 +36,12 @@ class ServicoProvider with ChangeNotifier {
     final idCity = "sample_city_id";
     final idClient = "sample_client_id";
     final idDisputa = "sample_dispute_id";
-    final idWorker = "sample_worker_id";
+    final idWorker = "";
     final idAcceptedLead = "sample_lead_id";
-    final idsWorkersBid = [1, 2, 3];
+    final idsWorkersBid = ['liYZpiChtih9m3ENiARnSqcG8iD3'];
     final serviceDetails = {"detail1": "value1", "detail2": "value2"};
-    final service = "sample_service";
-    final idService = "sample_service_id";
+    final service = "plumber";
+    final idService = "1";
     final smallerValue = "10";
     final greaterValue = "20";
     final acceptedValue = "15";
@@ -89,7 +90,44 @@ class ServicoProvider with ChangeNotifier {
     servicoController.cadastrarServico(servicoEntity);
   }
 
-    Future<List<ServicoViewModel>> getListServicos() async {
+  atualizarServico(ServicoViewModel servicoViewModel) {
+    ServicoEntity updatedService = ServicoEntity(
+      dataPropostaFeita: DateTime.now()/*DateTime.parse(servicoViewModel.dataPropostaFeita)*/,
+      dataPropostaAceita: DateTime.now(),
+      dataPagamento: DateTime.now(),
+      clientGivenDate: DateTime.now(),
+      descricao: servicoViewModel.descricao,
+      flgClientSaw: servicoViewModel.flgClientSaw,
+      flgWorkerSaw: servicoViewModel.flgWorkerSaw,
+      icone: servicoViewModel.icone,
+      idCity:servicoViewModel.icone,
+      idClient: servicoViewModel.idClient,
+      idDisputa: servicoViewModel.idDisputa,
+      idWorker: firebaseController.getCurrentUser()!.uid,
+      idAcceptedLead: servicoViewModel.idAcceptedLead,
+      idsWorkersBid: servicoViewModel.idsWorkersBid,
+      serviceDetails: servicoViewModel.serviceDetails,
+      service: servicoViewModel.service,
+      idService: servicoViewModel.idService,
+      smallerValue:servicoViewModel.smallerValue,
+      greaterValue:servicoViewModel.greaterValue,
+      acceptedValue: servicoViewModel.acceptedValue,
+      areThereBids:servicoViewModel.areThereBids,
+      clientAcceptedABid: servicoViewModel.clientAcceptedABid,
+      waitingPayment: servicoViewModel.waitingPayment,
+      payed: servicoViewModel.payed,
+      doing: servicoViewModel.doing,
+      concluded:servicoViewModel.concluded,
+      emDisputa: servicoViewModel.emDisputa,
+      reembolsado: servicoViewModel.reembolsado,
+      disputaFinalizada: servicoViewModel.disputaFinalizada,
+      id: '',
+    );
+
+    servicoController.atualizarServico(updatedService);
+  }
+
+/*    Future<List<ServicoViewModel>> getListServicos() async {
     List<ServicoViewModel> list_all_servicos = [];  // plumber pest control
 
       WorkerViewModel worker = await WorkerProvider().getWorker();
@@ -137,7 +175,7 @@ class ServicoProvider with ChangeNotifier {
     list_servicos = list_all_servicos;
 
       return list_all_servicos;
-  }
+  }*/
 
 /*  Stream<List<ServicoViewModel>> getListServicoss() {
     Stream<List<ServicoViewModel>> servicosStream = ServicoController().fetchServicosStream();
@@ -151,7 +189,7 @@ class ServicoProvider with ChangeNotifier {
     return filteredStream;
   }*/
 
-  Future<List<ServicoViewModel>> getlistLeadsNotAcceptedYet() async {
+/*  Future<List<ServicoViewModel>> getlistLeadsNotAcceptedYet() async {
       List <ServicoViewModel> notAcceptedYet = [];
       List<ServicoViewModel> list_all_servicos = await getListServicos();
       for(int i = 0; i < list_all_servicos.length; i++){
@@ -164,9 +202,9 @@ class ServicoProvider with ChangeNotifier {
       listLeadsNotAcceptedYet = notAcceptedYet;
       //notifyListeners();
       return notAcceptedYet;
-    }
+    }*/
 
-    Future<List<ServicoViewModel>> getlistLeadsAccepted() async {
+/*    Future<List<ServicoViewModel>> getlistLeadsAccepted() async {
       listLeadsAccepted.clear();
       List<ServicoViewModel> listLeadsAccepetedOrNot = await getlistLeadsNotAcceptedYet();
       for(int i = 0; i < listLeadsAccepetedOrNot.length; i++){
@@ -175,8 +213,17 @@ class ServicoProvider with ChangeNotifier {
         }
       }
       return listLeadsAccepted;
-    }
+    }*/
 
+  Future showExplanationAllServices(context) => showDialog(
+    context: context,
+    builder: (context) =>  PopUpExplainNameHomeScreen(title: "These are all the services",),
+  );
+
+  Future showExplanationOpenServices(context) => showDialog(
+    context: context,
+    builder: (context) =>  PopUpExplainNameHomeScreen(title: "These are the services you\n waitng for the client to\naccept or not ",),
+  );
 }
 
 

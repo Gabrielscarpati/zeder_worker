@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeder/ui/features/home/views/see_all_services_button.dart';
 import 'package:zeder/ui/widgets/servico/servico_listtile.dart';
+import '../../../../application/provider/servico_provider.dart';
 import '../../../../design_system/widgets/icons.dart';
 import '../../../widgets/servico/servico_viewmodel.dart';
 import '../../show_job_details/show_job_details_screen.dart';
 
-class ListLeadsNotAcceptedYet extends StatelessWidget {
+class CurrentServices extends StatelessWidget {
   final List<ServicoViewModel> servicos;
-  const ListLeadsNotAcceptedYet({Key? key, required this.servicos}) : super(key: key);
+  const CurrentServices({Key? key, required this.servicos}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool allowGetLeads = false;
+    final ServicoProvider provider = context.read<ServicoProvider>();
 
+    bool allowGetLeads = false;
     return Column(
                 children: [
                    Row(
@@ -21,13 +24,14 @@ class ListLeadsNotAcceptedYet extends StatelessWidget {
                     children: [
                        Row(
                         children: [
-                          Text("Open Services", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                          Text("Current services", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                           SizedBox(width: 2,),
                           Transform.scale(
                             scale: 0.7,
                             child: InkWell(
                               child: DSIconFilledSecondarySmall(iconName: 'help'),
                               onTap: (){
+                                provider.showExplanationOpenServices(context,);
 
                               },
                             ),
@@ -36,7 +40,7 @@ class ListLeadsNotAcceptedYet extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 8,),
-                        child: SeeAllServicesButton(title:'Open Services', servicos: servicos, allowGetLeads: allowGetLeads,),
+                        child: SeeAllServicesButton(title:'Current services', servicos: servicos, allowGetLeads: allowGetLeads,),
                       ),
                       //const SizedBox(width: 8,),
                     ],

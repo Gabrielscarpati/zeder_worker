@@ -6,13 +6,19 @@ class PropostasController {
   final _firebase = FirebaseController();
   final _collection = NameCollections.propostasCollection;
 
-  Future<bool> cadastrarProposta(PropostaEntity user) async {
+  Future<bool> cadastrarProposta(PropostaEntity proposta) async {
     try {
-      await _firebase.atualizarDado(
-        data: user,
-        id: user.id,
-        collection: _collection,
-      );
+
+        String id = await _firebase.cadastrarDado(
+          data: proposta,
+          collection: _collection,
+        );
+
+        await _firebase.atualizarDado(
+          data: proposta.copyWith(id:id),
+          id: id,
+          collection: _collection,
+        );
 
       return true;
     } catch (e, stackTrace) {

@@ -4,12 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:zeder/application/provider/pesquisa_cidade_provider.dart';
+import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import '../../data/firebase/firebase_controller.dart';
 import '../../data/user/user_controller.dart';
 import '../../data/user/user_entity.dart';
+import '../../ui/features/SignUp/list_signup_city/choose_city_screen.dart';
 import '../../ui/features/SignUp/save_image.dart';
 import '../../ui/features/SignUp/views/widgets/popUpTermsAndConditions.dart';
 import '../../ui/features/navigation_bar/navigation_bar.dart';
+import '../../ui/widgets/servico_do_app/servico_do_app_viewmodel.dart';
 
 class LogInSignUpProvider with ChangeNotifier {
 
@@ -62,8 +66,8 @@ class LogInSignUpProvider with ChangeNotifier {
       tipoPessoa: "tipoPessoa ?? this.tipoPessoa",
       profile_picture: profilePicture,
       phone: signUpPhone.text.trim(),
-      servicos: [],
-      my_cities: [],
+      servicos: getServicesIds(),
+      my_cities: PesquisaCidadeProvider().selected_cities,
       numberRating1: 0,
       numberRating2: 0,
       numberRating3: 0,
@@ -74,6 +78,35 @@ class LogInSignUpProvider with ChangeNotifier {
     await WorkerController().cadastrarWorker(new_user);
 
     notifyListeners();
+  }
+
+  List<String> getServicesIds(){
+    List<String> serviceIds = [];
+    List<ServicoDoAppViewModel> servicos= TipoServicoProvider().selected_servicos;
+    for (var servico in servicos){
+      serviceIds.add(getIdByServices(service: servico.servico));
+    }
+    print(serviceIds);
+    return serviceIds;
+  }
+
+  String getIdByServices({required String service}){
+    if(service == 'Plumber'){
+      return '1';
+    }else if(service == 'Pest Control'){
+      return '2';
+    }else if(service == 'Roofing'){
+      return '3';
+    }else if(service == 'Salon'){
+      return '4';
+    }
+    else if(service == 'Computer Repair'){
+      return '5';
+    }
+    else if(service == 'Ac Repair'){
+      return '6';
+    }
+    return "";
   }
 
 
@@ -91,6 +124,7 @@ class LogInSignUpProvider with ChangeNotifier {
       await FirebaseManager().registerUser(
         email: provider.signUpEmail.text.trim(),
         password: provider.signUpPassword.text.trim(),
+        context: context,
       );
 
       String profilePicture = await SaveImage(image: image!, path: 'userUrl', id: await getUserId()).saveAndGetUrl();
@@ -105,15 +139,31 @@ class LogInSignUpProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void goSelectCitiesScreen({required BuildContext context}) {
+    final form = provider.formKeyAuthenticationSignUp.currentState!;
+
+    if(provider.isChecked == false) {
+      showDialog(
+          context: context,
+          builder: (context) => PopUpTermsAndConditions()
+      );
+    }
+    else if (form.validate()){
+      Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return const ChooseCityScreen();
+            },
+          )
+      );
+    }
+  }
+
   Future<void> loginUser(BuildContext context)async {
     await FirebaseManager().loginUser(
       email: provider.loginEmail.text.trim(),
       password: provider.loginPassword.text.trim(),
-    );
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => NavigationBarScreen()),
-          (Route<dynamic> route) => false,
+      context: context,
     );
   }
 

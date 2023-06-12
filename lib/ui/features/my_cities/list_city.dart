@@ -1,37 +1,33 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/application/provider/worker_provider.dart';
-import '../../widgets/cities/cities.dart';
+import 'package:zeder/ui/widgets/cities/cities.dart';
+import 'package:zeder/ui/widgets/worker_services/worker_services_listtile.dart';
 import '../../widgets/cities/cities_viewmodel.dart.dart';
-import '../select_service/select_service_screen.dart';
 
-class ListCities extends StatefulWidget {
-  const ListCities({Key? key}) : super(key: key);
+class ListCity extends StatefulWidget {
+  const ListCity({Key? key}) : super(key: key);
 
   @override
-  State<ListCities> createState() => _ListCitiesState();
+  State<ListCity> createState() => _ListCityState();
 }
 
-class _ListCitiesState extends State<ListCities> {
+class _ListCityState extends State<ListCity> {
   @override
   Widget build(BuildContext context) {
     final WorkerProvider _Provider = context.watch<WorkerProvider>();
-    List<CitiesViewModel> cities = _Provider.my_cities;
-
+    List<CitiesViewModel> servicos = _Provider.my_cities;
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(right: 8, left: 8,),
         child: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: cities.length,
+          itemCount: servicos.length,
           itemBuilder: (context, index) {
             return CitiesListTile(
-              viewModel: cities[index],
+              viewModel: servicos[index],
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SelectServiceScreen()),
-                );
+
               },
             );
           },

@@ -24,6 +24,7 @@ class WorkerProvider with ChangeNotifier {
 
   List<CitiesViewModel> my_cities = [];
   List<WorkerServicesViewModel> my_services = [];
+  List<dynamic> servicosIDS = [];
 
   Future<WorkerViewModel> getWorker() async {
     WorkerEntity workerEntity = await WorkerController().buscarWorker(firebaseController.getCurrentUser()!.uid);
@@ -40,17 +41,35 @@ class WorkerProvider with ChangeNotifier {
     );
     get_servicos(servicos: workerEntity.servicos);
     my_cities.clear();
-    my_services.clear();
     for(int i = 0; i < workerViewModel.my_services.length; i++){
-      my_services.add(WorkerServicesViewModel(icone: 'city', servico: workerViewModel.my_services[i]));
+      my_services.add(WorkerServicesViewModel(icone: 'city', servico: getServicesByID(id:workerViewModel.my_services[i])));
     }
     for(int i = 0; i < workerViewModel.my_cities.length; i++){
       my_cities.add(CitiesViewModel(icon: 'city', city_name: workerViewModel.my_cities[i]));
     }
-   // notifyListeners();
-
+    servicosIDS = workerViewModel.servicos_id;
     return workerViewModel;
   }
+
+  String getServicesByID({required String id}){
+    if(id == '1'){
+      return 'Plumber';
+    }else if(id == '2'){
+      return 'Pest Control';
+    }else if(id == '3'){
+      return 'Roofing';
+    }else if(id == '4'){
+      return 'Salon';
+    }else if(id == '5'){
+      return 'Computer Repair';
+    }else if(id == '6'){
+      return 'Ac Repair';
+    }
+    return "";
+  }
+
+
+
 }
 
 

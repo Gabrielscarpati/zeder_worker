@@ -22,7 +22,7 @@ class MakeLeadBody extends StatelessWidget {
         key: provider.formKeyAuthenticationLead,
         child: Column(
           children: [
-            StandardController(
+            /*StandardController(
               nameController: provider.priceController,
               hint: 'Type the price here?',
               validator: validateEmail,
@@ -39,7 +39,7 @@ class MakeLeadBody extends StatelessWidget {
               sufixIcon: Icons.close,
               deleteOrHide: 'delete',
               title: 'When is your starting date',
-            ),
+            ),*/
           ],
         ),
       ),

@@ -15,16 +15,31 @@ class PesquisaCidadeProvider with ChangeNotifier {
 
   List<Map<String, dynamic>> list_all_cities = CidadeRepo().cidade_repo_list;
   List<CitiesViewModel> list_cities_screen = [];
+  List<CitiesViewModel> selected_cities = [];
+
+  void addSelectedCity(CitiesViewModel city){
+    selected_cities.add(city);
+    notifyListeners();
+  }
+
+  void removeSelectedCity(CitiesViewModel city){
+    selected_cities.remove(city);
+    notifyListeners();
+  }
 
   String user_chosen_city ='';
 
+  bool listInitialized = false;
   List<CitiesViewModel> getListaDeCidadesViewModel(){
     List<CitiesViewModel> tiposServicoViewModel = [];
     for(int i = 0; i < list_all_cities.length; i++ ) {
       CidadeEntity tipoServicoEntity = CidadeEntity.fromJson(list_all_cities[i]);
       tiposServicoViewModel.add(CitiesViewModel(icon: 'city',city_name: "${tipoServicoEntity.nome}, ${tipoServicoEntity.uf}"));
     }
-    list_cities_screen= tiposServicoViewModel;
+    if(!listInitialized){
+      list_cities_screen= tiposServicoViewModel;
+    }
+    listInitialized = true;
     return tiposServicoViewModel;
   }
 

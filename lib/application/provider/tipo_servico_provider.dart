@@ -17,6 +17,17 @@ class TipoServicoProvider with ChangeNotifier {
 
   List<Map<String, dynamic>> list_all_services = TipoServiceRepo().tipo_servico_repo;
   List<ServicoDoAppViewModel> list_servicos_screen = [];
+  List<ServicoDoAppViewModel> selected_servicos = [];
+
+  void addSelectedService(ServicoDoAppViewModel servico){
+    selected_servicos.add(servico);
+    notifyListeners();
+  }
+
+  void removeSelectedService(ServicoDoAppViewModel servico){
+    selected_servicos.remove(servico);
+    notifyListeners();
+  }
 
   String user_chosen_servico ='';
 

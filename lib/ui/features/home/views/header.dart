@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeder/ui/features/home/views/show_worker_cities.dart';
 import 'package:zeder/ui/features/home/views/show_worker_services.dart';
+import '../../../../application/provider/servico_provider.dart';
 import '../../../widgets/client/client_viewmodel.dart';
 import '../../user_profile/view/user_profile_screen.dart';
 
@@ -15,7 +17,7 @@ class Header extends StatefulWidget {
 class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
-
+    ServicoProvider servicoProvider = Provider.of<ServicoProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -57,6 +59,7 @@ class _HeaderState extends State<Header> {
                 ),
               ),
               onTap: () {
+               // servicoProvider.criarServico();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ProfilePage(user: widget.client,)),

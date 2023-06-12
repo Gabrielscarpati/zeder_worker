@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zeder/ui/features/select_service/select_service_screen.dart';
 
+import '../../ui/features/my_service/select_service_screen.dart';
 import '../parameters/colors.dart';
 
 class SearchBarButton extends StatefulWidget {
@@ -20,7 +20,7 @@ class _SearchBarButtonState extends State<SearchBarButton> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const SelectServiceScreen()),
+            MaterialPageRoute(builder: (context) => const MyServices()),
           );        },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

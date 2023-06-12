@@ -69,9 +69,9 @@ class LeadProvider with ChangeNotifier {
 
   Future<void> addleadFirebase({required ServicoViewModel servico}) async {
     PropostaEntity  new_lead = PropostaEntity(
-        id: 'minhaproposta',
+        id: '',
         idPrestador: firebaseController.getCurrentUser()!.uid,
-        idServico: 'lG72vV9GqWyIVWlMl1jR',
+        idServico: servico.id,
         dataInicio: DateTime.now(),
         valor: double.parse(priceController.text.trim()),
         consideracoes: '',

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zeder/application/provider/servico_provider.dart';
 import 'package:zeder/ui/features/home/views/header.dart';
 import 'package:zeder/ui/features/home/views/list_all_servicos.dart';
+import 'package:zeder/ui/features/home/views/list_all_servicos_empty.dart';
 import 'package:zeder/ui/features/home/views/list_leads_accepted.dart';
 import 'package:zeder/ui/features/home/views/list_servicos_do_prestador.dart';
 import '../../../application/provider/worker_provider.dart';
@@ -11,8 +12,10 @@ import '../../../core/utils/bool_utils.dart';
 import '../../../core/utils/date_utils.dart';
 import '../../../data/firebase/firebase_controller.dart';
 import '../../../data/servico/servico_controller.dart';
+import '../../device_type.dart';
 import '../../widgets/client/client_viewmodel.dart';
 import '../../widgets/servico/servico_viewmodel.dart';
+import 'Widgets/pop_up_explain_names_home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,9 +26,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<WorkerViewModel> clientFuture;
-  late Future<List<ServicoViewModel>> servicosFuture;
-  late Future<List<ServicoViewModel>> listLeadsNotAcceptedYetFuture;
-  late Future<List<ServicoViewModel>> listLeadsAccepted;
   late Stream<Map<String ,List<ServicoViewModel>>> servicosStream;
 
   @override
@@ -33,21 +33,21 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     final WorkerProvider _ClientProvider = context.read<WorkerProvider>();
     clientFuture = _ClientProvider.getWorker();
-    final ServicoProvider _ServicosProvider = context.read<ServicoProvider>();
-    servicosFuture = _ServicosProvider.getListServicos();
-    listLeadsNotAcceptedYetFuture = _ServicosProvider.getlistLeadsNotAcceptedYet();
-    listLeadsAccepted = _ServicosProvider.getlistLeadsAccepted();
     servicosStream = ServicoController().fetchServicosStream();
-
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double padding;
+    DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
+    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
+
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(right: 8, left: 8),
+          padding: EdgeInsets.only(right: padding, left: padding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -93,19 +93,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Text('Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
+                      return const Center(child: SizedBox(height: 50, width: 50,
+                          child: CircularProgressIndicator())
+                      );
                     }
                     Map<String, List<ServicoViewModel>>? servicosMap = snapshot.data;
-
-                    // Access the list from the map using the desired key
                     List<ServicoViewModel>? servicosList = servicosMap?['allAvailableJobs'];
-                    List<ServicoViewModel>? workerWaitingResponse = servicosMap?['workerWaitingResponse'];
-
+                    List<ServicoViewModel>? currentServices = servicosMap?['currentServices'];
                     return Column(
                       children: [
-                         ListAllServicos(servicos: servicosList!),
+                        servicosList!.isEmpty? const ListAllServicosEmpty(title: 'There are no new services available,new\n services can show up at any moment',):
+                         ListAllServicos(servicos: servicosList),
                         const SizedBox(height: 20,),
-                        ListLeadsNotAcceptedYet(servicos: workerWaitingResponse!),
+                        currentServices!.isEmpty? const ListAllServicosEmpty(title: "You are not doing any service right now,\n get a service form the list above",):
+                        CurrentServices(servicos: currentServices),
                       ],
                     );
                   },

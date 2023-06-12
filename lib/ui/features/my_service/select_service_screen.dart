@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/parameters/colors.dart';
-import '../../../application/provider/pesquisa_cidade_provider.dart';
-import 'list_cities.dart';
+import '../../../application/provider/tipo_servico_provider.dart';
+import '../../device_type.dart';
+import 'list_service.dart';
 
-class SelectCityScreen extends StatefulWidget {
-  const SelectCityScreen({Key? key}) : super(key: key);
+class MyServices extends StatefulWidget {
+  const MyServices({Key? key}) : super(key: key);
 
   @override
-  State<SelectCityScreen> createState() => _SelectCityScreenState();
+  State<MyServices> createState() => _MyServicesState();
 }
 
-class _SelectCityScreenState extends State<SelectCityScreen> {
+class _MyServicesState extends State<MyServices> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController passwordController = TextEditingController();
+    double screenWidth = MediaQuery.of(context).size.width;
+    double padding;
+    DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
+    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -22,37 +27,40 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
           Stack(
             children: [
               SizedBox(
+                height: 140,
                 width: double.infinity, // Set the width to occupy the whole screen width
                 child: Image.asset(
                   'assets/cabecario.png',
-                  fit: BoxFit.fitWidth, // Set the fit property to cover the whole space
+                  fit: BoxFit.cover, // Set the fit property to cover the whole space
                 ),
               ),
-               Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('I work in these cities', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only( left: 16, right: 16),
-                    child:Divider(
-                      color: Colors.white,
-                      thickness: 1,
+               Padding(
+                 padding: EdgeInsets.only(right: padding, left: padding),
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 40,
                     ),
-                  ),
-                  CityControllter(cityController: passwordController, hint: "Type the city's name", iconData: Icons.search,),
-                ],
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('My services', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only( left: 16, right: 16),
+                      child:Divider(
+                        color: Colors.white,
+                        thickness: 1,
+                      ),
+                    ),
+                  ],
               ),
+               ),
             ],
           ),
-          const ListCities(),
+          const ListService(),
         ],
       ),
     );
@@ -75,16 +83,15 @@ class _CityControllterState extends State<CityControllter> {
 
   @override
   Widget build(BuildContext context) {
-    final PesquisaCidadeProvider _Provider = context.watch<PesquisaCidadeProvider>();
-
+    final TipoServicoProvider _Provider = context.watch<TipoServicoProvider>();
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.only(left: 16),
       child: SizedBox(
         height: 56,
         child: TextField(
           onChanged: (value) {
             setState(() {
-              _Provider.applicarFiltroNalista(value);
+              _Provider.applicarFiltroNalistaServico(value);
 
             });
           },

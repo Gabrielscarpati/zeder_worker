@@ -3,9 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
+import 'package:zeder/ui/features/SignUp/list_signup_city/choose_city_screen.dart';
+import 'package:zeder/ui/features/SignUp/list_signup_service/choose_service_screen.dart';
 import 'package:zeder/ui/features/SignUp/viewSignUp.dart';
 import 'package:zeder/ui/features/home/home_screen.dart';
 import 'package:zeder/ui/features/navigation_bar/navigation_bar.dart';
+import 'package:zeder/ui/features/navigation_bar/viewNavigationBarScren.dart';
 import 'package:zeder/ui/templates/barra_botoes_media_screen.dart';
 import 'package:zeder/ui/templates/botoes_screen.dart';
 import 'package:zeder/ui/templates/diferenciais_card_screen.dart';
@@ -32,8 +35,6 @@ import 'application/provider/servico_provider.dart';
 import 'application/provider/tipo_servico_provider.dart';
 import 'application/provider/worker_provider.dart';
 import 'data/firebase/firebase_controller.dart';
-import 'data/path_servicos/path_controller.dart';
-import 'infra/repo/path_find_job_repo.dart';
 import 'ui/templates/rodape_confirmar_proposta_screen.dart';
 import 'ui/templates/rodape_fazer_orcamento_screen.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,6 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-      //name: 'name',
       options: const FirebaseOptions(
         apiKey: "AIzaSyCfogb_y9Sd9ODU2eJxf7X2HxMj6H1g_No",
         authDomain: "zeder-8cd2c.firebaseapp.com",
@@ -50,11 +50,10 @@ Future<void> main() async {
         messagingSenderId: "520371543372",
         appId: "1:520371543372:web:adbcddabd1ccd6473583e9",
         measurementId: "G-QWLTB813E6"
-      )
+      ),
+    name: 'name',
   );
 
-  FirebaseManager manager = FirebaseManager();
-  manager.loginUser(email: 'gabrielbrsc15@gmail.com', password: 'Gabriel1234');
 
   //final fcmToken = await FirebaseMessaging.instance.getToken();
   //print("FirebaseMessaging token: $fcmToken");
@@ -68,11 +67,11 @@ Future<void> main() async {
       ChangeNotifierProvider( create: (context) => LeadProvider() ,),
       ChangeNotifierProvider( create: (context) => LogInSignUpProvider() ,),
     ],
+
     child: const MyApp(),
    ),
 
   );
-
 }
 
 class MyApp extends StatelessWidget {
@@ -80,6 +79,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*FirebaseManager manager = FirebaseManager();
+    manager.loginUser(email: 'gabrielbrsc30@gmail.com', password: 'Gabriel1234', context: context);*/
     return MaterialApp(
         title: 'Flutter Demo',
         theme: DSTheme.theme(context),
@@ -87,9 +88,9 @@ class MyApp extends StatelessWidget {
             stream: FirebaseManager().firebaseAuth.authStateChanges(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
-                return NavigationBarScreen();
+                return const ViewNavegationBarScreen();//NavigationBarScreen();
               }
-              return  ViewSignUp();
+              return const ViewSignUp();
         }
       )
     );

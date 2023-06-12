@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/widgets/icons.dart';
-import 'package:zeder/ui/features/select_service/select_service_screen.dart';
 import '../../../../design_system/parameters/colors.dart';
+import '../../my_service/select_service_screen.dart';
 
 class ShowWorkerServices extends StatefulWidget {
   const ShowWorkerServices({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _ShowWorkerServicesState extends State<ShowWorkerServices> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const SelectServiceScreen()),
+                MaterialPageRoute(builder: (context) => const MyServices()),
               );
             },
             splashColor: Colors.transparent,

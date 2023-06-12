@@ -3,8 +3,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../../../design_system/parameters/colors.dart';
 import '../chat/chat_screen.dart';
 import '../home/home_screen.dart';
-import '../select_city/select_city_screen.dart';
-import '../service_history/service_history_view.dart';
+import '../show_list_services_standard/show_current_services_screen.dart';
+import '../show_list_services_standard/show_new_services_screen.dart';
+import '../show_list_services_standard/show_past_services_screen.dart';
 
 class NavigationBarScreen extends StatefulWidget {
   const NavigationBarScreen({super.key});
@@ -17,9 +18,9 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-    const SelectCityScreen(),
-    const ServiceHistoryView(),
-    const ServiceHistoryView(),
+    const ShowNewServicesScreen(),
+    const ShowPastServicesScreen(),
+    const ShowCurrentServicesScreen(),
     const ChatScreen(),
   ];
 
@@ -37,7 +38,6 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items:  <BottomNavigationBarItem>[
-
           BottomNavigationBarItem(
             icon: Icon(Icons.home,
               size: 40,
