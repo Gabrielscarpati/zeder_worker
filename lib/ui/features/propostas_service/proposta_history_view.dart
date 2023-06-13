@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/widgets/proposta/proposta_list.dart';
-import 'package:zeder/ui/widgets/servico/servico_viewmodel.dart';
 import '../../../application/provider/lead_provider.dart';
+import '../../../domain/entities/servico_entity.dart';
 import '../../widgets/proposta/proposta_viewmodel.dart';
 
 class Propostas_service extends StatefulWidget {
-  final ServicoViewModel servico;
+  final ServicoEntity servico;
   const Propostas_service({Key? key, required this.servico}) : super(key: key);
 
   @override

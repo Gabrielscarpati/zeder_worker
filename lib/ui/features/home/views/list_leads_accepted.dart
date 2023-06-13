@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/ui/features/home/views/see_all_services_button.dart';
 import 'package:zeder/ui/features/show_job_details/show_job_details_screen.dart';
+import '../../../../domain/entities/servico_entity.dart';
 import '../../../widgets/servico/servico_listtile.dart';
-import '../../../widgets/servico/servico_viewmodel.dart';
 
 class ListLeadsAccepted extends StatelessWidget {
-  final List<ServicoViewModel> servicos;
+  final List<ServicoEntity> servicos;
   const ListLeadsAccepted({Key? key, required this.servicos}) : super(key: key);
 
   @override

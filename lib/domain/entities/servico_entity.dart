@@ -13,16 +13,10 @@ class ServicoEntity extends Entity {
    final String idClient;
    final String idDisputa;
    final String idWorker;
-   final String idAcceptedLead;
-   final List idsWorkersBid;
    final Map serviceDetails;
    final String service;
    final String idService;
-   final String smallerValue;
-   final String greaterValue;
-   final String acceptedValue;
-   final bool areThereBids;
-   final bool clientAcceptedABid;
+   final String servicePrice;
    final bool waitingPayment;
    final bool payed;
    final bool doing;
@@ -44,17 +38,11 @@ class ServicoEntity extends Entity {
     required this.idClient,
     required this.idDisputa,
     required this.idWorker,
-    required this.idAcceptedLead,
-    required this.idsWorkersBid,
     required this.serviceDetails,
     required this.service,
     required this.idService,
-    required this.smallerValue,
-    required this.greaterValue,
-    required this.acceptedValue,
-    required this.areThereBids,
-    required this.clientAcceptedABid,
-    required this.waitingPayment,
+    required this.servicePrice,
+     required this.waitingPayment,
     required this.payed,
     required this.doing,
     required this.concluded,
@@ -81,16 +69,10 @@ class ServicoEntity extends Entity {
       idClient: json['idClient'] ?? '',
       idDisputa: json['idDisputa'] ?? '',
       idWorker: json['idWorker'] ?? '',
-      idAcceptedLead: json['idAcceptedLead'] ?? '',
-      idsWorkersBid: json['idsWorkersBid'] ?? [],
       serviceDetails: json['serviceDetails'] ?? {},
       service: json['service'] ?? '',
       idService: json['idService'] ?? '',
-      smallerValue: json['smallerValue'] ?? '',
-      greaterValue: json['greaterValue'] ?? '',
-      acceptedValue: json['acceptedValue'] ?? '',
-      areThereBids: BoolUtil.toBoolDefaultFalse(json['areThereBids']),
-      clientAcceptedABid: BoolUtil.toBoolDefaultFalse(json['clientAcceptedABid']),
+      servicePrice: json['servicePrice'] ?? '',
       waitingPayment: BoolUtil.toBoolDefaultFalse(json['waitingPayment']),
       payed: BoolUtil.toBoolDefaultFalse(json['payed']),
       doing: BoolUtil.toBoolDefaultFalse(json['doing']),
@@ -149,15 +131,9 @@ class ServicoEntity extends Entity {
       'idClient': idClient,
       'idDisputa': idDisputa,
       'idWorker': idWorker,
-      'idAcceptedLead': idAcceptedLead,
-      'idsWorkersBid': idsWorkersBid,
       'serviceDetails': serviceDetails,
       'service': service,
       'idService': idService,
-      'smallerValue': smallerValue,
-      'greaterValue': greaterValue,
-      'areThereBids': areThereBids,
-      'clientAcceptedABid': clientAcceptedABid,
       'waitingPayment': waitingPayment,
       'payed': payed,
       'doing': doing,
@@ -190,7 +166,7 @@ class ServicoEntity extends Entity {
     String? idService,
     String? smallerValue,
     String? greaterValue,
-    String? acceptedValue,
+    String? servicePrice,
     bool? areThereBids,
     bool? clientAcceptedABid,
     bool? waitingPayment,
@@ -215,16 +191,10 @@ class ServicoEntity extends Entity {
       idClient: idClient ?? this.idClient,
       idDisputa: idDisputa ?? this.idDisputa,
       idWorker: idWorker ?? this.idWorker,
-      idAcceptedLead: idAcceptedLead ?? this.idAcceptedLead,
-      idsWorkersBid: idsWorkersBid ?? this.idsWorkersBid,
       serviceDetails: serviceDetails ?? this.serviceDetails,
       service: service ?? this.service,
       idService: idService ?? this.idService,
-      smallerValue: smallerValue ?? this.smallerValue,
-      greaterValue: greaterValue ?? this.greaterValue,
-      acceptedValue: acceptedValue ?? this.acceptedValue,
-      areThereBids: areThereBids ?? this.areThereBids,
-      clientAcceptedABid: clientAcceptedABid ?? this.clientAcceptedABid,
+      servicePrice: servicePrice ?? this.servicePrice,
       waitingPayment: waitingPayment ?? this.waitingPayment,
       payed: payed ?? this.payed,
       doing: doing ?? this.doing,
@@ -232,7 +202,6 @@ class ServicoEntity extends Entity {
       emDisputa: emDisputa ?? this.emDisputa,
       reembolsado: reembolsado ?? this.reembolsado,
       disputaFinalizada: disputaFinalizada ?? this.disputaFinalizada,
-
     );
   }
 
@@ -252,16 +221,10 @@ class ServicoEntity extends Entity {
       idClient: json['idClient'] ?? '',
       idDisputa: json['idDisputa'] ?? '',
       idWorker: json['idWorker'] ?? '',
-      idAcceptedLead: json['idAcceptedLead'] ?? '',
-      idsWorkersBid: json['idsWorkersBid'] ?? [],
       serviceDetails: json['serviceDetails'] ?? {},
       service: json['service'] ?? '',
       idService: json['idService'] ?? '',
-      smallerValue: json['smallerValue'] ?? '',
-      greaterValue: json['greaterValue'] ?? '',
-      acceptedValue: json['acceptedValue'] ?? '',
-      areThereBids: BoolUtil.toBoolDefaultFalse(json['areThereBids']),
-      clientAcceptedABid: BoolUtil.toBoolDefaultFalse(json['clientAcceptedABid']),
+      servicePrice: json['servicePrice'] ?? '',
       waitingPayment: BoolUtil.toBoolDefaultFalse(json['waitingPayment']),
       payed: BoolUtil.toBoolDefaultFalse(json['payed']),
       doing: BoolUtil.toBoolDefaultFalse(json['doing']),

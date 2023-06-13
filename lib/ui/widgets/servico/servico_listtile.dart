@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 
+import '../../../domain/entities/servico_entity.dart';
 import 'servico_viewmodel.dart';
 
 abstract class ServicoListTile extends StatelessWidget {
-  final ServicoViewModel viewModel;
+  final ServicoEntity viewModel;
   final VoidCallback onTap;
 
   const ServicoListTile({
@@ -15,7 +16,10 @@ abstract class ServicoListTile extends StatelessWidget {
 
   Widget get icone => DSIconFilledSecondary(iconName: viewModel.icone);
   Widget get titulo => DSTextTitleBoldSecondary(text: viewModel.service);
-  Widget get status => viewModel.flgWorkerSaw ? DSTextSubtitleSecondary(text: 'viewModel.status') : DSTextSubtitleTertiary(text: 'viewModel.status');
+/*
+  Widget get status => viewModel.flgWorkerSaw ? DSTextSubtitleSecondary(text: viewModel.idCity) : DSTextSubtitleTertiary(text: 'viewModel.status');
+*/
+  Widget get status => DSTextSubtitleSecondary(text: viewModel.idCity);
   Widget get valorData => Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -23,8 +27,8 @@ abstract class ServicoListTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: valorTempoCrossAxisAlignment,
             children: [
-              DSTextTitleBoldSecondary(text: viewModel.acceptedValue.toString()),
-              DSTextSubtitleSecondary(text: viewModel.clientGivenDateDateTime.toString()),
+              DSTextTitleBoldSecondary(text: viewModel.servicePrice.toString()+ ' \$'),
+              DSTextSubtitleSecondary(text: viewModel.clientGivenDate.toString().substring(0,10)),
             ],
           ),
           const SizedBox(width: 8),
@@ -52,7 +56,7 @@ class ServicoListTileHorizontal extends ServicoListTile {
         title: titulo,
         subtitle: status,
         trailing: valorData,
-        color: viewModel.flgWorkerSaw ? DSColors.primary : null,
+        color: DSColors.cardColor,
         onTap: onTap,
       ),
     );
@@ -80,7 +84,7 @@ class ServicoListTileVertical extends ServicoListTile {
         title: titulo,
         icon: icone,
         footer: valorData,
-        color: viewModel.flgWorkerSaw ? DSColors.primary : null,
+        color: DSColors.primary,
         onTap: onTap,
       ),
     );

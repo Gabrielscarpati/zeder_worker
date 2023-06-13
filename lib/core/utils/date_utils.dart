@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class DateUtil {
   static final DateTime dateZero = DateTime(0);
 
@@ -72,3 +74,12 @@ extension DateUtils on DateTime {
     return toString();
   }
 }
+
+
+DateTime convertTimestampToDateTime(Timestamp timestamp) {
+  DateTime date = timestamp.toDate();
+  return date;
+}
+
+
+

@@ -1,21 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zeder/application/provider/servico_provider.dart';
 import 'package:zeder/ui/features/home/views/header.dart';
 import 'package:zeder/ui/features/home/views/list_all_servicos.dart';
 import 'package:zeder/ui/features/home/views/list_all_servicos_empty.dart';
-import 'package:zeder/ui/features/home/views/list_leads_accepted.dart';
 import 'package:zeder/ui/features/home/views/list_servicos_do_prestador.dart';
 import '../../../application/provider/worker_provider.dart';
-import '../../../core/utils/bool_utils.dart';
-import '../../../core/utils/date_utils.dart';
-import '../../../data/firebase/firebase_controller.dart';
 import '../../../data/servico/servico_controller.dart';
+import '../../../domain/entities/servico_entity.dart';
 import '../../device_type.dart';
 import '../../widgets/client/client_viewmodel.dart';
-import '../../widgets/servico/servico_viewmodel.dart';
-import 'Widgets/pop_up_explain_names_home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<WorkerViewModel> clientFuture;
-  late Stream<Map<String ,List<ServicoViewModel>>> servicosStream;
+  late Stream<Map<String ,List<ServicoEntity>>> servicosStream;
 
   @override
   void initState() {
@@ -85,9 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
                ),*/
               Container(
                 height: 514,
-                child: StreamBuilder<Map<String, List<ServicoViewModel>>>(
+                child: StreamBuilder<Map<String, List<ServicoEntity>>>(
                   stream: servicosStream,
-                  builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoViewModel>>> snapshot) {
+                  builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoEntity>>> snapshot) {
 
                     if (snapshot.hasError) {
                       return const Text('Something went wrong');
@@ -97,9 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CircularProgressIndicator())
                       );
                     }
-                    Map<String, List<ServicoViewModel>>? servicosMap = snapshot.data;
-                    List<ServicoViewModel>? servicosList = servicosMap?['allAvailableJobs'];
-                    List<ServicoViewModel>? currentServices = servicosMap?['currentServices'];
+                    Map<String, List<ServicoEntity>>? servicosMap = snapshot.data;
+                    List<ServicoEntity>? servicosList = servicosMap?['allAvailableJobs'];
+                    List<ServicoEntity>? currentServices = servicosMap?['currentServices'];
                     return Column(
                       children: [
                         servicosList!.isEmpty? const ListAllServicosEmpty(title: 'There are no new services available,new\n services can show up at any moment',):

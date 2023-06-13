@@ -112,7 +112,7 @@ class ServicoController {
               idService: data['idService'] ?? '',
               smallerValue: data['smallerValue'] ?? '',
               greaterValue: data['greaterValue'] ?? '',
-              acceptedValue: data['acceptedValue'] ?? '',
+              servicePrice: data['servicePrice'] ?? '',
               areThereBids: BoolUtil.toBoolDefaultFalse(data['areThereBids']),
               clientAcceptedABid: BoolUtil.toBoolDefaultFalse(data['clientAcceptedABid']),
               waitingPayment: BoolUtil.toBoolDefaultFalse(data['waitingPayment']),
@@ -148,50 +148,37 @@ class ServicoController {
     });
   }*/
 
-  Future<List<ServicoViewModel>> getlistJobsWorkerWatingGetOrNot( List<ServicoViewModel> list_all_servicos) async {
-    FirebaseController firebaseController = FirebaseController();
-    List <ServicoViewModel> notAcceptedYet = [];
-    for(int i = 0; i < list_all_servicos.length; i++){
-      for(int j = 0; j < list_all_servicos[i].idsWorkersBid.length; j++){
-        if(list_all_servicos[i].idsWorkersBid[j] == firebaseController.getCurrentUser()!.uid){
-          notAcceptedYet.add(list_all_servicos[i]);
-        }
-      }
-    }
-    return notAcceptedYet;
-  }
 
   WorkerProvider workerProvider = WorkerProvider();
 
-  Stream<Map<String, List<ServicoViewModel>>> checkThisIsAWorkerServiceElseRemove(Stream<List<ServicoViewModel>> servicos) {
+  Stream<Map<String, List<ServicoEntity>>> checkThisIsAWorkerServiceElseRemove(Stream<List<ServicoEntity>> servicos) {
     FirebaseController firebaseController = FirebaseController();
-    List<ServicoViewModel> allAvailableJobs = [];
-    List<ServicoViewModel> currentServices = [];
-    List<ServicoViewModel> pastJobs = [];
-    Map<String, List<ServicoViewModel>> map_padrao_empty = {
+    List<ServicoEntity> allAvailableJobs = [];
+    List<ServicoEntity> currentServices = [];
+    List<ServicoEntity> pastJobs = [];
+    Map<String, List<ServicoEntity>> map_padrao_empty = {
       'allAvailableJobs': [],
       'currentServices': [],
       'pastJobs': [],
     };
 
-    StreamController<Map<String, List<ServicoViewModel>>> controller = StreamController<Map<String, List<ServicoViewModel>>>();
+    StreamController<Map<String, List<ServicoEntity>>> controller = StreamController<Map<String, List<ServicoEntity>>>();
 
-    servicos.listen((List<ServicoViewModel> snapshot) {
+    servicos.listen((List<ServicoEntity> snapshot) {
       WorkerProvider workerProvider = WorkerProvider();
       for (var serviceSnapshot in snapshot) {
         bool addServiceCity = false;
         bool addServiceServiceId = false;
-        /*print(workerProvider.my_cities);
-         print(workerProvider.my_services);*/
+
         for (CitiesViewModel city in workerProvider.my_cities) {
           if (city.city_name == serviceSnapshot.idCity) {
             addServiceCity = true;
             break;
           }
         }
+
         for (WorkerServicesViewModel service in workerProvider.my_services) {
-          if (service.servico ==
-              workerProvider.getServicesByID(id: serviceSnapshot.idService)) {
+          if (service.servico == workerProvider.getServicesByID(id: serviceSnapshot.idService)) {
             addServiceServiceId = true;
             break;
           }
@@ -211,7 +198,7 @@ class ServicoController {
               firebaseController.getCurrentUser()!.uid) {
             pastJobs.add(serviceSnapshot);
           }
-          Map<String, List<ServicoViewModel>> map_all_Status = {
+          Map<String, List<ServicoEntity>> map_all_Status = {
             'allAvailableJobs': allAvailableJobs,
             'currentServices': currentServices,
             'pastJobs': pastJobs,
@@ -229,15 +216,15 @@ class ServicoController {
   }
 
 
-  Stream<Map<String, List<ServicoViewModel>>> fetchServicosStream() {
+  Stream<Map<String, List<ServicoEntity>>> fetchServicosStream() {
     CollectionReference servicosCollection = FirebaseFirestore.instance.collection('servico');
 
-    StreamController<Map<String, List<ServicoViewModel>>> controller = StreamController<Map<String, List<ServicoViewModel>>>();
+    StreamController<Map<String, List<ServicoEntity>>> controller = StreamController<Map<String, List<ServicoEntity>>>();
 
     servicosCollection.snapshots().listen((QuerySnapshot snapshot) {
-      List<ServicoViewModel> servicosList = processSnapshot(snapshot);
-      Stream<Map<String, List<ServicoViewModel>>> servicos_map = checkThisIsAWorkerServiceElseRemove(Stream.value(servicosList));
-      servicos_map.listen((Map<String, List<ServicoViewModel>> servicos) {
+      List<ServicoEntity> servicosList = processSnapshot(snapshot);
+      Stream<Map<String, List<ServicoEntity>>> servicos_map = checkThisIsAWorkerServiceElseRemove(Stream.value(servicosList));
+      servicos_map.listen((Map<String, List<ServicoEntity>> servicos) {
         controller.add(servicos);
       });
     });
@@ -245,8 +232,8 @@ class ServicoController {
     return controller.stream;
   }
 
-  List<ServicoViewModel> processSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map<ServicoViewModel>((DocumentSnapshot document) {
+  List<ServicoEntity> processSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map<ServicoEntity>((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
       return createServicoViewModel(data);
@@ -254,17 +241,13 @@ class ServicoController {
     ).toList();
   }
 
-  ServicoViewModel createServicoViewModel(Map<String, dynamic> data,) {
-    ServicoViewModel newServico =  ServicoViewModel(
+  ServicoEntity createServicoViewModel(Map<String, dynamic> data,) {
+    ServicoEntity newServico =  ServicoEntity(
       id: data['id'],
-      dataPropostaFeitaDateTime: data['dataPropostaFeita'] ?? Timestamp.now().toDate(),
-      dataPropostaAceitaDateTime: data['dataPropostaAceita'] ?? Timestamp.now().toDate(),
-      dataPagamentoDateTime:data['dataPagamento'] ?? Timestamp.now().toDate(),
-      clientGivenDateDateTime: data['clientGivenDate'] ?? Timestamp.now().toDate(),
-      dataPropostaFeitaString: DateUtil.toDateTimeDefaultDateZero(data['dataPropostaFeita']).toString().substring(0, 5),
-      dataPropostaAceitaString: DateUtil.toDateTimeDefaultDateZero(data['dataPropostaAceita']).toString().substring(0, 5),
-      dataPagamentoString: DateUtil.toDateTimeDefaultDateZero(data['dataPagamento']).toString().substring(0, 5),
-      clientGivenDateString: DateUtil.toDateTimeDefaultDateZero(data['clientGivenDate']).toString().substring(0, 5),
+      dataPropostaFeita: convertTimestampToDateTime(data['dataPropostaFeita']),
+      dataPropostaAceita: convertTimestampToDateTime(data['dataPropostaAceita']),
+      dataPagamento: convertTimestampToDateTime(data['dataPagamento']),
+      clientGivenDate:convertTimestampToDateTime(data['clientGivenDate']),
       descricao: data['descricao'] ?? '',
       flgClientSaw: BoolUtil.toBoolDefaultFalse(data['flgClientSaw']),
       flgWorkerSaw: BoolUtil.toBoolDefaultFalse(data['flgWorkerSaw']),
@@ -273,16 +256,10 @@ class ServicoController {
       idClient: data['idClient'] ?? '',
       idDisputa: data['idDisputa'] ?? '',
       idWorker: data['idWorker'] ?? '',
-      idAcceptedLead: data['idAcceptedLead'] ?? '',
-      idsWorkersBid: data['idsWorkersBid'] ?? [],
       serviceDetails: data['serviceDetails'] ?? {},
       service: data['service'] ?? '',
       idService: data['idService'] ?? '',
-      smallerValue: data['smallerValue'] ?? '',
-      greaterValue: data['greaterValue'] ?? '',
-      acceptedValue: data['acceptedValue'] ?? '',
-      areThereBids: BoolUtil.toBoolDefaultFalse(data['areThereBids']),
-      clientAcceptedABid: BoolUtil.toBoolDefaultFalse(data['clientAcceptedABid']),
+      servicePrice: data['servicePrice'] ?? "",
       waitingPayment: BoolUtil.toBoolDefaultFalse(data['waitingPayment']),
       payed: BoolUtil.toBoolDefaultFalse(data['payed']),
       doing: BoolUtil.toBoolDefaultFalse(data['doing']),
@@ -341,7 +318,7 @@ class ServicoController {
       idService: data['idService'] ?? '',
       smallerValue: data['smallerValue'] ?? '',
       greaterValue: data['greaterValue'] ?? '',
-      acceptedValue: data['acceptedValue'] ?? '',
+      servicePrice: data['servicePrice'] ?? '',
       areThereBids: BoolUtil.toBoolDefaultFalse(data['areThereBids']),
       clientAcceptedABid: BoolUtil.toBoolDefaultFalse(data['clientAcceptedABid']),
       waitingPayment: BoolUtil.toBoolDefaultFalse(data['waitingPayment']),

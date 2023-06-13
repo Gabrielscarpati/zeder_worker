@@ -4,10 +4,10 @@ import '../../../../application/provider/lead_provider.dart';
 import '../../../../application/provider/servico_provider.dart';
 import '../../../../design_system/parameters/colors.dart';
 import '../../../../design_system/widgets/buttons.dart';
-import '../../../widgets/servico/servico_viewmodel.dart';
+import '../../../../domain/entities/servico_entity.dart';
 
 class SendProposalBottomBar extends StatelessWidget {
-  final ServicoViewModel servico;
+  final ServicoEntity servico;
   const SendProposalBottomBar({Key? key, required this.servico}) : super(key: key);
 
   @override

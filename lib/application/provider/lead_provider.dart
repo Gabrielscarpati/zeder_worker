@@ -6,6 +6,7 @@ import 'package:zeder/ui/widgets/servico/servico_viewmodel.dart';
 import '../../data/firebase/firebase_controller.dart';
 import '../../data/propostas/proposta_controller.dart';
 import '../../domain/entities/proposta_entity.dart';
+import '../../domain/entities/servico_entity.dart';
 import '../../ui/widgets/proposta/proposta_viewmodel.dart';
 
 class LeadProvider with ChangeNotifier {
@@ -67,7 +68,7 @@ class LeadProvider with ChangeNotifier {
   TextEditingController startingDate = TextEditingController();
 
 
-  Future<void> addleadFirebase({required ServicoViewModel servico}) async {
+  Future<void> addleadFirebase({required ServicoEntity servico}) async {
     PropostaEntity  new_lead = PropostaEntity(
         id: '',
         idPrestador: firebaseController.getCurrentUser()!.uid,

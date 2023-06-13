@@ -26,17 +26,18 @@ class DSCardListTileHorizontal extends StatelessWidget {
       surfaceTintColor: DSColors.cardColor,
       elevation: 0.0,
       child: ListTile(
+        contentPadding: EdgeInsetsGeometry.lerp(
+          EdgeInsets.zero,
+          const EdgeInsets.symmetric(horizontal: 16),
+          0.5,
+        ),
         leading: leading,
         title: title,
         subtitle: subtitle,
         trailing: Container(
-            width: 85,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  trailing,
-          ],
-        )),
+            width: 108,
+            child: trailing
+        ),
         onTap: onTap,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),

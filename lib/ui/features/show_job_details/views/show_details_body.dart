@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zeder/ui/features/show_job_details/views/show_job_details_listviewbuilder.dart';
-import '../../../widgets/servico/servico_viewmodel.dart';
+import '../../../../domain/entities/servico_entity.dart';
 
 class ShowJobDetaisBody extends StatelessWidget {
-  final ServicoViewModel servicoViewModel;
+  final ServicoEntity servicoViewModel;
 
   const ShowJobDetaisBody({Key? key, required this.servicoViewModel}) : super(key: key);
 

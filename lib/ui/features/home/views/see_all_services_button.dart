@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../../design_system/parameters/colors.dart';
 import '../../../../design_system/widgets/icons.dart';
-import '../../../widgets/servico/servico_viewmodel.dart';
+import '../../../../domain/entities/servico_entity.dart';
 import '../../all_services_by_cathegory/List_all_service.dart';
 
 class SeeAllServicesButton extends StatelessWidget {
   final bool allowGetLeads;
   final String title;
-  final List<ServicoViewModel> servicos;
+  final List<ServicoEntity> servicos;
   const SeeAllServicesButton({Key? key, required this.title, required this.servicos, required this.allowGetLeads}) : super(key: key);
 
   @override

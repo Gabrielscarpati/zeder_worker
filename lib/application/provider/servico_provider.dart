@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zeder/application/provider/worker_provider.dart';
 import 'package:zeder/data/firebase/firebase_controller.dart';
-import 'package:zeder/ui/widgets/client/client_viewmodel.dart';
 import '../../data/servico/servico_controller.dart';
 import '../../domain/entities/servico_entity.dart';
 import '../../ui/features/home/Widgets/pop_up_explain_names_home_screen.dart';
-import '../../ui/widgets/servico/servico_viewmodel.dart';
 
 class ServicoProvider with ChangeNotifier {
 
@@ -19,9 +16,9 @@ class ServicoProvider with ChangeNotifier {
   ServicoProvider._internal();
 
   FirebaseController firebaseController = FirebaseController();
-  List<ServicoViewModel> list_servicos = [];  // plumber pest control
-  List<ServicoViewModel> listLeadsNotAcceptedYet = [];
-  List<ServicoViewModel> listLeadsAccepted = [];
+  List<ServicoEntity> list_servicos = [];  // plumber pest control
+  List<ServicoEntity> listLeadsNotAcceptedYet = [];
+  List<ServicoEntity> listLeadsAccepted = [];
   ServicoController servicoController = ServicoController();
 
   void criarServico(){
@@ -33,20 +30,14 @@ class ServicoProvider with ChangeNotifier {
     final flgClientSaw = true;
     final flgWorkerSaw = false;
     final icone = "sample_icon.png";
-    final idCity = "sample_city_id";
+    final idCity = "Tampa";
     final idClient = "sample_client_id";
     final idDisputa = "sample_dispute_id";
     final idWorker = "";
-    final idAcceptedLead = "sample_lead_id";
-    final idsWorkersBid = ['liYZpiChtih9m3ENiARnSqcG8iD3'];
     final serviceDetails = {"detail1": "value1", "detail2": "value2"};
     final service = "plumber";
     final idService = "1";
-    final smallerValue = "10";
-    final greaterValue = "20";
-    final acceptedValue = "15";
-    final areThereBids = true;
-    final clientAcceptedABid = true;
+    final servicePrice = '100.00';
     final waitingPayment = false;
     final payed = false;
     final doing = true;
@@ -68,16 +59,10 @@ class ServicoProvider with ChangeNotifier {
       idClient: idClient,
       idDisputa: idDisputa,
       idWorker: idWorker,
-      idAcceptedLead: idAcceptedLead,
-      idsWorkersBid: idsWorkersBid,
       serviceDetails: serviceDetails,
       service: service,
       idService: idService,
-      smallerValue: smallerValue,
-      greaterValue: greaterValue,
-      acceptedValue: acceptedValue,
-      areThereBids: areThereBids,
-      clientAcceptedABid: clientAcceptedABid,
+      servicePrice: servicePrice,
       waitingPayment: waitingPayment,
       payed: payed,
       doing: doing,
@@ -90,34 +75,32 @@ class ServicoProvider with ChangeNotifier {
     servicoController.cadastrarServico(servicoEntity);
   }
 
-  atualizarServico(ServicoViewModel servicoViewModel) async {
+  atualizarServico(ServicoEntity newService) async {
     ServicoEntity updatedService = ServicoEntity(
-      descricao: servicoViewModel.descricao,
-      flgClientSaw: servicoViewModel.flgClientSaw,
-      flgWorkerSaw: servicoViewModel.flgWorkerSaw,
-      icone: servicoViewModel.icone,
-      idCity:servicoViewModel.idCity,
-      idClient: servicoViewModel.idClient,
-      idDisputa: servicoViewModel.idDisputa,
+      dataPropostaFeita: newService.dataPropostaFeita,
+      dataPropostaAceita: DateTime.now(),
+      dataPagamento: newService.dataPagamento,
+      clientGivenDate: newService.clientGivenDate,
+      descricao: newService.descricao,
+      flgClientSaw: newService.flgClientSaw,
+      flgWorkerSaw: newService.flgWorkerSaw,
+      icone: newService.icone,
+      idCity: newService.idCity,
+      idClient: newService.idClient,
+      idDisputa: newService.idDisputa,
       idWorker: firebaseController.getCurrentUser()!.uid,
-      idAcceptedLead: servicoViewModel.idAcceptedLead,
-      idsWorkersBid: servicoViewModel.idsWorkersBid,
-      serviceDetails: servicoViewModel.serviceDetails,
-      service: servicoViewModel.service,
-      idService: servicoViewModel.idService,
-      smallerValue:servicoViewModel.smallerValue,
-      greaterValue:servicoViewModel.greaterValue,
-      acceptedValue: servicoViewModel.acceptedValue,
-      areThereBids:servicoViewModel.areThereBids,
-      clientAcceptedABid: servicoViewModel.clientAcceptedABid,
-      waitingPayment: servicoViewModel.waitingPayment,
-      payed: servicoViewModel.payed,
-      doing: servicoViewModel.doing,
-      concluded:servicoViewModel.concluded,
-      emDisputa: servicoViewModel.emDisputa,
-      reembolsado: servicoViewModel.reembolsado,
-      disputaFinalizada: servicoViewModel.disputaFinalizada,
-      id: servicoViewModel.id,
+      serviceDetails: newService.serviceDetails,
+      service: newService.service,
+      idService: newService.idService,
+      servicePrice: newService.servicePrice,
+      waitingPayment: newService.waitingPayment,
+      payed: newService.payed,
+      doing: newService.doing,
+      concluded: newService.concluded,
+      emDisputa: newService.emDisputa,
+      reembolsado: newService.reembolsado,
+      disputaFinalizada: newService.disputaFinalizada,
+      id: newService.id,
     );
 
     await servicoController.atualizarServico(updatedService);
@@ -153,7 +136,7 @@ class ServicoProvider with ChangeNotifier {
             idService: servicoEntities[i].idService,
             smallerValue: servicoEntities[i].smallerValue,
             greaterValue: servicoEntities[i].greaterValue,
-            acceptedValue: servicoEntities[i].acceptedValue,
+            servicePrice: servicoEntities[i].servicePrice,
             areThereBids: servicoEntities[i].areThereBids,
             clientAcceptedABid: servicoEntities[i].clientAcceptedABid,
             waitingPayment: servicoEntities[i].waitingPayment,

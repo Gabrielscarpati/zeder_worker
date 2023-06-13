@@ -12,7 +12,7 @@ class FooterPadraoServicoController extends FooterPadraoController {
   String get descricao => servico.descricao;
 
   @override
-  String get valor => servico.smallerValue == servico.greaterValue ? servico.greaterValue : "${servico.smallerValue} - ${servico.greaterValue}";
+  String get valor => servico.servicePrice == servico.servicePrice ? servico.servicePrice.toString() : "${servico.servicePrice} - ${servico.servicePrice}";
 
   @override
   String get data => 'Amanhã'; // servico.dataInicial.isAtSameMomentAs(servico.dataFinal) ? servico.dataInicial.toString() : "${servico.dataInicial.toString()} - ${servico.dataFinal.toString()}";

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/widgets/servico/servico_listtile.dart';
+import '../../../domain/entities/servico_entity.dart';
 import '../../device_type.dart';
-import '../../widgets/servico/servico_viewmodel.dart';
 import '../propostas_service/proposta_history_view.dart';
 
 class ShowListServicesStandardView extends StatefulWidget {
-  final List<ServicoViewModel>? servicos;
+  final List<ServicoEntity>? servicos;
   final String title;
   final String noServicesFoundTitle;
   const ShowListServicesStandardView({Key? key, required this.servicos, required this.title, required this.noServicesFoundTitle}) : super(key: key);

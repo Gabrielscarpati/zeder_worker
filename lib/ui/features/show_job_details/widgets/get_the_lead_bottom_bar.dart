@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
-import 'package:zeder/ui/features/lead/lead_screen.dart';
-
 import '../../../../application/provider/servico_provider.dart';
-import '../../../widgets/servico/servico_viewmodel.dart';
+import '../../../../domain/entities/servico_entity.dart';
 import '../../propostas_service/proposta_history_view.dart';
 
 class GetTheLeadBottomBar extends StatelessWidget {
   final bool allowGetLeads;
-  final ServicoViewModel servico;
+  final ServicoEntity servico;
   const GetTheLeadBottomBar({Key? key, required this.servico, required this.allowGetLeads}) : super(key: key);
 
   @override

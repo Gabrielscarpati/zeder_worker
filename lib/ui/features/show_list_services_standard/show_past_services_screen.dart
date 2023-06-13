@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zeder/ui/features/show_list_services_standard/show_list_services_standard_view.dart';
 import '../../../data/servico/servico_controller.dart';
-import '../../widgets/servico/servico_viewmodel.dart';
+import '../../../domain/entities/servico_entity.dart';
 
 class ShowPastServicesScreen extends StatefulWidget {
   const ShowPastServicesScreen({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class ShowPastServicesScreen extends StatefulWidget {
 
 
 class _ShowPastServicesScreenState extends State<ShowPastServicesScreen> {
-  late Stream<Map<String ,List<ServicoViewModel>>> servicosStream;
+  late Stream<Map<String ,List<ServicoEntity>>> servicosStream;
 
   @override
   void initState() {
@@ -21,9 +21,9 @@ class _ShowPastServicesScreenState extends State<ShowPastServicesScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Map<String, List<ServicoViewModel>>>(
+    return StreamBuilder<Map<String, List<ServicoEntity>>>(
       stream: servicosStream,
-      builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoViewModel>>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoEntity>>> snapshot) {
 
         if (snapshot.hasError) {
           return Text('Something went wrong');
@@ -31,10 +31,10 @@ class _ShowPastServicesScreenState extends State<ShowPastServicesScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text("Loading");
         }
-        Map<String, List<ServicoViewModel>>? servicosMap = snapshot.data;
+        Map<String, List<ServicoEntity>>? servicosMap = snapshot.data;
 
         // Access the list from the map using the desired key
-        List<ServicoViewModel>? servicosList = servicosMap?['pastJobs'];
+        List<ServicoEntity>? servicosList = servicosMap?['pastJobs'];
 
         return ShowListServicesStandardView(
           servicos: servicosList,

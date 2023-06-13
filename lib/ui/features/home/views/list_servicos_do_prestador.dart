@@ -4,11 +4,11 @@ import 'package:zeder/ui/features/home/views/see_all_services_button.dart';
 import 'package:zeder/ui/widgets/servico/servico_listtile.dart';
 import '../../../../application/provider/servico_provider.dart';
 import '../../../../design_system/widgets/icons.dart';
-import '../../../widgets/servico/servico_viewmodel.dart';
+import '../../../../domain/entities/servico_entity.dart';
 import '../../show_job_details/show_job_details_screen.dart';
 
 class CurrentServices extends StatelessWidget {
-  final List<ServicoViewModel> servicos;
+  final List<ServicoEntity> servicos;
   const CurrentServices({Key? key, required this.servicos}) : super(key: key);
 
   @override
