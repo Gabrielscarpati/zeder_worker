@@ -81,5 +81,11 @@ DateTime convertTimestampToDateTime(Timestamp timestamp) {
   return date;
 }
 
+Timestamp convertDateToTimeStemp(DateTime dateTime) {
+  Timestamp date = Timestamp.fromMillisecondsSinceEpoch(dateTime.millisecondsSinceEpoch);
+  return date;
+}
+
+
 
 

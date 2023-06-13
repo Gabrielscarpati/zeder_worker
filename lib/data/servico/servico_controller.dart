@@ -189,13 +189,11 @@ class ServicoController {
             allAvailableJobs.add(serviceSnapshot);
           }
 
-          if (serviceSnapshot.idWorker ==
-              firebaseController.getCurrentUser()!.uid) {
+          if (serviceSnapshot.idWorker == firebaseController.getCurrentUser()!.uid) {
             currentServices.add(serviceSnapshot);
           }
 
-          if (serviceSnapshot.concluded == true && serviceSnapshot.idWorker ==
-              firebaseController.getCurrentUser()!.uid) {
+          if (serviceSnapshot.concluded == true && serviceSnapshot.idWorker == firebaseController.getCurrentUser()!.uid) {
             pastJobs.add(serviceSnapshot);
           }
           Map<String, List<ServicoEntity>> map_all_Status = {
@@ -223,6 +221,7 @@ class ServicoController {
 
     servicosCollection.snapshots().listen((QuerySnapshot snapshot) {
       List<ServicoEntity> servicosList = processSnapshot(snapshot);
+
       Stream<Map<String, List<ServicoEntity>>> servicos_map = checkThisIsAWorkerServiceElseRemove(Stream.value(servicosList));
       servicos_map.listen((Map<String, List<ServicoEntity>> servicos) {
         controller.add(servicos);

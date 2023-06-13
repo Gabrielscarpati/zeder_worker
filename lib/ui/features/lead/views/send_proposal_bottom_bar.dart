@@ -12,7 +12,6 @@ class SendProposalBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LeadProvider provider = context.watch<LeadProvider>();
     final ServicoProvider servicoProvider = context.watch<ServicoProvider>();
 
     return  Container(
@@ -22,7 +21,6 @@ class SendProposalBottomBar extends StatelessWidget {
           child: DSButtonLargePrimary(
             text: 'Send proposal',
             onPressed: () {
-              //provider.addleadFirebase(servico: servico);
               servicoProvider.atualizarServico(servico);
 
             },

@@ -51,7 +51,7 @@ Future<void> main() async {
         appId: "1:520371543372:web:adbcddabd1ccd6473583e9",
         measurementId: "G-QWLTB813E6"
       ),
-    name: 'name',
+    //name: 'name',
   );
 
 

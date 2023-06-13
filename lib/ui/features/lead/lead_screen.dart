@@ -11,7 +11,7 @@ class MakeLeadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('servicoViewModel.servico'), backgroundColor: DSColors.tertiary,),
+      appBar: AppBar(title: Text(servico.service), backgroundColor: DSColors.tertiary,),
       body: const MakeLeadBody(),
       bottomNavigationBar: SendProposalBottomBar(servico: servico,),
     );

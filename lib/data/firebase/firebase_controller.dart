@@ -306,7 +306,7 @@ Future<List<ServicoViewModel>> fetchServicos() async {
       idService: data['idService'] ?? '',
       smallerValue: data['smallerValue'] ?? '',
       greaterValue: data['greaterValue'] ?? '',
-      servicePrice: data['servicePrice'] ?? '',
+      acceptedValue: data['acceptedValue'] ?? '',
       areThereBids: BoolUtil.toBoolDefaultFalse(data['areThereBids']),
       clientAcceptedABid: BoolUtil.toBoolDefaultFalse(data['clientAcceptedABid']),
       waitingPayment: BoolUtil.toBoolDefaultFalse(data['waitingPayment']),
