@@ -18,6 +18,9 @@ class PesquisaCidadeProvider with ChangeNotifier {
   List<CitiesViewModel> selected_cities = [];
 
   void addSelectedCity(CitiesViewModel city){
+    if(selected_cities.contains(city)){
+      return;
+    }
     selected_cities.add(city);
     notifyListeners();
   }

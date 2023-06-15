@@ -20,6 +20,9 @@ class TipoServicoProvider with ChangeNotifier {
   List<ServicoDoAppViewModel> selected_servicos = [];
 
   void addSelectedService(ServicoDoAppViewModel servico){
+    if(selected_servicos.contains(servico)){
+      return;
+    }
     selected_servicos.add(servico);
     notifyListeners();
   }
