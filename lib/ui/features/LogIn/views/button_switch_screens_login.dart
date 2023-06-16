@@ -52,7 +52,7 @@ class _ButtonSwitchScreensLogInState extends State<ButtonSwitchScreensLogIn> {
             ],
           ),
           onTap: () {
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) {
                     return const ViewSignUp();

@@ -43,6 +43,12 @@ class _MyCitiesState extends State<MyCities> {
                     const SizedBox(
                       height: 40,
                     ),
+                    InkWell(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(Icons.arrow_back, color: Colors.white, size: 28,),
+                    ),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

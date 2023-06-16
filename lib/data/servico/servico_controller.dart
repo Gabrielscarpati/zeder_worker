@@ -189,7 +189,7 @@ class ServicoController {
             allAvailableJobs.add(serviceSnapshot);
           }
 
-          if (serviceSnapshot.idWorker == firebaseController.getCurrentUser()!.uid) {
+          if (serviceSnapshot.idWorker == firebaseController.getCurrentUser()!.uid && serviceSnapshot.concluded == false) {
             currentServices.add(serviceSnapshot);
           }
 

@@ -21,7 +21,7 @@ class SendProposalBottomBar extends StatelessWidget {
           child: DSButtonLargePrimary(
             text: 'Send proposal',
             onPressed: () {
-              servicoProvider.atualizarServico(servico);
+              servicoProvider.setServiceAsCurrent(servico);
 
             },
           ),

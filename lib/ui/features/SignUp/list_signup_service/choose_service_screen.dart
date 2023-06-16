@@ -4,10 +4,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:zeder/application/provider/logInSignUpProvider.dart';
 import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import 'package:zeder/design_system/design_system.dart';
-import 'package:zeder/domain/domain.dart';
-import 'package:zeder/ui/features/SignUp/list_signup_city/standard_list_builder_sign_up.dart';
 import 'package:zeder/ui/features/SignUp/list_signup_service/standard_list_builder_sign_up_service.dart';
-import 'package:zeder/ui/features/home/home_screen.dart';
 import '../../../../application/provider/pesquisa_cidade_provider.dart';
 import '../../../device_type.dart';
 import '../../../widgets/servico_do_app/servico_do_app_viewmodel.dart';
@@ -55,6 +52,12 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
                      SizedBox(
                       height: 40,
                     ),
+                    InkWell(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(Icons.arrow_back, color: Colors.white, size: 28,),
+                    ),
                      Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -95,6 +98,7 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
                   else{
                     await logInSignUpProvider.checkConditionsSignUpUser(context);
                   }
+                  btnController.reset();
                 },
                 buttonText: "FINISH",
                 controller: btnController,

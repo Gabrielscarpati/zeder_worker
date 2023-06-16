@@ -12,8 +12,8 @@ import '../../../widgets/servico/servico_viewmodel.dart';
 import '../Widgets/pop_up_explain_names_home_screen.dart';
 
 class ListAllServicosEmpty extends StatefulWidget {
-  final String title;
-  const ListAllServicosEmpty({Key? key, required this.title}) : super(key: key);
+
+  const ListAllServicosEmpty({Key? key,}) : super(key: key);
 
   @override
   State<ListAllServicosEmpty> createState() => _ListAllServicosEmptyState();
@@ -37,7 +37,8 @@ class _ListAllServicosEmptyState extends State<ListAllServicosEmpty> {
               padding: EdgeInsets.only(top: 8, bottom: 4, left: 8),
               child: Row(
                 children: [
-                  Text("New Services", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+
+                  Text('New Services', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                   SizedBox(width: 2,),
                   Transform.scale(
                     scale: 0.7,
@@ -45,8 +46,7 @@ class _ListAllServicosEmptyState extends State<ListAllServicosEmpty> {
                         child: DSIconFilledSecondarySmall(iconName: 'help'),
                       onTap: (){
                         provider.showExplanationAllServices(context);
-                       // _ServicosProvider.criarServico();
-                      },
+                      }
                     ),
                   ),
                 ],
@@ -62,7 +62,66 @@ class _ListAllServicosEmptyState extends State<ListAllServicosEmpty> {
         Container(
           height: 160,
           child: Center(
-            child: Text(widget.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+            child: Text('There are no new services available,new\n services can show up at any moment', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+          ),
+        ),
+      ],
+    );
+  }
+
+}
+
+
+class ListCurrentServicosEmpty extends StatefulWidget {
+
+  const ListCurrentServicosEmpty({Key? key,}) : super(key: key);
+
+  @override
+  State<ListCurrentServicosEmpty> createState() => _ListCurrentServicosEmptyState();
+}
+
+class _ListCurrentServicosEmptyState extends State<ListCurrentServicosEmpty> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    final ServicoProvider provider = context.read<ServicoProvider>();
+    bool allowGetLeads = false;
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 8, bottom: 4, left: 8),
+              child: Row(
+                children: [
+                  Text('Current Services', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                  SizedBox(width: 2,),
+                  Transform.scale(
+                    scale: 0.7,
+                    child: InkWell(
+                        child: DSIconFilledSecondarySmall(iconName: 'help'),
+                        onTap: (){
+                          provider.showExplanationOpenServices(context);
+                        }
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8,),
+              child: SeeAllServicesButton(title: 'All Available Services', servicos: [], allowGetLeads: allowGetLeads,),
+            ),
+            //const SizedBox(width: 8,),
+          ],
+        ),
+        Container(
+          height: 160,
+          child: Center(
+            child: Text("You are not doing any service right now,\n get a service form the list above", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
           ),
         ),
       ],

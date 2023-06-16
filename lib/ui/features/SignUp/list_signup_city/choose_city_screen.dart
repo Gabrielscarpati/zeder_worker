@@ -42,19 +42,25 @@ class _ChooseCityScreenState extends State<ChooseCityScreen> {
               ),
                Padding(
                  padding: EdgeInsets.only(right: padding, left: padding),
-                 child: const Column(
+                 child:  Column(
                    crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
-                     Row(
+                    InkWell(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(Icons.arrow_back, color: Colors.white, size: 28,),
+                    ),
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('I work in these cities', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
                       ],
                     ),
-                     Padding(
+                     const Padding(
                       padding: EdgeInsets.only( left: 16, right: 16),
                       child:Divider(
                         color: Colors.white,

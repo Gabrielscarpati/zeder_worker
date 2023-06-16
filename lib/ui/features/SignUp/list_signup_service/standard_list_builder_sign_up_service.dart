@@ -27,10 +27,6 @@ class ListBuilderServices extends StatelessWidget {
               viewModel: servicos[index],
               onTap: () {
                 Provider.addSelectedService(servicos[index]);
-                /*Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SelectServiceScreen()),
-                );*/
               },
             );
           },
@@ -47,8 +43,8 @@ class ListBuilderSelectedCities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     PesquisaCidadeProvider Provider = context.watch<PesquisaCidadeProvider>();
-     List<CitiesViewModel> selectedCities = Provider.selected_cities;
+    TipoServicoProvider Provider = context.watch<TipoServicoProvider>();
+     List<ServicoDoAppViewModel> selectedServices = Provider.selected_servicos;
      return SizedBox(
        height: 30,
        width: double.infinity,
@@ -56,7 +52,7 @@ class ListBuilderSelectedCities extends StatelessWidget {
          padding: const EdgeInsets.only(right: 16, left: 16,),
          child: ListView.builder(
            scrollDirection: Axis.horizontal,
-           itemCount: selectedCities.length,
+           itemCount: selectedServices.length,
            itemBuilder: (context, index) {
              return Padding(
                padding: const EdgeInsets.only(right: 8,),
@@ -72,13 +68,13 @@ class ListBuilderSelectedCities extends StatelessWidget {
                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                      crossAxisAlignment: CrossAxisAlignment.center,
                      children: [
-                       DSTextTitleBoldSecondary(text: selectedCities[index].city_name,),
+                       DSTextTitleBoldSecondary(text: selectedServices[index].servico,),
                        const DSIconSmallSecondary(iconName: 'closeCircle',),
                      ],
                    ),
                  ),
                  onTap: () {
-                   Provider.removeSelectedCity(selectedCities[index]);
+                   Provider.removeSelectedService(selectedServices[index]);
                  },
                ),
              );

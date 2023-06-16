@@ -59,11 +59,10 @@ class _HeaderState extends State<Header> {
                 ),
               ),
               onTap: () {
-                servicoProvider.criarServico();
-                /*Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => ProfilePage(user: widget.client,)),
-                );*/
+                );
               }
           ),
         ],

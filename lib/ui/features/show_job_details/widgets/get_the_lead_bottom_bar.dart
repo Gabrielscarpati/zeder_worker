@@ -23,7 +23,8 @@ class GetTheLeadBottomBar extends StatelessWidget {
           ? DSButtonLargePrimary(
             text: 'Get This Lead',
             onPressed: () async {
-              await servicoProvider.atualizarServico(servico);
+              await servicoProvider.setServiceAsCurrent(servico);
+              Navigator.pop(context);
              /* Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => MakeLeadScreen(servico: servico,)),
@@ -31,13 +32,13 @@ class GetTheLeadBottomBar extends StatelessWidget {
             },
           )
          : DSButtonLargePrimary(
-          text: 'See My Lead',
+          text: 'Done',
           onPressed: () {
-            Navigator.push(
+            /*Navigator.push(
               context,
               // professional's lead in this job
               MaterialPageRoute(builder: (context) => Propostas_service(servico: servico,)),
-            );
+            );*/
           },
         ),
       )

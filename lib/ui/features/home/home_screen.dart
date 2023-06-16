@@ -4,6 +4,7 @@ import 'package:zeder/ui/features/home/views/header.dart';
 import 'package:zeder/ui/features/home/views/list_all_servicos.dart';
 import 'package:zeder/ui/features/home/views/list_all_servicos_empty.dart';
 import 'package:zeder/ui/features/home/views/list_servicos_do_prestador.dart';
+import '../../../application/provider/servico_provider.dart';
 import '../../../application/provider/worker_provider.dart';
 import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
@@ -95,11 +96,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<ServicoEntity>? currentServices = servicosMap?['currentServices'];
                     return Column(
                       children: [
-                        servicosList!.isEmpty? const ListAllServicosEmpty(title: 'There are no new services available,new\n services can show up at any moment',):
+                        servicosList!.isEmpty?  ListAllServicosEmpty():
                          ListAllServicos(servicos: servicosList),
                         const SizedBox(height: 20,),
-                        currentServices!.isEmpty? const ListAllServicosEmpty(title: "You are not doing any service right now,\n get a service form the list above",):
-                        CurrentServices(servicos: currentServices),
+                        currentServices!.isEmpty?  ListCurrentServicosEmpty():
+                        CurrentServices(servicos: currentServices), //setServiceAsDone
                       ],
                     );
                   },

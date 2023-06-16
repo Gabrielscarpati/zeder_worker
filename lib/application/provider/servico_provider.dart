@@ -75,7 +75,7 @@ class ServicoProvider with ChangeNotifier {
     servicoController.cadastrarServico(servicoEntity);
   }
 
-  atualizarServico(ServicoEntity newService) async {
+  setServiceAsCurrent(ServicoEntity newService) async {
     ServicoEntity updatedService = ServicoEntity(
       dataPropostaFeita: newService.dataPropostaFeita,
       dataPropostaAceita: DateTime.now(),
@@ -97,6 +97,37 @@ class ServicoProvider with ChangeNotifier {
       payed: newService.payed,
       doing: newService.doing,
       concluded: newService.concluded,
+      emDisputa: newService.emDisputa,
+      reembolsado: newService.reembolsado,
+      disputaFinalizada: newService.disputaFinalizada,
+      id: newService.id,
+    );
+
+    await servicoController.atualizarServico(updatedService);
+  }
+
+  setServiceAsDone(ServicoEntity newService) async {
+    ServicoEntity updatedService = ServicoEntity(
+      dataPropostaFeita: newService.dataPropostaFeita,
+      dataPropostaAceita: newService.dataPropostaAceita,
+      dataPagamento: newService.dataPagamento,
+      clientGivenDate: newService.clientGivenDate,
+      descricao: newService.descricao,
+      flgClientSaw: newService.flgClientSaw,
+      flgWorkerSaw: newService.flgWorkerSaw,
+      icone: newService.icone,
+      idCity: newService.idCity,
+      idClient: newService.idClient,
+      idDisputa: newService.idDisputa,
+      idWorker: newService.idWorker,
+      serviceDetails: newService.serviceDetails,
+      service: newService.service,
+      idService: newService.idService,
+      servicePrice: newService.servicePrice,
+      waitingPayment: newService.waitingPayment,
+      payed: newService.payed,
+      doing: newService.doing,
+      concluded: true,
       emDisputa: newService.emDisputa,
       reembolsado: newService.reembolsado,
       disputaFinalizada: newService.disputaFinalizada,
