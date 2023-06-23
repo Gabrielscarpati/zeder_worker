@@ -20,7 +20,7 @@ class _ViewNavegationBarScreenState extends State<ViewNavegationBarScreen> {
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Show loading screen while waiting for the future to complete
-          print("Wating");
+          print("Esperando ");
           return Scaffold(body: Container(height: 80, width: 80, child: Center(child: const CircularProgressIndicator())));
 
         } else if (snapshot.hasError) {

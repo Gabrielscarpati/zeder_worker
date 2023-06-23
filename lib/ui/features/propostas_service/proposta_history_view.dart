@@ -33,7 +33,7 @@ class _Propostas_serviceState extends State<Propostas_service> {
         backgroundColor: DSColors.scaffoldBackground,
         title: const Column(
           children: [
-            DSTextTitleSecondary(text:'Proposta History',),
+            DSTextTitleSecondary(text:'Histórico de Proposta ',),
             Padding(
               padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
               child: Divider(

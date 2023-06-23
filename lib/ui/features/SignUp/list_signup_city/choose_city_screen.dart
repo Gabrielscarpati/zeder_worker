@@ -97,7 +97,7 @@ class _ChooseCityScreenState extends State<ChooseCityScreen> {
                   );
                   }
                 },
-                text: "CONTINUE"
+                text: "CONTINUAR (2/6)"
               )
             ],
           ),

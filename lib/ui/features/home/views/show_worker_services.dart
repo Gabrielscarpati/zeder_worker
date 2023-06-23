@@ -29,7 +29,7 @@ class _ShowWorkerServicesState extends State<ShowWorkerServices> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(child: Text("What I do ", style: TextStyle(color: DSColors.primary, fontSize: 24, fontWeight: FontWeight.bold),)),
+                SizedBox(child: Text("O que eu faço ", style: TextStyle(color: DSColors.primary, fontSize: 24, fontWeight: FontWeight.bold),)),
                 DSIconPrimary(iconName: 'briefcase'),
                 ]
             ),

@@ -52,7 +52,7 @@ class _MyCitiesState extends State<MyCities> {
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('My Cities', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
+                        Text('Minhas cidades', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
                       ],
                     ),
                     const Padding(

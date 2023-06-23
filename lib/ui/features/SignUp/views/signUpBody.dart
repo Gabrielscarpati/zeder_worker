@@ -26,31 +26,30 @@ class SignUpBody extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: DSColors.scaffoldBackground,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(left: padding,right: padding, top: 44),
-          child: Container(
-            color: DSColors.scaffoldBackground,
-            height: MediaQuery.of(context).size.height,
-            child: Form(
-              key: provider.formKeyAuthenticationSignUp,
-              child: const SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    HeaderSignUp(),
-                    GetSaveImage(),
-                    TextFieldsSingUp(),
-                    CheckboxZeder(),
-                    SizedBox(height: 12,),
-                    ButtonSwitchScreens(),
-                  ],
-                ),
+      body: Padding(
+        padding: EdgeInsets.only(left: padding,right: padding, top: 44),
+        child: Container(
+          color: DSColors.scaffoldBackground,
+          height: MediaQuery.of(context).size.height,
+          child: Form(
+            key: provider.formKeyAuthenticationSignUp,
+            child: const SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  HeaderSignUp(),
+                  GetSaveImage(),
+                  TextFieldsSingUp(),
+                  CheckboxZeder(),
+                  SizedBox(height: 12,),
+                  ButtonSwitchScreens(),
+                ],
               ),
             ),
           ),
         ),
       ),
+      //bottomNavigationBar: ButtonSwitchScreens(),
     );
   }
 }

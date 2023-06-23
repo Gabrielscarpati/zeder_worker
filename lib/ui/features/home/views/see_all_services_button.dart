@@ -24,7 +24,7 @@ class SeeAllServicesButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(child: Text("See All", style: TextStyle(color: DSColors.primary, fontSize: 18, fontWeight: FontWeight.bold,decoration: TextDecoration.underline ),)),
+            SizedBox(child: Text("Ver todos", style: TextStyle(color: DSColors.primary, fontSize: 18, fontWeight: FontWeight.bold,decoration: TextDecoration.underline ),)),
             DSIconSmallPrimary(iconName: 'magnify'),
           ]
       ),

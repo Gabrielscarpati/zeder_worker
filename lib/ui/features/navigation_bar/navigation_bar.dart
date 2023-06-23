@@ -21,7 +21,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     const ShowNewServicesScreen(),
     const ShowPastServicesScreen(),
     const ShowCurrentServicesScreen(),
-    const ChatScreen(),
+    //const ChatScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -42,37 +42,37 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             icon: Icon(Icons.home,
               size: 40,
               color: _selectedIndex==0? DSColors.primary: DSColors.tertiary ,),
-            label: 'Home',
+            label: 'Casa',
             backgroundColor: DSColors.cardColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search,
                 size: 40,
                 color:  _selectedIndex==1? DSColors.primary: DSColors.tertiary),
-            label: 'New Services',
+            label: 'Novos Serviços',
             backgroundColor: DSColors.cardColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(MdiIcons.folderClock,
                 size: 40,
                 color: _selectedIndex==2? DSColors.primary: DSColors.tertiary),
-            label: 'Past Services',
+            label: 'Serviços passados',
             backgroundColor: DSColors.cardColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(MdiIcons.accountHardHat,
                 size: 40,
                 color: _selectedIndex==3? DSColors.primary: DSColors.tertiary),
-            label: 'Current',
+            label: 'Atuais',
             backgroundColor: DSColors.cardColor,
           ),
-          BottomNavigationBarItem(
+          /*BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble,
                 size: 40,
                 color:  _selectedIndex==4? DSColors.primary: DSColors.tertiary),
             label: 'Chat',
             backgroundColor: DSColors.cardColor,
-          ),
+          ),*/
 
         ],
         currentIndex: _selectedIndex,

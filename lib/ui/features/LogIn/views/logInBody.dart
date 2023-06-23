@@ -20,7 +20,7 @@ class LoginBody extends StatelessWidget {
     //          padding: EdgeInsets.only(right: padding, left: padding),
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: DSColors.scaffoldBackground,
       body: SingleChildScrollView(
         child: Padding(

@@ -13,7 +13,6 @@ import '../../ui/features/SignUp/list_signup_city/choose_city_screen.dart';
 import '../../ui/features/SignUp/save_image.dart';
 import '../../ui/features/SignUp/views/widgets/popUpTermsAndConditions.dart';
 import '../../ui/features/SignUp/views/widgets/snackbars.dart';
-import '../../ui/features/navigation_bar/navigation_bar.dart';
 import '../../ui/features/navigation_bar/viewNavigationBarScren.dart';
 import '../../ui/widgets/cities/cities_viewmodel.dart.dart';
 import '../../ui/widgets/servico_do_app/servico_do_app_viewmodel.dart';
@@ -37,15 +36,17 @@ class LogInSignUpProvider with ChangeNotifier {
    GlobalKey<FormState> formKeyAuthenticationSignUp = GlobalKey<FormState>();
   final RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
 
-
   TextEditingController signUpName = TextEditingController();
   TextEditingController signUpPhoneNumber = TextEditingController();
   TextEditingController signUpEmail = TextEditingController();
   TextEditingController signUpPhone = TextEditingController();
+  TextEditingController signUpCPF = TextEditingController();
   TextEditingController signUpPassword = TextEditingController();
   TextEditingController signUpConfirmPassword = TextEditingController();
   TextEditingController loginEmail = TextEditingController();
   TextEditingController loginPassword = TextEditingController();
+  String cpfPicture = "";
+  String proofOfResidencyPicture = "";
 
   Future<void> selectImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -65,8 +66,10 @@ class LogInSignUpProvider with ChangeNotifier {
       id: userId!,
       nome: signUpName.text.trim(),
       email: signUpEmail.text.trim(),
-      cpfCnpj: "cpfCnpj ?? this.cpfCnpj",
-      tipoPessoa: "tipoPessoa ?? this.tipoPessoa",
+      cpfCnpj: signUpCPF.text.trim(),
+      tipoPessoa: "Física",
+      cpfPicture: cpfPicture,
+      proofOfResidencyPicture: proofOfResidencyPicture,
       profile_picture: profilePicture,
       phone: signUpPhone.text.trim(),
       servicos: getServicesIds(),
@@ -149,7 +152,7 @@ class LogInSignUpProvider with ChangeNotifier {
       );
     }
     else if( await checkIfEmailInUse(provider.signUpEmail.text.trim()) == false){
-      ShowSnackBar(context: context).showErrorSnackBar(message: 'This email is already registered.');
+      ShowSnackBar(context: context).showErrorSnackBar(message: 'Esse email já foi cadastrado!');
     }
     else if (form.validate()){
       Navigator.of(context).push(
@@ -187,15 +190,15 @@ class LogInSignUpProvider with ChangeNotifier {
 
   String? validateName(String? value) {
     if (signUpName.text.trim().isEmpty) {
-      return "Enter a valid name";
+      return "Digite um nome válido";
     } else {
       return null;
     }
   }
 
-  String? validatePhone(String? value) {
-    if (signUpPhone.text.trim().isEmpty || !RegExp(r'(^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$)').hasMatch(signUpPhone.text.trim())) {
-      return "Enter a valid name";
+  String? validatePhone(String? value) {//27999553466 11 numeros
+    if (value == null || value.trim().isEmpty || !RegExp(r'^\d{11}$').hasMatch(value.trim())) {
+      return "Digite apenas números, com o\nddd do estado";
     } else {
       return null;
     }
@@ -203,14 +206,14 @@ class LogInSignUpProvider with ChangeNotifier {
 
   String? validateEmail(String? value) {
      if (!EmailValidator.validate(signUpEmail.text.trim())){
-       return  'Invalid Email';
+       return  'Email invalido';
      }
      return null;
   }
 
   String? validatePassword(String? value) {
     if (signUpPassword.text.trim().isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$').hasMatch(signUpPassword.text.trim())) {
-      return "Your password must contain an uppercase and\nlowercase letter and a number and at least 8 characters";
+      return "Sua senha precisa conter uma letra maiúscula,\nminúscula, um número e ter no mínimo 8 caracteres";
     } else {
       return null;
     }
@@ -219,12 +222,52 @@ class LogInSignUpProvider with ChangeNotifier {
 
   String? confirmPassword(String? value) {
     if (signUpPassword.text.trim() != signUpConfirmPassword.text.trim()) {
-      return "The passwords do not match";
+      return "As senhas não coincidem";
     } else {
       return null;
     }
   }
 
+
+  String? validateCPF(String? cpf) {
+    // Remove characters that are not digits
+    cpf = cpf?.replaceAll(RegExp(r'[^\d]'), '');
+
+    // CPF must have 11 digits
+    if (cpf?.length != 11) {
+      return 'O CPF deve conter 11 dígitos.';
+    }
+
+    // Check for repeated digits (e.g., 111.111.111-11)
+    if (RegExp(r'^(\d)\1*$').hasMatch(cpf!)) {
+      return 'CPF inválido com todos os dígitos iguais.';
+    }
+
+    // Validate the CPF using the algorithm
+    List<int> digits = cpf.split('').map(int.parse).toList();
+
+    // Validate the first digit
+    int sum = 0;
+    for (int i = 0; i < 9; i++) {
+      sum += digits[i] * (10 - i);
+    }
+    int firstDigit = (sum * 10) % 11;
+    if (firstDigit != digits[9]) {
+      return 'O primeiro dígito verificador do CPF está incorreto.';
+    }
+
+    // Validate the second digit
+    sum = 0;
+    for (int i = 0; i < 10; i++) {
+      sum += digits[i] * (11 - i);
+    }
+    int secondDigit = (sum * 10) % 11;
+    if (secondDigit != digits[10]) {
+      return 'O segundo dígito verificador do CPF está incorreto.';
+    }
+
+    return null;
+  }
 }
 
 

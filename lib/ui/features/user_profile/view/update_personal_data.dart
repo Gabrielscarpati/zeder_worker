@@ -20,12 +20,10 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
     deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
 
-
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(56),
-        child: AppBarProfile(title: 'Update your personal data',
+        child: AppBarProfile(title: 'Atualize seus dados',
             onTap: () {
             Navigator.pop(context);
           },
@@ -37,7 +35,7 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
           child: Column(
             children: [
               profile_data_widget(
-                title: 'Name',
+                title: 'Nome',
                 iconName: 'account',
                 content: widget.user.nome,
                 onPressed: () {
@@ -53,7 +51,7 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
                 },
               ),
               profile_data_widget(
-                title: 'Phone',
+                title: 'Telefone',
                 iconName: 'phone',
                 content: widget.user.phone,
                 onPressed: () {
@@ -61,7 +59,7 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
                 },
               ),
               profile_data_widget(
-                title: 'Social Security Number',
+                title: 'CPF',
                 iconName: 'id-card',
                 content: widget.user.cpfCnpj,
                 onPressed: () {
@@ -74,7 +72,7 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  texto: 'Done',
+                  texto: 'Pronto',
                 ),
               ),
             ],
@@ -122,67 +120,3 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
     Navigator.push(context, route);
   }
 }
-
-
-/*
-class StandardFormFieldEmail extends StatefulWidget {
-  final TextEditingController? controller;
-  final String hint;
-  final String iconName;
-   StandardFormFieldEmail({Key? key, required this.controller, required this.hint, required this.iconName}) : super(key: key);
-
-  @override
-  State<StandardFormFieldEmail> createState() => _StandardFormFieldEmailState();
-}
-
-class _StandardFormFieldEmailState extends State<StandardFormFieldEmail> {
-  @override
-  Widget build(BuildContext context) {
-    final ClientProvider _Provider = context.watch<ClientProvider>();
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: SizedBox(
-        height: 56,
-        child: TextFormField(
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-          onChanged: (value) {
-            setState(() {
-              //_Provider.applicarFiltroNalista(value);
-            });
-          },
-          textAlignVertical: TextAlignVertical.center,
-          style: const TextStyle(
-            fontSize: 16,
-            color: DSColors.tertiary,
-          ),
-          controller: widget.controller,
-          cursorColor: Colors.indigoAccent,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none,
-            ),
-            filled: true,
-            fillColor: Colors.white,
-            hintText: widget.hint,
-            hintStyle: const TextStyle(
-              fontSize: 16,
-              color: DSColors.tertiary,
-            ),
-
-            prefixIcon: DSIconPrimary(iconName: widget.iconName,),
-          ),
-          keyboardType: TextInputType.emailAddress,
-        ),
-      ),
-    );
-  }
-}
-
-*/

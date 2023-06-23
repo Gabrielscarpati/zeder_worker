@@ -18,7 +18,7 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
 
     String? validateEmail(String? value) {
       if (value == null || value.isEmpty) {
-        return 'Please enter some text';
+        return 'Por favor, digite seu email';
       }
       return null;
     }
@@ -39,8 +39,8 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
                 deleteOrHide: 'delete',
               ),
               StandardController(
-                title: 'Email',
-                hint: 'Password',
+                title: 'Senha',
+                hint: 'Digite sua senha',
                 nameController: provider.loginPassword,
                 validator: validateEmail,
                 prefixIcon: Icons.lock,

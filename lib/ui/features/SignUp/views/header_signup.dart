@@ -14,7 +14,7 @@ class _HeaderSignUpState extends State<HeaderSignUp> {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        DSTextTitleBoldSecondary(text: "Welcome back"),
+        DSTextTitleBoldSecondary(text: "Bem vindo"),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zeder/design_system/design_system.dart';
 
 class PopUpTermsAndConditions extends StatelessWidget {
   const PopUpTermsAndConditions({Key? key}) : super(key: key);
@@ -7,9 +8,9 @@ class PopUpTermsAndConditions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Accept terms and conditions\nto Sign Up!',
+      title: const Text('Aceite os termos e condições para\nse  Cadastrar!',
         textAlign: TextAlign.center ,
-        style: TextStyle(color: Color(0xff397f3f),
+        style: TextStyle(color: DSColors.primary,
             fontWeight: FontWeight.bold,
             fontSize: 28),
       ),
@@ -19,9 +20,7 @@ class PopUpTermsAndConditions extends StatelessWidget {
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color(0xff397f3f),
-                    Color(0xff397f3f),
-                    Color(0xff397f3f)
+                    DSColors.primary
                   ],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,

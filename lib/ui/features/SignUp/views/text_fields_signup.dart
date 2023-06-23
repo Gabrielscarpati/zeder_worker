@@ -16,22 +16,16 @@ class _TextFieldsSingUpState extends State<TextFieldsSingUp> {
   @override
   Widget build(BuildContext context) {
 
-    String? validateEmail(String? value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter some text';
-      }
-      return null;
-    }
-
     final provider = context.read<LogInSignUpProvider>();
 
     return SizedBox(
+      width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
             children: [
               StandardController(
-                title: 'First Name',
-                hint: 'First Name',
+                title: 'Nome completo',
+                hint: 'Digite seu nome completo',
                 nameController: provider.signUpName,
                 validator: provider.validateName,
                 prefixIcon: Icons.person,
@@ -39,11 +33,20 @@ class _TextFieldsSingUpState extends State<TextFieldsSingUp> {
                 deleteOrHide: 'delete',
               ),
               StandardController(
-                title: 'Phone',
-                hint: 'Phone Number',
+                title: 'Telefone',
+                hint: 'Digite seu telefone',
                 nameController: provider.signUpPhone,
                 validator: provider.validatePhone,
                 prefixIcon: Icons.phone,
+                sufixIcon:  Icons.close,
+                deleteOrHide: 'delete',
+              ),
+              StandardController(
+                title: 'CPF',
+                hint: 'Digite seu CPF',
+                nameController: provider.signUpCPF,
+                validator: provider.validateEmail, //mudar
+                prefixIcon: Icons.call_to_action,
                 sufixIcon:  Icons.close,
                 deleteOrHide: 'delete',
               ),
@@ -57,8 +60,8 @@ class _TextFieldsSingUpState extends State<TextFieldsSingUp> {
                 deleteOrHide: 'delete',
               ),
               StandardController(
-                title: 'Password',
-                hint: 'Password',
+                title: 'Senha',
+                hint: 'Digite sua senha',
                 nameController: provider.signUpPassword,
                 validator: provider.validatePassword,
                 prefixIcon: Icons.lock,
@@ -66,8 +69,8 @@ class _TextFieldsSingUpState extends State<TextFieldsSingUp> {
                 deleteOrHide: 'hide',
               ),
               StandardController(
-                title: 'Confirm Password',
-                hint: 'Confirm Password',
+                title: 'Confirmar senha',
+                hint: 'Confirme sua senha',
                 nameController: provider.signUpConfirmPassword,
                 validator: provider.confirmPassword,
                 prefixIcon: Icons.lock_reset,

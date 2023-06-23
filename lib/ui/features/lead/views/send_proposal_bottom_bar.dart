@@ -19,7 +19,7 @@ class SendProposalBottomBar extends StatelessWidget {
         color: DSColors.cardColor,
         child: Center(
           child: DSButtonLargePrimary(
-            text: 'Send proposal',
+            text: 'Enviar proposta',
             onPressed: () {
               servicoProvider.setServiceAsCurrent(servico);
 

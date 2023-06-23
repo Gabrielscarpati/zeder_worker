@@ -15,7 +15,7 @@ class PopUpExplainNameHomeScreen extends StatelessWidget {
           child: DSButtonSmallPrimary(onPressed:(){
             Navigator.pop(context);
           },
-              text: "Okay"),
+              text: "Ok"),
         )
       ],
     );

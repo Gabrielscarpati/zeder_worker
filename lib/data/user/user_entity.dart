@@ -7,6 +7,9 @@ class WorkerEntity extends Entity<WorkerEntity> {
   final String tipoPessoa;
   final String profile_picture;
   final String phone;
+  final String cpfPicture;
+  final String proofOfResidencyPicture;
+
   final List servicos;
   final List my_cities;
   final int numberRating1;
@@ -30,6 +33,9 @@ class WorkerEntity extends Entity<WorkerEntity> {
     required this.numberRating3,
     required this.numberRating4,
     required this.numberRating5,
+    required this.cpfPicture,
+    required this.proofOfResidencyPicture,
+
   });
 
   factory WorkerEntity.fromJson(Map<String, dynamic> json) {
@@ -48,6 +54,8 @@ class WorkerEntity extends Entity<WorkerEntity> {
       numberRating3: json['numberRating3'] ?? 0,
       numberRating4: json['numberRating4'] ?? 0,
       numberRating5: json['numberRating5'] ?? 0,
+      cpfPicture: json['cpfPicture'] ?? '',
+      proofOfResidencyPicture: json['proofOfResidencyPicture'] ?? '',
     );
   }
 
@@ -67,6 +75,8 @@ class WorkerEntity extends Entity<WorkerEntity> {
       'numberRating3': numberRating3,
       'numberRating4': numberRating4,
       'numberRating5': numberRating5,
+      'cpfPicture': cpfPicture,
+      'proofOfResidencyPicture': proofOfResidencyPicture,
     };
   }
 
@@ -85,6 +95,9 @@ class WorkerEntity extends Entity<WorkerEntity> {
     int? numberRating3,
     int? numberRating4,
     int? numberRating5,
+    String? proofOfResidencyPicture,
+    String? cpfPicture,
+
 
   }) {
     return WorkerEntity(
@@ -102,6 +115,8 @@ class WorkerEntity extends Entity<WorkerEntity> {
       numberRating3: numberRating3 ?? this.numberRating3,
       numberRating4: numberRating4 ?? this.numberRating4,
       numberRating5: numberRating5 ?? this.numberRating5,
+      cpfPicture: cpfPicture ?? this.cpfPicture,
+      proofOfResidencyPicture: proofOfResidencyPicture ?? this.proofOfResidencyPicture,
     );
   }
 

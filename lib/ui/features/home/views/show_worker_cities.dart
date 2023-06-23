@@ -32,7 +32,7 @@ class _ShowWorkerCitiesState extends State<ShowWorkerCities> {
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(child: Text("My cities", style: TextStyle(color: DSColors.primary, fontSize: 24, fontWeight: FontWeight.bold),)),
+            SizedBox(child: Text("Minhas cidades", style: TextStyle(color: DSColors.primary, fontSize: 24, fontWeight: FontWeight.bold),)),
             DSIconPrimary(iconName: 'map-marker'),
             ]
         ),

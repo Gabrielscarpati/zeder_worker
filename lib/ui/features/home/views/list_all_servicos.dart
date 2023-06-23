@@ -34,7 +34,7 @@ class _ListAllServicosState extends State<ListAllServicos> {
               padding: EdgeInsets.only(top: 8, bottom: 4, left: 8),
               child: Row(
                 children: [
-                  Text("New Services", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                  Text("Novos serviços", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                   SizedBox(width: 2,),
                   Transform.scale(
                     scale: 0.7,
@@ -51,7 +51,7 @@ class _ListAllServicosState extends State<ListAllServicos> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'All Available Services', servicos: widget.servicos, allowGetLeads: allowGetLeads,),
+              child: SeeAllServicesButton(title: 'Todos servicos disponíveis', servicos: widget.servicos, allowGetLeads: allowGetLeads,),
             ),
             //const SizedBox(width: 8,),
           ],

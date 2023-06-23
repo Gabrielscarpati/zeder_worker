@@ -24,7 +24,7 @@ class CurrentServices extends StatelessWidget {
                     children: [
                        Row(
                         children: [
-                          Text("Current services", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                          Text("Servicos atuais", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                           SizedBox(width: 2,),
                           Transform.scale(
                             scale: 0.7,
@@ -40,7 +40,7 @@ class CurrentServices extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 8,),
-                        child: SeeAllServicesButton(title:'Current services', servicos: servicos, allowGetLeads: allowGetLeads,),
+                        child: SeeAllServicesButton(title:'Servicos atuais', servicos: servicos, allowGetLeads: allowGetLeads,),
                       ),
                       //const SizedBox(width: 8,),
                     ],
@@ -71,24 +71,3 @@ class CurrentServices extends StatelessWidget {
     );
   }
 }
-
-
-
-/*ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: servicos.length,
-      itemBuilder: (context, index) {
-        return SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: ServicoListTileHorizontal(
-            viewModel: servicos[index],
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ShowJobDetailsScreen(servicoViewModel: servicos[index])),
-              );
-            },
-          ),
-        );
-      },
-    ),*/

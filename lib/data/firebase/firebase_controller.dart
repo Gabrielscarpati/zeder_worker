@@ -254,8 +254,13 @@ class FirebaseManager{
           email: email,
           password: password
       );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ViewNavegationBarScreen()),
+      );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
+      print("Error: "+ e.code);
       if (e.code == 'user-not-found') {
         ShowSnackBar(context: context).showErrorSnackBar(message: 'No user found for that email.');
       } else if (e.code == 'wrong-password') {

@@ -37,12 +37,12 @@ class _CheckboxZederState extends State<CheckboxZeder> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'I have read and agree with',
+                        'EU li e concordei com os',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       Text(
-                        'Terms and conditions',
+                        'Termos e condicões',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: DSColors.primary,

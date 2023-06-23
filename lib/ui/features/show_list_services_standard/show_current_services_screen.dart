@@ -26,10 +26,10 @@ class _ShowCurrentServicesScreenState extends State<ShowCurrentServicesScreen> {
       builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoEntity>>> snapshot) {
 
         if (snapshot.hasError) {
-          return Text('Something went wrong');
+          return Text('Algo deu errado');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Text("Carregando");
         }
         Map<String, List<ServicoEntity>>? servicosMap = snapshot.data;
 
@@ -38,8 +38,8 @@ class _ShowCurrentServicesScreenState extends State<ShowCurrentServicesScreen> {
 
         return ShowListServicesStandardView(
           servicos: servicosList,
-          title: 'Current Services',
-          noServicesFoundTitle: "You are not doing any service right now,\n get a service",
+          title: 'Servicos Atuais',
+          noServicesFoundTitle: "Você não está fazendo nenhum serviço agora,\n pegue um serviço",
         );
       },
     );

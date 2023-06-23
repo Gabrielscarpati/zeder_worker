@@ -32,7 +32,7 @@ class _ShowNewServicesScreenState extends State<ShowNewServicesScreen> {
           return Text('Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Text("Carrengando");
         }
         Map<String, List<ServicoEntity>>? servicosMap = snapshot.data;
 
@@ -41,8 +41,8 @@ class _ShowNewServicesScreenState extends State<ShowNewServicesScreen> {
 
         return ShowListServicesStandardView(
           servicos: servicosList,
-          title: 'New Services',
-          noServicesFoundTitle: 'There are no new services available,new\n services can show up at any moment',
+          title: 'Novos Serviços',
+          noServicesFoundTitle: 'Não há nenhum serviço diponível agora,novos\n serviço podem aparecer a qualquer momento',
         );
       },
     );

@@ -34,7 +34,7 @@ class _HeaderState extends State<Header> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Hi, ${widget.client.nome}',
+                    'Olá, ${widget.client.nome}',
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,

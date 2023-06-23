@@ -227,12 +227,12 @@ class ServicoProvider with ChangeNotifier {
 
   Future showExplanationAllServices(context) => showDialog(
     context: context,
-    builder: (context) =>  PopUpExplainNameHomeScreen(title: "These are all the services",),
+    builder: (context) =>  PopUpExplainNameHomeScreen(title: "Esses são todos os serviços",),
   );
 
   Future showExplanationOpenServices(context) => showDialog(
     context: context,
-    builder: (context) =>  PopUpExplainNameHomeScreen(title: "These are the services you\n are working on right now",),
+    builder: (context) =>  PopUpExplainNameHomeScreen(title: "Esses são os serviços que você\nestá trabalhando agora",),
   );
 }
 

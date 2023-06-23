@@ -14,7 +14,7 @@ class _HeaderLogInState extends State<HeaderLogIn> {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        DSTextTitleBoldSecondary(text: "Welcome back"),
+        DSTextTitleBoldSecondary(text: "Bem-vindo de volta!"),
       ],
     );
   }

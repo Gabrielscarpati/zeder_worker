@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoEntity>>> snapshot) {
 
                     if (snapshot.hasError) {
-                      return const Text('Something went wrong');
+                      return const Text('Algo deu errado');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: SizedBox(height: 50, width: 50,

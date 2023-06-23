@@ -29,7 +29,7 @@ class _ButtonSwitchScreensState extends State<ButtonSwitchScreens> {
              await provider.goSelectCitiesScreen(context: context);
             _controller.reset();
           },
-          buttonText: "Sign Up",
+          buttonText: "Cadastre-se",
           controller: _controller,
         ),
         const SizedBox(height: 8,),
@@ -38,7 +38,7 @@ class _ButtonSwitchScreensState extends State<ButtonSwitchScreens> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               DSTextSubtitleSecondary(
-                text: "Already have an account?",
+                text: "Já tem uma conta?",
               ),
               SizedBox(width: 4,),
               Text('Log In',

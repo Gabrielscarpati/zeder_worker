@@ -51,7 +51,7 @@ class _MyServicesState extends State<MyServices> {
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('My services', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
+                        Text('Meus serviços', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
                       ],
                     ),
                     const Padding(

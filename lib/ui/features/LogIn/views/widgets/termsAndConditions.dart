@@ -31,7 +31,7 @@ class _ViewTermsAndConditionsState extends State<ViewTermsAndConditions> {
             child: Column(
               children: [
                 SizedBox(height: 40,),
-                Text('Accept the Terms and\nconditions to Sign Up!!!',
+                Text('Aceite os termos para\nse cadastrar!!!',
                   textAlign: TextAlign.center ,
                   style: TextStyle(color: Colors.green,
                       fontWeight: FontWeight.bold,

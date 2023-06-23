@@ -29,7 +29,7 @@ class _ShowPastServicesScreenState extends State<ShowPastServicesScreen> {
           return Text('Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Text("Carrengando");
         }
         Map<String, List<ServicoEntity>>? servicosMap = snapshot.data;
 
@@ -38,8 +38,8 @@ class _ShowPastServicesScreenState extends State<ShowPastServicesScreen> {
 
         return ShowListServicesStandardView(
           servicos: servicosList,
-          title: 'Past Services',
-          noServicesFoundTitle: "You have't done any service yet"
+          title: 'Serviços Passados',
+          noServicesFoundTitle: "Você ainda não finalizou nenhum serviço ainda"
         );
       },
     );

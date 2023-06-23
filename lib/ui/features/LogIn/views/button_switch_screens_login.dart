@@ -29,7 +29,7 @@ class _ButtonSwitchScreensLogInState extends State<ButtonSwitchScreensLogIn> {
             provider.loginUser(context);
             _controller.reset();
           },
-          buttonText: "Log in",
+          buttonText: "Entrar",
           controller: _controller,
         ),
         const SizedBox(height: 8,),
@@ -38,10 +38,10 @@ class _ButtonSwitchScreensLogInState extends State<ButtonSwitchScreensLogIn> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               DSTextSubtitleSecondary(
-                text: "You don't have an account?",
+                text: "Você não tem uma conta?",
               ),
               SizedBox(width: 4,),
-              Text('Sign up',
+              Text('Cadastre-se',
                 style: TextStyle(
                   decoration: TextDecoration.underline,
                   color: DSColors.primary,

@@ -9,6 +9,7 @@ import '../../../../application/provider/pesquisa_cidade_provider.dart';
 import '../../../device_type.dart';
 import '../../../widgets/servico_do_app/servico_do_app_viewmodel.dart';
 import '../../LoadingButton.dart';
+import '../explainCPF/views/bodyExplainCPF.dart';
 
 class ChooseServiceScreen extends StatefulWidget {
   const ChooseServiceScreen({Key? key}) : super(key: key);
@@ -89,18 +90,21 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
               LoadingButton(
+
                 goNextScreen:() async {
                   if(_Provider.selected_servicos.isEmpty){
                     mostrarCompleteInfo(context);
                   }
-                  else{
-                    await logInSignUpProvider.checkConditionsSignUpUser(context);
+                  else{//BodyExplainCPF
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BodyExplainCPF()),
+                  );
                   }
                   btnController.reset();
                 },
-                buttonText: "FINISH",
+                buttonText: "CONTINUAR (3/6)",
                 controller: btnController,
               ),
             ],

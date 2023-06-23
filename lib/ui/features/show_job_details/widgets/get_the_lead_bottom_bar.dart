@@ -21,7 +21,7 @@ class GetTheLeadBottomBar extends StatelessWidget {
         child:
             allowGetLeads == true
           ? DSButtonLargePrimary(
-            text: 'Get This Lead',
+            text: 'Pegar esse serviço',
             onPressed: () async {
               await servicoProvider.setServiceAsCurrent(servico);
               Navigator.pop(context);
@@ -32,7 +32,7 @@ class GetTheLeadBottomBar extends StatelessWidget {
             },
           )
          : DSButtonLargePrimary(
-          text: 'Done',
+          text: 'Pronto',
           onPressed: () {
             /*Navigator.push(
               context,

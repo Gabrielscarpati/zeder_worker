@@ -38,7 +38,7 @@ class _ListAllServicosEmptyState extends State<ListAllServicosEmpty> {
               child: Row(
                 children: [
 
-                  Text('New Services', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                  Text('Novos serviços', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                   SizedBox(width: 2,),
                   Transform.scale(
                     scale: 0.7,
@@ -54,7 +54,7 @@ class _ListAllServicosEmptyState extends State<ListAllServicosEmpty> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'All Available Services', servicos: [], allowGetLeads: allowGetLeads,),
+              child: SeeAllServicesButton(title: 'Todos serviços disponíveis', servicos: [], allowGetLeads: allowGetLeads,),
             ),
             //const SizedBox(width: 8,),
           ],
@@ -62,7 +62,7 @@ class _ListAllServicosEmptyState extends State<ListAllServicosEmpty> {
         Container(
           height: 160,
           child: Center(
-            child: Text('There are no new services available,new\n services can show up at any moment', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+            child: Text('Não há novos serviços disponíveis,novos\n serviços podem aparecer a qualquer momento', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
           ),
         ),
       ],
@@ -97,7 +97,7 @@ class _ListCurrentServicosEmptyState extends State<ListCurrentServicosEmpty> {
               padding: EdgeInsets.only(top: 8, bottom: 4, left: 8),
               child: Row(
                 children: [
-                  Text('Current Services', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                  Text('Serviços atuais', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                   SizedBox(width: 2,),
                   Transform.scale(
                     scale: 0.7,
@@ -113,7 +113,7 @@ class _ListCurrentServicosEmptyState extends State<ListCurrentServicosEmpty> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'All Available Services', servicos: [], allowGetLeads: allowGetLeads,),
+              child: SeeAllServicesButton(title: 'Todos serviços disponíveis', servicos: [], allowGetLeads: allowGetLeads,),
             ),
             //const SizedBox(width: 8,),
           ],
@@ -121,7 +121,7 @@ class _ListCurrentServicosEmptyState extends State<ListCurrentServicosEmpty> {
         Container(
           height: 160,
           child: Center(
-            child: Text("You are not doing any service right now,\n get a service form the list above", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+            child: Text("Você nâo está fazendo nenhum serviços agora,\n pege serviços um da lista acima", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
           ),
         ),
       ],

@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(56),
-        child: AppBarProfile(title: 'Profile', onTap: () {
+        child: AppBarProfile(title: 'Perfil', onTap: () {
           Navigator.pop(context);
          },
         ),
@@ -56,7 +56,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(left: 16.0, bottom: 8.0, top: 8.0, right: 4.0),
-                      child: DSTextTitleBoldSecondary(text: 'Settings'),
+                      child: DSTextTitleBoldSecondary(text: 'Opcões'),
                     ),
                   ],
                 ),
@@ -64,19 +64,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: DSColors.cardColor,
                   child: Column(
                     children: [
-                      profile_settings(field_value: 'Update personal data', editPage:  UpdatePersonalData(user: widget.user,), iconName: 'account'),
+                      profile_settings(field_value: 'Atualizar dados', editPage:  UpdatePersonalData(user: widget.user,), iconName: 'account'),
                        Container(
                         width: double.infinity,
                         height: 2,
                          color: DSColors.tertiary,
                       ),
-                      profile_settings(field_value: 'Costumer service', editPage:  UpdatePersonalData(user: widget.user,), iconName: 'help'),
+                      profile_settings(field_value: 'Assistência ao consumidor', editPage:  UpdatePersonalData(user: widget.user,), iconName: 'help'),
                       Container(
                         width: double.infinity,
                         height: 2,
                         color: DSColors.tertiary,
                       ),
-                      profile_settings(field_value: 'Rate the app', editPage:  UpdatePersonalData(user: widget.user,), iconName: 'thumb-up'),
+                      profile_settings(field_value: 'Avalie o applicativo', editPage:  UpdatePersonalData(user: widget.user,), iconName: 'thumb-up'),
                       Container(
                         width: double.infinity,
                         height: 2,
@@ -99,12 +99,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               color: DSColors.primary,
                             ),
                              SizedBox(width: 8),
-                             DSTextTitleBoldPrimary(text: 'Logout'),
+                             DSTextTitleBoldPrimary(text: 'Sair'),
                           ],
                         ),
                         onTap: () async {
                           await FirebaseManager().signOut();
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => const ViewLogin()),
                           );
@@ -121,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                texto: 'Done',
+                texto: 'Pronto',
               ),
             ),
           ],

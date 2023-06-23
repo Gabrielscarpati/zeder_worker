@@ -19,11 +19,11 @@ class ListLeadsAccepted extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.only(top: 8, bottom: 4, left: 8),
-              child: Text("My Services", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+              child: Text("Meus serviços", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'My Services', servicos: servicos, allowGetLeads: allowGetLeads,),
+              child: SeeAllServicesButton(title: 'Meus serviços', servicos: servicos, allowGetLeads: allowGetLeads,),
             ),
             //const SizedBox(width: 8,),
           ],
