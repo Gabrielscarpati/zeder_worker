@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import '../../../../application/provider/pesquisa_cidade_provider.dart';
 import '../../../../application/provider/tipo_servico_provider.dart';
+import '../../../../domain/entities/tipo_servico_entity.dart';
 import '../../../widgets/cities/cities.dart';
 import '../../../widgets/cities/cities_viewmodel.dart.dart';
 import '../../../widgets/servico_do_app/servico_do_app_viewmodel.dart';
@@ -10,7 +11,7 @@ import '../../../widgets/worker_services/worker_services_listtile.dart';
 
 class ListBuilderServices extends StatelessWidget {
   final double paddig;
-  final List<ServicoDoAppViewModel> servicos;
+  final List<TipoServicoEntity> servicos;
   const ListBuilderServices({Key? key, required this.servicos, required this.paddig}) : super(key: key);
 
   @override
@@ -23,7 +24,7 @@ class ListBuilderServices extends StatelessWidget {
           scrollDirection: Axis.vertical,
           itemCount: servicos.length,
           itemBuilder: (context, index) {
-            return ServicosDoAppListTile(
+            return ServicosDoAppListTileEntity(
               viewModel: servicos[index],
               onTap: () {
                 Provider.addSelectedService(servicos[index]);
@@ -44,7 +45,7 @@ class ListBuilderSelectedCities extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TipoServicoProvider Provider = context.watch<TipoServicoProvider>();
-     List<ServicoDoAppViewModel> selectedServices = Provider.selected_servicos;
+     List<TipoServicoEntity> selectedServices = Provider.selected_servicos;
      return SizedBox(
        height: 30,
        width: double.infinity,
@@ -68,7 +69,7 @@ class ListBuilderSelectedCities extends StatelessWidget {
                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                      crossAxisAlignment: CrossAxisAlignment.center,
                      children: [
-                       DSTextTitleBoldSecondary(text: selectedServices[index].servico,),
+                       DSTextTitleBoldSecondary(text: selectedServices[index].name,),
                        const DSIconSmallSecondary(iconName: 'closeCircle',),
                      ],
                    ),

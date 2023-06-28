@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../design_system/parameters/colors.dart';
-import '../chat/chat_screen.dart';
 import '../home/home_screen.dart';
 import '../show_list_services_standard/show_current_services_screen.dart';
 import '../show_list_services_standard/show_new_services_screen.dart';
@@ -19,8 +18,8 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     const ShowNewServicesScreen(),
-    const ShowPastServicesScreen(),
     const ShowCurrentServicesScreen(),
+    const ShowPastServicesScreen(),
     //const ChatScreen(),
   ];
 
@@ -53,19 +52,20 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             backgroundColor: DSColors.cardColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(MdiIcons.folderClock,
-                size: 40,
-                color: _selectedIndex==2? DSColors.primary: DSColors.tertiary),
-            label: 'Serviços passados',
-            backgroundColor: DSColors.cardColor,
-          ),
-          BottomNavigationBarItem(
             icon: Icon(MdiIcons.accountHardHat,
                 size: 40,
-                color: _selectedIndex==3? DSColors.primary: DSColors.tertiary),
+                color: _selectedIndex==2? DSColors.primary: DSColors.tertiary),
             label: 'Atuais',
             backgroundColor: DSColors.cardColor,
           ),
+          BottomNavigationBarItem(
+            icon: Icon(MdiIcons.folderClock,
+                size: 40,
+                color: _selectedIndex==3? DSColors.primary: DSColors.tertiary),
+            label: 'Serviços passados',
+            backgroundColor: DSColors.cardColor,
+          ),
+
           /*BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble,
                 size: 40,

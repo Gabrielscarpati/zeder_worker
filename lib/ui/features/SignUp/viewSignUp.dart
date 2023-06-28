@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-
+import '../../../main.dart';
 import 'views/signUpBody.dart';
 
 class ViewSignUp extends StatelessWidget {
@@ -7,7 +7,9 @@ class ViewSignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SignUpBody();
+    return const LoadData(
+        body: SignUpBody()
+    );
   }
 }
 

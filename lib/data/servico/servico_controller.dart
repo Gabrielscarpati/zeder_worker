@@ -6,6 +6,7 @@ import '../../application/provider/worker_provider.dart';
 import '../../core/utils/bool_utils.dart';
 import '../../core/utils/date_utils.dart';
 import '../../domain/entities/servico_entity.dart';
+import '../../domain/entities/tipo_servico_entity.dart';
 import '../../ui/widgets/cities/cities_viewmodel.dart.dart';
 import '../../ui/widgets/client/client_viewmodel.dart';
 import '../../ui/widgets/servico/servico_viewmodel.dart';

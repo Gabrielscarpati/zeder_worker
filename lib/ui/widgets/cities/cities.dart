@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/widgets/cities/cities_viewmodel.dart.dart';
-import 'package:zeder/ui/widgets/servico_do_app/servico_do_app_viewmodel.dart';
 
 class CitiesListTile extends StatelessWidget {
   final CitiesViewModel viewModel;
@@ -20,10 +19,11 @@ class CitiesListTile extends StatelessWidget {
     return Container(
       height: 68,
       child: DSCardListTileHorizontal(
+        includeTrailing: false,
         leading: icone,
         title: titulo,
         onTap: onTap,
-        trailing: Container(),
+        trailing: SizedBox(),
       ),
     );
   }

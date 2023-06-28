@@ -59,7 +59,7 @@ class ListBuilderSelectedCities extends StatelessWidget {
                padding: const EdgeInsets.only(right: 8,),
                child: InkWell(
                  child: Container(
-                   width: 162,
+                   width: 176,
                    height: 30,
                    decoration: BoxDecoration(
                      color: DSColors.scaffoldBackground,

@@ -4,7 +4,6 @@ import 'package:zeder/ui/features/home/views/header.dart';
 import 'package:zeder/ui/features/home/views/list_all_servicos.dart';
 import 'package:zeder/ui/features/home/views/list_all_servicos_empty.dart';
 import 'package:zeder/ui/features/home/views/list_servicos_do_prestador.dart';
-import '../../../application/provider/servico_provider.dart';
 import '../../../application/provider/worker_provider.dart';
 import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
@@ -26,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     final WorkerProvider _ClientProvider = context.read<WorkerProvider>();
-    clientFuture = _ClientProvider.getWorker();
+    clientFuture = _ClientProvider.getWorkerLoadDataApp();
     servicosStream = ServicoController().fetchServicosStream();
   }
 
@@ -77,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                   ),
                ),*/
-              Container(
+              SizedBox(
                 height: 514,
                 child: StreamBuilder<Map<String, List<ServicoEntity>>>(
                   stream: servicosStream,
@@ -106,8 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-
-             /*Container(
+              /*Container(
                 height: 200,
                 child: StreamBuilder<Map<String, List<ServicoViewModel>>>(
                   stream: servicosStream,
@@ -145,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),*/
-           /* SizedBox(
+              /* SizedBox(
                 height: 194,
                 child: FutureBuilder<List<ServicoViewModel>>(
                   future: listLeadsAccepted,

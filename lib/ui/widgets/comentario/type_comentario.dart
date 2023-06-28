@@ -28,10 +28,10 @@ class _TypeComentarioState extends State<TypeComentario> {
               children: [
                 const DSTextTitleBoldSecondary(text: 'Comentário'),
                 const SizedBox(height: 12,),
-                TextCard(
+                /*TextCard(
                   hintText: 'Escreva seu comentário',
                   textEditingController: widget.viewModel.textEditingController,
-                ),
+                ),*/
                 const SizedBox(height: 24,),
 
                 const DSTextTitleBoldSecondary(text: 'Avaliação'),

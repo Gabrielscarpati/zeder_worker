@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/show_job_details/views/show_job_details_listviewbuilder.dart';
 import '../../../../domain/entities/servico_entity.dart';
 

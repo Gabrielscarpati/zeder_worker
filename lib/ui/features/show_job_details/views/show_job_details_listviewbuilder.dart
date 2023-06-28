@@ -26,7 +26,7 @@ class _ShowJobDetailsListviewbuilderState extends State<ShowJobDetailsListviewbu
               return ShowJobDetaisListtile(
                 iconName: 'city',
                 title: key,
-                chosenOption: value,
+                chosenOption: value.toString().substring(1, value.toString().length - 1),
               );
             },
           ),

@@ -2,6 +2,7 @@ import '../../core/core.dart';
 
 class AvaliacaoPrestadorEntity extends Entity {
   final String idPrestador;
+  final String idServico;
   final String idCliente;
   final double nota;
   final String comentario;
@@ -14,12 +15,14 @@ class AvaliacaoPrestadorEntity extends Entity {
     required this.nota,
     required this.comentario,
     required this.data,
+    required this.idServico,
   });
 
   factory AvaliacaoPrestadorEntity.fromJson(Map<String, dynamic> json) {
     return AvaliacaoPrestadorEntity(
       id: json['id'] ?? '',
       idPrestador: json['idPrestador'] ?? '',
+      idServico: json['idServico'] ?? '',
       idCliente: json['idCliente'] ?? '',
       nota: DoubleUtil.toDoubleDefaultZero(json['nota']),
       comentario: json['comentario'] ?? '',
@@ -31,6 +34,7 @@ class AvaliacaoPrestadorEntity extends Entity {
     return {
       'id': id,
       'idPrestador': idPrestador,
+      'idServico': idServico,
       'idCliente': idCliente,
       'nota': nota,
       'comentario': comentario,
@@ -41,14 +45,17 @@ class AvaliacaoPrestadorEntity extends Entity {
   AvaliacaoPrestadorEntity copyWith({
     String? id,
     String? idPrestador,
+    String? idServico,
     String? idCliente,
     double? nota,
     String? comentario,
     DateTime? data,
+
   }) {
     return AvaliacaoPrestadorEntity(
       id: id ?? this.id,
       idPrestador: idPrestador ?? this.idPrestador,
+      idServico: idServico ?? this.idServico,
       idCliente: idCliente ?? this.idCliente,
       nota: nota ?? this.nota,
       comentario: comentario ?? this.comentario,

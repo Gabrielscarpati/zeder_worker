@@ -117,6 +117,23 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
     }
   }
 
+  Future<List<Map<String, dynamic>>> buscarTodosDados({required String collection}) async {
+    if (collection.isEmpty) {
+      throw ArgumentError("Nome da coleção inválido");
+    }
+    try {
+      final response = await _db.collection(collection).get();
+      final documents = response.docs;
+
+      if (documents.isNotEmpty) {
+        return documents.map((doc) => doc.data()).toList();
+      }
+      throw Exception("Não há dados na coleção $collection");
+    } catch (e, stackTrace) {
+      throw Exception(e.toString());
+    }
+  }
+
 
   Future<List<Map<String, dynamic>>> buscarDadoComCondicao({required String collection, required String condName,required String cond}) async {
     print("collection: $collection, condName: $condName, cond: $cond");

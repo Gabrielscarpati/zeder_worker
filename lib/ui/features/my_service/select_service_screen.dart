@@ -96,10 +96,7 @@ class _CityControllterState extends State<CityControllter> {
         height: 56,
         child: TextField(
           onChanged: (value) {
-            setState(() {
-              _Provider.applicarFiltroNalistaServico(value);
 
-            });
           },
           textAlignVertical: TextAlignVertical.center,
           style: const TextStyle(

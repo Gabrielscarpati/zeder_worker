@@ -90,17 +90,13 @@ class _CityControllterState extends State<CityControllter> {
 
   @override
   Widget build(BuildContext context) {
-    final TipoServicoProvider _Provider = context.watch<TipoServicoProvider>();
     return Padding(
       padding: const EdgeInsets.only(left: 16),
       child: SizedBox(
         height: 56,
         child: TextField(
           onChanged: (value) {
-            setState(() {
-              _Provider.applicarFiltroNalistaServico(value);
 
-            });
           },
           textAlignVertical: TextAlignVertical.center,
           style: const TextStyle(

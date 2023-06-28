@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
-
 import '../../../domain/entities/servico_entity.dart';
-import 'servico_viewmodel.dart';
 
 abstract class ServicoListTile extends StatelessWidget {
   final ServicoEntity viewModel;
@@ -16,18 +14,16 @@ abstract class ServicoListTile extends StatelessWidget {
 
   Widget get icone => DSIconFilledSecondary(iconName: viewModel.icone);
   Widget get titulo => DSTextTitleBoldSecondary(text: viewModel.service);
-/*
-  Widget get status => viewModel.flgWorkerSaw ? DSTextSubtitleSecondary(text: viewModel.idCity) : DSTextSubtitleTertiary(text: 'viewModel.status');
-*/
   Widget get status => DSTextSubtitleSecondary(text: viewModel.idCity);
+
   Widget get valorData => Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: valorTempoCrossAxisAlignment,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DSTextTitleBoldSecondary(text: viewModel.servicePrice.toString()+ ' \$'),
+              DSTextTitleBoldSecondary(text: '${viewModel.servicePrice} R\$'),
               DSTextSubtitleSecondary(text: viewModel.clientGivenDate.toString().substring(0,10)),
             ],
           ),
@@ -58,6 +54,7 @@ class ServicoListTileHorizontal extends ServicoListTile {
         trailing: valorData,
         color: DSColors.cardColor,
         onTap: onTap,
+        includeTrailing: true,
       ),
     );
   }

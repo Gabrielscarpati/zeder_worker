@@ -1,9 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zeder/data/avaliacoes/avaliacao_controller.dart';
+import 'package:zeder/data/cancel/cancel_controller.dart';
 import 'package:zeder/data/firebase/firebase_controller.dart';
+import 'package:zeder/design_system/widgets/ds_pop_up.dart';
+import 'package:zeder/domain/entities/log_entity.dart';
+import 'package:zeder/ui/features/SignUp/views/widgets/snackbars.dart';
 import '../../data/servico/servico_controller.dart';
+import '../../design_system/parameters/colors.dart';
+import '../../domain/entities/avaliacao_prestador_entity.dart';
+import '../../domain/entities/cancel_entity.dart';
 import '../../domain/entities/servico_entity.dart';
 import '../../ui/features/home/Widgets/pop_up_explain_names_home_screen.dart';
+import '../../ui/features/navigation_bar/navigation_bar.dart';
 
 class ServicoProvider with ChangeNotifier {
 
@@ -137,93 +145,35 @@ class ServicoProvider with ChangeNotifier {
     await servicoController.atualizarServico(updatedService);
   }
 
-/*    Future<List<ServicoViewModel>> getListServicos() async {
-    List<ServicoViewModel> list_all_servicos = [];  // plumber pest control
-
-      WorkerViewModel worker = await WorkerProvider().getWorker();
-
-    List<dynamic> list_servicos_ids = worker.my_services;
-
-    for(int i = 0; i < list_servicos_ids.length; i++){
-        List<ServicoEntity> servicoEntities = await ServicoController().buscarServicoComCondicao(cond: list_servicos_ids[i], condName: "id");
-        for(int j = 0; j < servicoEntities.length; j++){
-          ServicoViewModel servicoViewModel = ServicoViewModel(
-            icone: servicoEntities[i].icone,
-            dataPropostaAceita: servicoEntities[i].dataPropostaAceita.toString().substring(0,5),
-            idDisputa: servicoEntities[i].idDisputa,
-            id: servicoEntities[i].id,
-            dataPropostaFeita: servicoEntities[i].dataPropostaFeita.toString().substring(0,5),
-            dataPagamento: servicoEntities[i].dataPagamento.toString().substring(0,5),
-            descricao: servicoEntities[i].descricao,
-            flgClientSaw: servicoEntities[i].flgClientSaw,
-            flgWorkerSaw: servicoEntities[i].flgWorkerSaw,
-            idCity: servicoEntities[i].idCity,
-            idClient: servicoEntities[i].idClient,
-            idWorker: servicoEntities[i].idWorker,
-            idAcceptedLead: servicoEntities[i].idAcceptedLead,
-            idsWorkersBid: servicoEntities[i].idsWorkersBid,
-            serviceDetails: servicoEntities[i].serviceDetails,
-            service: servicoEntities[i].service,
-            idService: servicoEntities[i].idService,
-            smallerValue: servicoEntities[i].smallerValue,
-            greaterValue: servicoEntities[i].greaterValue,
-            servicePrice: servicoEntities[i].servicePrice,
-            areThereBids: servicoEntities[i].areThereBids,
-            clientAcceptedABid: servicoEntities[i].clientAcceptedABid,
-            waitingPayment: servicoEntities[i].waitingPayment,
-            payed: servicoEntities[i].payed,
-            doing: servicoEntities[i].doing,
-            concluded: servicoEntities[i].concluded,
-            emDisputa: servicoEntities[i].emDisputa,
-            reembolsado: servicoEntities[i].reembolsado,
-            disputaFinalizada: servicoEntities[i].disputaFinalizada,
-            clientGivenDate: servicoEntities[i].clientGivenDate.toString().substring(0,5),
-          );
-          list_all_servicos.add(servicoViewModel);
-        }
-      }
-    list_servicos = list_all_servicos;
-
-      return list_all_servicos;
-  }*/
-
-/*  Stream<List<ServicoViewModel>> getListServicoss() {
-    Stream<List<ServicoViewModel>> servicosStream = ServicoController().fetchServicosStream();
-
-    Stream<List<ServicoViewModel>> filteredStream = servicosStream.map((servicos) {
-      return servicos
-          .where((servico) => servico.descricao =="Sampe description" )
-          .toList();
-    });
-
-    return filteredStream;
-  }*/
-
-/*  Future<List<ServicoViewModel>> getlistLeadsNotAcceptedYet() async {
-      List <ServicoViewModel> notAcceptedYet = [];
-      List<ServicoViewModel> list_all_servicos = await getListServicos();
-      for(int i = 0; i < list_all_servicos.length; i++){
-        for(int j = 0; j < list_all_servicos[i].idsWorkersBid.length; j++){
-          if(list_all_servicos[i].idsWorkersBid[j] == firebaseController.getCurrentUser()!.uid){
-            notAcceptedYet.add(list_all_servicos[i]);
-            }
-          }
-        }
-      listLeadsNotAcceptedYet = notAcceptedYet;
-      //notifyListeners();
-      return notAcceptedYet;
-    }*/
-
-/*    Future<List<ServicoViewModel>> getlistLeadsAccepted() async {
-      listLeadsAccepted.clear();
-      List<ServicoViewModel> listLeadsAccepetedOrNot = await getlistLeadsNotAcceptedYet();
-      for(int i = 0; i < listLeadsAccepetedOrNot.length; i++){
-        if(listLeadsAccepetedOrNot[i].idWorker == firebaseController.getCurrentUser()!.uid){
-          listLeadsAccepted.add(listLeadsAccepetedOrNot[i]);
-        }
-      }
-      return listLeadsAccepted;
-    }*/
+   cancelarServico(ServicoEntity newService) async{
+      ServicoEntity updatedService = ServicoEntity(
+        dataPropostaFeita: newService.dataPropostaFeita,
+        dataPropostaAceita: newService.dataPropostaAceita,
+        dataPagamento: newService.dataPagamento,
+        clientGivenDate: newService.clientGivenDate,
+        descricao: newService.descricao,
+        flgClientSaw: newService.flgClientSaw,
+        flgWorkerSaw: newService.flgWorkerSaw,
+        icone: newService.icone,
+        idCity: newService.idCity,
+        idClient: newService.idClient,
+        idDisputa: newService.idDisputa,
+        idWorker: '',
+        serviceDetails: newService.serviceDetails,
+        service: newService.service,
+        idService: newService.idService,
+        servicePrice: newService.servicePrice,
+        waitingPayment: newService.waitingPayment,
+        payed: newService.payed,
+        doing: newService.doing,
+        concluded: newService.concluded,
+        emDisputa: newService.emDisputa,
+        reembolsado: newService.reembolsado,
+        disputaFinalizada: newService.disputaFinalizada,
+        id: newService.id,
+      );
+      await servicoController.atualizarServico(updatedService);
+  }
 
   Future showExplanationAllServices(context) => showDialog(
     context: context,
@@ -234,6 +184,65 @@ class ServicoProvider with ChangeNotifier {
     context: context,
     builder: (context) =>  PopUpExplainNameHomeScreen(title: "Esses são os serviços que você\nestá trabalhando agora",),
   );
+  Future confirmarPegarServico(context, ServicoEntity servicoEntity) => showDialog(
+    context: context,
+    builder: (context) =>  DSPopUp(title: 'Tem certeza que quer pegar esse serviço?',
+        onPressedYes: () async {
+          await setServiceAsCurrent(servicoEntity);
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
+            );
+        }, onPressedNo: (){
+          Navigator.pop(context);
+      }
+    ),
+  );
+  CancelController cancelController = CancelController();
+
+  Future confirmarCancelServico(context, ServicoEntity servicoEntity) => showDialog(
+    context: context,
+    builder: (context) =>  DSPopUp(title: 'Tem certeza que quer cancelar esse serviço?',
+        onPressedYes: () async {
+          CancelEntity newCancelEntity = CancelEntity(
+            idServico: servicoEntity.id,
+            id: '',
+            idWorker: servicoEntity.idWorker,
+            dataCreated: DateTime.now(),
+            message: cancelingController.text.trim(),
+            needsAction: true,
+            idClient: servicoEntity.idClient,
+          );
+          await cancelarServico(servicoEntity);
+          await cancelController.cadastrarCancel(newCancelEntity);
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
+            );
+          ShowSnackBar(context: context,).showErrorSnackBar(message: 'O serviço foi cancelado', color: DSColors.primary,);
+        }, onPressedNo: (){
+          Navigator.pop(context);
+      }
+    ),
+  );
+
+  TextEditingController cancelingController = TextEditingController();
+  GlobalKey<FormState> cancelingFormKey = GlobalKey<FormState>();
+
+  String? validateCanceling(String? value) {
+    if (cancelingController.text.trim().isEmpty) {
+      return "Por favor, digite o motivo do cancelamento";
+    } else {
+      return null;
+    }
+  }
+
+  Future<AvaliacaoPrestadorEntity> getAvaliaCaoByServicoId(String idServico) async{
+    AvaliacaoController avaliacaoEntity = AvaliacaoController();
+    List<AvaliacaoPrestadorEntity> listRatings = await avaliacaoEntity.buscarAvaliacaoComCondicao(idServico, 'idServico');
+    return listRatings[0];
+  }
+
 }
 
 

@@ -98,10 +98,7 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                     padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
+                        Container(
                           width: MediaQuery.of(context).size.width*.7,
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +114,7 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                                     thickness: 1,
                                   ),
                                    DSTextTitleBoldSecondary(
-                                    text: 'Faça o mesmo processo que\nvocê fez com o seu CPF',
+                                    text: 'Faça o mesmo processo que\nvocê fez com a sua identidade',
                                   ),
                                   Divider(
                                     color: DSColors.primary,
@@ -131,7 +128,7 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                                     thickness: 1,
                                   ),
                                    DSTextTitleBoldSecondary(
-                                    text: 'Abaixo temos os documentos\n que aceitamos ',
+                                    text: 'Abaixo temos os documentos\nque aceitamos ',
                                   ),
                                 ],
                               ),
@@ -162,15 +159,15 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                                     ),
                                   )
                                       : Container(
-                                    decoration: BoxDecoration(
+                                        decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(0)),
-                                    width: 250,
-                                    height: 323,
-                                    child: Icon(
-                                      Icons.camera_alt,
-                                      size: 40,
-                                      color: Colors.grey[600],
+                                        width: 250,
+                                        height: 323,
+                                        child: Icon(
+                                          Icons.camera_alt,
+                                        size: 40,
+                                        color: Colors.grey[600],
                                     ),
                                   ),
 
@@ -188,17 +185,137 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                             ),
                           ),
                         ),
+                        Container(
+                          width: MediaQuery.of(context).size.width*.70,
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Contas de água, luz, gás, TV,\ninternet, telefone fixo e celular;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Carnês do IPTU e IPVA;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'contrato de aluguel reconhecido\nem cartório;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Documento de financiamento\nimobiliário;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Boleto de cobrança de condomínio;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Escritura de imóvel;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Declaração recente de Imposto de\nRenda;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Laudo de avaliação de imóvel\nemitido pela Caixa Econômica\nFederal;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Contracheque emitido por órgão\npúblico;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Demonstrativos do INSS ou SRF;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Extrato do FGTS;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Fatura de cartão de crédito;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Boleto de mensalidade escolar;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Registro de licenciamento de\nveículo;',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+                                  DSTextTitleBoldSecondary(
+                                    text: 'Termo de rescisão de contrato\nde trabalho.',
+                                  ),
+                                  Divider(
+                                    color: DSColors.primary,
+                                    thickness: 1,
+                                  ),
+
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
             ),
+
             /*SizedBox(
               width: MediaQuery.of(context).size.width*.6,
               child: const DSTextTitleBoldSecondary(
-                  text: '''contas de água, luz, gás, TV, internet, telefone fixo e celular;
-                  carnês do IPTU e IPVA;
+              text: '''contas de água, luz, gás, TV, internet, telefone fixo e celular;
+              carnês do IPTU e IPVA;/n
               contrato de aluguel reconhecido em cartório;
               documento de financiamento imobiliário;
               boleto de cobrança de condomínio;

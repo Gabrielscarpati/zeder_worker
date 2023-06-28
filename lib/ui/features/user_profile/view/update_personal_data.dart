@@ -3,6 +3,7 @@ import 'package:zeder/design_system/design_system.dart';
 import '../../../device_type.dart';
 import '../../../widgets/botoes.dart';
 import '../../../widgets/client/client_viewmodel.dart';
+import '../../SignUp/views/widgets/snackbars.dart';
 import 'app_bar_profile.dart';
 
 class UpdatePersonalData extends StatefulWidget {
@@ -89,7 +90,9 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
     required void Function() onPressed,
     }){
     return InkWell(
-      onTap: onPressed,
+      onTap: () {
+        ShowSnackBar(context: context).showErrorSnackBar(message: 'Você ainda não pode atualizar essas informaçōes por questāo de seguraça',);
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -9,6 +9,7 @@ import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import '../../data/firebase/firebase_controller.dart';
 import '../../data/user/user_controller.dart';
 import '../../data/user/user_entity.dart';
+import '../../domain/entities/tipo_servico_entity.dart';
 import '../../ui/features/SignUp/list_signup_city/choose_city_screen.dart';
 import '../../ui/features/SignUp/save_image.dart';
 import '../../ui/features/SignUp/views/widgets/popUpTermsAndConditions.dart';
@@ -97,28 +98,21 @@ class LogInSignUpProvider with ChangeNotifier {
 
   List<String> getServicesIds(){
     List<String> serviceIds = [];
-    List<ServicoDoAppViewModel> servicos= TipoServicoProvider().selected_servicos;
+    List<TipoServicoEntity> servicos= TipoServicoProvider().selected_servicos;
     for (var servico in servicos){
-      serviceIds.add(getIdByServices(service: servico.servico));
+      serviceIds.add(getIdByServices(service: servico.name));
     }
     return serviceIds;
   }
 
+
+  TipoServicoProvider tipoServicoProvider = TipoServicoProvider();
   String getIdByServices({required String service}){
-    if(service == 'Plumber'){
-      return '1';
-    }else if(service == 'Pest Control'){
-      return '2';
-    }else if(service == 'Roofing'){
-      return '3';
-    }else if(service == 'Salon'){
-      return '4';
-    }
-    else if(service == 'Computer Repair'){
-      return '5';
-    }
-    else if(service == 'Ac Repair'){
-      return '6';
+    List<TipoServicoEntity> servicos = tipoServicoProvider.list_all_cservices;
+    for(TipoServicoEntity servico in servicos){
+      if(servico.name == service){
+        return servico.id  ;
+      }
     }
     return "";
   }
@@ -206,7 +200,7 @@ class LogInSignUpProvider with ChangeNotifier {
 
   String? validateEmail(String? value) {
      if (!EmailValidator.validate(signUpEmail.text.trim())){
-       return  'Email invalido';
+       return  'Email inválido';
      }
      return null;
   }
@@ -229,42 +223,45 @@ class LogInSignUpProvider with ChangeNotifier {
   }
 
 
-  String? validateCPF(String? cpf) {
-    // Remove characters that are not digits
-    cpf = cpf?.replaceAll(RegExp(r'[^\d]'), '');
-
-    // CPF must have 11 digits
-    if (cpf?.length != 11) {
-      return 'O CPF deve conter 11 dígitos.';
+  String? validateCPF(String? value) {
+    print(RegExp(r"^([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})$").hasMatch(value!));
+    if ( RegExp(r"^([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})$").hasMatch(value!) == false ) {
+      return 'O CPF não é válido';
+    }
+    if (value == null || value.isEmpty) {
+      return 'favor adicionar cpf';
     }
 
-    // Check for repeated digits (e.g., 111.111.111-11)
-    if (RegExp(r'^(\d)\1*$').hasMatch(cpf!)) {
-      return 'CPF inválido com todos os dígitos iguais.';
-    }
+    int Soma;
+    int Resto;
+    Soma = 0;
+    String strCPF  = "";
 
-    // Validate the CPF using the algorithm
-    List<int> digits = cpf.split('').map(int.parse).toList();
+    List<String> res =  value.split(".");
+    res.forEach((element) {
+      strCPF += element;
+    });
 
-    // Validate the first digit
-    int sum = 0;
-    for (int i = 0; i < 9; i++) {
-      sum += digits[i] * (10 - i);
-    }
-    int firstDigit = (sum * 10) % 11;
-    if (firstDigit != digits[9]) {
-      return 'O primeiro dígito verificador do CPF está incorreto.';
-    }
+    List<String> res2 = strCPF.split("-");
+    strCPF = "";
+    res2.forEach((element) {
+      strCPF += element;
+    });
+    print(strCPF);
+    if (value == "00000000000") return 'favor adicionar cpf';
 
-    // Validate the second digit
-    sum = 0;
-    for (int i = 0; i < 10; i++) {
-      sum += digits[i] * (11 - i);
-    }
-    int secondDigit = (sum * 10) % 11;
-    if (secondDigit != digits[10]) {
-      return 'O segundo dígito verificador do CPF está incorreto.';
-    }
+    for (int i=1; i<=9; i++) Soma = Soma + int.parse(strCPF.substring(i-1, i)) * (11 - i);
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11))  Resto = 0;
+    if (Resto != int.parse(strCPF.substring(9, 10)) ) return 'O CPF não é válido';
+
+    Soma = 0;
+    for (int i = 1; i <= 10; i++) Soma = Soma + int.parse(strCPF.substring(i-1, i)) * (12 - i);
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11))  Resto = 0;
+    if (Resto != int.parse(strCPF.substring(10, 11) ) ) return 'O CPF não é válido';
 
     return null;
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zeder/design_system/design_system.dart';
 import '../../../../../design_system/parameters/colors.dart';
 
@@ -10,8 +11,9 @@ class StandardController extends StatefulWidget {
   final IconData sufixIcon;
   final String hint;
   final String deleteOrHide;
+  final List<TextInputFormatter>? inputFormatters;
 
-  const StandardController({Key? key, required this.nameController, required this.hint, required this.validator, required this.prefixIcon, required this.sufixIcon, required this.deleteOrHide, required this.title}) : super(key: key);
+  const StandardController({Key? key, required this.nameController, required this.hint, required this.validator, required this.prefixIcon, required this.sufixIcon, required this.deleteOrHide, required this.title, this.inputFormatters}) : super(key: key);
 
   @override
   State<StandardController> createState() => _StandardControllerState();
@@ -38,6 +40,7 @@ class _StandardControllerState extends State<StandardController> {
               fontSize: 16,
               color: DSColors.tertiary,
             ),
+            inputFormatters: widget.inputFormatters,
             obscureText: widget.deleteOrHide == 'hide' ? passwordIsHidden : false,
             controller: widget.nameController,
             cursorColor: Colors.indigoAccent,

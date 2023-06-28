@@ -1,20 +1,23 @@
 import '../../core/core.dart';
 
-class CidadeEntity extends Entity {
-  final String nome;
+
+class CityEntity extends Entity {
+  final String country;
+  final String name;
   final String uf;
 
-
-  CidadeEntity({
+  CityEntity({
     required super.id,
-    required this.nome,
+    required this.country,
+    required this.name,
     required this.uf,
   });
 
-  factory CidadeEntity.fromJson(Map<String, dynamic> json) {
-    return CidadeEntity(
+  factory CityEntity.fromJson(Map<String, dynamic> json) {
+    return CityEntity(
       id: json['id'] ?? '',
-      nome: json['nome'] ?? '',
+      country: json['country'] ?? '',
+      name: json['name'] ?? '',
       uf: json['uf'] ?? '',
     );
   }
@@ -22,34 +25,38 @@ class CidadeEntity extends Entity {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'nome': nome,
+      'country': country,
+      'name': name,
       'uf': uf,
     };
   }
 
-  CidadeEntity copyWith({
+  CityEntity copyWith({
     String? id,
-    String? nome,
+    String? country,
+    String? name,
     String? uf,
+
   }) {
-    return CidadeEntity(
+    return CityEntity(
       id: id ?? this.id,
-      nome: nome ?? this.nome,
+      country: country ?? this.country,
+      name: name ?? this.name,
       uf: uf ?? this.uf,
     );
   }
 }
 
-abstract class CidadeRepository extends Repository<CidadeEntity> {}
+abstract class CidadeRepository extends Repository<CityEntity> {}
 
-class CidadeAdapter extends Adapter<CidadeEntity> {
+class CidadeAdapter extends Adapter<CityEntity> {
   @override
-  CidadeEntity fromJson(Map<String, dynamic> json) {
-    return CidadeEntity.fromJson(json);
+  CityEntity fromJson(Map<String, dynamic> json) {
+    return CityEntity.fromJson(json);
   }
 
   @override
-  Map<String, dynamic> toJson(CidadeEntity entity) {
+  Map<String, dynamic> toJson(CityEntity entity) {
     return entity.toJson();
   }
 }

@@ -6,6 +6,7 @@ import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/SignUp/list_signup_service/standard_list_builder_sign_up_service.dart';
 import '../../../../application/provider/pesquisa_cidade_provider.dart';
+import '../../../../domain/entities/tipo_servico_entity.dart';
 import '../../../device_type.dart';
 import '../../../widgets/servico_do_app/servico_do_app_viewmodel.dart';
 import '../../LoadingButton.dart';
@@ -29,7 +30,6 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
     deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
 
     final TipoServicoProvider _Provider = context.watch<TipoServicoProvider>();
-    final LogInSignUpProvider logInSignUpProvider = context.watch<LogInSignUpProvider>();
     _Provider.getListaDeServicosViewModel();
     return Scaffold(
       body: Column(
@@ -62,7 +62,7 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
                      Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('I provide these services', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
+                        Text('Eu faço esses serviços', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
                       ],
                     ),
                      Padding(
@@ -72,7 +72,8 @@ class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
                         thickness: 1,
                       ),
                     ),
-                    CityControllter(hint: "Type the service's name", iconData: Icons.search,),
+                    // ServiceController(hint: "Digite o nome do servico", iconData: Icons.search,),
+                    CityControllter(hint: "Digite o nome do serviço", iconData: Icons.search,),
                     ListBuilderSelectedServices(),
                   ],
               ),
@@ -126,7 +127,7 @@ class ListBuilderSelectedServices extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TipoServicoProvider Provider = context.watch<TipoServicoProvider>();
-    List<ServicoDoAppViewModel> selectedServices = Provider.selected_servicos;
+    List<TipoServicoEntity> selectedServices = Provider.selected_servicos;
     return SizedBox(
       height: 30,
       width: double.infinity,
@@ -150,7 +151,7 @@ class ListBuilderSelectedServices extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      DSTextTitleBoldSecondary(text: selectedServices[index].servico,),
+                      DSTextTitleBoldSecondary(text: selectedServices[index].name,),
                       const DSIconSmallSecondary(iconName: 'closeCircle',),
                     ],
                   ),
@@ -172,11 +173,11 @@ class PopUpSelectOneCity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Select at least one service!',
+      title: const Text('Selecione pelo menos um serviço!',
         textAlign: TextAlign.center ,
         style: TextStyle(color: DSColors.primary,
             fontWeight: FontWeight.bold,
-            fontSize: 28),
+            fontSize: 24),
       ),
       actions: [
         DSButtonLargePrimary(
@@ -202,7 +203,7 @@ class _CityControllterState extends State<CityControllter> {
 
   @override
   Widget build(BuildContext context) {
-    final PesquisaCidadeProvider _Provider = context.watch<PesquisaCidadeProvider>();
+    final TipoServicoProvider _Provider = context.watch<TipoServicoProvider>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/ui/features/user_profile/view/user_profile_screen.dart';
@@ -19,7 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     final WorkerProvider _provider = context.read<WorkerProvider>();
-    clientFuture = _provider.getWorker();
+    clientFuture = _provider.getWorkerLoadDataApp();
   }
   @override
   Widget build(BuildContext context) {
