@@ -4,7 +4,9 @@ import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/show_job_details/additional_screens/adicionais_do_servico/adicionais_do_servico_screen.dart';
 import '../../../../application/provider/servico_provider.dart';
 import '../../../../domain/entities/servico_entity.dart';
+import '../../SignUp/views/widgets/snackbars.dart';
 import 'adicionais_do_servico/cancelar_servico.dart';
+import 'adicionais_do_servico/disputa_servico.dart';
 import 'adicionais_do_servico/see_rating_servico.dart';
 
 class GetTheLeadBottomBar extends StatelessWidget {
@@ -17,76 +19,128 @@ class GetTheLeadBottomBar extends StatelessWidget {
     final ServicoProvider servicoProvider = context.watch<ServicoProvider>();
 
     return SizedBox(
-      //height: 262,
-      height: 328,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-        child: Column(
-          children: [
-            CardChangeServiceDetails(
-              iconName: 'close-circle-outline',
-              title: 'Cancelar serviço',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CancelarServicoServico(servicoViewModel: servico,)),
-                );
-              },
-            ),
-            CardChangeServiceDetails(
-              iconName: 'format-list-bulleted',
-              title: 'Adicionais do serviço',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AdicionaisDoServicoScreen(servicoViewModel: servico,)),
-                );
-              },//
-            ),
-            CardChangeServiceDetails(
-              iconName: 'chat-alert-outline',
-              title: 'Dispulta serviço',
-              onTap: () {
-
-              },
-            ),
-            CardChangeServiceDetails(
-              iconName: 'thumb-up-outline',
-              title: 'Ver Avaliação do serviço',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SeeRatingServico(servicoViewModel: servico,)),
-                );
-              },
-            ),
-            
-            Container(
-              height: 70,
-              color: DSColors.cardColor,
-              child: Center(
-                child:
-                    allowGetLeads == true
-                  ? DSButtonLargePrimary(
-                    text: 'Pegar esse serviço',
-                    onPressed: () async {
-                      await servicoProvider.confirmarPegarServico(context, servico);
-                    },
-                  )
-                 : DSButtonLargePrimary(
-                  text: 'Pronto',
-                  onPressed: () {
-                    /*Navigator.push(
-                      context,
-                      // professional's lead in this job
-                      MaterialPageRoute(builder: (context) => Propostas_service(servico: servico,)),
-                    );*/
+      height: allowGetLeads == true
+      ? 70
+      : servico.concluded ==false
+      ? 262:
+      215,
+      //height: 328,
+      child: Column(
+        children: [
+          allowGetLeads == true
+          ? SizedBox():
+          servico.concluded ==false?
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: Column(
+              children: [
+                CardChangeServiceDetails(
+                  iconName: 'check-outline',
+                  title: 'Finalizar serviço',
+                  onTap: () async {
+                    await servicoProvider.setServiceAsDone(servico, context);
                   },
                 ),
-              )
+                CardChangeServiceDetails(
+                  iconName: 'close-circle-outline',
+                  title: 'Cancelar serviço',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CancelarServicoServico(servicoViewModel: servico,)),
+                    );
+                  },
+                ),
+                CardChangeServiceDetails(
+                  iconName: 'format-list-bulleted',
+                  title: 'Adicionais do serviço',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AdicionaisDoServicoScreen(servicoViewModel: servico,)),
+                    );
+                  },//
+                ),
+                CardChangeServiceDetails(
+                  iconName: 'chat-alert-outline',
+                  title: 'Dispulta serviço',
+                  onTap: () {
+                    if(servico.idDisputa == ''){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DisputaServico(servicoViewModel: servico,)),
+                      );
+                    }
+                    else{
+                      ShowSnackBar(context: context).showErrorSnackBar(message: 'A disputa foi iniciada', color: DSColors.primary,);
+                    }
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          )
+          : Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: Column(
+              children: [
+                CardChangeServiceDetails(
+                  iconName: 'format-list-bulleted',
+                  title: 'Adicionais do serviço',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AdicionaisDoServicoScreen(servicoViewModel: servico,)),
+                    );
+                  },//
+                ),
+                CardChangeServiceDetails(
+                  iconName: 'chat-alert-outline',
+                  title: 'Dispulta serviço',
+                  onTap: () {
+                    if(servico.idDisputa == ''){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DisputaServico(servicoViewModel: servico,)),
+                      );
+                    }
+                    else{
+                      ShowSnackBar(context: context).showErrorSnackBar(message: 'A disputa foi iniciada', color: DSColors.primary,);
+                    }
+                  },
+                ),
+                CardChangeServiceDetails(
+                  iconName: 'thumb-up-outline',
+                  title: 'Ver Avaliação do serviço',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SeeRatingServico(servicoViewModel: servico,)),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 70,
+            color: DSColors.cardColor,
+            child: Center(
+              child: allowGetLeads == true
+                ? DSButtonLargePrimary(
+                  text: 'Pegar esse serviço',
+                  onPressed: () async {
+                    await servicoProvider.confirmarPegarServico(context, servico);
+                  },
+                )
+               : DSButtonLargePrimary(
+                text: 'Voltar',
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          ),
+        ],
       ),
     );
   }
@@ -105,6 +159,8 @@ class CardChangeServiceDetails extends StatelessWidget {
       surfaceTintColor: DSColors.cardColor,
       elevation: 4,
       child: ListTile(
+        visualDensity: const VisualDensity(vertical: -4), // to compact
+
         contentPadding: EdgeInsetsGeometry.lerp(
           EdgeInsets.zero,
           const EdgeInsets.symmetric(horizontal: 12),

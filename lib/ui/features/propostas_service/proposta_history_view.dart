@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/widgets/proposta/proposta_list.dart';
 import '../../../application/provider/lead_provider.dart';
+import '../../../design_system/widgets/DsFutureBuilder.dart';
 import '../../../domain/entities/servico_entity.dart';
 import '../../widgets/proposta/proposta_viewmodel.dart';
 
@@ -45,7 +46,7 @@ class _Propostas_serviceState extends State<Propostas_service> {
         ),
       ),
 
-      body: FutureBuilder<PropostaViewModel?>(
+      body: /*FutureBuilder<PropostaViewModel?>(
         future: propostaFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -54,7 +55,7 @@ class _Propostas_serviceState extends State<Propostas_service> {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Error: ${snapshot.error}'),
+              child: Text('Error: ${snapsot.error}'),
             );
           } else {
             final servicosList = snapshot.data;
@@ -67,6 +68,21 @@ class _Propostas_serviceState extends State<Propostas_service> {
               );
           }
         },
+      ),*/
+      DSFutureBuilder<PropostaViewModel?>(
+        future: propostaFuture,
+        builder: (context, AsyncSnapshot<PropostaViewModel?> snapshot) {
+          PropostaViewModel? servicosList = snapshot.data;
+          return Padding(
+            padding: const EdgeInsets.only( left: 8.0, right: 8.0),
+            child: PropostaListTileHorizontal(
+              viewModel: servicosList!,
+              onTap: () {},
+            ),
+          );
+        },
+        error: 'Não há avaliação para\neste serviço ainda',
+        messageWhenEmpty: "Não há avaliação para\neste serviço ainda",
       ),
     );
   }

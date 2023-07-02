@@ -68,7 +68,6 @@ class WorkerController {
     List<WorkerEntity> retorno = [];
     try {
       final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
-      print(dado);
       dado.forEach((element) {
         retorno.add(WorkerEntity.fromJson(element));
        });

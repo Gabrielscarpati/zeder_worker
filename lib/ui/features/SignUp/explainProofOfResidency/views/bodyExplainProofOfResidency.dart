@@ -150,14 +150,14 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                                   },
                                   child: _photo != null
                                       ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(0),
-                                    child: Image.file(
-                                      _photo!,
-                                      width:250,
-                                      height: 323,
-                                      fit: BoxFit.fitHeight,
-                                    ),
-                                  )
+                                        borderRadius: BorderRadius.circular(0),
+                                        child: Image.file(
+                                          _photo!,
+                                          width:250,
+                                          height: 323,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      )
                                       : Container(
                                         decoration: BoxDecoration(
                                         color: Colors.white,
@@ -208,97 +208,12 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                                     thickness: 1,
                                   ),
                                   DSTextTitleBoldSecondary(
-                                    text: 'contrato de aluguel reconhecido\nem cartório;',
+                                    text: 'Contrato de aluguel reconhecido\nem cartório;',
                                   ),
                                   Divider(
                                     color: DSColors.primary,
                                     thickness: 1,
                                   ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Documento de financiamento\nimobiliário;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Boleto de cobrança de condomínio;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Escritura de imóvel;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Declaração recente de Imposto de\nRenda;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Laudo de avaliação de imóvel\nemitido pela Caixa Econômica\nFederal;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Contracheque emitido por órgão\npúblico;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Demonstrativos do INSS ou SRF;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Extrato do FGTS;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Fatura de cartão de crédito;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Boleto de mensalidade escolar;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Registro de licenciamento de\nveículo;',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Termo de rescisão de contrato\nde trabalho.',
-                                  ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-
                                 ],
                               ),
                             ],

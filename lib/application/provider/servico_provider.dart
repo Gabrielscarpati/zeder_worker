@@ -3,7 +3,6 @@ import 'package:zeder/data/avaliacoes/avaliacao_controller.dart';
 import 'package:zeder/data/cancel/cancel_controller.dart';
 import 'package:zeder/data/firebase/firebase_controller.dart';
 import 'package:zeder/design_system/widgets/ds_pop_up.dart';
-import 'package:zeder/domain/entities/log_entity.dart';
 import 'package:zeder/ui/features/SignUp/views/widgets/snackbars.dart';
 import '../../data/servico/servico_controller.dart';
 import '../../design_system/parameters/colors.dart';
@@ -12,6 +11,7 @@ import '../../domain/entities/cancel_entity.dart';
 import '../../domain/entities/servico_entity.dart';
 import '../../ui/features/home/Widgets/pop_up_explain_names_home_screen.dart';
 import '../../ui/features/navigation_bar/navigation_bar.dart';
+import '../../ui/features/show_list_services_standard/show_past_services_screen.dart';
 
 class ServicoProvider with ChangeNotifier {
 
@@ -29,150 +29,28 @@ class ServicoProvider with ChangeNotifier {
   List<ServicoEntity> listLeadsAccepted = [];
   ServicoController servicoController = ServicoController();
 
-  void criarServico(){
-    final dataPropostaFeita = DateTime.now();
-    final dataPropostaAceita = DateTime.now().add(Duration(days: 1));
-    final dataPagamento = DateTime.now().add(Duration(days: 2));
-    final clientGivenDate = DateTime.now().add(Duration(days: 3));
-    final descricao = "Sample description";
-    final flgClientSaw = true;
-    final flgWorkerSaw = false;
-    final icone = "sample_icon.png";
-    final idCity = "Tampa";
-    final idClient = "sample_client_id";
-    final idDisputa = "sample_dispute_id";
-    final idWorker = "";
-    final serviceDetails = {"detail1": "value1", "detail2": "value2"};
-    final service = "plumber";
-    final idService = "1";
-    final servicePrice = '100.00';
-    final waitingPayment = false;
-    final payed = false;
-    final doing = true;
-    final concluded = false;
-    final emDisputa = false;
-    final reembolsado = false;
-    final disputaFinalizada = false;
 
-    final servicoEntity = ServicoEntity(
-      dataPropostaFeita: dataPropostaFeita,
-      dataPropostaAceita: dataPropostaAceita,
-      dataPagamento: dataPagamento,
-      clientGivenDate: clientGivenDate,
-      descricao: descricao,
-      flgClientSaw: flgClientSaw,
-      flgWorkerSaw: flgWorkerSaw,
-      icone: icone,
-      idCity: idCity,
-      idClient: idClient,
-      idDisputa: idDisputa,
-      idWorker: idWorker,
-      serviceDetails: serviceDetails,
-      service: service,
-      idService: idService,
-      servicePrice: servicePrice,
-      waitingPayment: waitingPayment,
-      payed: payed,
-      doing: doing,
-      concluded: concluded,
-      emDisputa: emDisputa,
-      reembolsado: reembolsado,
-      disputaFinalizada: disputaFinalizada,
-      id: firebaseController.getRandomGeneratedId(),
-    );
-    servicoController.cadastrarServico(servicoEntity);
+  setServiceAsCurrent(ServicoEntity newService, BuildContext context) async {
+    await servicoController.atualizarServicoMakeCurrent(id: newService.id, idWorker: firebaseController.getCurrentUser()!.uid);
+    ShowSnackBar(context: context,).showErrorSnackBar(message: 'O serviço é seu agora', color: DSColors.primary,);
   }
 
-  setServiceAsCurrent(ServicoEntity newService) async {
-    ServicoEntity updatedService = ServicoEntity(
-      dataPropostaFeita: newService.dataPropostaFeita,
-      dataPropostaAceita: DateTime.now(),
-      dataPagamento: newService.dataPagamento,
-      clientGivenDate: newService.clientGivenDate,
-      descricao: newService.descricao,
-      flgClientSaw: newService.flgClientSaw,
-      flgWorkerSaw: newService.flgWorkerSaw,
-      icone: newService.icone,
-      idCity: newService.idCity,
-      idClient: newService.idClient,
-      idDisputa: newService.idDisputa,
-      idWorker: firebaseController.getCurrentUser()!.uid,
-      serviceDetails: newService.serviceDetails,
-      service: newService.service,
-      idService: newService.idService,
-      servicePrice: newService.servicePrice,
-      waitingPayment: newService.waitingPayment,
-      payed: newService.payed,
-      doing: newService.doing,
-      concluded: newService.concluded,
-      emDisputa: newService.emDisputa,
-      reembolsado: newService.reembolsado,
-      disputaFinalizada: newService.disputaFinalizada,
-      id: newService.id,
+  setServiceAsDone(ServicoEntity newService, BuildContext context) async {
+    await servicoController.atualizarServicoSetDone(id: newService.id,);
+    ShowSnackBar(context: context,).showErrorSnackBar(message: 'O serviço foi finalizado', color: DSColors.primary,);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const ShowPastServicesScreen()),
     );
 
-    await servicoController.atualizarServico(updatedService);
-  }
-
-  setServiceAsDone(ServicoEntity newService) async {
-    ServicoEntity updatedService = ServicoEntity(
-      dataPropostaFeita: newService.dataPropostaFeita,
-      dataPropostaAceita: newService.dataPropostaAceita,
-      dataPagamento: newService.dataPagamento,
-      clientGivenDate: newService.clientGivenDate,
-      descricao: newService.descricao,
-      flgClientSaw: newService.flgClientSaw,
-      flgWorkerSaw: newService.flgWorkerSaw,
-      icone: newService.icone,
-      idCity: newService.idCity,
-      idClient: newService.idClient,
-      idDisputa: newService.idDisputa,
-      idWorker: newService.idWorker,
-      serviceDetails: newService.serviceDetails,
-      service: newService.service,
-      idService: newService.idService,
-      servicePrice: newService.servicePrice,
-      waitingPayment: newService.waitingPayment,
-      payed: newService.payed,
-      doing: newService.doing,
-      concluded: true,
-      emDisputa: newService.emDisputa,
-      reembolsado: newService.reembolsado,
-      disputaFinalizada: newService.disputaFinalizada,
-      id: newService.id,
-    );
-
-    await servicoController.atualizarServico(updatedService);
   }
 
    cancelarServico(ServicoEntity newService) async{
-      ServicoEntity updatedService = ServicoEntity(
-        dataPropostaFeita: newService.dataPropostaFeita,
-        dataPropostaAceita: newService.dataPropostaAceita,
-        dataPagamento: newService.dataPagamento,
-        clientGivenDate: newService.clientGivenDate,
-        descricao: newService.descricao,
-        flgClientSaw: newService.flgClientSaw,
-        flgWorkerSaw: newService.flgWorkerSaw,
-        icone: newService.icone,
-        idCity: newService.idCity,
-        idClient: newService.idClient,
-        idDisputa: newService.idDisputa,
-        idWorker: '',
-        serviceDetails: newService.serviceDetails,
-        service: newService.service,
-        idService: newService.idService,
-        servicePrice: newService.servicePrice,
-        waitingPayment: newService.waitingPayment,
-        payed: newService.payed,
-        doing: newService.doing,
-        concluded: newService.concluded,
-        emDisputa: newService.emDisputa,
-        reembolsado: newService.reembolsado,
-        disputaFinalizada: newService.disputaFinalizada,
-        id: newService.id,
-      );
-      await servicoController.atualizarServico(updatedService);
+      await servicoController.atualizarCancelarServico(id: newService.id);
+  }
+
+  iniciarDisputa(ServicoEntity newService, String newIdDisputa) async{
+    await servicoController.atualizarServicoIniciarDisputa(id: newService.id, idDisputa: newIdDisputa);
   }
 
   Future showExplanationAllServices(context) => showDialog(
@@ -188,7 +66,7 @@ class ServicoProvider with ChangeNotifier {
     context: context,
     builder: (context) =>  DSPopUp(title: 'Tem certeza que quer pegar esse serviço?',
         onPressedYes: () async {
-          await setServiceAsCurrent(servicoEntity);
+          await setServiceAsCurrent(servicoEntity, context);
           Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
@@ -212,6 +90,8 @@ class ServicoProvider with ChangeNotifier {
             message: cancelingController.text.trim(),
             needsAction: true,
             idClient: servicoEntity.idClient,
+            idCity: servicoEntity.idCity,
+            aditionalData: {},
           );
           await cancelarServico(servicoEntity);
           await cancelController.cadastrarCancel(newCancelEntity);

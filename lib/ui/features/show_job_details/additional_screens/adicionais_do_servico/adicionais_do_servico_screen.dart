@@ -5,7 +5,6 @@ import '../../../../../application/provider/adicionais_servico.dart';
 import '../../../../../design_system/widgets/DsFutureBuilder.dart';
 import '../../../../../domain/entities/log_entity.dart';
 import '../../../../../domain/entities/servico_entity.dart';
-import '../../views/show_job_details_Listtitle.dart';
 import 'add_adicionais_do_servico.dart';
 
 class AdicionaisDoServicoScreen extends StatelessWidget {
@@ -18,18 +17,9 @@ class AdicionaisDoServicoScreen extends StatelessWidget {
     AdicionaisServicoProvider provider = context.read<AdicionaisServicoProvider>();
     return Scaffold(
       appBar: AppBar(title: Text('Adicionais do serviço'), backgroundColor: DSColors.tertiary,),
-        body: /*DSFutureBuilder(
-          future: null,
-          builder: (BuildContext , snapshot) {
-            return
-          },
-          messageWhenEmpty: 'Ainda',
-        ),*/
-        /**/
-      DSFutureBuilder<List<LogEntity>>(
-        future: provider.getLogEntity(idServico: servicoViewModel.id),
-        builder: (context,  AsyncSnapshot<List<LogEntity>> snapshot) {
-
+        body: DSFutureBuilder<List<LogEntity>>(
+          future: provider.getLogEntity(idServico: servicoViewModel.id),
+          builder: (context,  AsyncSnapshot<List<LogEntity>> snapshot) {
           return SizedBox(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -50,6 +40,7 @@ class AdicionaisDoServicoScreen extends StatelessWidget {
             ),
           );
         },
+        error: 'Você ainda não criou nenhuma\nadicional para este serviço\nainda',
         messageWhenEmpty: "Sem internet...",
       ),
 

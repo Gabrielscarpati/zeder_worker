@@ -9,5 +9,6 @@ class NameCollections {
   static const String listCitiesBrazil = 'list_cities';
   static const String logCollection = 'log';
   static const String avaliacoesCollection = 'avaliacoes';
-  static const String cancelCollection = 'cancel';
+  static const String cancelCollection = 'cancelamentos';
+  static const String disputaCollection= 'disputas';
 }

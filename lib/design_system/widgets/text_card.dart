@@ -23,12 +23,18 @@ class TextCard extends StatelessWidget {
               Radius.circular(12)),
         ),
         elevation: 10,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: DSTextSubtitleSecondary(
-            text: text,
-            ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: DSColors.cardColor,
           ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: DSTextSubtitleSecondary(
+              text: text,
+              ),
+            ),
+        ),
         ),
       );
   }

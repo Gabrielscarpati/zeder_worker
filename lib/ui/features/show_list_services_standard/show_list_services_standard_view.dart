@@ -3,13 +3,14 @@ import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/widgets/servico/servico_listtile.dart';
 import '../../../domain/entities/servico_entity.dart';
 import '../../device_type.dart';
-import '../propostas_service/proposta_history_view.dart';
+import '../show_job_details/show_job_details_screen.dart';
 
 class ShowListServicesStandardView extends StatefulWidget {
   final List<ServicoEntity>? servicos;
   final String title;
   final String noServicesFoundTitle;
-  const ShowListServicesStandardView({Key? key, required this.servicos, required this.title, required this.noServicesFoundTitle}) : super(key: key);
+  final bool allowGetLeads;
+  const ShowListServicesStandardView({Key? key, required this.servicos, required this.title, required this.noServicesFoundTitle, required this.allowGetLeads}) : super(key: key);
 
   @override
   State<ShowListServicesStandardView> createState() => _ShowListServicesStandardViewState();
@@ -54,7 +55,7 @@ class _ShowListServicesStandardViewState extends State<ShowListServicesStandardV
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Propostas_service(servico: widget.servicos![index],)),
+                    MaterialPageRoute(builder: (context) => ShowJobDetailsScreen(servicoViewModel: widget.servicos![index], allowGetLeads: widget.allowGetLeads,)),
                   );
                 },
               ),

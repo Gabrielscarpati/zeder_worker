@@ -354,10 +354,8 @@ class CreatePathInFirebase{
     /*try {
       //var json_result = map_all_jobs_paths.toJson();
       //json_result["create_at"] = DateTime.now();
-      print('aaaaaaaaaaaa');
 
       final response = await _db.collection('path_find_service').add(map_all_jobs_paths);
-      print('aaaaaaaaaaaa');
       return response.id;
     } catch (e, stackTrace) {
       return Future.error("Erro ao tentar Cadastrar", stackTrace);

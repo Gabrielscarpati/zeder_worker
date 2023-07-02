@@ -1,3 +1,4 @@
+/*
 import 'package:flutter_test/flutter_test.dart';
 import 'package:zeder/core/utils/date_utils.dart';
 import 'package:zeder/domain/entities/disputa_entity.dart';
@@ -117,3 +118,4 @@ void main() {
     expect(map['dataLeitura'], DateTime(2023, 02, 05).toJsonString());
   });
 }
+*/

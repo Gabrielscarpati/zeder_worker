@@ -18,16 +18,11 @@ class PathController {
         id: '1',
       );
       String json = jsonEncode(dado['map_path']);
-      print(json.length);
 
-      //printLongString(json);
-      //print(dado);
       Map<String, dynamic> jsonReturn =  jsonDecode(dado['map_path']);
       jsonReturn.forEach((key, value) {
-        print('$key: $value');
       });
 
-      print(jsonReturn);
       //return jsonReturn;
     } catch (e, stackTrace) {
      // return Future.error(e.toString(), stackTrace);

@@ -43,10 +43,8 @@ class _SeeRatingServicoState extends State<SeeRatingServico> {
                     text: rating.comentario,
                   ),
                   const SizedBox(height: 24,),
-
                   const DSTextTitleBoldSecondary(text: 'Avaliação'),
                   const SizedBox(height: 12,),
-
                   SizedBox(
                     width: MediaQuery.of(context).size.width-24.0,
                     child: Card(
@@ -55,34 +53,39 @@ class _SeeRatingServicoState extends State<SeeRatingServico> {
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
                       elevation: 10,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const DSTextTitleSecondary(text: 'Avalie o prestador de 1 a 5.'),
-                            const SizedBox(height: 8,),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: DSColors.cardColor,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const DSTextTitleSecondary(text: 'Sua avaliação de 1 a 5 foi:'),
+                              const SizedBox(height: 8,),
 
-                            IgnorePointer(
-                              child: RatingBar.builder(
-                                itemBuilder: (BuildContext context, int index) => const Icon(
-                                  Icons.star,
-                                  color:Colors.amber ,
+                              IgnorePointer(
+                                child: RatingBar.builder(
+                                  itemBuilder: (BuildContext context, int index) => const Icon(
+                                    Icons.star,
+                                    color:Colors.amber ,
+                                  ),
+                                  itemCount: 5,
+                                  itemSize: 36.0,
+                                  minRating: 1,
+                                  initialRating: rating.nota.toDouble(),
+                                  updateOnDrag: true,
+                                  onRatingUpdate: (ratingValue) {
+                                  },
                                 ),
-                                itemCount: 5,
-                                itemSize: 36.0,
-                                minRating: 1,
-                                initialRating: rating.nota.toDouble(),
-                                updateOnDrag: true,
-                                onRatingUpdate: (ratingValue) {
-                                },
                               ),
-                            ),
-
-                            const SizedBox(height: 8,),
-                             DSTextTitleSecondary(text: rating.nota.toString()),
-                          ],
+                              const SizedBox(height: 8,),
+                               DSTextTitleSecondary(text: 'Sua nota foi: ${rating.nota.toString()}'),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -93,7 +96,8 @@ class _SeeRatingServicoState extends State<SeeRatingServico> {
             ),
           );
         },
-        messageWhenEmpty: "Sem internet...",
+        error: 'Não há avaliação para\neste serviço ainda',
+        messageWhenEmpty: "Não há avaliação para\neste serviço ainda",
       ),
      /* */
       bottomNavigationBar: Container(

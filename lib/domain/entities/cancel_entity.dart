@@ -1,5 +1,6 @@
 import '../../core/core.dart';
 
+
 class CancelEntity extends Entity<CancelEntity> {
   final String idServico;
   final String idClient;
@@ -7,7 +8,8 @@ class CancelEntity extends Entity<CancelEntity> {
   final String message;
   final bool needsAction;
   final DateTime dataCreated;
-
+  final String idCity;
+  final Map aditionalData;
   CancelEntity({
     required super.id,
     required this.idWorker,
@@ -16,6 +18,8 @@ class CancelEntity extends Entity<CancelEntity> {
     required this.message,
     required this.needsAction,
     required this.idClient,
+    required this.idCity,
+    required this.aditionalData,
   });
 
   factory CancelEntity.fromJson(Map<String, dynamic> json) {
@@ -27,6 +31,8 @@ class CancelEntity extends Entity<CancelEntity> {
       message: json['message'] ?? '',
       needsAction: json['needsAction'] ?? false,
       idClient: json['idClient'],
+      idCity: json['idCity'],
+      aditionalData: json['aditionalData'] ?? {},
     );
   }
 
@@ -39,6 +45,8 @@ class CancelEntity extends Entity<CancelEntity> {
       message: json['message'] ?? '',
       needsAction: json['needsAction'] ?? false,
       idClient: json['idClient'],
+      idCity: json['idCity'],
+      aditionalData: json['aditionalData'] ?? {},
     );
   }
 
@@ -51,6 +59,8 @@ class CancelEntity extends Entity<CancelEntity> {
       'message': message,
       'needsAction': needsAction,
       'idClient': idClient,
+      'idCity': idCity,
+      'aditionalData': aditionalData,
     };
   }
 
@@ -74,6 +84,8 @@ class CancelEntity extends Entity<CancelEntity> {
       needsAction: needsAction ?? this.needsAction,
       dataCreated: dataCreated ?? this.dataCreated,
       id: id ?? this.id,
+      idCity: idCity ?? this.idCity,
+      aditionalData: aditionalData ?? this.aditionalData,
     );
   }
 }

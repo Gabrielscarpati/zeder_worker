@@ -74,7 +74,7 @@ class LogInSignUpProvider with ChangeNotifier {
       profile_picture: profilePicture,
       phone: signUpPhone.text.trim(),
       servicos: getServicesIds(),
-      my_cities: getNameByCities(PesquisaCidadeProvider().selected_cities),
+      my_cities: getIdByCities(PesquisaCidadeProvider().selected_cities),
       numberRating1: 0,
       numberRating2: 0,
       numberRating3: 0,
@@ -87,10 +87,10 @@ class LogInSignUpProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<String> getNameByCities(List<CitiesViewModel> lista_cidades){
+  List<String> getIdByCities(List<CitiesViewModel> lista_cidades){
     List<String> cidadeNames = [];
     for(var cidade in lista_cidades){
-      cidadeNames.add(cidade.city_name);
+      cidadeNames.add(cidade.id);
     }
     return cidadeNames;
   }
@@ -224,7 +224,6 @@ class LogInSignUpProvider with ChangeNotifier {
 
 
   String? validateCPF(String? value) {
-    print(RegExp(r"^([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})$").hasMatch(value!));
     if ( RegExp(r"^([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})$").hasMatch(value!) == false ) {
       return 'O CPF não é válido';
     }
@@ -247,7 +246,6 @@ class LogInSignUpProvider with ChangeNotifier {
     res2.forEach((element) {
       strCPF += element;
     });
-    print(strCPF);
     if (value == "00000000000") return 'favor adicionar cpf';
 
     for (int i=1; i<=9; i++) Soma = Soma + int.parse(strCPF.substring(i-1, i)) * (11 - i);

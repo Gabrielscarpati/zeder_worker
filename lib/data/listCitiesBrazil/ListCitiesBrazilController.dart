@@ -52,7 +52,6 @@ class ListCitiesBrazilController {
     List<CityEntity> retorno = [];
     try {
       final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
-      print(dado);
       dado.forEach((element) {
         retorno.add(CityEntity.fromJson(element));
        });

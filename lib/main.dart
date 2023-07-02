@@ -10,8 +10,8 @@ import 'package:zeder/ui/features/SignUp/viewSignUp.dart';
 import 'package:zeder/ui/features/home/home_screen.dart';
 import 'package:zeder/ui/features/navigation_bar/navigation_bar.dart';
 import 'package:zeder/ui/features/navigation_bar/viewNavigationBarScren.dart';
-import 'package:zeder/ui/widgets/client/client_viewmodel.dart';
 import 'application/provider/adicionais_servico.dart';
+import 'application/provider/disputa_provider.dart';
 import 'application/provider/home_screen_provider.dart';
 import 'application/provider/lead_provider.dart';
 import 'application/provider/logInSignUpProvider.dart';
@@ -21,7 +21,6 @@ import 'application/provider/tipo_servico_provider.dart';
 import 'application/provider/worker_provider.dart';
 import 'data/firebase/firebase_controller.dart';
 import 'package:provider/provider.dart';
-
 import 'design_system/widgets/DsFutureBuilder.dart';
 
 Future<void> main() async {
@@ -52,6 +51,7 @@ Future<void> main() async {
       ChangeNotifierProvider( create: (context) => LeadProvider() ,),
       ChangeNotifierProvider( create: (context) => LogInSignUpProvider() ,),
       ChangeNotifierProvider( create: (context) => AdicionaisServicoProvider() ,),
+      ChangeNotifierProvider( create: (context) => DisputaProvider() ,),
     ],
 
     child: const MyApp(),
@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
     //FirebaseAuth.instance.signOut();
     //print(FirebaseAuth.instance.currentUser);
    /*FirebaseManager manager = FirebaseManager();
-     manager.loginUser(email: 'gabrielbrsc30@gmail.com', password: 'Gabriel1234', context: context)*/;
+     manager.loginUser(email: 'gabrielbrsc30@gmail.com', password: 'Gabriel1234', context: context);*/
     return MaterialApp(
           title: 'Flutter Demo',
           theme: DSTheme.theme(context),
@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
                 stream: FirebaseManager().firebaseAuth.authStateChanges(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    return const  ViewNavegationBarScreen();
+                    return const ViewNavegationBarScreen();
                     //ViewNavegationBarScreen();
                   }
                 return const ViewLogin();
@@ -109,7 +109,9 @@ class _LoadDataState extends State<LoadData> {
           return widget.body;
         },
         messageWhenEmpty: "Sem internet...",
+        error: "Erro ao carregar dados",
       ),
     );
   }
 }
+

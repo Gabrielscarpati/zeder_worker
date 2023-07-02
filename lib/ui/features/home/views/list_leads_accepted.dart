@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:zeder/ui/features/home/views/see_all_services_button.dart';
 import 'package:zeder/ui/features/show_job_details/show_job_details_screen.dart';
@@ -23,7 +24,7 @@ class ListLeadsAccepted extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'Meus serviços', servicos: servicos, allowGetLeads: allowGetLeads,),
+              child: SeeAllServicesButton(title: 'Meus serviços', servicos: servicos, allowGetLeads: allowGetLeads, newServico: true, currentServico: false,),
             ),
             //const SizedBox(width: 8,),
           ],
@@ -50,3 +51,4 @@ class ListLeadsAccepted extends StatelessWidget {
     );
   }
 }
+*/

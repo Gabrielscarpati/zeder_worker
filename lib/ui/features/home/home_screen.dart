@@ -19,14 +19,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<WorkerViewModel> clientFuture;
-  late Stream<Map<String ,List<ServicoEntity>>> servicosStream;
+  late Stream<List<ServicoEntity>> newServicosStream;
+  late Stream<List<ServicoEntity>> currentServicosStream;
 
   @override
   void initState() {
     super.initState();
     final WorkerProvider _ClientProvider = context.read<WorkerProvider>();
     clientFuture = _ClientProvider.getWorkerLoadDataApp();
-    servicosStream = ServicoController().fetchServicosStream();
+    newServicosStream = ServicoController().fetchNewServicesStreamWithParameter();
+    currentServicosStream = ServicoController().fetchWorkerServicesStreamWithParameter();
   }
 
   @override
@@ -59,28 +61,58 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 },
               ),
-               /*SizedBox(
-                 height: 200,
-                 child: FutureBuilder<List<ServicoViewModel>>(
-                  future: servicosFuture,
-                  builder: (context, snapshot) {
+
+              SizedBox(
+                height: 200,
+                child: StreamBuilder<List<ServicoEntity>>(
+                  stream: newServicosStream,
+                  builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text('Algo deu errado');
+                    }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: SizedBox(height: 50, width: 50,
+                      return const Center(child: SizedBox(height: 50, width: 50,
                           child: CircularProgressIndicator())
                       );
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return ListAllServicos(servicos: snapshot.data!);
+                    }
+                    WorkerProvider workerProvider = WorkerProvider();
+                    List<ServicoEntity>? services = snapshot.data;
+                    List<ServicoEntity>? newServices = [];
+                    newServices.clear();
+
+                    for(ServicoEntity service in services!) {
+                      bool isWorkerCity = false;
+                      bool isWorkerService = false;
+
+                      for (var myCity in workerProvider.my_cities) {
+                        if (myCity.id == service.idCity) {
+                          isWorkerCity = true;
                         }
-                      },
-                  ),
-               ),*/
+                      }
+                      for (var myService in workerProvider.my_services) {
+                        if (myService.servico ==  workerProvider.getServicesByID(id:service.idService)) {
+                          isWorkerService = true;
+                        }
+                      }
+
+                      if (isWorkerCity && isWorkerService) {
+                        newServices.add(service);
+                      }
+                    }
+
+                    return newServices.isEmpty? const ListAllServicosEmpty():
+                     ListAllServicos(servicos: newServices);
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 20,),
+
               SizedBox(
-                height: 514,
-                child: StreamBuilder<Map<String, List<ServicoEntity>>>(
-                  stream: servicosStream,
-                  builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoEntity>>> snapshot) {
+                height: 400,
+                child: StreamBuilder<List<ServicoEntity>>(
+                  stream: currentServicosStream,
+                  builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
 
                     if (snapshot.hasError) {
                       return const Text('Algo deu errado');
@@ -90,76 +122,26 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CircularProgressIndicator())
                       );
                     }
-                    Map<String, List<ServicoEntity>>? servicosMap = snapshot.data;
-                    List<ServicoEntity>? servicosList = servicosMap?['allAvailableJobs'];
-                    List<ServicoEntity>? currentServices = servicosMap?['currentServices'];
+
+                    List<ServicoEntity>? currentServices = snapshot.data;
+                    List<ServicoEntity>? newCurrentServices = [];
+                    currentServices!.forEach((element) {
+                        if(element.concluded == false && element.idWorker != ''){
+                          newCurrentServices.add(element);
+                        }
+                      }
+                    );
+
                     return Column(
                       children: [
-                        servicosList!.isEmpty?  ListAllServicosEmpty():
-                         ListAllServicos(servicos: servicosList),
-                        const SizedBox(height: 20,),
-                        currentServices!.isEmpty?  ListCurrentServicosEmpty():
-                        CurrentServices(servicos: currentServices), //setServiceAsDone
+                        newCurrentServices.isEmpty?  ListAllServicosEmpty():
+                          CurrentServices(servicos: newCurrentServices)
+
                       ],
                     );
                   },
                 ),
               ),
-              /*Container(
-                height: 200,
-                child: StreamBuilder<Map<String, List<ServicoViewModel>>>(
-                  stream: servicosStream,
-                  builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoViewModel>>> snapshot) {
-
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
-                    }
-                    Map<String, List<ServicoViewModel>>? servicosMap = snapshot.data;
-
-                    // Access the list from the map using the desired key
-                    List<ServicoViewModel>? servicosList = servicosMap?['allAvailableJobs'];
-
-                    return ListLeadsNotAcceptedYet(servicos: servicosList!);
-                  },
-                ),
-              ),*/
-              /*SizedBox(
-                height: 300,
-                child: FutureBuilder<List<ServicoViewModel>>(
-                  future: listLeadsNotAcceptedYetFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: SizedBox(height: 50, width: 50,
-                          child: CircularProgressIndicator())
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return ListLeadsNotAcceptedYet(servicos: snapshot.data!);
-                    }
-                  },
-                ),
-              ),*/
-              /* SizedBox(
-                height: 194,
-                child: FutureBuilder<List<ServicoViewModel>>(
-                  future: listLeadsAccepted,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: SizedBox(height: 50, width: 50,
-                          child: CircularProgressIndicator())
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return ListLeadsAccepted(servicos: snapshot.data!);
-                    }
-                  },
-                ),
-              ),*/
             ],
           ),
         ),

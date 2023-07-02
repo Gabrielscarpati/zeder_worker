@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:zeder/ui/features/show_list_services_standard/show_list_services_standard_view.dart';
+import '../../../application/provider/worker_provider.dart';
 import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
 
@@ -13,36 +14,58 @@ class ShowNewServicesScreen extends StatefulWidget {
 
 class _ShowNewServicesScreenState extends State<ShowNewServicesScreen> {
 
-  late Stream<Map<String ,List<ServicoEntity>>> servicosStream;
+  late Stream<List<ServicoEntity>> servicosStream;
 
   @override
   void initState() {
     super.initState();
-    servicosStream = ServicoController().fetchServicosStream();
+
+    servicosStream =  ServicoController().fetchNewServicesStreamWithParameter();
   }
   @override
   Widget build(BuildContext context) {
 
-
-    return StreamBuilder<Map<String, List<ServicoEntity>>>(
+    return StreamBuilder<List<ServicoEntity>>(
       stream: servicosStream,
-      builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoEntity>>> snapshot) {
-
+      builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
         if (snapshot.hasError) {
-          return Text('Something went wrong');
+          return const Text('Algo deu errado');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Carrengando");
+          return const Center(child: SizedBox(height: 50, width: 50,
+              child: CircularProgressIndicator())
+          );
         }
-        Map<String, List<ServicoEntity>>? servicosMap = snapshot.data;
+        WorkerProvider workerProvider = WorkerProvider();
+        List<ServicoEntity>? services = snapshot.data;
+        List<ServicoEntity>? newServices = [];
+        newServices.clear();
 
-        // Access the list from the map using the desired key
-        List<ServicoEntity>? servicosList = servicosMap?['allAvailableJobs'];
+        for(ServicoEntity service in services!) {
+          bool isWorkerCity = false;
+          bool isWorkerService = false;
+
+          for (var myCity in workerProvider.my_cities) {
+            if (myCity.id == service.idCity) {
+              isWorkerCity = true;
+            }
+          }
+          for (var myService in workerProvider.my_services) {
+            if (myService.servico ==  workerProvider.getServicesByID(id:service.idService)) {
+              isWorkerService = true;
+            }
+          }
+
+          if (isWorkerCity && isWorkerService) {
+            newServices.add(service);
+          }
+        }
 
         return ShowListServicesStandardView(
-          servicos: servicosList,
+          servicos: newServices,
           title: 'Novos Serviços',
           noServicesFoundTitle: 'Não há nenhum serviço diponível agora,novos\n serviço podem aparecer a qualquer momento',
+          allowGetLeads: false,
         );
       },
     );

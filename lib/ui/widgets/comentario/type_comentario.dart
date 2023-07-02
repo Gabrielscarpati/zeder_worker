@@ -51,7 +51,7 @@ class _TypeComentarioState extends State<TypeComentario> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const DSTextTitleSecondary(text: 'Avalie o prestador de 1 a 5'),
+                          const DSTextTitleSecondary(text: 'Sua avaliação de 1 a 5 foi:'),
                           const SizedBox(height: 8,),
 
                           RatingBar.builder(

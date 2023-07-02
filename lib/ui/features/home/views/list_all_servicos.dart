@@ -27,8 +27,8 @@ class _ListAllServicosState extends State<ListAllServicos> {
     return Column(
       children: [
          Row(
-           crossAxisAlignment: CrossAxisAlignment.end,
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
              Padding(
               padding: EdgeInsets.only(top: 8, bottom: 4, left: 8),
@@ -51,7 +51,7 @@ class _ListAllServicosState extends State<ListAllServicos> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'Todos servicos disponíveis', servicos: widget.servicos, allowGetLeads: allowGetLeads,),
+              child: SeeAllServicesButton(title: 'Todos servicos disponíveis', servicos: widget.servicos, allowGetLeads: allowGetLeads, newServico: true, currentServico: false,),
             ),
             //const SizedBox(width: 8,),
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zeder/application/provider/worker_provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import '../../../domain/entities/servico_entity.dart';
 
@@ -6,15 +7,15 @@ abstract class ServicoListTile extends StatelessWidget {
   final ServicoEntity viewModel;
   final VoidCallback onTap;
 
-  const ServicoListTile({
+   ServicoListTile({
     super.key,
     required this.viewModel,
     required this.onTap,
   });
-
+  WorkerProvider workerProvider = WorkerProvider();
   Widget get icone => DSIconFilledSecondary(iconName: viewModel.icone);
   Widget get titulo => DSTextTitleBoldSecondary(text: viewModel.service);
-  Widget get status => DSTextSubtitleSecondary(text: viewModel.idCity);
+  Widget get status => DSTextSubtitleSecondary(text: workerProvider.getCitiesByID(id: viewModel.idCity));
 
   Widget get valorData => Row(
         mainAxisSize: MainAxisSize.min,
@@ -38,7 +39,7 @@ abstract class ServicoListTile extends StatelessWidget {
 }
 
 class ServicoListTileHorizontal extends ServicoListTile {
-  const ServicoListTileHorizontal({
+   ServicoListTileHorizontal({
     super.key,
     required super.viewModel,
     required super.onTap,
@@ -67,7 +68,7 @@ class ServicoListTileHorizontal extends ServicoListTile {
 }
 
 class ServicoListTileVertical extends ServicoListTile {
-  const ServicoListTileVertical({
+   ServicoListTileVertical({
     super.key,
     required super.viewModel,
     required super.onTap,

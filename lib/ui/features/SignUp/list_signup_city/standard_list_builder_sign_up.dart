@@ -69,7 +69,7 @@ class ListBuilderSelectedCities extends StatelessWidget {
                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                      crossAxisAlignment: CrossAxisAlignment.center,
                      children: [
-                       DSTextTitleBoldSecondary(text: selectedCities[index].city_name,),
+                       DSTextTitleBoldSecondary(text: selectedCities[index].name,),
                        const DSIconSmallSecondary(iconName: 'closeCircle',),
                      ],
                    ),

@@ -20,12 +20,16 @@ class PesquisaCidadeProvider with ChangeNotifier {
   bool isServicesLoaded = false;
   Future<String> loadCities() async{
     TipoServicoProvider tipoServicoProvider = TipoServicoProvider();
-    tipoServicoProvider.loadListTipoServicos();
+    await tipoServicoProvider.loadListTipoServicos();
     isServicesLoaded = true;
     List<CityEntity> citiesFromDataBase = await cityControllter.buscarCidadeComCondicao(cond:'Brazil', condName: 'country');
     list_all_cities.clear();
     list_all_cities = citiesFromDataBase;
-    return 'String';
+    return 'MyStrng';
+  }
+
+  List<CityEntity> getAllCities(){
+    return list_all_cities;
   }
 
   List<CitiesViewModel> list_cities_screen = [];
@@ -44,6 +48,8 @@ class PesquisaCidadeProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+
   String user_chosen_city ='';
 
   bool listInitialized = false;
@@ -51,7 +57,7 @@ class PesquisaCidadeProvider with ChangeNotifier {
     List<CitiesViewModel> cidadesViewModel = [];
     for(int i = 0; i < list_all_cities.length; i++ ) {
 
-      cidadesViewModel.add(CitiesViewModel(icon: 'city',city_name: list_all_cities[i].name));
+      cidadesViewModel.add(CitiesViewModel(icon: 'city',name: list_all_cities[i].name, id: list_all_cities[i].id));
     }
     if(!listInitialized){
       list_cities_screen= cidadesViewModel;
@@ -64,7 +70,7 @@ class PesquisaCidadeProvider with ChangeNotifier {
     List<CitiesViewModel> list_all_cities = getListaDeCidadesViewModel();
     List<CitiesViewModel> novalista_cidades = [];
     for(int i = 0; i < list_all_cities.length; i++ ) {
-      if(list_all_cities[i].city_name.toLowerCase().contains(filter_name.toLowerCase())){
+      if(list_all_cities[i].name.toLowerCase().contains(filter_name.toLowerCase())){
         novalista_cidades.add(list_all_cities[i]);
       }
     }
@@ -78,7 +84,6 @@ class PesquisaCidadeProvider with ChangeNotifier {
   String get_user_chonsen_city(){
     return user_chosen_city;
   }
-
 
 
 }

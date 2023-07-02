@@ -53,7 +53,6 @@ class LeadProvider with ChangeNotifier {
   Future<PropostaViewModel?> getPropostaByService(String id) async {
 
     List<PropostaViewModel> all_worker_propostas = await getListPropostas();
-    print(all_worker_propostas.length);
     for (int i = 0; i < all_worker_propostas.length; i++) {
       if (all_worker_propostas[i].idServico == id) {
         return all_worker_propostas[i];

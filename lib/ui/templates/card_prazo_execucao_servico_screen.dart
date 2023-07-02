@@ -31,19 +31,14 @@ class _CardPrazoExecucaoServicoScreenState extends State<CardPrazoExecucaoServic
       body: SizedBox(
         child: CardPrazoExecucaoServico(
           SelectCardRadioButtonSecondaryAction: () {
-            print("SelectCardRadioButtonSecondaryAction");
           },
           onSelectCardAmanhaRadioButton: (p0) {
-            print("onSelectAmanhaRadioButton");
           },
           onSelectSeteDiasRadioButton: (p0) {
-            print("onSelectSeteDiasRadioButton");
           },
           onSelectTrintaDiasRadioButton: (p0) {
-            print("onSelectTrintaDiasRadioButton");
           },
           onSelectSemLimiteRadioButton: (p0) {
-            print("onSelectSemLimiteRadioButton");
           },
 
           selectedType: PrazoExecucaoServicoEntity.trintaDias(),

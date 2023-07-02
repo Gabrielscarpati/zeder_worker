@@ -17,7 +17,8 @@ class Header extends StatefulWidget {
 class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
-    ServicoProvider servicoProvider = Provider.of<ServicoProvider>(context);
+    List<String> nameParts = widget.client.nome.split(' ');
+    String firstName = nameParts[0];
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -34,7 +35,7 @@ class _HeaderState extends State<Header> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Olá, ${widget.client.nome}',
+                    'Olá, $firstName',
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,

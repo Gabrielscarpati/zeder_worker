@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:zeder/application/provider/pesquisa_cidade_provider.dart';
 import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import 'package:zeder/data/user/user_controller.dart';
 import 'package:zeder/domain/domain.dart';
@@ -36,8 +37,8 @@ class WorkerProvider with ChangeNotifier {
   String profilePicturePath = '';
 
   Future<WorkerViewModel> getWorkerLoadDataApp() async {
-    TipoServicoProvider tipoServicoProvider = TipoServicoProvider();
-    await tipoServicoProvider.loadListTipoServicos();
+    PesquisaCidadeProvider tipoServicoProvider = PesquisaCidadeProvider();
+    await tipoServicoProvider.loadCities();
 
     WorkerEntity workerEntity = await WorkerController().buscarWorker(firebaseController.getCurrentUser()!.uid);
 
@@ -62,15 +63,13 @@ class WorkerProvider with ChangeNotifier {
       my_services.add(WorkerServicesViewModel(icone: 'city', servico: getServicesByID(id:workerViewModel.my_services[i])));
     }
     for(int i = 0; i < workerViewModel.my_cities.length; i++){
-      my_cities.add(CitiesViewModel(icon: 'city', city_name: workerViewModel.my_cities[i]));
+      my_cities.add(CitiesViewModel(icon: 'city',  name: getCitiesByID(id: workerViewModel.my_cities[i]), id: workerViewModel.my_cities[i]));
+    print(my_cities[i].name);
     }
-
     return workerViewModel;
-
   }
 
   String getServicesByID({required String id}){
-
     TipoServicoProvider tipoServicoProvider = TipoServicoProvider();
     List<TipoServicoEntity> servicos = tipoServicoProvider.getListServices();
     for(TipoServicoEntity servico in servicos){
@@ -80,6 +79,18 @@ class WorkerProvider with ChangeNotifier {
     }
     return 'String';
   }
+
+  String getCitiesByID({required String id}){
+    PesquisaCidadeProvider pesquisaCidadeProvider = PesquisaCidadeProvider();
+    List<CityEntity> cities = pesquisaCidadeProvider.getAllCities();
+    for(CityEntity city in cities){
+      if(city.id == id){
+        return city.name;
+      }
+    }
+    return 'Str';
+  }
+
 
   String getCurrentUserProfilePicture(){
     return profilePicturePath;

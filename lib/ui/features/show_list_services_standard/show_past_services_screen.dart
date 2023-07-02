@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:zeder/ui/features/show_list_services_standard/show_list_services_standard_view.dart';
+import '../../../data/firebase/firebase_controller.dart';
 import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
 
@@ -12,37 +13,75 @@ class ShowPastServicesScreen extends StatefulWidget {
 
 
 class _ShowPastServicesScreenState extends State<ShowPastServicesScreen> {
-  late Stream<Map<String ,List<ServicoEntity>>> servicosStream;
+  late Stream<List<ServicoEntity>> servicosStream;
 
   @override
   void initState() {
     super.initState();
-    servicosStream = ServicoController().fetchServicosStream();
+    servicosStream = ServicoController().fetchWorkerServicesStreamWithParameter();
   }
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Map<String, List<ServicoEntity>>>(
+    return StreamBuilder<List<ServicoEntity>>(
       stream: servicosStream,
-      builder: (BuildContext context, AsyncSnapshot<Map<String, List<ServicoEntity>>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
 
         if (snapshot.hasError) {
-          return Text('Something went wrong');
+          return const Text('Algo deu errado');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Carrengando");
+          return const Center(child: SizedBox(height: 50, width: 50,
+              child: CircularProgressIndicator())
+          );
         }
-        Map<String, List<ServicoEntity>>? servicosMap = snapshot.data;
+        List<ServicoEntity>? servicosList = snapshot.data;
+        FirebaseController firebaseController = FirebaseController();
+
+        List<ServicoEntity>? newPastServices = [];
+        for (var element in servicosList!) {
+            if(element.concluded == true && element.idWorker == firebaseController.getCurrentUser()!.uid){
+              newPastServices.add(element);
+            }
+          }
+        return ShowListServicesStandardView(
+          servicos: newPastServices,
+          title: 'Serviços Passados',
+          noServicesFoundTitle: "Você ainda não finalizou nenhum serviço ainda",
+          allowGetLeads: false,
+        );
+      },
+    );
+  /* StreamBuilder<List<ServicoEntity>>(
+      stream: servicosStream,
+      builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
+
+        if (snapshot.hasError) {
+          return const Text('Something went wrong');
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            body: Center(
+              child: Container(
+                height: 50,
+                width: 50,
+                  child: CircularProgressIndicator()
+              ),
+            ),
+          );
+        }
+        //Map<String, List<ServicoEntity>>? servicosMap = snapshot.data;
 
         // Access the list from the map using the desired key
-        List<ServicoEntity>? servicosList = servicosMap?['pastJobs'];
+        List<ServicoEntity>? servicosList = snapshot.data;
 
         return ShowListServicesStandardView(
           servicos: servicosList,
           title: 'Serviços Passados',
-          noServicesFoundTitle: "Você ainda não finalizou nenhum serviço ainda"
+          noServicesFoundTitle: "Você ainda não finalizou nenhum serviço ainda",
+          allowGetLeads: false,
         );
       },
-    );
+    );*/
   }
 }
 

@@ -12,7 +12,7 @@ class CitiesListTile extends StatelessWidget {
   });
 
   Widget get icone => DSIconFilledSecondary(iconName: viewModel.icon,);
-  Widget get titulo => DSTextTitleBoldSecondary(text: viewModel.city_name);
+  Widget get titulo => DSTextTitleBoldSecondary(text: viewModel.name);
 
   @override
   Widget build(BuildContext context) {
