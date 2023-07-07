@@ -1,15 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/home/views/see_all_services_button.dart';
-import 'package:zeder/ui/features/show_job_details/show_job_details_screen.dart';
 import '../../../../application/provider/servico_provider.dart';
-import '../../../../data/firebase/firebase_controller.dart';
-import '../../../../data/shared/name_collections.dart';
-import '../../../widgets/servico/servico_listtile.dart';
-import '../../../widgets/servico/servico_viewmodel.dart';
-import '../Widgets/pop_up_explain_names_home_screen.dart';
+
 
 class ListAllServicosEmpty extends StatefulWidget {
 
@@ -54,7 +48,7 @@ class _ListAllServicosEmptyState extends State<ListAllServicosEmpty> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'Todos serviços disponíveis', servicos: [], allowGetLeads: allowGetLeads,),
+              child: SeeAllServicesButton(title: 'Todos serviços disponíveis', servicos: [], allowGetLeads: allowGetLeads,newServico: true, currentServico: false),
             ),
             //const SizedBox(width: 8,),
           ],
@@ -113,7 +107,7 @@ class _ListCurrentServicosEmptyState extends State<ListCurrentServicosEmpty> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'Todos serviços disponíveis', servicos: [], allowGetLeads: allowGetLeads,),
+              child: SeeAllServicesButton(title: 'Todos serviços disponíveis', servicos: [], allowGetLeads: allowGetLeads, newServico: false, currentServico: true),
             ),
             //const SizedBox(width: 8,),
           ],

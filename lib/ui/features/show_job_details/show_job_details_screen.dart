@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/show_job_details/views/show_details_body.dart';
-import 'package:zeder/ui/features/show_job_details/widgets/get_the_lead_bottom_bar.dart';
 import '../../../domain/entities/servico_entity.dart';
+import 'additional_screens/get_the_lead_bottom_bar.dart';
 
 class ShowJobDetailsScreen extends StatelessWidget {
   final bool allowGetLeads;

@@ -16,16 +16,13 @@ class _ViewNavegationBarScreenState extends State<ViewNavegationBarScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: workerProvider.getWorker(),
+      future: workerProvider.getWorkerLoadDataApp(),
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // Show loading screen while waiting for the future to complete
           print("Esperando ");
           return Scaffold(body: Container(height: 80, width: 80, child: Center(child: const CircularProgressIndicator())));
-
         } else if (snapshot.hasError) {
-          // Handle error if the future throws an exception
-          return const Text("Error");
+          return Scaffold(body: Container(height: 80, width: 80, child: Center(child: const CircularProgressIndicator())));
         } else {
           // Continue with the actual UI
           return const NavigationBarScreen();

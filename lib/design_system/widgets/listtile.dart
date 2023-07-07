@@ -8,6 +8,7 @@ class DSCardListTileHorizontal extends StatelessWidget {
   final Widget trailing;
   final VoidCallback? onTap;
   final Color? color;
+  final bool? includeTrailing;
 
   const DSCardListTileHorizontal({
     super.key,
@@ -17,6 +18,7 @@ class DSCardListTileHorizontal extends StatelessWidget {
     required this.trailing,
     this.onTap,
     this.color = DSColors.cardColor,
+    this.includeTrailing,
   });
 
   @override
@@ -28,16 +30,17 @@ class DSCardListTileHorizontal extends StatelessWidget {
       child: ListTile(
         contentPadding: EdgeInsetsGeometry.lerp(
           EdgeInsets.zero,
-          const EdgeInsets.symmetric(horizontal: 16),
+          const EdgeInsets.symmetric(horizontal: 12),
           0.5,
         ),
         leading: leading,
         title: title,
         subtitle: subtitle,
-        trailing: Container(
+        trailing: includeTrailing == true? SizedBox(
             width: 108,
             child: trailing
-        ),
+        ):
+        SizedBox(width: 4,),
         onTap: onTap,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),

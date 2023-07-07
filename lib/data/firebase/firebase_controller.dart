@@ -3,19 +3,11 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zeder/domain/domain.dart';
-import '../../application/provider/worker_provider.dart';
 import '../../core/framework/entity.dart';
-import '../../core/utils/bool_utils.dart';
-import '../../core/utils/date_utils.dart';
 import '../../ui/features/SignUp/views/widgets/snackbars.dart';
-import '../../ui/features/navigation_bar/navigation_bar.dart';
 import '../../ui/features/navigation_bar/viewNavigationBarScren.dart';
-import '../../ui/widgets/client/client_viewmodel.dart';
-import '../../ui/widgets/servico/servico_viewmodel.dart';
 
 class FirebaseController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -117,9 +109,25 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
     }
   }
 
+  Future<List<Map<String, dynamic>>> buscarTodosDados({required String collection}) async {
+    if (collection.isEmpty) {
+      throw ArgumentError("Nome da coleção inválido");
+    }
+    try {
+      final response = await _db.collection(collection).get();
+      final documents = response.docs;
+
+      if (documents.isNotEmpty) {
+        return documents.map((doc) => doc.data()).toList();
+      }
+      throw Exception("Não há dados na coleção $collection");
+    } catch (e, stackTrace) {
+      throw Exception(e.toString());
+    }
+  }
+
 
   Future<List<Map<String, dynamic>>> buscarDadoComCondicao({required String collection, required String condName,required String cond}) async {
-    print("collection: $collection, condName: $condName, cond: $cond");
   if (cond.isEmpty || collection.isEmpty) {
       return Future.error("Dados Inváidos para buscar", StackTrace.current);
     }
@@ -164,15 +172,27 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
   }*/
 
 
-  Future<void> atualizarDado(
-      {String collection = '', String id = '', Entity? data}) async {
+  Future<void> atualizarDado({String collection = '', String id = '', Entity? data}) async {
     if (data == null || id.isEmpty || collection.isEmpty) {
       return Future.error("Dados Inváidos para atualizar", StackTrace.current);
     }
     try {
       var json = data.toJson();
-      json["update_at"] = DateTime.now();
+      json["update_at"] = Timestamp.now();
       await _db.collection(collection).doc(id).set(json, SetOptions(merge: true) );
+    } catch (e, stackTrace) {
+      return Future.error(e.toString(), stackTrace);
+    }
+  }
+
+
+  Future<void> atualizarDadosEspecificos({String collection = '', String id = '', Map<String, Object>? data}) async {
+    if (data == null || id.isEmpty || collection.isEmpty) {
+      return Future.error("Dados Inváidos para atualizar", StackTrace.current);
+    }
+    try {
+      data['update_at'] = Timestamp.now();
+      await _db.collection(collection).doc(id).update(data);
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);
     }
@@ -217,7 +237,6 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
     for (int i = 0; i < AUTO_ID_LENGTH; i++) {
       buffer.write(AUTO_ID_ALPHABET[randomGen.nextInt(maxRandom)]);
     }
-    print(buffer.toString());
     return buffer.toString();
   }
 
@@ -260,7 +279,6 @@ class FirebaseManager{
       );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      print("Error: "+ e.code);
       if (e.code == 'user-not-found') {
         ShowSnackBar(context: context).showErrorSnackBar(message: 'No user found for that email.');
       } else if (e.code == 'wrong-password') {

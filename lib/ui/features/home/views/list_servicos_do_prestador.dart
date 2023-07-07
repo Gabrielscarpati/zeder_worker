@@ -40,7 +40,7 @@ class CurrentServices extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 8,),
-                        child: SeeAllServicesButton(title:'Servicos atuais', servicos: servicos, allowGetLeads: allowGetLeads,),
+                        child: SeeAllServicesButton(title:'Servicos atuais', servicos: servicos, allowGetLeads: allowGetLeads, newServico: false, currentServico: true,),
                       ),
                       //const SizedBox(width: 8,),
                     ],

@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:zeder/application/provider/worker_provider.dart';
 import 'package:zeder/design_system/design_system.dart';
-
 import '../../../domain/entities/servico_entity.dart';
-import 'servico_viewmodel.dart';
 
 abstract class ServicoListTile extends StatelessWidget {
   final ServicoEntity viewModel;
   final VoidCallback onTap;
 
-  const ServicoListTile({
+   ServicoListTile({
     super.key,
     required this.viewModel,
     required this.onTap,
   });
-
+  WorkerProvider workerProvider = WorkerProvider();
   Widget get icone => DSIconFilledSecondary(iconName: viewModel.icone);
   Widget get titulo => DSTextTitleBoldSecondary(text: viewModel.service);
-/*
-  Widget get status => viewModel.flgWorkerSaw ? DSTextSubtitleSecondary(text: viewModel.idCity) : DSTextSubtitleTertiary(text: 'viewModel.status');
-*/
-  Widget get status => DSTextSubtitleSecondary(text: viewModel.idCity);
+  Widget get status => DSTextSubtitleSecondary(text: workerProvider.getCitiesByID(id: viewModel.idCity));
+
   Widget get valorData => Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: valorTempoCrossAxisAlignment,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DSTextTitleBoldSecondary(text: viewModel.servicePrice.toString()+ ' \$'),
+              DSTextTitleBoldSecondary(text: '${viewModel.servicePrice} R\$'),
               DSTextSubtitleSecondary(text: viewModel.clientGivenDate.toString().substring(0,10)),
             ],
           ),
@@ -42,7 +39,7 @@ abstract class ServicoListTile extends StatelessWidget {
 }
 
 class ServicoListTileHorizontal extends ServicoListTile {
-  const ServicoListTileHorizontal({
+   ServicoListTileHorizontal({
     super.key,
     required super.viewModel,
     required super.onTap,
@@ -58,6 +55,7 @@ class ServicoListTileHorizontal extends ServicoListTile {
         trailing: valorData,
         color: DSColors.cardColor,
         onTap: onTap,
+        includeTrailing: true,
       ),
     );
   }
@@ -70,7 +68,7 @@ class ServicoListTileHorizontal extends ServicoListTile {
 }
 
 class ServicoListTileVertical extends ServicoListTile {
-  const ServicoListTileVertical({
+   ServicoListTileVertical({
     super.key,
     required super.viewModel,
     required super.onTap,

@@ -36,12 +36,27 @@ class WorkerController {
     }
   }
 
+  Future<void> atualizarWorkerPicture(WorkerEntity worker, String profilePicture) async {
+    try {
+      await _firebase.atualizarDado(
+        collection: _collection,
+        id: worker.id,
+        data: worker.copyWith(profile_picture: profilePicture)
+      );
+    } catch (e, stackTrace) {
+      return Future.error(
+          "Erro ao tentar atualizar o usuario ${e.toString()}{", stackTrace);
+    }
+  }
+
   Future<WorkerEntity> buscarWorker(String userId) async {
     try {
+
       final dado = await _firebase.buscarDado(
         collection: _collection,
         id: userId,
       );
+
       final user = WorkerEntity.fromJson(dado);
       return user;
     } catch (e, stackTrace) {
@@ -53,7 +68,6 @@ class WorkerController {
     List<WorkerEntity> retorno = [];
     try {
       final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
-      print(dado);
       dado.forEach((element) {
         retorno.add(WorkerEntity.fromJson(element));
        });

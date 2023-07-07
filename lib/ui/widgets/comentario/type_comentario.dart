@@ -28,10 +28,10 @@ class _TypeComentarioState extends State<TypeComentario> {
               children: [
                 const DSTextTitleBoldSecondary(text: 'Comentário'),
                 const SizedBox(height: 12,),
-                TextCard(
+                /*TextCard(
                   hintText: 'Escreva seu comentário',
                   textEditingController: widget.viewModel.textEditingController,
-                ),
+                ),*/
                 const SizedBox(height: 24,),
 
                 const DSTextTitleBoldSecondary(text: 'Avaliação'),
@@ -51,7 +51,7 @@ class _TypeComentarioState extends State<TypeComentario> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const DSTextTitleSecondary(text: 'Avalie o prestador de 1 a 5'),
+                          const DSTextTitleSecondary(text: 'Sua avaliação de 1 a 5 foi:'),
                           const SizedBox(height: 8,),
 
                           RatingBar.builder(

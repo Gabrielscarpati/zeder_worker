@@ -12,8 +12,11 @@ class StandardController extends StatefulWidget {
   final IconData sufixIcon;
   final String hint;
   final String deleteOrHide;
+  final bool? multilineText;
+  final int? maxLines;
+  final bool? iSkeyboardTypeNumber;
 
-  const StandardController({Key? key, required this.nameController, required this.hint, required this.validator, required this.prefixIcon, required this.sufixIcon, required this.deleteOrHide, required this.title}) : super(key: key);
+  const StandardController({Key? key, required this.nameController, required this.hint, required this.validator, required this.prefixIcon, required this.sufixIcon, required this.deleteOrHide, required this.title, this.multilineText, this.maxLines, this.iSkeyboardTypeNumber}) : super(key: key);
 
   @override
   State<StandardController> createState() => _StandardControllerState();
@@ -43,6 +46,10 @@ class _StandardControllerState extends State<StandardController> {
             obscureText: widget.deleteOrHide == 'hide' ? passwordIsHidden : false,
             controller: widget.nameController,
             cursorColor: Colors.indigoAccent,
+            maxLines: widget.maxLines,
+            minLines: 1,
+            keyboardType:  widget.iSkeyboardTypeNumber == true? TextInputType.number: widget.multilineText == null|| widget.multilineText == false? TextInputType.emailAddress:TextInputType.multiline,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -55,6 +62,7 @@ class _StandardControllerState extends State<StandardController> {
                 fontSize: 16,
                 color: DSColors.tertiary,
               ),
+
               prefixIcon: Icon(widget.prefixIcon, color: DSColors.tertiary,),
               suffixIcon:
               widget.deleteOrHide == "hide"?
@@ -77,8 +85,6 @@ class _StandardControllerState extends State<StandardController> {
                   onPressed: () => widget.nameController.clear()
               )
             ),
-
-            keyboardType: TextInputType.emailAddress,
           ),
         ),
       ],

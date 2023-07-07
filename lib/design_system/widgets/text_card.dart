@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:zeder/design_system/design_system.dart';
 
 class TextCard extends StatelessWidget {
-  final String? hintText;
-  final TextEditingController textEditingController;
+  final String text;
   const TextCard({Key? key,
-    required this.hintText,
-    required this.textEditingController
+    required this.text
   }) : super(key: key);
 
   @override
@@ -13,32 +12,29 @@ class TextCard extends StatelessWidget {
 
     return ConstrainedBox(
         constraints: const BoxConstraints(
+          minWidth: double.infinity,
           minHeight: 120,
         maxHeight: 600,
     ),
       child:Card(
-        color: Colors.white,
+        color: DSColors.cardColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
               Radius.circular(12)),
         ),
         elevation: 10,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: TextField(
-            maxLines: null,
-            controller: textEditingController,
-           keyboardType: TextInputType.multiline,
-            cursorColor: Colors.indigoAccent,
-            decoration: InputDecoration(
-              hintText: hintText,
-              hintStyle: const TextStyle(
-                color: Colors.black,
-                ),
-                border: InputBorder.none,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: DSColors.cardColor,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: DSTextSubtitleSecondary(
+              text: text,
               ),
             ),
-          ),
+        ),
         ),
       );
   }

@@ -21,7 +21,7 @@ class _ListAllServiceViewState extends State<ListAllServiceView> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: DSColors.scaffoldBackground,
+        backgroundColor: DSColors.tertiary,
         title: Column(
           children: [
             DSTextTitleSecondary(text:widget.title,),
@@ -35,6 +35,7 @@ class _ListAllServiceViewState extends State<ListAllServiceView> {
           ],
         ),
       ),
+
 
       body: ListView.builder(
         scrollDirection: Axis.vertical,

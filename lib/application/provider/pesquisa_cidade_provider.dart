@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import 'package:zeder/domain/domain.dart';
-import '../../infra/repo/cidade_repo.dart';
+import '../../data/listCitiesBrazil/ListCitiesBrazilController.dart';
 import '../../ui/widgets/cities/cities_viewmodel.dart.dart';
 
 class PesquisaCidadeProvider with ChangeNotifier {
@@ -13,7 +14,24 @@ class PesquisaCidadeProvider with ChangeNotifier {
   }
   PesquisaCidadeProvider._internal();
 
-  List<Map<String, dynamic>> list_all_cities = CidadeRepo().cidade_repo_list;
+  ListCitiesBrazilController cityControllter = ListCitiesBrazilController();
+  List<CityEntity> list_all_cities =[];
+
+  bool isServicesLoaded = false;
+  Future<String> loadCities() async{
+    TipoServicoProvider tipoServicoProvider = TipoServicoProvider();
+    await tipoServicoProvider.loadListTipoServicos();
+    isServicesLoaded = true;
+    List<CityEntity> citiesFromDataBase = await cityControllter.buscarCidadeComCondicao(cond:'Brazil', condName: 'country');
+    list_all_cities.clear();
+    list_all_cities = citiesFromDataBase;
+    return 'MyStrng';
+  }
+
+  List<CityEntity> getAllCities(){
+    return list_all_cities;
+  }
+
   List<CitiesViewModel> list_cities_screen = [];
   List<CitiesViewModel> selected_cities = [];
 
@@ -30,28 +48,29 @@ class PesquisaCidadeProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+
   String user_chosen_city ='';
 
   bool listInitialized = false;
   List<CitiesViewModel> getListaDeCidadesViewModel(){
-    List<CitiesViewModel> tiposServicoViewModel = [];
+    List<CitiesViewModel> cidadesViewModel = [];
     for(int i = 0; i < list_all_cities.length; i++ ) {
-      CidadeEntity tipoServicoEntity = CidadeEntity.fromJson(list_all_cities[i]);
-      tiposServicoViewModel.add(CitiesViewModel(icon: 'city',city_name: "${tipoServicoEntity.nome}"));
+
+      cidadesViewModel.add(CitiesViewModel(icon: 'city',name: list_all_cities[i].name, id: list_all_cities[i].id));
     }
-    /*, ${tipoServicoEntity.uf}*/
     if(!listInitialized){
-      list_cities_screen= tiposServicoViewModel;
+      list_cities_screen= cidadesViewModel;
     }
     listInitialized = true;
-    return tiposServicoViewModel;
+    return cidadesViewModel;
   }
 
   void applicarFiltroNalista(String filter_name){
     List<CitiesViewModel> list_all_cities = getListaDeCidadesViewModel();
     List<CitiesViewModel> novalista_cidades = [];
     for(int i = 0; i < list_all_cities.length; i++ ) {
-      if(list_all_cities[i].city_name.toLowerCase().contains(filter_name.toLowerCase())){
+      if(list_all_cities[i].name.toLowerCase().contains(filter_name.toLowerCase())){
         novalista_cidades.add(list_all_cities[i]);
       }
     }
@@ -65,7 +84,6 @@ class PesquisaCidadeProvider with ChangeNotifier {
   String get_user_chonsen_city(){
     return user_chosen_city;
   }
-
 
 
 }

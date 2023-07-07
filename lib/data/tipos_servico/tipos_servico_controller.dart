@@ -19,11 +19,11 @@ class TiposServicoController {
     }
   }
 
-  Future<TipoServicoEntity> buscarTiposServico(String userId) async {
+  Future<TipoServicoEntity> buscarTiposServico({required String id}) async {
     try {
       final dado = await _firebase.buscarDado(
         collection: _collection,
-        id: userId,
+        id: id,
       );
       final servicos = TipoServicoEntity.fromJson(dado);
       return servicos;
@@ -32,17 +32,34 @@ class TiposServicoController {
     }
   }
 
+  Future<List<TipoServicoEntity>> buscarTodosTiposServico() async {
+    try {
+      final dado = await _firebase.buscarTodosDados(
+        collection: _collection,
+      );
+      List<TipoServicoEntity> servicos = [];
+      for(var eachDado in dado){
+        servicos.add(TipoServicoEntity.fromJson(eachDado));
+      }
+      return servicos;
+    } catch (e, stackTrace) {
+      return Future.error(e.toString(), stackTrace);
+    }
+  }
+
+
   Future<List<TipoServicoEntity>> buscarTiposServicoComCondicao(String cond, String condName)async{
     List<TipoServicoEntity> retorno = [];
     try {
       final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
       dado.forEach((element) {
         retorno.add(TipoServicoEntity.fromJson(element));
-       });
-     
+      });
+
       return retorno;
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);
     }
   }
+
 }

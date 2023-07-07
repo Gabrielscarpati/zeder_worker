@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
-import 'package:zeder/design_system/parameters/colors.dart';
 import 'package:zeder/ui/features/SignUp/list_signup_city/standard_list_builder_sign_up.dart';
-import 'package:zeder/ui/features/home/home_screen.dart';
 import '../../../../application/provider/pesquisa_cidade_provider.dart';
 import '../../../device_type.dart';
 import '../list_signup_service/choose_service_screen.dart';
-import '../views/widgets/snackbars.dart';
 
 class ChooseCityScreen extends StatefulWidget {
   const ChooseCityScreen({Key? key}) : super(key: key);
@@ -57,7 +54,7 @@ class _ChooseCityScreenState extends State<ChooseCityScreen> {
                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('I work in these cities', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
+                        Text('Eu Trabalho nessas ciadades', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
                       ],
                     ),
                      const Padding(
@@ -67,8 +64,8 @@ class _ChooseCityScreenState extends State<ChooseCityScreen> {
                         thickness: 1,
                       ),
                     ),
-                    CityControllter(hint: "Type the city's name", iconData: Icons.search,),
-                    ListBuilderSelectedCities(),
+                    const CityControllter(hint: "Digite o nome da cidade", iconData: Icons.search,),
+                    const ListBuilderSelectedCities(),
                   ],
               ),
                ),
@@ -117,11 +114,11 @@ class PopUpSelectOneCity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Select at least one city!',
+      title: const Text('Selecione pelo menos uma cidade!',
         textAlign: TextAlign.center ,
         style: TextStyle(color: DSColors.primary,
             fontWeight: FontWeight.bold,
-            fontSize: 28),
+            fontSize: 24),
       ),
       actions: [
         DSButtonLargePrimary(

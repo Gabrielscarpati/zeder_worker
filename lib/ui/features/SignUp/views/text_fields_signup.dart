@@ -1,4 +1,6 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/ui/features/SignUp/views/widgets/widgetsForSignUp.dart';
 import '../../../../application/provider/logInSignUpProvider.dart';
@@ -34,21 +36,29 @@ class _TextFieldsSingUpState extends State<TextFieldsSingUp> {
               ),
               StandardController(
                 title: 'Telefone',
-                hint: 'Digite seu telefone',
+                hint: 'Digite apenas números',
                 nameController: provider.signUpPhone,
                 validator: provider.validatePhone,
                 prefixIcon: Icons.phone,
                 sufixIcon:  Icons.close,
                 deleteOrHide: 'delete',
+                /*inputFormatters: [
+                  TelefoneInputFormatter(),
+                ],*/
               ),
+
               StandardController(
                 title: 'CPF',
-                hint: 'Digite seu CPF',
+                hint: 'Digite apenas números',
                 nameController: provider.signUpCPF,
-                validator: provider.validateEmail, //mudar
+                validator: provider.validateCPF, //mudar
                 prefixIcon: Icons.call_to_action,
                 sufixIcon:  Icons.close,
                 deleteOrHide: 'delete',
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CpfInputFormatter(),
+                ],
               ),
               StandardController(
                 title: 'Email',
