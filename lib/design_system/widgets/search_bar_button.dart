@@ -31,7 +31,7 @@ class _SearchBarButtonState extends State<SearchBarButton> {
           backgroundColor: MaterialStateProperty.all<Color>(DSColors.cardColor), // Set the background color to white
 
         ),
-        child: const Padding(
+        child: Padding(
           padding: EdgeInsets.all(4.0),
           child: Row(
             children: [

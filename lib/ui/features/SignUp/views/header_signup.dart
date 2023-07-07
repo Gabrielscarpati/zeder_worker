@@ -12,7 +12,7 @@ class HeaderSignUp extends StatefulWidget {
 class _HeaderSignUpState extends State<HeaderSignUp> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         DSTextTitleBoldSecondary(text: "Bem vindo"),
       ],

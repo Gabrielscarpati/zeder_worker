@@ -49,7 +49,7 @@ class _MyCitiesState extends State<MyCities> {
                       },
                       child: const Icon(Icons.arrow_back, color: Colors.white, size: 28,),
                     ),
-                    const Row(
+                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Minhas cidades', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),

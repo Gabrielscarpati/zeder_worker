@@ -31,7 +31,7 @@ class _Propostas_serviceState extends State<Propostas_service> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: DSColors.scaffoldBackground,
-        title: const Column(
+        title:  Column(
           children: [
             DSTextTitleSecondary(text:'Histórico de Proposta ',),
             Padding(

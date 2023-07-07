@@ -30,7 +30,7 @@ class LoginBody extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             child: Form(
               key: provider.formKeyAuthenticationLogin,
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Column(

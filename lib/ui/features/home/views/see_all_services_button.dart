@@ -20,7 +20,7 @@ class SeeAllServicesButton extends StatelessWidget {
         );
       },
       splashColor: Colors.transparent,
-      child: const Row(
+      child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

@@ -48,7 +48,7 @@ class _MyServicesState extends State<MyServices> {
                       },
                       child: const Icon(Icons.arrow_back, color: Colors.white, size: 28,),
                     ),
-                    const Row(
+                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Meus serviços', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
