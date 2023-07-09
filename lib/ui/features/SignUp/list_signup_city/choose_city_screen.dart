@@ -51,7 +51,7 @@ class _ChooseCityScreenState extends State<ChooseCityScreen> {
                       },
                       child: const Icon(Icons.arrow_back, color: Colors.white, size: 28,),
                     ),
-                    const Row(
+                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Eu Trabalho nessas ciadades', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),

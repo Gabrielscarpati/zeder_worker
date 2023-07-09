@@ -70,7 +70,7 @@ class _ButtonSwitchScreensLogInState extends State<ButtonSwitchScreensLogIn> {
         ),
         const SizedBox(height: 8,),
         GestureDetector(
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               DSTextSubtitleSecondary(

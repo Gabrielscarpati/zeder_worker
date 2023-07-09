@@ -56,7 +56,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     text: widget.user.nome,
                   ),
                 ),
-                const Row(
+                
+                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
@@ -97,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       InkWell(
-                        child: const Row(
+                        child:  Row(
                           children: [
                              Icon(
                               Icons.power_settings_new_outlined,
