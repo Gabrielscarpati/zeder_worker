@@ -9,6 +9,7 @@ import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import '../../data/firebase/firebase_controller.dart';
 import '../../data/user/user_controller.dart';
 import '../../data/user/user_entity.dart';
+import '../../design_system/parameters/colors.dart';
 import '../../domain/entities/tipo_servico_entity.dart';
 import '../../ui/features/SignUp/list_signup_city/choose_city_screen.dart';
 import '../../ui/features/SignUp/save_image.dart';
@@ -36,7 +37,8 @@ class LogInSignUpProvider with ChangeNotifier {
    GlobalKey<FormState> formKeyAuthenticationLogin = GlobalKey<FormState>();
    GlobalKey<FormState> formKeyAuthenticationSignUp = GlobalKey<FormState>();
   final RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
-
+  TextEditingController resetPasswordEmail = TextEditingController();
+  FirebaseManager firebaseManager = FirebaseManager();
   TextEditingController signUpName = TextEditingController();
   TextEditingController signUpPhoneNumber = TextEditingController();
   TextEditingController signUpEmail = TextEditingController();
@@ -48,6 +50,8 @@ class LogInSignUpProvider with ChangeNotifier {
   TextEditingController loginPassword = TextEditingController();
   String cpfPicture = "";
   String proofOfResidencyPicture = "";
+  GlobalKey<FormState> formKeyAuthenticationResetPassword = GlobalKey<FormState>();
+  RoundedLoadingButtonController bntControllerForgotPassword = RoundedLoadingButtonController();
 
   Future<void> selectImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -173,11 +177,19 @@ class LogInSignUpProvider with ChangeNotifier {
   }
 
   Future<void> loginUser(BuildContext context)async {
-    await FirebaseManager().loginUser(
-      email: provider.loginEmail.text.trim(),
-      password: provider.loginPassword.text.trim(),
-      context: context,
-    );
+
+    if(formKeyAuthenticationLogin.currentState!.validate()){
+      if( await checkIfEmailInUse(provider.signUpEmail.text.trim()) == false){
+        ShowSnackBar(context: context).showErrorSnackBar(message: 'Não existe usuário com esse email!');
+      }
+      else{
+        await FirebaseManager().loginUser(
+          email: provider.loginEmail.text.trim(),
+          password: provider.loginPassword.text.trim(),
+          context: context,
+        );
+      }
+    }
   }
 
   ///// VALIDATORS  /////
@@ -205,8 +217,23 @@ class LogInSignUpProvider with ChangeNotifier {
      return null;
   }
 
+  String? validateEmailLogIn(String? value) {
+     if (!EmailValidator.validate(loginEmail.text.trim())){
+       return  'Email inválido';
+     }
+     return null;
+  }
+
   String? validatePassword(String? value) {
     if (signUpPassword.text.trim().isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$').hasMatch(signUpPassword.text.trim())) {
+      return "Sua senha precisa conter uma letra maiúscula,\nminúscula, um número e ter no mínimo 8 caracteres";
+    } else {
+      return null;
+    }
+  }
+
+  String? validatePasswordLogIn(String? value) {
+    if (loginPassword.text.trim().isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$').hasMatch(loginPassword.text.trim())) {
       return "Sua senha precisa conter uma letra maiúscula,\nminúscula, um número e ter no mínimo 8 caracteres";
     } else {
       return null;
@@ -263,6 +290,25 @@ class LogInSignUpProvider with ChangeNotifier {
 
     return null;
   }
+
+  String? validateEmailResetPassword(String? value) {
+    String email = resetPasswordEmail.text.trim();
+    if (!EmailValidator.validate(email)) {
+      return "Digite um Email válido";
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> resetPassword({required BuildContext context}) async {
+    if(formKeyAuthenticationResetPassword.currentState!.validate()){
+        await firebaseManager.resetPassword(
+            email: resetPasswordEmail.text.trim(), context: context);
+        ShowSnackBar(context: context).showErrorSnackBar(
+            message: 'A link was sent to your email to reset your password.', color: DSColors.primary);
+    }
+  }
+
 }
 
 

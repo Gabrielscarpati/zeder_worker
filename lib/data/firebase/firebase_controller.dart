@@ -299,130 +299,27 @@ class FirebaseManager{
       return null;
     }
   }
-}
 
-/*
-Future<List<ServicoViewModel>> fetchServicos() async {
-  FirebaseController firebaseController = FirebaseController();
-  final snapshot = await FirebaseFirestore.instance.collection('servico').get();
-  List<ServicoViewModel> servicos = [];
-  for (var doc in snapshot.docs) {
-    Map<String, dynamic> data = doc.data();
-    servicos.add(ServicoViewModel(
-      id: data['id'],
-      dataPropostaFeita: DateUtil.toDateTimeDefaultDateZero(data['id']).toString().substring(0,5),
-      dataPropostaAceita: DateUtil.toDateTimeDefaultDateZero(data['id']).toString().substring(0,5),
-      dataPagamento: DateUtil.toDateTimeDefaultDateZero(data['id']).toString().substring(0,5),
-      clientGivenDate: DateUtil.toDateTimeDefaultDateZero(data['id']).toString().substring(0,5),
-      descricao: data['descricao'] ?? '',
-      flgClientSaw: BoolUtil.toBoolDefaultFalse(data['flgClientSaw']),
-      flgWorkerSaw: BoolUtil.toBoolDefaultFalse(data['flgWorkerSaw']),
-      icone: data['icone'] ?? '',
-      idCity: data['idCity'] ?? '',
-      idClient: data['idClient'] ?? '',
-      idDisputa: data['idDisputa'] ?? '',
-      idWorker: data['idWorker'] ?? '',
-      idAcceptedLead: data['idAcceptedLead'] ?? '',
-      idsWorkersBid: data['idsWorkersBid'] ?? [],
-      serviceDetails: data['serviceDetails'] ?? {},
-      service: data['service'] ?? '',
-      idService: data['idService'] ?? '',
-      smallerValue: data['smallerValue'] ?? '',
-      greaterValue: data['greaterValue'] ?? '',
-      acceptedValue: data['acceptedValue'] ?? '',
-      areThereBids: BoolUtil.toBoolDefaultFalse(data['areThereBids']),
-      clientAcceptedABid: BoolUtil.toBoolDefaultFalse(data['clientAcceptedABid']),
-      waitingPayment: BoolUtil.toBoolDefaultFalse(data['waitingPayment']),
-      payed: BoolUtil.toBoolDefaultFalse(data['payed']),
-      doing: BoolUtil.toBoolDefaultFalse(data['doing']),
-      concluded: BoolUtil.toBoolDefaultFalse(data['concluded']),
-      emDisputa: BoolUtil.toBoolDefaultFalse(data['emDisputa']),
-      reembolsado: BoolUtil.toBoolDefaultFalse(data['reembolsado']),
-      disputaFinalizada: BoolUtil.toBoolDefaultFalse(data['disputaFinalizada']),
-      )
-    );
+  Future resetPassword({required String email, required BuildContext context }) async{
+    bool doesEmailExists = await checkIfEmailInUse(email);
+    if(!doesEmailExists){
+      ShowSnackBar(context: context).showErrorSnackBar(message: 'This email is not registered.');
+    }
+    else{
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+    }
   }
-  String userId = firebaseController.getCurrentUser()!.uid;
-  WorkerViewModel worker = await WorkerProvider().getWorker();
-  List<dynamic> worker_servicos_ids = worker.my_services;
-  print('aaaaaaaa');
 
-  print(worker_servicos_ids);
-  for(var id in worker_servicos_ids){
-    servicos.removeWhere((service) => service.idService != id);
-
-*/
-/*    for(var service in servicos ){
-      if(service.idService != id){
-        service.
+  Future<bool> checkIfEmailInUse(String emailAddress) async {
+    try {
+      List<String> list = await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
+      if (list.isEmpty) {
+        return false;
+      } else {
+        return true;
       }
-    }*//*
-
+    }catch (error) {
+      return true;
+    }
   }
-  servicos.clear();
-
-  return servicos;
 }
-*/
-
-
-
-/////////////////////////  Stream  /////////////////////////////
-/*abstract class IModel<T>{
-  Map<String, dynamic> toJson();
-
-
-  // IModel fromJson(Map<String, dynamic> json);
-  DateTime parseDateTime(String? dateTime) {
-    if (dateTime == null) return DateTime.now();
-    final date = DateTime.tryParse(dateTime);
-    if (date == null) return DateTime.now();
-    return date;
-  }
-
-  T fromJson(Map<String, dynamic> json);
-}*/
-
-/*class GetDataStream<B extends Entity> {
-  B entity;
-  String collection = '';
-
-  GetDataStream({required this.entity, required this.collection});
-
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  Stream<List<B>> getBasicStream() {
-    try {
-      return _db.collection(collection).snapshots().map((notes) {
-        final List<B> notesFromFirestore = <B>[];
-        for (final DocumentSnapshot<Map<String, dynamic>> doc in notes.docs) {
-          notesFromFirestore.add(entity.fromJson(doc.data()!));
-        }
-        return notesFromFirestore;
-      });
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Stream<List<B>> getStreamWithAtribute(String atribute, String value) {
-    try {
-      return _db
-          .collection(collection)
-          .where(atribute, isEqualTo: value)
-          .snapshots()
-          .map((notes) {
-        final List<B> notesFromFirestore = <B>[];
-        for (final DocumentSnapshot<Map<String, dynamic>> doc in notes.docs) {
-          notesFromFirestore.add(entity.fromJson(doc.data()!));
-        }
-        return notesFromFirestore;
-      });
-    } catch (e) {
-      rethrow;
-    }
-  }
-}*/
-
-
-

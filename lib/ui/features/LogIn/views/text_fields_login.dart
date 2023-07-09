@@ -15,14 +15,6 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
 
   @override
   Widget build(BuildContext context) {
-
-    String? validateEmail(String? value) {
-      if (value == null || value.isEmpty) {
-        return 'Por favor, digite seu email';
-      }
-      return null;
-    }
-
     final provider = context.read<LogInSignUpProvider>();
 
     return SizedBox(
@@ -33,7 +25,7 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
                 title: 'Email',
                 hint: 'Email',
                 nameController: provider.loginEmail,
-                validator: validateEmail,
+                validator: provider.validateEmailLogIn,
                 prefixIcon: Icons.email,
                 sufixIcon:  Icons.close,
                 deleteOrHide: 'delete',
@@ -42,7 +34,7 @@ class _TextFieldsLoginState extends State<TextFieldsLogin> {
                 title: 'Senha',
                 hint: 'Digite sua senha',
                 nameController: provider.loginPassword,
-                validator: validateEmail,
+                validator: provider.validatePasswordLogIn,
                 prefixIcon: Icons.lock,
                 sufixIcon:  Icons.close,
                 deleteOrHide: 'hide',

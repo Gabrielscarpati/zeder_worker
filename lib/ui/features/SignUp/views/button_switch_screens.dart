@@ -61,6 +61,7 @@ class _ButtonSwitchScreensState extends State<ButtonSwitchScreens> {
             );
           },
         ),
+        SizedBox(height: 20,)
       ],
     );
   }

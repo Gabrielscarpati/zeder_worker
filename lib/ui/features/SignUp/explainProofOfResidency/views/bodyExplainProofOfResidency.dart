@@ -24,7 +24,7 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   Future<String?> getUserId() async {
-    final User? user = await auth.currentUser;
+    final User? user = auth.currentUser;
     final userId = user?.uid.toString();
     return userId;
   }
@@ -225,27 +225,6 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                 ),
               ),
             ),
-
-            /*SizedBox(
-              width: MediaQuery.of(context).size.width*.6,
-              child: const DSTextTitleBoldSecondary(
-              text: '''contas de água, luz, gás, TV, internet, telefone fixo e celular;
-              carnês do IPTU e IPVA;/n
-              contrato de aluguel reconhecido em cartório;
-              documento de financiamento imobiliário;
-              boleto de cobrança de condomínio;
-              escritura de imóvel;
-              declaração recente de Imposto de Renda;
-              laudo de avaliação de imóvel emitido pela Caixa Econômica Federal;
-              contracheque emitido por órgão público;
-              demonstrativos do INSS ou SRF;
-              extrato do FGTS;
-              fatura de cartão de crédito;
-              boleto de mensalidade escolar;
-              registro de licenciamento de veículo;
-              termo de rescisão de contrato de trabalho.''',
-              ),
-            ),*/
           ],
         ),
       ),

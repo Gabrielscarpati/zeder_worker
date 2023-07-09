@@ -82,7 +82,7 @@ class ServicoListTileVertical extends ServicoListTile {
         title: titulo,
         icon: icone,
         footer: valorData,
-        color: DSColors.primary,
+        color: DSColors.primary.withOpacity(0.3),
         onTap: onTap,
       ),
     );

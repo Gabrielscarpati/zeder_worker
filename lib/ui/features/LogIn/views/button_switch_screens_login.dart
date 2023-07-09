@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:zeder/ui/features/LogIn/views/ForgotPassword.dart';
 import '../../../../application/provider/logInSignUpProvider.dart';
 import '../../../../design_system/parameters/colors.dart';
 import '../../../../design_system/widgets/text.dart';
@@ -24,6 +25,41 @@ class _ButtonSwitchScreensLogInState extends State<ButtonSwitchScreensLogIn> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
+      Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const SizedBox(height: 8,),
+        GestureDetector(
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              DSTextSubtitleSecondary(
+                text: "Esqueceu a senha?",
+              ),
+              SizedBox(width: 4,),
+              Text('Recuperar senha',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: DSColors.primary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          onTap: () {
+            provider.formKeyAuthenticationLogin.currentState!.deactivate();
+
+            Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const ForgotPassword();
+                  },
+                ));
+          },
+        ),
+      ],
+    ),
         LoadingButton(
           goNextScreen:() async{
             provider.loginUser(context);

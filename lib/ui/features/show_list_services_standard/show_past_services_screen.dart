@@ -39,7 +39,9 @@ class _ShowPastServicesScreenState extends State<ShowPastServicesScreen> {
 
         List<ServicoEntity>? newPastServices = [];
         for (var element in servicosList!) {
+          print(element.idWorker);
             if(element.concluded == true && element.idWorker == firebaseController.getCurrentUser()!.uid){
+              print('element.idWorker');
               newPastServices.add(element);
             }
           }
