@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/ui/features/SignUp/views/widgets/termsAndConditions.dart';
 import '../../../../application/provider/logInSignUpProvider.dart';
+import '../../../../application/provider/pesquisa_cidade_provider.dart';
 import '../../../../design_system/parameters/colors.dart';
 
 class CheckboxZeder extends StatefulWidget {
@@ -12,10 +13,11 @@ class CheckboxZeder extends StatefulWidget {
 }
 
 class _CheckboxZederState extends State<CheckboxZeder> {
+  PesquisaCidadeProvider pesquisaCidadeProvider = PesquisaCidadeProvider();
+
   @override
   Widget build(BuildContext context) {
     final provider = context.read<LogInSignUpProvider>();
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -64,6 +66,6 @@ class _CheckboxZederState extends State<CheckboxZeder> {
   }
   Future viewTermsAndConditions(context) => showDialog(
     context: context,
-    builder: (context) => const ViewTermsAndConditions(),
+    builder: (context) =>  ViewTermsAndConditions(termsAndConditions: pesquisaCidadeProvider.terms,),
   );
 }

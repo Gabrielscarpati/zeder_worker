@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/show_job_details/views/show_job_details_listviewbuilder.dart';
+import '../../../../design_system/widgets/text_card.dart';
 import '../../../../domain/entities/servico_entity.dart';
 
 class ShowJobDetaisBody extends StatelessWidget {
@@ -12,8 +12,9 @@ class ShowJobDetaisBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        ShowJobDetailsListviewbuilder(servicoDetails: servicoViewModel.serviceDetails),
+        ShowJobDetailsListviewbuilder(servicoDetails: servicoViewModel.serviceDetails, descricao: servicoViewModel.descricao,),
       ],
     );
   }

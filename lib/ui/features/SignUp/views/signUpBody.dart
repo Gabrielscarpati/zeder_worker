@@ -19,9 +19,6 @@ class SignUpBody extends StatelessWidget {
     double padding;
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
     deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 16;
-    //          padding: EdgeInsets.only(right: padding, left: padding),
-
-
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -33,7 +30,7 @@ class SignUpBody extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: Form(
             key: provider.formKeyAuthenticationSignUp,
-            child: SingleChildScrollView(
+            child: const SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

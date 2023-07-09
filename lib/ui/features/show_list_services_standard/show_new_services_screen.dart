@@ -56,7 +56,7 @@ class _ShowNewServicesScreenState extends State<ShowNewServicesScreen> {
             }
           }
 
-          if (isWorkerCity && isWorkerService) {
+          if (isWorkerCity && isWorkerService && service.payed) {
             newServices.add(service);
           }
         }

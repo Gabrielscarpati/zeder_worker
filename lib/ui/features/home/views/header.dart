@@ -37,6 +37,7 @@ class _HeaderState extends State<Header> {
                   Text(
                     'Olá, $firstName',
                     style: const TextStyle(
+                      color: Colors.grey,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),

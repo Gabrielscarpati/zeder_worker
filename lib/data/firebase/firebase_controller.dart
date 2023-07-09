@@ -280,11 +280,11 @@ class FirebaseManager{
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        ShowSnackBar(context: context).showErrorSnackBar(message: 'No user found for that email.');
+        ShowSnackBar(context: context).showErrorSnackBar(message: 'Não existe usuário com esse email.');
       } else if (e.code == 'wrong-password') {
-        ShowSnackBar(context: context).showErrorSnackBar(message: 'Wrong password provided for that user.');
+        ShowSnackBar(context: context).showErrorSnackBar(message: 'Senha errada para esse email');
       }else if (e.code == 'too-many-requests') {
-        ShowSnackBar(context: context).showErrorSnackBar(message: 'Too many requests, please try again later.');
+        ShowSnackBar(context: context).showErrorSnackBar(message: 'Espere um pouco e tente novamente');
       }
     }
     return null;
@@ -303,7 +303,7 @@ class FirebaseManager{
   Future resetPassword({required String email, required BuildContext context }) async{
     bool doesEmailExists = await checkIfEmailInUse(email);
     if(!doesEmailExists){
-      ShowSnackBar(context: context).showErrorSnackBar(message: 'This email is not registered.');
+      ShowSnackBar(context: context).showErrorSnackBar(message: 'O email não está cadastrado.');
     }
     else{
       await firebaseAuth.sendPasswordResetEmail(email: email);

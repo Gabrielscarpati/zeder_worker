@@ -3,15 +3,24 @@ import 'package:zeder/ui/features/show_job_details/views/show_job_details_Listti
 
 class ShowJobDetailsListviewbuilder extends StatefulWidget {
   final Map<dynamic, dynamic> servicoDetails;
-  const ShowJobDetailsListviewbuilder({Key? key, required this.servicoDetails}) : super(key: key);
+  final String descricao;
+  const ShowJobDetailsListviewbuilder({Key? key, required this.servicoDetails, required this.descricao}) : super(key: key);
 
   @override
   State<ShowJobDetailsListviewbuilder> createState() => _ShowJobDetailsListviewbuilderState();
 }
 
 class _ShowJobDetailsListviewbuilderState extends State<ShowJobDetailsListviewbuilder> {
+
+  @override
+  void initState() {
+    super.initState();
+    widget.servicoDetails['Descrição'] =  widget.descricao== ""? " O cliente não fez uma descição para esse serviço. ": " ${widget.descricao} "; // Add a new key-value pair
+  }
+
   @override
   Widget build(BuildContext context) {
+
     {
       Map<dynamic, dynamic> details = widget.servicoDetails;
       return Expanded(
@@ -23,8 +32,9 @@ class _ShowJobDetailsListviewbuilderState extends State<ShowJobDetailsListviewbu
             itemBuilder: (context, index) {
               String key = details.keys.elementAt(index);
               dynamic value = details[key];
+
               return ShowJobDetaisListtile(
-                iconName: 'city',
+                iconName: 'notebook-edit',
                 title: key,
                 chosenOption: value.toString().substring(1, value.toString().length - 1),
               );

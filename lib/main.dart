@@ -35,7 +35,7 @@ Future<void> main() async {
         appId: "1:520371543372:web:adbcddabd1ccd6473583e9",
         measurementId: "G-QWLTB813E6"
       ),
-    //name: 'name',
+    name: 'name',
   );
 
 
@@ -68,8 +68,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //FirebaseAuth.instance.signOut();
-   /* //print(FirebaseAuth.instance.currentUser);
-   FirebaseManager manager = FirebaseManager();
+   //print(FirebaseAuth.instance.currentUser);
+ /*  FirebaseManager manager = FirebaseManager();
      manager.loginUser(email: 'gabrielbrsc30@gmail.com', password: 'Gabriel1234', context: context);*/
     return MaterialApp(
           title: 'Flutter Demo',

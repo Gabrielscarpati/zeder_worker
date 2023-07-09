@@ -13,7 +13,7 @@ class TextCard extends StatelessWidget {
     return ConstrainedBox(
         constraints: const BoxConstraints(
           minWidth: double.infinity,
-          minHeight: 120,
+          minHeight: 60,
         maxHeight: 600,
     ),
       child:Card(
@@ -30,7 +30,7 @@ class TextCard extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: DSTextSubtitleSecondary(
+            child: DSTextTitleSecondary(
               text: text,
               ),
             ),

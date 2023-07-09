@@ -32,9 +32,9 @@ class _ButtonSwitchScreensState extends State<ButtonSwitchScreens> {
           buttonText: "Cadastre-se",
           controller: _controller,
         ),
-        const SizedBox(height: 8,),
-        GestureDetector(
-          child: Row(
+        const SizedBox(height: 24,),
+       GestureDetector(
+          child: const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               DSTextSubtitleSecondary(
@@ -61,7 +61,7 @@ class _ButtonSwitchScreensState extends State<ButtonSwitchScreens> {
             );
           },
         ),
-        SizedBox(height: 20,)
+        const SizedBox(height: 20,)
       ],
     );
   }

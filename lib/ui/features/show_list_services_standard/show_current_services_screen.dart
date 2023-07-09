@@ -37,7 +37,7 @@ class _ShowCurrentServicesScreenState extends State<ShowCurrentServicesScreen> {
 
         List<ServicoEntity>? newCurrentServices = [];
         servicosList!.forEach((element) {
-          if(element.concluded == false && element.idWorker != ''){
+          if(element.concluded == false && element.idWorker != '' && element.payed == true){
             newCurrentServices.add(element);
             }
           }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import 'package:zeder/domain/domain.dart';
 import '../../data/listCitiesBrazil/ListCitiesBrazilController.dart';
+import '../../data/terms/terms_controller.dart';
 import '../../ui/widgets/cities/cities_viewmodel.dart.dart';
 
 class PesquisaCidadeProvider with ChangeNotifier {
@@ -18,6 +19,7 @@ class PesquisaCidadeProvider with ChangeNotifier {
   List<CityEntity> list_all_cities =[];
 
   bool isServicesLoaded = false;
+  String terms = '';
   Future<String> loadCities() async{
     TipoServicoProvider tipoServicoProvider = TipoServicoProvider();
     await tipoServicoProvider.loadListTipoServicos();
@@ -25,6 +27,7 @@ class PesquisaCidadeProvider with ChangeNotifier {
     List<CityEntity> citiesFromDataBase = await cityControllter.buscarCidadeComCondicao(cond:'Brazil', condName: 'country');
     list_all_cities.clear();
     list_all_cities = citiesFromDataBase;
+    terms = await TermsController().buscarWorker();
     return 'MyStrng';
   }
 

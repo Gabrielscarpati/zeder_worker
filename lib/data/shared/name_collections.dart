@@ -11,4 +11,5 @@ class NameCollections {
   static const String avaliacoesCollection = 'avaliacoes';
   static const String cancelCollection = 'cancelamentos';
   static const String disputaCollection= 'disputas';
+  static const String termsCollection= 'terms_conditions_worker';
 }

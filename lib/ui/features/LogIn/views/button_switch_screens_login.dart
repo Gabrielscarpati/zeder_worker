@@ -28,7 +28,6 @@ class _ButtonSwitchScreensLogInState extends State<ButtonSwitchScreensLogIn> {
       Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        const SizedBox(height: 8,),
         GestureDetector(
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -58,6 +57,7 @@ class _ButtonSwitchScreensLogInState extends State<ButtonSwitchScreensLogIn> {
                 ));
           },
         ),
+        const SizedBox(height: 24,),
       ],
     ),
         LoadingButton(
@@ -68,7 +68,7 @@ class _ButtonSwitchScreensLogInState extends State<ButtonSwitchScreensLogIn> {
           buttonText: "Entrar",
           controller: _controller,
         ),
-        const SizedBox(height: 8,),
+        const SizedBox(height: 24,),
         GestureDetector(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

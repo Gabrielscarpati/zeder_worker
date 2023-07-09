@@ -109,11 +109,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                         onTap: () async {
-                          await FirebaseManager().signOut();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => const ViewLogin()),
                           );
+                          await FirebaseManager().signOut();
                         },
                       ),
                     ],

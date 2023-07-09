@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       }
 
-                      if (isWorkerCity && isWorkerService) {
+                      if (isWorkerCity && isWorkerService && service.payed) {
                         newServices.add(service);
                       }
                     }
@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<ServicoEntity>? currentServices = snapshot.data;
                     List<ServicoEntity>? newCurrentServices = [];
                     currentServices!.forEach((element) {
-                        if(element.concluded == false && element.idWorker != ''){
+                        if(element.concluded == false && element.idWorker != '' && element.payed == true){
                           newCurrentServices.add(element);
                         }
                       }
