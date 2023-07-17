@@ -88,6 +88,7 @@ class ServicoController {
   Future<void> atualizarServicoIniciarDisputa({required String id, required String idDisputa,}) async {
     Map<String, Object> data = {};
     data['idDisputa'] = idDisputa;
+    data['emDisputa'] = true;
     try {
       await _firebase.atualizarDadosEspecificos(
         collection: _collection,

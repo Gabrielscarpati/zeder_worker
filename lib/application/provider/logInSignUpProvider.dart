@@ -36,6 +36,10 @@ class LogInSignUpProvider with ChangeNotifier {
   Uint8List? image;
    GlobalKey<FormState> formKeyAuthenticationLogin = GlobalKey<FormState>();
    GlobalKey<FormState> formKeyAuthenticationSignUp = GlobalKey<FormState>();
+   GlobalKey<FormState> formKeyAuthenticationGetCPF = GlobalKey<FormState>();
+   GlobalKey<FormState> formKeyAuthenticationResidencia = GlobalKey<FormState>();
+
+
   final RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
   TextEditingController resetPasswordEmail = TextEditingController();
   FirebaseManager firebaseManager = FirebaseManager();
@@ -132,10 +136,9 @@ class LogInSignUpProvider with ChangeNotifier {
       String profilePicture = await SaveImage(image: image!, path: 'userUrl', id: await getUserId()).saveAndGetUrl();
       await provider.signupUser(userId: await getUserId(), profilePicture: profilePicture);
 
-      Navigator.pushAndRemoveUntil(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => ViewNavegationBarScreen()),
-            (Route<dynamic> route) => false,
       );
     notifyListeners();
   }

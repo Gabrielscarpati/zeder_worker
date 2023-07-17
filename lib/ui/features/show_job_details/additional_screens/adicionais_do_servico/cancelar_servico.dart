@@ -19,7 +19,8 @@ class CancelarServicoServico extends StatefulWidget {
 }
 
 class _CancelarServicoServicoState extends State<CancelarServicoServico> {
-  RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnControllerCancelar = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnControllerVoltar = RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +54,13 @@ class _CancelarServicoServicoState extends State<CancelarServicoServico> {
               LoadingButton(
                 buttonText: 'Cancelar serviço',
                 goNextScreen: () async {
-                  await provider.confirmarCancelServico(context, widget.servicoViewModel);
-                  btnController.reset();
+                  await provider.confirmarCancelServico(context, widget.servicoViewModel, btnControllerCancelar);
+                  btnControllerCancelar.stop();
                 },
-                controller: btnController,
+                controller: btnControllerCancelar,
               ),
               const SizedBox(height: 20,),
-              const DSTextTitleBoldSecondary(text: "Esse serviço voltará para a\nlista de novos serviços",),
+              const DSTextTitleBoldSecondary(text: "Esse serviço voltará para a lista \n de novos serviços e outra pessoa\npoderá pegá-lo",),
             ],
           ),
         ),
@@ -75,7 +76,7 @@ class _CancelarServicoServicoState extends State<CancelarServicoServico> {
                     ShowSnackBar(context: context,).showErrorSnackBar(message: 'O serviço não foi cancelado',);
                     Navigator.pop(context);
                   },
-                  controller: btnController,
+                  controller: btnControllerVoltar,
                 ),
           ),
       ),

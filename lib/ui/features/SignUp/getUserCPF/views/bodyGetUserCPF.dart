@@ -80,8 +80,6 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
     String imageUrl = await ref.getDownloadURL();
      return imageUrl.toString();
   }
-  final formKeyAuthentication = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     final LogInSignUpProvider provider = context.watch<LogInSignUpProvider>();
@@ -105,7 +103,7 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
                           height: 20,
                         ),
                         const DSTextTitleBoldSecondary(
-                          text: 'Clique no lapis para escolher\numa imagem do seu RG,'
+                          text: 'Clique no icone de imagem para escolher\numa imagem do seu RG,'
                         ),
                         const SizedBox(
                            height: 20,
@@ -147,15 +145,6 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
                             ],
                           ),
                         ),
-                        Form(
-                          key: formKeyAuthentication,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -167,25 +156,28 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: LoadingButton(
-          goNextScreen:() async {
-            final form = formKeyAuthentication.currentState!;
-            if(await uploadFile() == null){
-              mostrarErroSelecioneUmaFoto(context);
-            } else if (form.validate()) {
-              provider.cpfPicture = await getUrlToImageFirebase();
-              {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                  const ExplainProofOfResidencyScreen(),
-                )
-                );
+        child: Form(
+          key: provider.formKeyAuthenticationGetCPF,
+          child: LoadingButton(
+            goNextScreen:() async {
+              final form = provider.formKeyAuthenticationGetCPF.currentState!;
+              if(await uploadFile() == null){
+                mostrarErroSelecioneUmaFoto(context);
+              } else if (form.validate()) {
+                provider.cpfPicture = await getUrlToImageFirebase();
+                {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                    const ExplainProofOfResidencyScreen(),
+                  )
+                  );
+                }
               }
-            }
-            _btnController.reset();
-          },
-          buttonText: "CONTINUAR (5/6)",
-          controller: _btnController,
+              _btnController.reset();
+            },
+            buttonText: "CONTINUAR (5/6)",
+            controller: _btnController,
+          ),
         ),
       ),
     );

@@ -28,7 +28,7 @@ class GetTheLeadBottomBar extends StatelessWidget {
       child: Column(
         children: [
           allowGetLeads == true
-          ? SizedBox():
+          ? const SizedBox():
           servico.concluded ==false?
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -38,7 +38,7 @@ class GetTheLeadBottomBar extends StatelessWidget {
                   iconName: 'check-outline',
                   title: 'Finalizar serviço',
                   onTap: () async {
-                    await servicoProvider.setServiceAsDone(servico, context);
+                    await servicoProvider.confirmarFinalizarServico(context,servico);
                   },
                 ),
                 CardChangeServiceDetails(
@@ -72,7 +72,7 @@ class GetTheLeadBottomBar extends StatelessWidget {
                       );
                     }
                     else{
-                      ShowSnackBar(context: context).showErrorSnackBar(message: 'A disputa foi iniciada', color: DSColors.primary,);
+                      ShowSnackBar(context: context).showErrorSnackBar(message: 'A disputa já foi iniciada.', color: DSColors.primary,);
                     }
                   },
                 ),

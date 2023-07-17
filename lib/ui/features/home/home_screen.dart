@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double padding;
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
     deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
-
+    String workerId = context.read<WorkerProvider>().workerId;
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20,),
 
               SizedBox(
-                height: 400,
+                height: 440,
                 child: StreamBuilder<List<ServicoEntity>>(
                   stream: currentServicosStream,
                   builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<ServicoEntity>? currentServices = snapshot.data;
                     List<ServicoEntity>? newCurrentServices = [];
                     currentServices!.forEach((element) {
-                        if(element.concluded == false && element.idWorker != '' && element.payed == true){
+                        if(element.concluded == false && element.idWorker == workerId && element.payed == true){
                           newCurrentServices.add(element);
                         }
                       }
@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     return Column(
                       children: [
-                        newCurrentServices.isEmpty?  ListAllServicosEmpty():
+                        newCurrentServices.isEmpty?  const ListCurrentServicosEmpty():
                           CurrentServices(servicos: newCurrentServices)
 
                       ],

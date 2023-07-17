@@ -273,7 +273,7 @@ class FirebaseManager{
           email: email,
           password: password
       );
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const ViewNavegationBarScreen()),
       );
@@ -290,9 +290,9 @@ class FirebaseManager{
     return null;
   }
 
-  Future signOut() async {
+   signOut()  {
     try {
-      return await firebaseAuth.signOut();
+      return  firebaseAuth.signOut();
 
     } catch(e){
       print(e.toString());

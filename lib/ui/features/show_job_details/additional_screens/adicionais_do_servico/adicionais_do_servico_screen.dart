@@ -16,7 +16,7 @@ class AdicionaisDoServicoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     AdicionaisServicoProvider provider = context.read<AdicionaisServicoProvider>();
     return Scaffold(
-      appBar: AppBar(title: Text('Adicionais do serviço'), backgroundColor: DSColors.tertiary,),
+      appBar: AppBar(title: const Text('Adicionais do serviço'), backgroundColor: DSColors.tertiary,),
         body: DSFutureBuilder<List<LogEntity>>(
           future: provider.getLogEntity(idServico: servicoViewModel.id),
           builder: (context,  AsyncSnapshot<List<LogEntity>> snapshot) {
@@ -41,7 +41,7 @@ class AdicionaisDoServicoScreen extends StatelessWidget {
           );
         },
         error: 'Você ainda não criou nenhuma\nadicional para este serviço\nainda',
-        messageWhenEmpty: "Sem internet...",
+        messageWhenEmpty: 'Você ainda não criou nenhuma\nadicional para este serviço\nainda',
       ),
 
       floatingActionButton: ClipRRect(
@@ -63,11 +63,7 @@ class AdicionaisDoServicoScreen extends StatelessWidget {
             child:DSButtonLargePrimary(
               text: 'Voltar',
               onPressed: () {
-                /*Navigator.push(
-                      context,
-                      // professional's lead in this job
-                      MaterialPageRoute(builder: (context) => Propostas_service(servico: servico,)),
-                    );*/
+                Navigator.pop(context);
               },
             ),
           )

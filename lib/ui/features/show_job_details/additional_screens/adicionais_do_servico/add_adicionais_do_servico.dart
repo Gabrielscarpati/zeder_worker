@@ -17,7 +17,8 @@ class AddAdicionaisDoServico extends StatefulWidget {
 }
 
 class _AddAdicionaisDoServicoState extends State<AddAdicionaisDoServico> {
-  RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnControllerSalvar = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnControllerVoltar = RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,16 @@ class _AddAdicionaisDoServicoState extends State<AddAdicionaisDoServico> {
                   multilineText: true,
                   maxLines: 12,
                 ),
+                const SizedBox(height: 40,),
+                LoadingButton(
+                  buttonText: 'Salvar',
+                  goNextScreen: () async {
+
+                    await provider.showExplanationAllServices(context, widget.servicoViewModel);
+                    btnControllerVoltar.stop();
+                  },
+                  controller: btnControllerVoltar,
+                )
               ],
             ),
           ),
@@ -64,13 +75,11 @@ class _AddAdicionaisDoServicoState extends State<AddAdicionaisDoServico> {
           child: Center(
             child:
                 LoadingButton(
-                  buttonText: 'Salvar',
-                  goNextScreen: () async {
-
-                    await provider.showExplanationAllServices(context, widget.servicoViewModel);
-                    btnController.reset();
+                  buttonText: 'Voltar',
+                  goNextScreen: () {
+                    Navigator.pop(context);
                   },
-                  controller: btnController,
+                  controller: btnControllerSalvar,
                 ),
           ),
       ),

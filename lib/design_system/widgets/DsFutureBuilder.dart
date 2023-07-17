@@ -26,7 +26,7 @@ class DSFutureBuilder<T> extends StatelessWidget {
           return _buildErrorWidget();
         } else if (snapshot.hasData) {
           if (_isDataEmpty(snapshot.data)) {
-            return Center(child: Text(messageWhenEmpty));
+            return Center(child: DSTextSubtitleBoldSecondary( text: messageWhenEmpty,));
           } else {
             return builder(context, snapshot);
           }
@@ -45,12 +45,12 @@ class DSFutureBuilder<T> extends StatelessWidget {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(child: Container(height: 50, width: 50,child: const CircularProgressIndicator()));
+    return Center(child: SizedBox(height: 50, width: 50,child: const CircularProgressIndicator()));
   }
 
   Widget _buildErrorWidget() {
     return Center(
-      child: DSTextTitleBoldSecondary(text: 'Error: $error',),
+      child: DSTextTitleBoldSecondary(text: error,),
     );
   }
 }

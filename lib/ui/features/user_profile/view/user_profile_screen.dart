@@ -7,6 +7,12 @@ import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/LoadingButton.dart';
 import 'package:zeder/ui/features/LogIn/viewLogIn.dart';
 import 'package:zeder/ui/features/user_profile/view/update_personal_data.dart';
+import '../../../../application/provider/adicionais_servico.dart';
+import '../../../../application/provider/disputa_provider.dart';
+import '../../../../application/provider/lead_provider.dart';
+import '../../../../application/provider/logInSignUpProvider.dart';
+import '../../../../application/provider/servico_provider.dart';
+import '../../../../application/provider/tipo_servico_provider.dart';
 import '../../../../main.dart';
 import '../../../device_type.dart';
 import '../../../widgets/botoes.dart';
@@ -32,6 +38,11 @@ class _ProfilePageState extends State<ProfilePage> {
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
     deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
     final WorkerProvider workerProvider = context.read<WorkerProvider>();
+    final AdicionaisServicoProvider adicionaisServicoProvider = context.read<AdicionaisServicoProvider>();
+    final DisputaProvider disputaProvider = context.read<DisputaProvider>();
+    final LeadProvider leadProvider = context.read<LeadProvider>();
+    final LogInSignUpProvider logInSignUpProvider = context.read<LogInSignUpProvider>();
+    final ServicoProvider servicoProvider = context.read<ServicoProvider>();
 
     return Scaffold(
       appBar: PreferredSize(
@@ -98,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       InkWell(
-                        child:  Row(
+                        child:  const Row(
                           children: [
                              Icon(
                               Icons.power_settings_new_outlined,
@@ -109,11 +120,36 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                         onTap: () async {
+
+                          if(adicionaisServicoProvider.formKeyAuthentication.currentState != null){
+                            adicionaisServicoProvider.formKeyAuthentication.currentState!.reset();
+                          }
+                          if(disputaProvider.disputaFormKey.currentState != null){
+                            disputaProvider.disputaFormKey.currentState!.reset();
+                          }
+                          if(leadProvider.formKeyAuthenticationLead.currentState != null){
+                            leadProvider.formKeyAuthenticationLead.currentState!.reset();
+                          }
+                          if(logInSignUpProvider.formKeyAuthenticationLogin.currentState != null){
+                            logInSignUpProvider.formKeyAuthenticationLogin.currentState!.reset();
+                          }
+                          if(logInSignUpProvider.formKeyAuthenticationSignUp.currentState != null){
+                            logInSignUpProvider.formKeyAuthenticationSignUp.currentState!.reset();
+                          }
+                          if(logInSignUpProvider.formKeyAuthenticationGetCPF.currentState != null){
+                            logInSignUpProvider.formKeyAuthenticationGetCPF.currentState!.reset();
+                          }
+                          if(logInSignUpProvider.formKeyAuthenticationResidencia.currentState != null){
+                            logInSignUpProvider.formKeyAuthenticationResidencia.currentState!.reset();
+                          }
+                          if(servicoProvider.cancelingFormKey.currentState != null){
+                            servicoProvider.cancelingFormKey.currentState!.reset();
+                          }
+                          FirebaseManager().signOut();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => const ViewLogin()),
                           );
-                          await FirebaseManager().signOut();
                         },
                       ),
                     ],

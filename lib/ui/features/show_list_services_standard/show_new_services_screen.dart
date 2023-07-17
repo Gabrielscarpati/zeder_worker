@@ -65,7 +65,7 @@ class _ShowNewServicesScreenState extends State<ShowNewServicesScreen> {
           servicos: newServices,
           title: 'Novos Serviços',
           noServicesFoundTitle: 'Não há nenhum serviço diponível agora,novos\n serviço podem aparecer a qualquer momento',
-          allowGetLeads: false,
+          allowGetLeads: true,
         );
       },
     );
