@@ -121,7 +121,7 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
         return documents.map((doc) => doc.data()).toList();
       }
       throw Exception("Não há dados na coleção $collection");
-    } catch (e, stackTrace) {
+    } catch (e) {
       throw Exception(e.toString());
     }
   }
@@ -136,11 +136,11 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
       final response = await _db.collection(collection).where(condName, isEqualTo: cond).get();
 
       //final response = await _db.collection(collection).where(condName, isEqualTo: cond).get();
-      response.docs.forEach((element) {
+      for (var element in response.docs) {
         if (element.exists && element.data() != null) {
         res.add(element.data());
       }
-       });
+       }
 
         return res;
 
@@ -257,7 +257,6 @@ class FirebaseManager{
   Future<User?> registerUser ({required String email, required String password, required BuildContext context}) async {
     try {
       UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      await loginUser(email: email, password: password, context: context);
       return userCredential.user;
     } on FirebaseAuthException catch(e){
       print(e);

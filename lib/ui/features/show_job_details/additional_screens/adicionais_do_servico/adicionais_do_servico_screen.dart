@@ -5,6 +5,7 @@ import '../../../../../application/provider/adicionais_servico.dart';
 import '../../../../../design_system/widgets/DsFutureBuilder.dart';
 import '../../../../../domain/entities/log_entity.dart';
 import '../../../../../domain/entities/servico_entity.dart';
+import '../../../navigation_bar/viewNavigationBarScren.dart';
 import 'add_adicionais_do_servico.dart';
 
 class AdicionaisDoServicoScreen extends StatelessWidget {
@@ -42,7 +43,9 @@ class AdicionaisDoServicoScreen extends StatelessWidget {
         },
         error: 'Você ainda não criou nenhuma\nadicional para este serviço\nainda',
         messageWhenEmpty: 'Você ainda não criou nenhuma\nadicional para este serviço\nainda',
-      ),
+          reloadScreen : const DSTextSubtitleBoldSecondary(text: 'Você ainda não criou nenhuma\nadicional para este serviço\nainda',)
+
+        ),
 
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(40.0), // Adjust the value as per your preference

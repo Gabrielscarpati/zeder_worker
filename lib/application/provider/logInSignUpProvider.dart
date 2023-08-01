@@ -136,9 +136,9 @@ class LogInSignUpProvider with ChangeNotifier {
       String profilePicture = await SaveImage(image: image!, path: 'userUrl', id: await getUserId()).saveAndGetUrl();
       await provider.signupUser(userId: await getUserId(), profilePicture: profilePicture);
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => ViewNavegationBarScreen()),
+      Navigator.pushAndRemoveUntil(
+          context, MaterialPageRoute(builder: (context) => const ViewNavegationBarScreen()
+      ), (route) => false
       );
     notifyListeners();
   }
@@ -182,16 +182,11 @@ class LogInSignUpProvider with ChangeNotifier {
   Future<void> loginUser(BuildContext context)async {
 
     if(formKeyAuthenticationLogin.currentState!.validate()){
-      if( await checkIfEmailInUse(provider.signUpEmail.text.trim()) == false){
-        ShowSnackBar(context: context).showErrorSnackBar(message: 'Não existe usuário com esse email!');
-      }
-      else{
-        await FirebaseManager().loginUser(
-          email: provider.loginEmail.text.trim(),
-          password: provider.loginPassword.text.trim(),
-          context: context,
-        );
-      }
+      await FirebaseManager().loginUser(
+        email: provider.loginEmail.text.trim(),
+        password: provider.loginPassword.text.trim(),
+        context: context,
+      );
     }
   }
 
@@ -308,7 +303,7 @@ class LogInSignUpProvider with ChangeNotifier {
         await firebaseManager.resetPassword(
             email: resetPasswordEmail.text.trim(), context: context);
         ShowSnackBar(context: context).showErrorSnackBar(
-            message: 'A link was sent to your email to reset your password.', color: DSColors.primary);
+            message: 'Um link foi mandado para o seu email para resetar sua senha.', color: DSColors.primary);
     }
   }
 

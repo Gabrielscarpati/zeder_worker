@@ -6,6 +6,7 @@ class DSFutureBuilder<T> extends StatelessWidget {
   final String messageWhenEmpty;
   final Widget Function(BuildContext, AsyncSnapshot<T>) builder;
   final String error;
+  final Widget reloadScreen;
 
   const DSFutureBuilder({
     Key? key,
@@ -13,6 +14,7 @@ class DSFutureBuilder<T> extends StatelessWidget {
     required this.builder,
     required this.messageWhenEmpty,
     required this.error,
+    required this.reloadScreen,
   }) : super(key: key);
 
   @override
@@ -22,16 +24,31 @@ class DSFutureBuilder<T> extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return _buildLoadingWidget();
-        } else if (snapshot.hasError) {
-          return _buildErrorWidget();
-        } else if (snapshot.hasData) {
+        }
+        else if (snapshot.connectionState == ConnectionState.none) {
+          return _buildNoInternetWidget(context,reloadScreen);
+        }
+        else if (snapshot.hasData) {
+          if(snapshot.data.toString() == 'no_internet'){
+            return _buildNoInternetWidget(context,reloadScreen);
+          }
           if (_isDataEmpty(snapshot.data)) {
-            return Center(child: DSTextSubtitleBoldSecondary( text: messageWhenEmpty,));
+            return Center(child: DSTextSubtitleBoldSecondary(text: messageWhenEmpty,));
           } else {
             return builder(context, snapshot);
           }
-        } else {
-          return Text('No data available');
+        }
+        else if (snapshot.hasError) {
+          print('RangeError (index): Invalid value: Valid value range is empty: 0');
+          if('${snapshot.error}' == 'RangeError (index): Invalid value: Valid value range is empty: 0'){
+            return Center(child: DSTextSubtitleBoldSecondary(text: messageWhenEmpty,));
+          }
+          else{
+            return _buildNoInternetWidget(context,reloadScreen);
+          }
+        }
+        else {
+          return _buildNoInternetWidget(context,reloadScreen);
         }
       },
     );
@@ -45,12 +62,32 @@ class DSFutureBuilder<T> extends StatelessWidget {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(child: SizedBox(height: 50, width: 50,child: const CircularProgressIndicator()));
+    return const Center(child: SizedBox(height: 50, width: 50,child: CircularProgressIndicator()));
   }
+}
 
-  Widget _buildErrorWidget() {
-    return Center(
-      child: DSTextTitleBoldSecondary(text: error,),
-    );
-  }
+
+Widget _buildNoInternetWidget(BuildContext context, Widget reloadScreen) {
+  return Scaffold(
+    body: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Center(
+          child: DSTextSubtitleBoldSecondary(
+            text: 'Verifique sua conexão com a internet',
+          ),
+        ),
+        const SizedBox(height: 20),
+        DSButtonLargePrimary(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => reloadScreen),
+            );
+          },
+          text: 'Tentar novamente',
+        ),
+      ],
+    ),
+  );
 }

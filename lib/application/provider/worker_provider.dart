@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:zeder/application/provider/pesquisa_cidade_provider.dart';
 import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import 'package:zeder/data/user/user_controller.dart';
@@ -36,6 +37,7 @@ class WorkerProvider with ChangeNotifier {
   List<WorkerServicesViewModel> my_services = [];
   String profilePicturePath = '';
   String workerId = '';
+
   Future<WorkerViewModel> getWorkerLoadDataApp() async {
     PesquisaCidadeProvider tipoServicoProvider = PesquisaCidadeProvider();
     await tipoServicoProvider.loadCities();

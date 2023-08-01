@@ -146,9 +146,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             servicoProvider.cancelingFormKey.currentState!.reset();
                           }
                           FirebaseManager().signOut();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => const ViewLogin()),
+                            Navigator.pushAndRemoveUntil(
+                                context, MaterialPageRoute(builder: (context) => const ViewLogin()
+                            ), (route) => false
                           );
                         },
                       ),

@@ -76,7 +76,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   height: MediaQuery.of(context).size.height * 0.16,
                 ),
                 LoadingButton(
-                  buttonText: 'Send email',
+                  buttonText: 'Enviar email',
                   goNextScreen: () async {
                     await provider.resetPassword(
                       context: context,

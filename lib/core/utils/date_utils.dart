@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class DateUtil {
   static final DateTime dateZero = DateTime(0);
@@ -63,12 +64,6 @@ class DateUtil {
   }
 }
 
-class DateFormat {
-  static String format(DateTime date) {
-    return date.toString();
-  }
-}
-
 extension DateUtils on DateTime {
   String toJsonString() {
     return toString();
@@ -76,9 +71,13 @@ extension DateUtils on DateTime {
 }
 
 
-DateTime convertTimestampToDateTime(Timestamp timestamp) {
-  DateTime date = timestamp.toDate();
-  return date;
+String convertTimestampToDateTime(Timestamp timestamp) {
+
+  DateTime dateTime = DateTime.fromMicrosecondsSinceEpoch(timestamp.microsecondsSinceEpoch);
+
+  String formattedDate =DateFormat("d/MM/y",).format(dateTime);
+
+  return formattedDate;
 }
 
 Timestamp convertDateToTimeStemp(DateTime dateTime) {
