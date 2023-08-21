@@ -9,6 +9,7 @@ import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
 import '../../device_type.dart';
 import '../../widgets/client/client_viewmodel.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -29,6 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
     clientFuture = _ClientProvider.getWorkerLoadDataApp();
     newServicosStream = ServicoController().fetchNewServicesStreamWithParameter();
     currentServicosStream = ServicoController().fetchWorkerServicesStreamWithParameter();
+
+    FirebaseMessaging.instance.setAutoInitEnabled(true);
+
+ 
   }
 
   @override

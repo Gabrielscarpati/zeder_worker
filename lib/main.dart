@@ -38,6 +38,7 @@ Future<void> main() async {
     name: 'name',
   );
 
+  
 
   //final fcmToken = await FirebaseMessaging.instance.getToken();
   //print("FirebaseMessaging token: $fcmToken");

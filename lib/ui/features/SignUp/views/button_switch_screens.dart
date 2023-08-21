@@ -34,7 +34,7 @@ class _ButtonSwitchScreensState extends State<ButtonSwitchScreens> {
         ),
         const SizedBox(height: 24,),
        GestureDetector(
-          child: const Row(
+          child:  Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               DSTextSubtitleSecondary(

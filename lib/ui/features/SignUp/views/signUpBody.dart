@@ -30,7 +30,7 @@ class SignUpBody extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: Form(
             key: provider.formKeyAuthenticationSignUp,
-            child: const SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

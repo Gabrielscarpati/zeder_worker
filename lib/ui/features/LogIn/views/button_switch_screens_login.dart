@@ -29,7 +29,7 @@ class _ButtonSwitchScreensLogInState extends State<ButtonSwitchScreensLogIn> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         GestureDetector(
-          child: const Row(
+          child:  Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               DSTextSubtitleSecondary(

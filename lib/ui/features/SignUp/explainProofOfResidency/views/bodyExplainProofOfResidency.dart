@@ -187,7 +187,7 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width*.70,
-                          child: const Row(
+                          child:  Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Column(
