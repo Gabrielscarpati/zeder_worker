@@ -7,6 +7,8 @@ import 'package:zeder/ui/features/home/views/list_servicos_do_prestador.dart';
 import '../../../application/provider/worker_provider.dart';
 import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
+import '../../../services/firebase_messaging_service.dart';
+import '../../../services/notification_service.dart';
 import '../../device_type.dart';
 import '../../widgets/client/client_viewmodel.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -31,11 +33,17 @@ class _HomeScreenState extends State<HomeScreen> {
     newServicosStream = ServicoController().fetchNewServicesStreamWithParameter();
     currentServicosStream = ServicoController().fetchWorkerServicesStreamWithParameter();
 
-    FirebaseMessaging.instance.setAutoInitEnabled(true);
-
- 
+    initilizeFirebaseMessaging();
+    checkNotifications();
   }
 
+  initilizeFirebaseMessaging() async {
+    await Provider.of<FirebaseMessagingService>(context, listen: false).initialize();
+  }
+
+  checkNotifications() async {
+    await Provider.of<NotificationService>(context, listen: false).checkForNotifications();
+  }
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
