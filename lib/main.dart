@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/LogIn/viewLogIn.dart';
 import 'package:zeder/ui/features/SignUp/explainCPF/views/bodyExplainCPF.dart';
@@ -70,20 +73,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //FirebaseAuth.instance.signOut();
    //print(FirebaseAuth.instance.currentUser);
- /*  FirebaseManager manager = FirebaseManager();
-     manager.loginUser(email: 'gabrielbrsc30@gmail.com', password: 'Gabriel1234', context: context);*/
+  /* FirebaseManager manager = FirebaseManager();
+     manager.loginUser(email: 'gabrielbrsc30@gmail.com', password: 'Gabriel12', context: context);*/
     return MaterialApp(
           title: 'Flutter Demo',
           theme: DSTheme.theme(context),
-          home: StreamBuilder(
-                stream: FirebaseManager().firebaseAuth.authStateChanges(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return const ViewNavegationBarScreen();
-                    //ViewNavegationBarScreen();
-                  }
-                return const ViewLogin();
-          }
+      home: DSFutureBuilder<String>(
+          future: checkInternetConnectivity(),
+          builder: (context, snapshot) {
+            if (FirebaseManager().firebaseAuth.currentUser != null) {
+              return const ViewNavegationBarScreen();
+            }
+            return const ViewLogin();
+          },
+          messageWhenEmpty: "Verifique sua conexão com a internet",
+          error: "Verifique sua conexão com a internet",
+          reloadScreen: const LoadData(body: MyApp(),) ,
         ),
     );
   }
@@ -109,10 +114,30 @@ class _LoadDataState extends State<LoadData> {
         builder: (context, snapshot) {
           return widget.body;
         },
-        messageWhenEmpty: "Sem internet...",
-        error: "Erro ao carregar dados",
+        messageWhenEmpty: "Verifique sua conexão com a internet",
+        error: "Verifique sua conexão com a internet",
+        reloadScreen: LoadData(body: widget.body,) ,
       ),
     );
   }
 }
+
+
+
+
+
+Future<String> checkInternetConnectivity() async {
+  final result = await InternetAddress.lookup('google.com');
+  if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+    return 'no internet';
+  }
+  else{
+    return 'internet';
+  }
+
+}
+
+
+
+
 

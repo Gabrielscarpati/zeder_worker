@@ -17,7 +17,8 @@ class DisputaServico extends StatefulWidget {
 }
 
 class _DisputaServicoState extends State<DisputaServico> {
-  RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnControllerIniciar = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnControllerVoltar = RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +52,11 @@ class _DisputaServicoState extends State<DisputaServico> {
               LoadingButton(
                 buttonText: 'Iniciar disputa do serviço',
                 goNextScreen: () async {
-                  await provider.confirmarIniciarDisputa(context, widget.servicoViewModel);
-                  btnController.reset();
+
+                  await provider.confirmarIniciarDisputa(context, widget.servicoViewModel, btnControllerIniciar, );
+                  btnControllerIniciar.reset();
                 },
-                controller: btnController,
+                controller: btnControllerIniciar,
               ),
               const SizedBox(height: 20,),
               const DSTextTitleBoldSecondary(text: "Voltaremos em contato para\nresolver a disputa",),
@@ -73,7 +75,7 @@ class _DisputaServicoState extends State<DisputaServico> {
                     ShowSnackBar(context: context,).showErrorSnackBar(message: 'A disputa não foi iniciada',);
                     Navigator.pop(context);
                   },
-                  controller: btnController,
+                  controller: btnControllerVoltar,
                 ),
           ),
       ),

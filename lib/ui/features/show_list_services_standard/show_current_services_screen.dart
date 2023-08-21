@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zeder/ui/features/show_list_services_standard/show_list_services_standard_view.dart';
+import '../../../application/provider/worker_provider.dart';
 import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
 
@@ -21,6 +23,8 @@ class _ShowCurrentServicesScreenState extends State<ShowCurrentServicesScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    String workerId = context.read<WorkerProvider>().workerId;
+
     return StreamBuilder<List<ServicoEntity>>(
       stream: servicosStream,
       builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
@@ -37,7 +41,7 @@ class _ShowCurrentServicesScreenState extends State<ShowCurrentServicesScreen> {
 
         List<ServicoEntity>? newCurrentServices = [];
         servicosList!.forEach((element) {
-          if(element.concluded == false && element.idWorker != '' && element.payed == true){
+          if(element.concluded == false && element.idWorker == workerId && element.payed == true){
             newCurrentServices.add(element);
             }
           }

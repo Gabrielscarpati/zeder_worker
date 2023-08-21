@@ -5,6 +5,7 @@ import '../../../../../application/provider/adicionais_servico.dart';
 import '../../../../../design_system/widgets/DsFutureBuilder.dart';
 import '../../../../../domain/entities/log_entity.dart';
 import '../../../../../domain/entities/servico_entity.dart';
+import '../../../navigation_bar/viewNavigationBarScren.dart';
 import 'add_adicionais_do_servico.dart';
 
 class AdicionaisDoServicoScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class AdicionaisDoServicoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     AdicionaisServicoProvider provider = context.read<AdicionaisServicoProvider>();
     return Scaffold(
-      appBar: AppBar(title: Text('Adicionais do serviço'), backgroundColor: DSColors.tertiary,),
+      appBar: AppBar(title: const Text('Adicionais do serviço'), backgroundColor: DSColors.tertiary,),
         body: DSFutureBuilder<List<LogEntity>>(
           future: provider.getLogEntity(idServico: servicoViewModel.id),
           builder: (context,  AsyncSnapshot<List<LogEntity>> snapshot) {
@@ -41,8 +42,10 @@ class AdicionaisDoServicoScreen extends StatelessWidget {
           );
         },
         error: 'Você ainda não criou nenhuma\nadicional para este serviço\nainda',
-        messageWhenEmpty: "Sem internet...",
-      ),
+        messageWhenEmpty: 'Você ainda não criou nenhuma\nadicional para este serviço\nainda',
+          reloadScreen : const DSTextSubtitleBoldSecondary(text: 'Você ainda não criou nenhuma\nadicional para este serviço\nainda',)
+
+        ),
 
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(40.0), // Adjust the value as per your preference
@@ -63,11 +66,7 @@ class AdicionaisDoServicoScreen extends StatelessWidget {
             child:DSButtonLargePrimary(
               text: 'Voltar',
               onPressed: () {
-                /*Navigator.push(
-                      context,
-                      // professional's lead in this job
-                      MaterialPageRoute(builder: (context) => Propostas_service(servico: servico,)),
-                    );*/
+                Navigator.pop(context);
               },
             ),
           )

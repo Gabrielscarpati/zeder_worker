@@ -9,6 +9,7 @@ import '../../../../../design_system/widgets/DsFutureBuilder.dart';
 import '../../../../../design_system/widgets/text_card.dart';
 import '../../../../../domain/entities/avaliacao_prestador_entity.dart';
 import '../../../../../domain/entities/servico_entity.dart';
+import '../../../navigation_bar/viewNavigationBarScren.dart';
 
 class SeeRatingServico extends StatefulWidget {
   final ServicoEntity servicoViewModel;
@@ -98,6 +99,8 @@ class _SeeRatingServicoState extends State<SeeRatingServico> {
         },
         error: 'Não há avaliação para\neste serviço ainda',
         messageWhenEmpty: "Não há avaliação para\neste serviço ainda",
+          reloadScreen : const DSTextSubtitleBoldSecondary(text:  'Não há avaliação para\neste serviço ainda',)
+
       ),
      /* */
       bottomNavigationBar: Container(

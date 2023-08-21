@@ -18,17 +18,31 @@ abstract class ServicoListTile extends StatelessWidget {
   Widget get status => DSTextSubtitleSecondary(text: workerProvider.getCitiesByID(id: viewModel.idCity));
 
   Widget get valorData => Row(
-        mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DSTextTitleBoldSecondary(text: '${viewModel.servicePrice} R\$'),
-              DSTextSubtitleSecondary(text: viewModel.clientGivenDate.toString().substring(0,10)),
+              DSTextTitleBoldSecondary(text: '${viewModel.servicePrice}R\$'),
+              DSTextSubtitleSecondary(text: viewModel.clientGivenDate),
             ],
           ),
-          const SizedBox(width: 8),
+          if (incluiIconeNavegarProximo) const DSIconSecondary(iconName: 'menu-right'),
+        ],
+      );
+
+  Widget get valorDataVertical => Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              DSTextTitleBoldSecondary(text: '${viewModel.servicePrice}R\$'),
+              DSTextSubtitleSecondary(text: viewModel.clientGivenDate),
+            ],
+          ),
           if (incluiIconeNavegarProximo) const DSIconSecondary(iconName: 'menu-right'),
         ],
       );
@@ -81,7 +95,7 @@ class ServicoListTileVertical extends ServicoListTile {
         header: status,
         title: titulo,
         icon: icone,
-        footer: valorData,
+        footer: valorDataVertical,
         color: DSColors.primary.withOpacity(0.3),
         onTap: onTap,
       ),

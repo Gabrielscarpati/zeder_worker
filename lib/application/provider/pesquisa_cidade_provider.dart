@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import 'package:zeder/domain/domain.dart';
 import '../../data/listCitiesBrazil/ListCitiesBrazilController.dart';
@@ -28,7 +29,10 @@ class PesquisaCidadeProvider with ChangeNotifier {
     list_all_cities.clear();
     list_all_cities = citiesFromDataBase;
     terms = await TermsController().buscarWorker();
-    return 'MyStrng';
+    if(await InternetConnectionChecker().hasConnection == false){
+      return 'no_internet';
+    }
+    return TermsController().buscarWorker();
   }
 
   List<CityEntity> getAllCities(){

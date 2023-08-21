@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:zeder/data/avaliacoes/avaliacao_controller.dart';
 import 'package:zeder/data/cancel/cancel_controller.dart';
 import 'package:zeder/data/firebase/firebase_controller.dart';
@@ -35,6 +36,8 @@ class ServicoProvider with ChangeNotifier {
     ShowSnackBar(context: context,).showErrorSnackBar(message: 'O serviço é seu agora', color: DSColors.primary,);
   }
 
+
+
   setServiceAsDone(ServicoEntity newService, BuildContext context) async {
     await servicoController.atualizarServicoSetDone(id: newService.id,);
     ShowSnackBar(context: context,).showErrorSnackBar(message: 'O serviço foi finalizado', color: DSColors.primary,);
@@ -45,17 +48,18 @@ class ServicoProvider with ChangeNotifier {
 
   }
 
-   cancelarServico(ServicoEntity newService) async{
+  cancelarServico(ServicoEntity newService) async{
       await servicoController.atualizarCancelarServico(id: newService.id);
   }
 
   iniciarDisputa(ServicoEntity newService, String newIdDisputa) async{
-    await servicoController.atualizarServicoIniciarDisputa(id: newService.id, idDisputa: newIdDisputa);
+    await servicoController.atualizarServicoIniciarDisputa(id: newService.id, idDisputa: newIdDisputa,);
   }
+
 
   Future showExplanationAllServices(context) => showDialog(
     context: context,
-    builder: (context) =>  PopUpExplainNameHomeScreen(title: "Esses são todos os serviços",),
+    builder: (context) =>  PopUpExplainNameHomeScreen(title: "Esses são os serviços que você pode selecionar para realizar",),
   );
 
   Future showExplanationOpenServices(context) => showDialog(
@@ -76,31 +80,57 @@ class ServicoProvider with ChangeNotifier {
       }
     ),
   );
+
+  Future confirmarFinalizarServico(BuildContext context, ServicoEntity servicoEntity) => showDialog(
+    context: context,
+    builder: (context) =>  DSPopUp(title: 'Tem certeza que quer finalizar esse serviço?',
+        onPressedYes: () async {
+          await setServiceAsDone(servicoEntity, context);
+          ShowSnackBar(context: context,).showErrorSnackBar(
+            message: 'O serviço foi finalizado', color: DSColors.primary,);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const ShowPastServicesScreen()),
+          );
+        }, onPressedNo: (){
+          Navigator.pop(context);
+        }
+    ),
+  );
+
   CancelController cancelController = CancelController();
 
-  Future confirmarCancelServico(context, ServicoEntity servicoEntity) => showDialog(
+  Future confirmarCancelServico(context, ServicoEntity servicoEntity, RoundedLoadingButtonController loadingButton) => showDialog(
     context: context,
     builder: (context) =>  DSPopUp(title: 'Tem certeza que quer cancelar esse serviço?',
         onPressedYes: () async {
-          CancelEntity newCancelEntity = CancelEntity(
-            idServico: servicoEntity.id,
-            id: '',
-            idWorker: servicoEntity.idWorker,
-            dataCreated: DateTime.now(),
-            message: cancelingController.text.trim(),
-            needsAction: true,
-            idClient: servicoEntity.idClient,
-            idCity: servicoEntity.idCity,
-            aditionalData: {},
-          );
-          await cancelarServico(servicoEntity);
-          await cancelController.cadastrarCancel(newCancelEntity);
-          Navigator.push(
+          if(cancelingFormKey.currentState!.validate()) {
+            CancelEntity newCancelEntity = CancelEntity(
+              idServico: servicoEntity.id,
+              id: '',
+              idWorker: servicoEntity.idWorker,
+              dataCreated: DateTime.now(),
+              message: cancelingController.text.trim(),
+              needsAction: true,
+              idClient: servicoEntity.idClient,
+              idCity: servicoEntity.idCity,
+              aditionalData: {},
+            );
+            await cancelarServico(servicoEntity);
+            await cancelController.cadastrarCancel(newCancelEntity);
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
             );
-          ShowSnackBar(context: context,).showErrorSnackBar(message: 'O serviço foi cancelado', color: DSColors.primary,);
+            ShowSnackBar(context: context,).showErrorSnackBar(
+              message: 'O serviço foi cancelado', color: DSColors.primary,);
+          }
+          else{
+            Navigator.pop(context);
+          }
+          loadingButton.reset();
         }, onPressedNo: (){
+          loadingButton.start();
           Navigator.pop(context);
       }
     ),

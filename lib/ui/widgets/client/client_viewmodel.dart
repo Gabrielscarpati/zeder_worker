@@ -1,5 +1,5 @@
 class WorkerViewModel {
-  final String nome;
+   String nome;
   final String email;
   final String cpfCnpj;
   final String tipoPessoa;
@@ -9,7 +9,7 @@ class WorkerViewModel {
   final List my_cities;
   final List my_services;
 
-  const WorkerViewModel({
+   WorkerViewModel({
     required this.nome,
     required this.email,
     required this.cpfCnpj,

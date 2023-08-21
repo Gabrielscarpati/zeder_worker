@@ -4,7 +4,7 @@ class ServicoEntity extends Entity {
    final DateTime dataPropostaFeita;
    final DateTime dataPropostaAceita ;
    final DateTime dataPagamento ;
-   final DateTime clientGivenDate;
+   final String clientGivenDate;
    final String descricao;
    final bool flgClientSaw;
    final bool flgWorkerSaw;
@@ -60,7 +60,7 @@ class ServicoEntity extends Entity {
       dataPropostaFeita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaFeita']),
       dataPropostaAceita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaAceita']),
       dataPagamento: DateUtil.toDateTimeDefaultDateZero(json['dataPagamento']),
-      clientGivenDate: DateUtil.toDateTimeDefaultDateZero(json['clientGivenDate']),
+      clientGivenDate: convertTimestampToDateTime(json['clientGivenDate']),
       descricao: json['descricao'] ?? '',
       flgClientSaw: BoolUtil.toBoolDefaultFalse(json['flgClientSaw']),
       flgWorkerSaw: BoolUtil.toBoolDefaultFalse(json['flgWorkerSaw']),
@@ -72,7 +72,7 @@ class ServicoEntity extends Entity {
       serviceDetails: json['serviceDetails'] ?? {},
       service: json['service'] ?? '',
       idService: json['idService'] ?? '',
-      servicePrice: json['servicePrice'] ?? '',
+      servicePrice: decreaseBy20Percent(json['servicePrice']) ?? '',
       waitingPayment: BoolUtil.toBoolDefaultFalse(json['waitingPayment']),
       payed: BoolUtil.toBoolDefaultFalse(json['payed']),
       doing: BoolUtil.toBoolDefaultFalse(json['doing']),
@@ -81,6 +81,7 @@ class ServicoEntity extends Entity {
       reembolsado: BoolUtil.toBoolDefaultFalse(json['reembolsado']),
       disputaFinalizada: BoolUtil.toBoolDefaultFalse(json['disputaFinalizada']),
     );
+
   }
 
   factory ServicoEntity.test() {
@@ -123,7 +124,7 @@ class ServicoEntity extends Entity {
       "dataPropostaFeita"  : convertDateToTimeStemp(dataPropostaFeita),
       "dataPropostaAceita"  : convertDateToTimeStemp(dataPropostaAceita),
       "dataPagamento"  : convertDateToTimeStemp(dataPagamento),
-      "clientGivenDate"  : convertDateToTimeStemp(clientGivenDate),
+      "clientGivenDate"  : clientGivenDate,
       "descricao"  : descricao,
       "flgClientSaw"  : flgClientSaw,
       "flgWorkerSaw"  : flgWorkerSaw,
@@ -151,7 +152,7 @@ class ServicoEntity extends Entity {
     DateTime? dataPropostaFeita,
     DateTime? dataPropostaAceita,
     DateTime? dataPagamento,
-    DateTime? clientGivenDate,
+    String? clientGivenDate,
     String? descricao,
     bool? flgClientSaw,
     bool? flgWorkerSaw,
@@ -213,7 +214,7 @@ class ServicoEntity extends Entity {
       dataPropostaFeita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaFeita']),
       dataPropostaAceita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaAceita']),
       dataPagamento: DateUtil.toDateTimeDefaultDateZero(json['dataPagamento']),
-      clientGivenDate: DateUtil.toDateTimeDefaultDateZero(json['clientGivenDate']),
+      clientGivenDate: json['clientGivenDate'],
       descricao: json['descricao'] ?? '',
       flgClientSaw: BoolUtil.toBoolDefaultFalse(json['flgClientSaw']),
       flgWorkerSaw: BoolUtil.toBoolDefaultFalse(json['flgWorkerSaw']),
@@ -254,9 +255,14 @@ class ServicoAdapter extends Adapter<ServicoEntity> {
 }
 
 
-/*install
-  flutter_modular: ^5.0.3
-   main:  return runApp(ModularApp(module: AppModule(), child: AppWidget()));
-    inside of app folder app moduler and app widget
+String decreaseBy20Percent(String inputString) {
+  try {
+    double valueAsDouble = double.parse(inputString);
+    double decreasedValue = valueAsDouble * 0.8;
 
-* */
+    return decreasedValue.toStringAsFixed(2);
+  } on FormatException {
+    print("Invalid input. Please provide a valid double value as a string.");
+    return 'null';
+  }
+}

@@ -78,7 +78,6 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
     String imageUrl = await ref.getDownloadURL();
     return imageUrl.toString();
   }
-  final formKeyAuthentication = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -176,15 +175,6 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                             ],
                           ),
                         ),
-                        Form(
-                          key: formKeyAuthentication,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
                         Container(
                           width: MediaQuery.of(context).size.width*.70,
                           child:  Row(
@@ -228,21 +218,24 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: LoadingButton(
-          goNextScreen:() async {
-            final form = formKeyAuthentication.currentState!;
-            if(await uploadFile() == null){
-              mostrarErroSelecioneUmaFoto(context);
-            } else if (form.validate()) {
-              provider.proofOfResidencyPicture = await getUrlToImageFirebase();
-              await provider.checkConditionsSignUpUser(context);
-            }
-            _btnController.reset();
-          },
-          buttonText: "FINALIZAR",
-          controller: _btnController,
+      bottomNavigationBar: Form(
+        key: provider.formKeyAuthenticationResidencia,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: LoadingButton(
+            goNextScreen:() async {
+              final form = provider.formKeyAuthenticationResidencia.currentState!;
+              if(await uploadFile() == null){
+                mostrarErroSelecioneUmaFoto(context);
+              } else if (form.validate()) {
+                provider.proofOfResidencyPicture = await getUrlToImageFirebase();
+                await provider.checkConditionsSignUpUser(context);
+              }
+              _btnController.reset();
+            },
+            buttonText: "FINALIZAR",
+            controller: _btnController,
+          ),
         ),
       ),
     );

@@ -23,26 +23,41 @@ class DSCardListTileHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: color,
-      surfaceTintColor: DSColors.cardColor,
-      elevation: 0.0,
-      child: ListTile(
-        contentPadding: EdgeInsetsGeometry.lerp(
-          EdgeInsets.zero,
-          const EdgeInsets.symmetric(horizontal: 12),
-          0.5,
-        ),
-        leading: leading,
-        title: title,
-        subtitle: subtitle,
-        trailing: includeTrailing == true? SizedBox(
-            width: 108,
-            child: trailing
-        ):
-        SizedBox(width: 4,),
-        onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        color: color,
+        elevation: 0.0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 12,
+            bottom: 12,
+            left: 12,
+          ),
+          child: Row(
+            children: [
+              leading,
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    title,
+                    if (subtitle != null) const SizedBox(height: 4),
+                    if (subtitle != null) subtitle!,
+                  ],
+                ),
+              ),
+              if (includeTrailing == true)
+                SizedBox(
+                  width: 122,
+                  child: trailing,
+                ),
+              if (includeTrailing != true) const SizedBox(width: 4),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -81,6 +96,7 @@ class DSCardListTileVertical extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 header,
                 icon,

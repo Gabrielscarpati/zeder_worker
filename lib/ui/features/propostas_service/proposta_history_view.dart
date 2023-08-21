@@ -6,6 +6,7 @@ import '../../../application/provider/lead_provider.dart';
 import '../../../design_system/widgets/DsFutureBuilder.dart';
 import '../../../domain/entities/servico_entity.dart';
 import '../../widgets/proposta/proposta_viewmodel.dart';
+import '../navigation_bar/viewNavigationBarScren.dart';
 
 class Propostas_service extends StatefulWidget {
   final ServicoEntity servico;
@@ -83,6 +84,7 @@ class _Propostas_serviceState extends State<Propostas_service> {
         },
         error: 'Não há avaliação para\neste serviço ainda',
         messageWhenEmpty: "Não há avaliação para\neste serviço ainda",
+        reloadScreen : ViewNavegationBarScreen()
       ),
     );
   }

@@ -82,6 +82,7 @@ class AdicionaisServicoProvider with ChangeNotifier {
       ShowSnackBar(context: context).showErrorSnackBar(message: 'Preencha todos os campos',);
       Navigator.pop(context);
     }
+
     else{
       await createLogEntity(servicoViewModel: servicoViewModel);
       ShowSnackBar(context: context).showErrorSnackBar(message: 'Adicional adicionado com sucesso', color: DSColors.secondary,);
