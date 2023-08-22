@@ -13,6 +13,7 @@ import '../../device_type.dart';
 import '../../widgets/client/client_viewmodel.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -35,6 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     initilizeFirebaseMessaging();
     checkNotifications();
+
+    //NativeNotify.registerIOSDevice();
   }
 
   initilizeFirebaseMessaging() async {

@@ -1,18 +1,23 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:zeder/data/avaliacoes/avaliacao_controller.dart';
 import 'package:zeder/data/cancel/cancel_controller.dart';
 import 'package:zeder/data/firebase/firebase_controller.dart';
 import 'package:zeder/design_system/widgets/ds_pop_up.dart';
+import 'package:zeder/services/notification_service.dart';
 import 'package:zeder/ui/features/SignUp/views/widgets/snackbars.dart';
 import '../../data/servico/servico_controller.dart';
 import '../../design_system/parameters/colors.dart';
 import '../../domain/entities/avaliacao_prestador_entity.dart';
 import '../../domain/entities/cancel_entity.dart';
 import '../../domain/entities/servico_entity.dart';
+import '../../services/firebase_messaging_service.dart';
 import '../../ui/features/home/Widgets/pop_up_explain_names_home_screen.dart';
 import '../../ui/features/navigation_bar/navigation_bar.dart';
 import '../../ui/features/show_list_services_standard/show_past_services_screen.dart';
+import 'package:provider/provider.dart';
 
 class ServicoProvider with ChangeNotifier {
 
@@ -80,7 +85,7 @@ class ServicoProvider with ChangeNotifier {
       }
     ),
   );
-
+  
   Future confirmarFinalizarServico(BuildContext context, ServicoEntity servicoEntity) => showDialog(
     context: context,
     builder: (context) =>  DSPopUp(title: 'Tem certeza que quer finalizar esse serviço?',
@@ -100,7 +105,9 @@ class ServicoProvider with ChangeNotifier {
 
   CancelController cancelController = CancelController();
 
-  Future confirmarCancelServico(context, ServicoEntity servicoEntity, RoundedLoadingButtonController loadingButton) => showDialog(
+  Future confirmarCancelServico(context, ServicoEntity servicoEntity, RoundedLoadingButtonController loadingButton) {
+    //FirebaseMessagingService provider = Provider.of<FirebaseMessagingService>(context, listen: false);
+    return showDialog(
     context: context,
     builder: (context) =>  DSPopUp(title: 'Tem certeza que quer cancelar esse serviço?',
         onPressedYes: () async {
@@ -118,12 +125,15 @@ class ServicoProvider with ChangeNotifier {
             );
             await cancelarServico(servicoEntity);
             await cancelController.cadastrarCancel(newCancelEntity);
+            await Provider.of<FirebaseMessagingService>(context, listen: false).sendPushMessage('Serviço disponível', 'tem um novo serviço esperando por você');
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
             );
             ShowSnackBar(context: context,).showErrorSnackBar(
               message: 'O serviço foi cancelado', color: DSColors.primary,);
+              
+              
           }
           else{
             Navigator.pop(context);
@@ -135,6 +145,7 @@ class ServicoProvider with ChangeNotifier {
       }
     ),
   );
+  } 
 
   TextEditingController cancelingController = TextEditingController();
   GlobalKey<FormState> cancelingFormKey = GlobalKey<FormState>();

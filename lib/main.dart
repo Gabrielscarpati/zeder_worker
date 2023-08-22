@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:zeder/design_system/design_system.dart';
+import 'package:zeder/services/firebase_messaging_service.dart';
 import 'package:zeder/ui/features/LogIn/viewLogIn.dart';
 import 'package:zeder/ui/features/SignUp/explainCPF/views/bodyExplainCPF.dart';
 import 'package:zeder/ui/features/SignUp/list_signup_city/choose_city_screen.dart';
@@ -25,7 +26,7 @@ import 'application/provider/worker_provider.dart';
 import 'data/firebase/firebase_controller.dart';
 import 'package:provider/provider.dart';
 import 'design_system/widgets/DsFutureBuilder.dart';
-
+import './services/notification_service.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -56,6 +57,8 @@ Future<void> main() async {
       ChangeNotifierProvider( create: (context) => LogInSignUpProvider() ,),
       ChangeNotifierProvider( create: (context) => AdicionaisServicoProvider() ,),
       ChangeNotifierProvider( create: (context) => DisputaProvider() ,),
+      ChangeNotifierProvider( create: (context) => FirebaseMessagingService(NotificationService()) ,),
+      ChangeNotifierProvider( create: (context) => NotificationService() ,),
     ],
 
     child: const MyApp(),
