@@ -1,29 +1,29 @@
 import '../../core/core.dart';
 
 class ServicoEntity extends Entity {
-   final DateTime dataPropostaFeita;
-   final DateTime dataPropostaAceita ;
-   final DateTime dataPagamento ;
-   final String clientGivenDate;
-   final String descricao;
-   final bool flgClientSaw;
-   final bool flgWorkerSaw;
-   final String icone;
-   final String idCity;
-   final String idClient;
-   final String idDisputa;
-   final String idWorker;
-   final Map serviceDetails;
-   final String service;
-   final String idService;
-   final String servicePrice;
-   final bool waitingPayment;
-   final bool payed;
-   final bool doing;
-   final bool concluded;
-   final bool emDisputa;
-   final bool reembolsado;
-   final bool disputaFinalizada;
+  final DateTime dataPropostaFeita;
+  final DateTime dataPropostaAceita;
+  final DateTime dataPagamento;
+  final DateTime clientGivenDate;
+  final String descricao;
+  final bool flgClientSaw;
+  final bool flgWorkerSaw;
+  final String icone;
+  final String idCity;
+  final String idClient;
+  final String idDisputa;
+  final String idWorker;
+  final Map serviceDetails;
+  final String service;
+  final String idService;
+  final String servicePrice;
+  final bool waitingPayment;
+  final bool payed;
+  final bool doing;
+  final bool concluded;
+  final bool emDisputa;
+  final bool reembolsado;
+  final bool disputaFinalizada;
 
   ServicoEntity({
     required this.dataPropostaFeita,
@@ -42,7 +42,7 @@ class ServicoEntity extends Entity {
     required this.service,
     required this.idService,
     required this.servicePrice,
-     required this.waitingPayment,
+    required this.waitingPayment,
     required this.payed,
     required this.doing,
     required this.concluded,
@@ -52,13 +52,13 @@ class ServicoEntity extends Entity {
     required super.id,
   });
 
-
-
   factory ServicoEntity.fromJson(Map<String, dynamic> json) {
     return ServicoEntity(
       id: json['id'] ?? '',
-      dataPropostaFeita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaFeita']),
-      dataPropostaAceita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaAceita']),
+      dataPropostaFeita:
+          DateUtil.toDateTimeDefaultDateZero(json['dataPropostaFeita']),
+      dataPropostaAceita:
+          DateUtil.toDateTimeDefaultDateZero(json['dataPropostaAceita']),
       dataPagamento: DateUtil.toDateTimeDefaultDateZero(json['dataPagamento']),
       clientGivenDate: convertTimestampToDateTime(json['clientGivenDate']),
       descricao: json['descricao'] ?? '',
@@ -81,7 +81,6 @@ class ServicoEntity extends Entity {
       reembolsado: BoolUtil.toBoolDefaultFalse(json['reembolsado']),
       disputaFinalizada: BoolUtil.toBoolDefaultFalse(json['disputaFinalizada']),
     );
-
   }
 
   factory ServicoEntity.test() {
@@ -91,7 +90,8 @@ class ServicoEntity extends Entity {
       'dataPropostaAceita': '2',
       'dataPagamento': '3',
       'descricao': '4',
-      'flgClientSaw': 'adfadsf adsf asdf asdf asdf asdf asdf asdf asdf asdfasdfa sdf asfasdfasdf fa sdfa sdf asdf asdf asdf asdf asdf asdf asdf asdf  sadfa sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf',
+      'flgClientSaw':
+          'adfadsf adsf asdf asdf asdf asdf asdf asdf asdf asdfasdfa sdf asfasdfasdf fa sdfa sdf asdf asdf asdf asdf asdf asdf asdf asdf  sadfa sdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdfasdf asdf',
       'flgWorkerSaw': 100.0,
       'icone': 600.0,
       'idCity': DateTime(2023, 12, 1),
@@ -120,30 +120,30 @@ class ServicoEntity extends Entity {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "id"  : id,
-      "dataPropostaFeita"  : convertDateToTimeStemp(dataPropostaFeita),
-      "dataPropostaAceita"  : convertDateToTimeStemp(dataPropostaAceita),
-      "dataPagamento"  : convertDateToTimeStemp(dataPagamento),
-      "clientGivenDate"  : clientGivenDate,
-      "descricao"  : descricao,
-      "flgClientSaw"  : flgClientSaw,
-      "flgWorkerSaw"  : flgWorkerSaw,
-      "icone"  : icone,
-      "idCity"  : idCity,
-      "idClient"  : idClient,
-      "idDisputa"  : idDisputa,
-      "idWorker"  : idWorker,
-       "serviceDetails"  : serviceDetails,
-      "service"  : service,
-      "idService"  : idService,
-      "servicePrice"  : servicePrice,
-      "waitingPayment"  : waitingPayment,
-      "payed"  : payed,
-      "doing"  : doing,
-      "concluded"  : concluded,
-      "emDisputa"  : emDisputa,
-      "reembolsado"  : reembolsado,
-      "disputaFinalizada"  : disputaFinalizada,
+      "id": id,
+      "dataPropostaFeita": convertDateToTimeStemp(dataPropostaFeita),
+      "dataPropostaAceita": convertDateToTimeStemp(dataPropostaAceita),
+      "dataPagamento": convertDateToTimeStemp(dataPagamento),
+      "clientGivenDate": clientGivenDate,
+      "descricao": descricao,
+      "flgClientSaw": flgClientSaw,
+      "flgWorkerSaw": flgWorkerSaw,
+      "icone": icone,
+      "idCity": idCity,
+      "idClient": idClient,
+      "idDisputa": idDisputa,
+      "idWorker": idWorker,
+      "serviceDetails": serviceDetails,
+      "service": service,
+      "idService": idService,
+      "servicePrice": servicePrice,
+      "waitingPayment": waitingPayment,
+      "payed": payed,
+      "doing": doing,
+      "concluded": concluded,
+      "emDisputa": emDisputa,
+      "reembolsado": reembolsado,
+      "disputaFinalizada": disputaFinalizada,
     };
   }
 
@@ -152,7 +152,7 @@ class ServicoEntity extends Entity {
     DateTime? dataPropostaFeita,
     DateTime? dataPropostaAceita,
     DateTime? dataPagamento,
-    String? clientGivenDate,
+    DateTime? clientGivenDate,
     String? descricao,
     bool? flgClientSaw,
     bool? flgWorkerSaw,
@@ -181,7 +181,7 @@ class ServicoEntity extends Entity {
   }) {
     return ServicoEntity(
       id: id ?? this.id,
-       dataPropostaFeita: dataPropostaFeita ?? this.dataPropostaFeita,
+      dataPropostaFeita: dataPropostaFeita ?? this.dataPropostaFeita,
       dataPropostaAceita: dataPropostaAceita ?? this.dataPropostaAceita,
       dataPagamento: dataPagamento ?? this.dataPagamento,
       clientGivenDate: clientGivenDate ?? this.clientGivenDate,
@@ -211,8 +211,10 @@ class ServicoEntity extends Entity {
   ServicoEntity fromJson(Map<String, dynamic> json) {
     return ServicoEntity(
       id: json['id'] ?? '',
-      dataPropostaFeita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaFeita']),
-      dataPropostaAceita: DateUtil.toDateTimeDefaultDateZero(json['dataPropostaAceita']),
+      dataPropostaFeita:
+          DateUtil.toDateTimeDefaultDateZero(json['dataPropostaFeita']),
+      dataPropostaAceita:
+          DateUtil.toDateTimeDefaultDateZero(json['dataPropostaAceita']),
       dataPagamento: DateUtil.toDateTimeDefaultDateZero(json['dataPagamento']),
       clientGivenDate: json['clientGivenDate'],
       descricao: json['descricao'] ?? '',
@@ -236,8 +238,6 @@ class ServicoEntity extends Entity {
       disputaFinalizada: BoolUtil.toBoolDefaultFalse(json['disputaFinalizada']),
     );
   }
-
-
 }
 
 abstract class ServicoRepository extends Repository<ServicoEntity> {}
@@ -253,7 +253,6 @@ class ServicoAdapter extends Adapter<ServicoEntity> {
     return entity.toJson();
   }
 }
-
 
 String decreaseBy20Percent(String inputString) {
   try {

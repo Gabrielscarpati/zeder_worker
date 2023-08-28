@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/application/provider/worker_provider.dart';
 import 'package:zeder/design_system/design_system.dart';
+
+import '../../../core/utils/date_utils.dart';
 import '../../../domain/entities/servico_entity.dart';
 
 abstract class ServicoListTile extends StatelessWidget {
   final ServicoEntity viewModel;
   final VoidCallback onTap;
 
-   ServicoListTile({
+  ServicoListTile({
     super.key,
     required this.viewModel,
     required this.onTap,
@@ -15,35 +17,40 @@ abstract class ServicoListTile extends StatelessWidget {
   WorkerProvider workerProvider = WorkerProvider();
   Widget get icone => DSIconFilledSecondary(iconName: viewModel.icone);
   Widget get titulo => DSTextTitleBoldSecondary(text: viewModel.service);
-  Widget get status => DSTextSubtitleSecondary(text: workerProvider.getCitiesByID(id: viewModel.idCity));
+  Widget get status => DSTextSubtitleSecondary(
+      text: workerProvider.getCitiesByID(id: viewModel.idCity));
 
   Widget get valorData => Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DSTextTitleBoldSecondary(text: '${viewModel.servicePrice}R\$'),
-              DSTextSubtitleSecondary(text: viewModel.clientGivenDate),
+              DSTextSubtitleSecondary(
+                  text: convertDateTimeDMMY(viewModel.clientGivenDate)),
             ],
           ),
-          if (incluiIconeNavegarProximo) const DSIconSecondary(iconName: 'menu-right'),
+          if (incluiIconeNavegarProximo)
+            const DSIconSecondary(iconName: 'menu-right'),
         ],
       );
 
   Widget get valorDataVertical => Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               DSTextTitleBoldSecondary(text: '${viewModel.servicePrice}R\$'),
-              DSTextSubtitleSecondary(text: viewModel.clientGivenDate),
+              DSTextSubtitleSecondary(
+                  text: convertDateTimeDMMY(viewModel.clientGivenDate)),
             ],
           ),
-          if (incluiIconeNavegarProximo) const DSIconSecondary(iconName: 'menu-right'),
+          if (incluiIconeNavegarProximo)
+            const DSIconSecondary(iconName: 'menu-right'),
         ],
       );
 
@@ -53,7 +60,7 @@ abstract class ServicoListTile extends StatelessWidget {
 }
 
 class ServicoListTileHorizontal extends ServicoListTile {
-   ServicoListTileHorizontal({
+  ServicoListTileHorizontal({
     super.key,
     required super.viewModel,
     required super.onTap,
@@ -82,7 +89,7 @@ class ServicoListTileHorizontal extends ServicoListTile {
 }
 
 class ServicoListTileVertical extends ServicoListTile {
-   ServicoListTileVertical({
+  ServicoListTileVertical({
     super.key,
     required super.viewModel,
     required super.onTap,
@@ -106,5 +113,6 @@ class ServicoListTileVertical extends ServicoListTile {
   bool get incluiIconeNavegarProximo => false;
 
   @override
-  CrossAxisAlignment get valorTempoCrossAxisAlignment => CrossAxisAlignment.center;
+  CrossAxisAlignment get valorTempoCrossAxisAlignment =>
+      CrossAxisAlignment.center;
 }

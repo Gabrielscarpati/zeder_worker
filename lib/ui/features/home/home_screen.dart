@@ -4,6 +4,7 @@ import 'package:zeder/ui/features/home/views/header.dart';
 import 'package:zeder/ui/features/home/views/list_all_servicos.dart';
 import 'package:zeder/ui/features/home/views/list_all_servicos_empty.dart';
 import 'package:zeder/ui/features/home/views/list_servicos_do_prestador.dart';
+
 import '../../../application/provider/worker_provider.dart';
 import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
@@ -11,7 +12,6 @@ import '../../../services/firebase_messaging_service.dart';
 import '../../../services/notification_service.dart';
 import '../../device_type.dart';
 import '../../widgets/client/client_viewmodel.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,26 +30,33 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     final WorkerProvider _ClientProvider = context.read<WorkerProvider>();
     clientFuture = _ClientProvider.getWorkerLoadDataApp();
-    newServicosStream = ServicoController().fetchNewServicesStreamWithParameter();
-    currentServicosStream = ServicoController().fetchWorkerServicesStreamWithParameter();
+    newServicosStream =
+        ServicoController().fetchNewServicesStreamWithParameter();
+    currentServicosStream =
+        ServicoController().fetchWorkerServicesStreamWithParameter();
 
     initilizeFirebaseMessaging();
     checkNotifications();
   }
 
   initilizeFirebaseMessaging() async {
-    await Provider.of<FirebaseMessagingService>(context, listen: false).initialize();
+    await Provider.of<FirebaseMessagingService>(context, listen: false)
+        .initialize();
   }
 
   checkNotifications() async {
-    await Provider.of<NotificationService>(context, listen: false).checkForNotifications();
+    await Provider.of<NotificationService>(context, listen: false)
+        .checkForNotifications();
   }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double padding;
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
-    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
+    deviceType == DeviceType.Desktop
+        ? padding = (screenWidth - 900) / 2
+        : padding = 8;
     String workerId = context.read<WorkerProvider>().workerId;
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -59,14 +66,18 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 24,),
+              const SizedBox(
+                height: 24,
+              ),
               FutureBuilder<WorkerViewModel>(
                 future: clientFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: SizedBox(height: 50, width: 50,
-                        child: CircularProgressIndicator())
-                    );
+                    return const Center(
+                        child: SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: CircularProgressIndicator()));
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
@@ -74,26 +85,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 },
               ),
-
               SizedBox(
                 height: 200,
                 child: StreamBuilder<List<ServicoEntity>>(
                   stream: newServicosStream,
-                  builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<ServicoEntity>> snapshot) {
                     if (snapshot.hasError) {
                       return const Text('Algo deu errado');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: SizedBox(height: 50, width: 50,
-                          child: CircularProgressIndicator())
-                      );
+                      return const Center(
+                          child: SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: CircularProgressIndicator()));
                     }
                     WorkerProvider workerProvider = WorkerProvider();
                     List<ServicoEntity>? services = snapshot.data;
                     List<ServicoEntity>? newServices = [];
                     newServices.clear();
 
-                    for(ServicoEntity service in services!) {
+                    for (ServicoEntity service in services!) {
                       bool isWorkerCity = false;
                       bool isWorkerService = false;
 
@@ -103,7 +116,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       }
                       for (var myService in workerProvider.my_services) {
-                        if (myService.servico ==  workerProvider.getServicesByID(id:service.idService)) {
+                        if (myService.servico ==
+                            workerProvider.getServicesByID(
+                                id: service.idService)) {
                           isWorkerService = true;
                         }
                       }
@@ -113,43 +128,47 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     }
 
-                    return newServices.isEmpty? const ListAllServicosEmpty():
-                     ListAllServicos(servicos: newServices);
+                    return newServices.isEmpty
+                        ? const ListAllServicosEmpty()
+                        : ListAllServicos(servicos: newServices);
                   },
                 ),
               ),
-
-              const SizedBox(height: 20,),
-
+              const SizedBox(
+                height: 20,
+              ),
               SizedBox(
                 height: 440,
                 child: StreamBuilder<List<ServicoEntity>>(
                   stream: currentServicosStream,
-                  builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
-
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<ServicoEntity>> snapshot) {
                     if (snapshot.hasError) {
                       return const Text('Algo deu errado');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: SizedBox(height: 50, width: 50,
-                          child: CircularProgressIndicator())
-                      );
+                      return const Center(
+                          child: SizedBox(
+                              height: 50,
+                              width: 50,
+                              child: CircularProgressIndicator()));
                     }
 
                     List<ServicoEntity>? currentServices = snapshot.data;
                     List<ServicoEntity>? newCurrentServices = [];
                     currentServices!.forEach((element) {
-                        if(element.concluded == false && element.idWorker == workerId && element.payed == true){
-                          newCurrentServices.add(element);
-                        }
+                      if (element.concluded == false &&
+                          element.idWorker == workerId &&
+                          element.payed == true) {
+                        newCurrentServices.add(element);
                       }
-                    );
+                    });
 
                     return Column(
                       children: [
-                        newCurrentServices.isEmpty?  const ListCurrentServicosEmpty():
-                          CurrentServices(servicos: newCurrentServices)
-
+                        newCurrentServices.isEmpty
+                            ? const ListCurrentServicosEmpty()
+                            : CurrentServices(servicos: newCurrentServices)
                       ],
                     );
                   },
@@ -162,8 +181,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
 
 /*
 import 'package:flutter/material.dart';

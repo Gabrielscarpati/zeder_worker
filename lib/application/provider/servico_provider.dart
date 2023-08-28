@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:whatsapp/whatsapp.dart';
 import 'package:zeder/data/avaliacoes/avaliacao_controller.dart';
 import 'package:zeder/data/cancel/cancel_controller.dart';
 import 'package:zeder/data/firebase/firebase_controller.dart';
 import 'package:zeder/design_system/widgets/ds_pop_up.dart';
 import 'package:zeder/ui/features/SignUp/views/widgets/snackbars.dart';
+
 import '../../data/servico/servico_controller.dart';
 import '../../design_system/parameters/colors.dart';
 import '../../domain/entities/avaliacao_prestador_entity.dart';
@@ -15,7 +18,6 @@ import '../../ui/features/navigation_bar/navigation_bar.dart';
 import '../../ui/features/show_list_services_standard/show_past_services_screen.dart';
 
 class ServicoProvider with ChangeNotifier {
-
   static final ServicoProvider provider = ServicoProvider._internal();
 
   factory ServicoProvider() {
@@ -25,116 +27,204 @@ class ServicoProvider with ChangeNotifier {
   ServicoProvider._internal();
 
   FirebaseController firebaseController = FirebaseController();
-  List<ServicoEntity> list_servicos = [];  // plumber pest control
+  List<ServicoEntity> list_servicos = []; // plumber pest control
   List<ServicoEntity> listLeadsNotAcceptedYet = [];
   List<ServicoEntity> listLeadsAccepted = [];
   ServicoController servicoController = ServicoController();
 
-
   setServiceAsCurrent(ServicoEntity newService, BuildContext context) async {
-    await servicoController.atualizarServicoMakeCurrent(id: newService.id, idWorker: firebaseController.getCurrentUser()!.uid);
-    ShowSnackBar(context: context,).showErrorSnackBar(message: 'O serviço é seu agora', color: DSColors.primary,);
+    await servicoController.atualizarServicoMakeCurrent(
+        id: newService.id, idWorker: firebaseController.getCurrentUser()!.uid);
+    ShowSnackBar(
+      context: context,
+    ).showErrorSnackBar(
+      message: 'O serviço é seu agora',
+      color: DSColors.primary,
+    );
   }
 
-
-
   setServiceAsDone(ServicoEntity newService, BuildContext context) async {
-    await servicoController.atualizarServicoSetDone(id: newService.id,);
-    ShowSnackBar(context: context,).showErrorSnackBar(message: 'O serviço foi finalizado', color: DSColors.primary,);
+    await servicoController.atualizarServicoSetDone(
+      id: newService.id,
+    );
+    ShowSnackBar(
+      context: context,
+    ).showErrorSnackBar(
+      message: 'O serviço foi finalizado',
+      color: DSColors.primary,
+    );
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const ShowPastServicesScreen()),
     );
-
   }
 
-  cancelarServico(ServicoEntity newService) async{
-      await servicoController.atualizarCancelarServico(id: newService.id);
+  cancelarServico(ServicoEntity newService) async {
+    await servicoController.atualizarCancelarServico(id: newService.id);
   }
 
-  iniciarDisputa(ServicoEntity newService, String newIdDisputa) async{
-    await servicoController.atualizarServicoIniciarDisputa(id: newService.id, idDisputa: newIdDisputa,);
+  iniciarDisputa(ServicoEntity newService, String newIdDisputa) async {
+    await servicoController.atualizarServicoIniciarDisputa(
+      id: newService.id,
+      idDisputa: newIdDisputa,
+    );
   }
-
 
   Future showExplanationAllServices(context) => showDialog(
-    context: context,
-    builder: (context) =>  PopUpExplainNameHomeScreen(title: "Esses são os serviços que você pode selecionar para realizar",),
-  );
+        context: context,
+        builder: (context) => PopUpExplainNameHomeScreen(
+          title: "Esses são os serviços que você pode selecionar para realizar",
+        ),
+      );
 
   Future showExplanationOpenServices(context) => showDialog(
-    context: context,
-    builder: (context) =>  PopUpExplainNameHomeScreen(title: "Esses são os serviços que você\nestá trabalhando agora",),
-  );
-  Future confirmarPegarServico(context, ServicoEntity servicoEntity) => showDialog(
-    context: context,
-    builder: (context) =>  DSPopUp(title: 'Tem certeza que quer pegar esse serviço?',
-        onPressedYes: () async {
-          await setServiceAsCurrent(servicoEntity, context);
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
-            );
-        }, onPressedNo: (){
-          Navigator.pop(context);
-      }
-    ),
-  );
+        context: context,
+        builder: (context) => PopUpExplainNameHomeScreen(
+          title: "Esses são os serviços que você\nestá trabalhando agora",
+        ),
+      );
+  Future confirmarPegarServico(context, ServicoEntity servicoEntity) =>
+      showDialog(
+        context: context,
+        builder: (context) => DSPopUp(
+            title: 'Tem certeza que quer pegar esse serviço?',
+            onPressedYes: () async {
+              await setServiceAsCurrent(servicoEntity, context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NavigationBarScreen()),
+              );
+            },
+            onPressedNo: () {
+              Navigator.pop(context);
+            }),
+      );
 
-  Future confirmarFinalizarServico(BuildContext context, ServicoEntity servicoEntity) => showDialog(
-    context: context,
-    builder: (context) =>  DSPopUp(title: 'Tem certeza que quer finalizar esse serviço?',
-        onPressedYes: () async {
-          await setServiceAsDone(servicoEntity, context);
-          ShowSnackBar(context: context,).showErrorSnackBar(
-            message: 'O serviço foi finalizado', color: DSColors.primary,);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const ShowPastServicesScreen()),
-          );
-        }, onPressedNo: (){
-          Navigator.pop(context);
-        }
-    ),
-  );
+  Future confirmarFinalizarServico(
+          BuildContext context, ServicoEntity servicoEntity) =>
+      showDialog(
+        context: context,
+        builder: (context) => DSPopUp(
+            title: 'Tem certeza que quer finalizar esse serviço?',
+            onPressedYes: () async {
+              await setServiceAsDone(servicoEntity, context);
+              ShowSnackBar(
+                context: context,
+              ).showErrorSnackBar(
+                message: 'O serviço foi finalizado',
+                color: DSColors.primary,
+              );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ShowPastServicesScreen()),
+              );
+            },
+            onPressedNo: () {
+              Navigator.pop(context);
+            }),
+      );
 
+  /*
+                mandar email pra gente
+                whatsapp
+                botar o id no cancelamento
+                */
   CancelController cancelController = CancelController();
 
-  Future confirmarCancelServico(context, ServicoEntity servicoEntity, RoundedLoadingButtonController loadingButton) => showDialog(
-    context: context,
-    builder: (context) =>  DSPopUp(title: 'Tem certeza que quer cancelar esse serviço?',
-        onPressedYes: () async {
-          if(cancelingFormKey.currentState!.validate()) {
-            CancelEntity newCancelEntity = CancelEntity(
-              idServico: servicoEntity.id,
-              id: '',
-              idWorker: servicoEntity.idWorker,
-              dataCreated: DateTime.now(),
-              message: cancelingController.text.trim(),
-              needsAction: true,
-              idClient: servicoEntity.idClient,
-              idCity: servicoEntity.idCity,
-              aditionalData: {},
-            );
-            await cancelarServico(servicoEntity);
-            await cancelController.cadastrarCancel(newCancelEntity);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
-            );
-            ShowSnackBar(context: context,).showErrorSnackBar(
-              message: 'O serviço foi cancelado', color: DSColors.primary,);
-          }
-          else{
+  Future confirmarCancelServico(context, ServicoEntity servicoEntity,
+      RoundedLoadingButtonController loadingButton) {
+    if (isTimeDifferenceLessThan2Hours(
+            DateTime.now(), servicoEntity.clientGivenDate) ==
+        true) {
+      return showDialog(
+        context: context,
+        builder: (context) => DSPopUp(
+            title:
+                'O serviço ocorrerá em menos de 2 horas, se você cancelar será retirada uma taxa de cancelamento do seu próximo serviço!',
+            onPressedYes: () async {
+              if (cancelingFormKey.currentState!.validate()) {
+                CancelEntity newCancelEntity = CancelEntity(
+                  idServico: servicoEntity.id,
+                  id: '',
+                  idWorker: servicoEntity.idWorker,
+                  dataCreated: DateTime.now(),
+                  message: cancelingController.text.trim(),
+                  needsAction: true,
+                  idClient: servicoEntity.idClient,
+                  idCity: servicoEntity.idCity,
+                  aditionalData: {},
+                );
+                await cancelarServico(servicoEntity);
+                await cancelController.cadastrarCancel(newCancelEntity);
+                _sendEmail();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NavigationBarScreen()),
+                );
+                ShowSnackBar(
+                  context: context,
+                ).showErrorSnackBar(
+                  message: 'O serviço foi cancelado',
+                  color: DSColors.primary,
+                );
+              } else {
+                Navigator.pop(context);
+              }
+              loadingButton.reset();
+            },
+            onPressedNo: () {
+              print(servicoEntity.clientGivenDate);
+              loadingButton.start();
+              Navigator.pop(context);
+            }),
+      );
+    }
+
+    return showDialog(
+      context: context,
+      builder: (context) => DSPopUp(
+          title: 'Tem certeza que quer cancelar esse serviço?',
+          onPressedYes: () async {
+            if (cancelingFormKey.currentState!.validate()) {
+              CancelEntity newCancelEntity = CancelEntity(
+                idServico: servicoEntity.id,
+                id: '',
+                idWorker: servicoEntity.idWorker,
+                dataCreated: DateTime.now(),
+                message: cancelingController.text.trim(),
+                needsAction: true,
+                idClient: servicoEntity.idClient,
+                idCity: servicoEntity.idCity,
+                aditionalData: {},
+              );
+              await cancelarServico(servicoEntity);
+              await cancelController.cadastrarCancel(newCancelEntity);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NavigationBarScreen()),
+              );
+              ShowSnackBar(
+                context: context,
+              ).showErrorSnackBar(
+                message: 'O serviço foi cancelado',
+                color: DSColors.primary,
+              );
+            } else {
+              Navigator.pop(context);
+            }
+            loadingButton.reset();
+          },
+          onPressedNo: () {
+            print(servicoEntity.clientGivenDate);
+            loadingButton.start();
             Navigator.pop(context);
-          }
-          loadingButton.reset();
-        }, onPressedNo: (){
-          loadingButton.start();
-          Navigator.pop(context);
-      }
-    ),
-  );
+          }),
+    );
+  }
 
   TextEditingController cancelingController = TextEditingController();
   GlobalKey<FormState> cancelingFormKey = GlobalKey<FormState>();
@@ -147,14 +237,32 @@ class ServicoProvider with ChangeNotifier {
     }
   }
 
-  Future<AvaliacaoPrestadorEntity> getAvaliaCaoByServicoId(String idServico) async{
+  Future<AvaliacaoPrestadorEntity> getAvaliaCaoByServicoId(
+      String idServico) async {
     AvaliacaoController avaliacaoEntity = AvaliacaoController();
-    List<AvaliacaoPrestadorEntity> listRatings = await avaliacaoEntity.buscarAvaliacaoComCondicao(idServico, 'idServico');
+    List<AvaliacaoPrestadorEntity> listRatings = await avaliacaoEntity
+        .buscarAvaliacaoComCondicao(idServico, 'idServico');
     return listRatings[0];
   }
 
+  bool isTimeDifferenceLessThan2Hours(DateTime startTime, DateTime endTime) {
+    Duration difference = endTime.difference(startTime);
+    if (difference.inHours < 0) {
+      return false;
+    }
+    return difference.inHours < 2;
+  }
+
+  WhatsApp whatsapp = WhatsApp();
+
+  Future<void> _sendEmail() async {
+    final Email email = Email(
+      body: '_suggestionController.text',
+      subject: 'Housie Site Future Job Suggestion',
+      recipients: ['zedderapp@gmail.com'],
+      isHTML: false,
+    );
+
+    await FlutterEmailSender.send(email);
+  }
 }
-
-
-
-

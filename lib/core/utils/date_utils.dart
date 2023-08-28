@@ -70,21 +70,27 @@ extension DateUtils on DateTime {
   }
 }
 
+DateTime convertTimestampToDateTime(Timestamp timestamp) {
+  DateTime dateTime =
+      DateTime.fromMicrosecondsSinceEpoch(timestamp.microsecondsSinceEpoch);
 
-String convertTimestampToDateTime(Timestamp timestamp) {
+  String formattedDate = DateFormat(
+    "d/MM/y",
+  ).format(dateTime);
 
-  DateTime dateTime = DateTime.fromMicrosecondsSinceEpoch(timestamp.microsecondsSinceEpoch);
+  return dateTime;
+}
 
-  String formattedDate =DateFormat("d/MM/y",).format(dateTime);
+String convertDateTimeDMMY(DateTime dateTime) {
+  String formattedDate = DateFormat(
+    "d/MM/y",
+  ).format(dateTime);
 
   return formattedDate;
 }
 
 Timestamp convertDateToTimeStemp(DateTime dateTime) {
-  Timestamp date = Timestamp.fromMillisecondsSinceEpoch(dateTime.millisecondsSinceEpoch);
+  Timestamp date =
+      Timestamp.fromMillisecondsSinceEpoch(dateTime.millisecondsSinceEpoch);
   return date;
 }
-
-
-
-

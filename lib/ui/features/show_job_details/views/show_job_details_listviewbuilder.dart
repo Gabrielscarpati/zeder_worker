@@ -4,23 +4,27 @@ import 'package:zeder/ui/features/show_job_details/views/show_job_details_Listti
 class ShowJobDetailsListviewbuilder extends StatefulWidget {
   final Map<dynamic, dynamic> servicoDetails;
   final String descricao;
-  const ShowJobDetailsListviewbuilder({Key? key, required this.servicoDetails, required this.descricao}) : super(key: key);
+  const ShowJobDetailsListviewbuilder(
+      {Key? key, required this.servicoDetails, required this.descricao})
+      : super(key: key);
 
   @override
-  State<ShowJobDetailsListviewbuilder> createState() => _ShowJobDetailsListviewbuilderState();
+  State<ShowJobDetailsListviewbuilder> createState() =>
+      _ShowJobDetailsListviewbuilderState();
 }
 
-class _ShowJobDetailsListviewbuilderState extends State<ShowJobDetailsListviewbuilder> {
-
+class _ShowJobDetailsListviewbuilderState
+    extends State<ShowJobDetailsListviewbuilder> {
   @override
   void initState() {
     super.initState();
-    widget.servicoDetails['Descrição'] =  widget.descricao== ""? " O cliente não fez uma descição para esse serviço. ": " ${widget.descricao} "; // Add a new key-value pair
+    widget.servicoDetails['Descrição'] = widget.descricao == ""
+        ? " O cliente não fez uma descição para esse serviço. "
+        : " ${widget.descricao} "; // Add a new key-value pair
   }
 
   @override
   Widget build(BuildContext context) {
-
     {
       Map<dynamic, dynamic> details = widget.servicoDetails;
       return Expanded(
@@ -36,12 +40,21 @@ class _ShowJobDetailsListviewbuilderState extends State<ShowJobDetailsListviewbu
               return ShowJobDetaisListtile(
                 iconName: 'notebook-edit',
                 title: key,
-                chosenOption: value.toString().substring(1, value.toString().length - 1),
+                chosenOption: formatString(value.toString()),
               );
             },
           ),
         ),
       );
     }
+  }
+
+  String formatString(String string) {
+    if (string[string.length - 1] == ']') {
+      return string.substring(1, string.length - 1);
+    } else if (string[string.length - 1] == ']') {
+      return string.substring(string.length - 1);
+    }
+    return string;
   }
 }
