@@ -21,7 +21,7 @@ class CustomNotification {
   });
 }
 
-class NotificationService {
+class NotificationService with ChangeNotifier {
   late FlutterLocalNotificationsPlugin localNotificationsPlugin;
   late AndroidNotificationDetails androidDetails;
 
