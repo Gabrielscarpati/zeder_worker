@@ -1,11 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/home/views/see_all_services_button.dart';
 import 'package:zeder/ui/features/show_job_details/show_job_details_screen.dart';
+
 import '../../../../application/provider/servico_provider.dart';
 import '../../../../domain/entities/servico_entity.dart';
+import '../../../../utils/flutter_get_Location.dart';
 import '../../../widgets/servico/servico_listtile.dart';
 
 class ListAllServicos extends StatefulWidget {
@@ -17,32 +18,36 @@ class ListAllServicos extends StatefulWidget {
 }
 
 class _ListAllServicosState extends State<ListAllServicos> {
-
-
   @override
   Widget build(BuildContext context) {
     final ServicoProvider provider = context.read<ServicoProvider>();
+    GetLocation getLocation = GetLocation();
 
     bool allowGetLeads = true;
     return Column(
       children: [
-         Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-             Padding(
+            Padding(
               padding: EdgeInsets.only(top: 8, bottom: 4, left: 8),
               child: Row(
                 children: [
-                  Text("Novos serviços", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                  SizedBox(width: 2,),
+                  Text(
+                    getLocation.locationBR ? "Novos serviços" : "New services",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 2,
+                  ),
                   Transform.scale(
                     scale: 0.7,
                     child: InkWell(
-                        child: DSIconFilledSecondarySmall(iconName: 'help'),
-                      onTap: (){
+                      child: DSIconFilledSecondarySmall(iconName: 'help'),
+                      onTap: () {
                         provider.showExplanationAllServices(context);
-                       // _ServicosProvider.criarServico();
+                        // _ServicosProvider.criarServico();
                       },
                     ),
                   ),
@@ -50,8 +55,18 @@ class _ListAllServicosState extends State<ListAllServicos> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 8,),
-              child: SeeAllServicesButton(title: 'Todos servicos disponíveis', servicos: widget.servicos, allowGetLeads: allowGetLeads, newServico: true, currentServico: false,),
+              padding: const EdgeInsets.only(
+                right: 8,
+              ),
+              child: SeeAllServicesButton(
+                title: getLocation.locationBR
+                    ? 'Todos servicos disponíveis'
+                    : 'All available services',
+                servicos: widget.servicos,
+                allowGetLeads: allowGetLeads,
+                newServico: true,
+                currentServico: false,
+              ),
             ),
             //const SizedBox(width: 8,),
           ],
@@ -63,13 +78,17 @@ class _ListAllServicosState extends State<ListAllServicos> {
             itemCount: widget.servicos.length,
             itemBuilder: (context, index) {
               return ServicoListTileVertical(
-                  viewModel: widget.servicos[index],
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ShowJobDetailsScreen(servicoViewModel: widget.servicos[index], allowGetLeads: allowGetLeads,)),
-                    );
-                  },
+                viewModel: widget.servicos[index],
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ShowJobDetailsScreen(
+                              servicoViewModel: widget.servicos[index],
+                              allowGetLeads: allowGetLeads,
+                            )),
+                  );
+                },
               );
             },
           ),
@@ -77,5 +96,4 @@ class _ListAllServicosState extends State<ListAllServicos> {
       ],
     );
   }
-
 }

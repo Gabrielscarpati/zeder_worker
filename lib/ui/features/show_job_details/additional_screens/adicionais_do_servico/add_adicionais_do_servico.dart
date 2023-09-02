@@ -5,61 +5,84 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/LoadingButton.dart';
 import 'package:zeder/ui/features/LogIn/views/widgets/widgetsForSignUp.dart';
+
 import '../../../../../application/provider/adicionais_servico.dart';
 import '../../../../../domain/entities/servico_entity.dart';
+import '../../../../../utils/flutter_get_Location.dart';
 
 class AddAdicionaisDoServico extends StatefulWidget {
   final ServicoEntity servicoViewModel;
-  const AddAdicionaisDoServico({Key? key, required this.servicoViewModel, }) : super(key: key);
+  const AddAdicionaisDoServico({
+    Key? key,
+    required this.servicoViewModel,
+  }) : super(key: key);
 
   @override
   State<AddAdicionaisDoServico> createState() => _AddAdicionaisDoServicoState();
 }
 
 class _AddAdicionaisDoServicoState extends State<AddAdicionaisDoServico> {
-  RoundedLoadingButtonController btnControllerSalvar = RoundedLoadingButtonController();
-  RoundedLoadingButtonController btnControllerVoltar = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnControllerSalvar =
+      RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnControllerVoltar =
+      RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
-    AdicionaisServicoProvider provider = context.read<AdicionaisServicoProvider>();
+    AdicionaisServicoProvider provider =
+        context.read<AdicionaisServicoProvider>();
+    GetLocation getLocation = GetLocation();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Adicionar adicional ao serviço', style: TextStyle(fontSize: 18),), backgroundColor: DSColors.tertiary,),
+      appBar: AppBar(
+        title: const Text(
+          'Adicionar adicional ao serviço',
+          style: TextStyle(fontSize: 18),
+        ),
+        backgroundColor: DSColors.tertiary,
+      ),
       body: SizedBox(
-        child:Form(
+        child: Form(
           key: provider.formKeyAuthentication,
           child: Padding(
-            padding: const EdgeInsets.only( left: 16.0, right: 16.0),
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             child: Column(
               children: [
                 StandardController(
-                  title: 'Valor Adicional (EX: R\$ 10,00 = 10)',
-                  hint: 'Digite apenas números',
+                  title: getLocation.locationBR
+                      ? 'Valor Adicional (EX: R\$ 10,00 = 10)'
+                      : 'Additional Value (EX: R\$ 10,00 = 10)',
+                  hint: getLocation.locationBR
+                      ? 'Digite apenas números'
+                      : 'Enter only numbers',
                   nameController: provider.price,
                   validator: provider.validatePrice,
                   prefixIcon: MdiIcons.currencyBrl,
-                  sufixIcon:  Icons.close,
+                  sufixIcon: Icons.close,
                   deleteOrHide: 'delete',
                   iSkeyboardTypeNumber: true,
                 ),
                 StandardController(
-                  title: 'Descrição',
-                  hint: 'Faça uma descrição do que foi adicionado ao serviço',
+                  title: getLocation.locationBR ? 'Descrição' : 'Description',
+                  hint: getLocation.locationBR
+                      ? 'Faça uma descrição do que foi adicionado ao serviço'
+                      : 'Make a description of what was added to the service',
                   nameController: provider.description,
                   validator: provider.validateDescription,
                   prefixIcon: Icons.person,
-                  sufixIcon:  Icons.close,
+                  sufixIcon: Icons.close,
                   deleteOrHide: 'delete',
                   multilineText: true,
                   maxLines: 12,
                 ),
-                const SizedBox(height: 40,),
+                const SizedBox(
+                  height: 40,
+                ),
                 LoadingButton(
-                  buttonText: 'Salvar',
+                  buttonText: getLocation.locationBR ? 'Salvar' : 'Save',
                   goNextScreen: () async {
-
-                    await provider.showExplanationAllServices(context, widget.servicoViewModel);
+                    await provider.showExplanationAllServices(
+                        context, widget.servicoViewModel);
                     btnControllerVoltar.stop();
                   },
                   controller: btnControllerVoltar,
@@ -70,20 +93,18 @@ class _AddAdicionaisDoServicoState extends State<AddAdicionaisDoServico> {
         ),
       ),
       bottomNavigationBar: Container(
-          height: 70,
-          color: DSColors.cardColor,
-          child: Center(
-            child:
-                LoadingButton(
-                  buttonText: 'Voltar',
-                  goNextScreen: () {
-                    Navigator.pop(context);
-                  },
-                  controller: btnControllerSalvar,
-                ),
+        height: 70,
+        color: DSColors.cardColor,
+        child: Center(
+          child: LoadingButton(
+            buttonText: getLocation.locationBR ? 'Voltar' : 'Back',
+            goNextScreen: () {
+              Navigator.pop(context);
+            },
+            controller: btnControllerSalvar,
           ),
+        ),
       ),
     );
   }
 }
-

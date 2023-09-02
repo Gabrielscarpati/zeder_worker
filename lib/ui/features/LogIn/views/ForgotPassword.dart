@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../application/provider/logInSignUpProvider.dart';
+import '../../../../utils/flutter_get_Location.dart';
 import '../../../device_type.dart';
 import '../../LoadingButton.dart';
 import 'widgets/widgetsForSignUp.dart';
@@ -17,20 +17,23 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
-    LogInSignUpProvider provider = Provider.of<LogInSignUpProvider>(context,listen: false);
+    LogInSignUpProvider provider =
+        Provider.of<LogInSignUpProvider>(context, listen: false);
     double screenWidth = MediaQuery.of(context).size.width;
     double padding;
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
-    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 16;
+    deviceType == DeviceType.Desktop
+        ? padding = (screenWidth - 900) / 2
+        : padding = 16;
+    GetLocation getLocation = GetLocation();
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: BackButton(
             onPressed: () {
-               provider.formKeyAuthenticationLogin.currentState!.reset();
+              provider.formKeyAuthenticationLogin.currentState!.reset();
               Navigator.of(context).pop();
-
             },
             color: Colors.black,
           ),
@@ -38,29 +41,32 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         body: Form(
           key: provider.formKeyAuthenticationResetPassword,
           child: Padding(
-            padding: EdgeInsets.only(left: padding, right: padding, top: 16, bottom: 16),
+            padding: EdgeInsets.only(
+                left: padding, right: padding, top: 16, bottom: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                 'Esqueceu sua senha?',
-                  style: TextStyle(
+                Text(
+                    getLocation.locationBR
+                        ? 'Esqueceu sua senha?'
+                        : 'Forgot your password?',
+                    style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                       )
-                    ),
+                    )),
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                    "Digite seu e-mail para que possamos enviar um link para você recuperar o acesso à sua conta e voltar a desfrutar do nosso aplicativo sem problemas.",
+                Text(
+                    getLocation.locationBR
+                        ? "Digite seu e-mail para que possamos enviar um link para você recuperar o acesso à sua conta e voltar a desfrutar do nosso aplicativo sem problemas."
+                        : "Enter your email so we can send you a link to recover access to your account and get back to enjoying our app without any problems.",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                    )
-                ),
-                 SizedBox(
+                    )),
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.16,
                 ),
                 StandardController(
@@ -76,7 +82,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   height: MediaQuery.of(context).size.height * 0.16,
                 ),
                 LoadingButton(
-                  buttonText: 'Enviar email',
+                  buttonText:
+                      getLocation.locationBR ? 'Enviar email' : 'Send email',
                   goNextScreen: () async {
                     await provider.resetPassword(
                       context: context,
@@ -88,7 +95,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }

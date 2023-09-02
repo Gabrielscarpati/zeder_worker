@@ -1,26 +1,35 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:zeder/application/provider/logInSignUpProvider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/design_system/ds_app_bar.dart';
 import 'package:zeder/ui/features/home/Widgets/pop_up_explain_names_home_screen.dart';
+
+import '../../../../../utils/flutter_get_Location.dart';
 import '../../../LoadingButton.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'dart:io';
-import 'package:path/path.dart';
 
-class BodyExplainProofOfResidency extends StatefulWidget{
-
-  const BodyExplainProofOfResidency({Key? key,}) : super(key: key);
+class BodyExplainProofOfResidency extends StatefulWidget {
+  const BodyExplainProofOfResidency({
+    Key? key,
+  }) : super(key: key);
   @override
-  _BodyExplainProofOfResidencyState createState() => _BodyExplainProofOfResidencyState();
+  _BodyExplainProofOfResidencyState createState() =>
+      _BodyExplainProofOfResidencyState();
 }
-class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidency> {
-  RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+class _BodyExplainProofOfResidencyState
+    extends State<BodyExplainProofOfResidency> {
+  RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
+  GetLocation getLocation = GetLocation();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   Future<String?> getUserId() async {
@@ -28,7 +37,9 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
     final userId = user?.uid.toString();
     return userId;
   }
-  final firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
+
+  final firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
 
   File? _photo;
   final ImagePicker _picker = ImagePicker();
@@ -40,8 +51,7 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
       if (pickedFile != null) {
         _photo = File(pickedFile.path);
         uploadFile();
-      } else {
-      }
+      } else {}
     });
   }
 
@@ -64,7 +74,9 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
     final destination = 'PictureCPFWorker/$fileName';
 
     try {
-      final ref = firebase_storage.FirebaseStorage.instance.ref(destination).child('PictureCPFWorker/');
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('PictureCPFWorker/');
       await ref.putFile(_photo!);
     } catch (e) {
       print('error occurred');
@@ -73,7 +85,8 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
   }
 
   Future<String> getUrlToImageFirebase() async {
-    Reference ref = storage.ref().child(basename(_photo!.path) + DateTime.now().toString());
+    Reference ref =
+        storage.ref().child(basename(_photo!.path) + DateTime.now().toString());
     await ref.putFile(File(_photo!.path));
     String imageUrl = await ref.getDownloadURL();
     return imageUrl.toString();
@@ -83,7 +96,10 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
   Widget build(BuildContext context) {
     final LogInSignUpProvider provider = context.watch<LogInSignUpProvider>();
     return Scaffold(
-      appBar: const DSAppBar(title: 'Prova de residêcia',),
+      appBar: DSAppBar(
+          title: getLocation.locationBR
+              ? 'Prova de residêcia'
+              : 'Proof of Address'),
       body: SizedBox(
         width: double.infinity,
         child: Column(
@@ -98,109 +114,114 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
                     child: Column(
                       children: [
                         Container(
-                          width: MediaQuery.of(context).size.width*.7,
+                          width: MediaQuery.of(context).size.width * .7,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                   DSTextTitleBoldSecondary(
-                                      text: 'Escolha uma foto do seu\ncomprovante de residência',
+                                  DSTextTitleBoldSecondary(
+                                    text: getLocation.locationBR
+                                        ? 'Escolha uma foto do seu\ncomprovante de residência'
+                                        : 'Choose a photo of your proof of address',
                                   ),
-                                  Divider(
+                                  const Divider(
                                     color: DSColors.primary,
                                     thickness: 1,
                                   ),
-                                   DSTextTitleBoldSecondary(
-                                    text: 'Faça o mesmo processo que\nvocê fez com a sua identidade',
+                                  DSTextTitleBoldSecondary(
+                                    text: getLocation.locationBR
+                                        ? 'Faça o mesmo processo que\nvocê fez com a sua identidade'
+                                        : 'Do the same process you did with your ID',
                                   ),
-                                  Divider(
+                                  const Divider(
                                     color: DSColors.primary,
                                     thickness: 1,
                                   ),
-                                   DSTextTitleBoldSecondary(
-                                    text: 'Certifique-se que a foto está\nlegível e que não está cortada',
+                                  DSTextTitleBoldSecondary(
+                                    text: getLocation.locationBR
+                                        ? 'Certifique-se que a foto está\nlegível e que não está cortada'
+                                        : 'Make sure the photo is readable and not cropped',
                                   ),
-                                  Divider(
+                                  const Divider(
                                     color: DSColors.primary,
                                     thickness: 1,
                                   ),
-                                   DSTextTitleBoldSecondary(
-                                    text: 'Abaixo temos os documentos\nque aceitamos ',
+                                  DSTextTitleBoldSecondary(
+                                    text: getLocation.locationBR
+                                        ? 'Abaixo temos os documentos\nque aceitamos '
+                                        : 'The documents we accept are below',
                                   ),
                                 ],
                               ),
                             ],
                           ),
                         ),
-
                         const SizedBox(
                           height: 20,
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                           child: Stack(
                             children: [
                               Center(
-                                child:GestureDetector(
+                                child: GestureDetector(
                                   onTap: () {
                                     _showPicker(context);
                                   },
                                   child: _photo != null
                                       ? ClipRRect(
-                                        borderRadius: BorderRadius.circular(0),
-                                        child: Image.file(
-                                          _photo!,
-                                          width:250,
-                                          height: 323,
-                                          fit: BoxFit.fitHeight,
-                                        ),
-                                      )
+                                          borderRadius:
+                                              BorderRadius.circular(0),
+                                          child: Image.file(
+                                            _photo!,
+                                            width: 250,
+                                            height: 323,
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                        )
                                       : Container(
-                                        decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(0)),
-                                        width: 250,
-                                        height: 323,
-                                        child: Icon(
-                                          Icons.camera_alt,
-                                        size: 40,
-                                        color: Colors.grey[600],
-                                    ),
-                                  ),
-
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(0)),
+                                          width: 250,
+                                          height: 323,
+                                          child: Icon(
+                                            Icons.camera_alt,
+                                            size: 40,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
                                 ),
                               ),
                             ],
                           ),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width*.70,
-                          child:  Row(
+                          width: MediaQuery.of(context).size.width * .70,
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   DSTextTitleBoldSecondary(
-                                    text: 'Contas de água, luz, gás, TV,\ninternet, telefone fixo e celular;',
+                                    text: getLocation.locationBR
+                                        ? 'Contas de água, luz, gás, TV,\ninternet, telefone fixo e celular'
+                                        : 'Water, electricity, gas, TV, internet, landline and cell phone bills',
                                   ),
-                                  Divider(
+                                  const Divider(
                                     color: DSColors.primary,
                                     thickness: 1,
                                   ),
                                   DSTextTitleBoldSecondary(
-                                    text: 'Carnês do IPTU e IPVA;',
+                                    text: getLocation.locationBR
+                                        ? 'Contrato de aluguel reconhecido\nem cartório'
+                                        : 'Notarized rental agreement',
                                   ),
-                                  Divider(
-                                    color: DSColors.primary,
-                                    thickness: 1,
-                                  ),
-                                  DSTextTitleBoldSecondary(
-                                    text: 'Contrato de aluguel reconhecido\nem cartório;',
-                                  ),
-                                  Divider(
+                                  const Divider(
                                     color: DSColors.primary,
                                     thickness: 1,
                                   ),
@@ -223,12 +244,14 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: LoadingButton(
-            goNextScreen:() async {
-              final form = provider.formKeyAuthenticationResidencia.currentState!;
-              if(await uploadFile() == null){
+            goNextScreen: () async {
+              final form =
+                  provider.formKeyAuthenticationResidencia.currentState!;
+              if (await uploadFile() == null) {
                 mostrarErroSelecioneUmaFoto(context);
               } else if (form.validate()) {
-                provider.proofOfResidencyPicture = await getUrlToImageFirebase();
+                provider.proofOfResidencyPicture =
+                    await getUrlToImageFirebase();
                 await provider.checkConditionsSignUpUser(context);
               }
               _btnController.reset();
@@ -241,26 +264,24 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
     );
   }
 
-
-
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child:  Wrap(
+              child: Wrap(
                 children: <Widget>[
                   ListTile(
-                      leading:  Icon(Icons.photo_library),
-                      title:  Text('Gallery'),
+                      leading: Icon(Icons.photo_library),
+                      title: Text('Gallery'),
                       onTap: () {
                         imgFromGallery();
                         Navigator.of(context).pop();
                       }),
                   ListTile(
-                    leading:  Icon(Icons.photo_camera),
-                    title:  Text('Camera'),
+                    leading: Icon(Icons.photo_camera),
+                    title: Text('Camera'),
                     onTap: () {
                       imgFromCamera();
                       Navigator.of(context).pop();
@@ -272,9 +293,10 @@ class _BodyExplainProofOfResidencyState extends State<BodyExplainProofOfResidenc
           );
         });
   }
-  Future mostrarErroSelecioneUmaFoto(context) => showDialog(
-    context: context,
-    builder: (context) => PopUpExplainNameHomeScreen(title: "Por favor, selecione uma foto"),
-  );
-}
 
+  Future mostrarErroSelecioneUmaFoto(context) => showDialog(
+        context: context,
+        builder: (context) =>
+            PopUpExplainNameHomeScreen(title: "Por favor, selecione uma foto"),
+      );
+}

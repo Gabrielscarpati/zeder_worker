@@ -9,7 +9,6 @@ class WorkerEntity extends Entity<WorkerEntity> {
   final String phone;
   final String cpfPicture;
   final String proofOfResidencyPicture;
-
   final List servicos;
   final List my_cities;
   final int numberRating1;
@@ -17,6 +16,7 @@ class WorkerEntity extends Entity<WorkerEntity> {
   final int numberRating3;
   final int numberRating4;
   final int numberRating5;
+  final DateTime dataCreated;
 
   WorkerEntity({
     required super.id,
@@ -35,10 +35,11 @@ class WorkerEntity extends Entity<WorkerEntity> {
     required this.numberRating5,
     required this.cpfPicture,
     required this.proofOfResidencyPicture,
-
+    required this.dataCreated,
   });
 
   factory WorkerEntity.fromJson(Map<String, dynamic> json) {
+    print(DateTime.parse(json['dataCreated'] ?? DateTime.now().toString()));
     return WorkerEntity(
       id: json['id'] ?? '',
       nome: json['nome'] ?? '',
@@ -56,6 +57,8 @@ class WorkerEntity extends Entity<WorkerEntity> {
       numberRating5: json['numberRating5'] ?? 0,
       cpfPicture: json['cpfPicture'] ?? '',
       proofOfResidencyPicture: json['proofOfResidencyPicture'] ?? '',
+      dataCreated:
+          DateTime.parse(json['dataCreated'] ?? DateTime.now().toString()),
     );
   }
 
@@ -77,6 +80,7 @@ class WorkerEntity extends Entity<WorkerEntity> {
       'numberRating5': numberRating5,
       'cpfPicture': cpfPicture,
       'proofOfResidencyPicture': proofOfResidencyPicture,
+      'dataCreated': dataCreated.toString(),
     };
   }
 
@@ -97,8 +101,7 @@ class WorkerEntity extends Entity<WorkerEntity> {
     int? numberRating5,
     String? proofOfResidencyPicture,
     String? cpfPicture,
-
-
+    String? dataCreated,
   }) {
     return WorkerEntity(
       id: id ?? this.id,
@@ -116,11 +119,14 @@ class WorkerEntity extends Entity<WorkerEntity> {
       numberRating4: numberRating4 ?? this.numberRating4,
       numberRating5: numberRating5 ?? this.numberRating5,
       cpfPicture: cpfPicture ?? this.cpfPicture,
-      proofOfResidencyPicture: proofOfResidencyPicture ?? this.proofOfResidencyPicture,
+      proofOfResidencyPicture:
+          proofOfResidencyPicture ?? this.proofOfResidencyPicture,
+      dataCreated: DateTime.parse(
+        dataCreated ?? this.dataCreated.toString(),
+      ),
     );
   }
 
-  @override
   fromJson(Map<String, dynamic> json) {
     // TODO: implement fromJson
     throw UnimplementedError();

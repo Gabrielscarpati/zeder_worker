@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:zeder/application/provider/logInSignUpProvider.dart';
@@ -8,29 +13,31 @@ import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/design_system/ds_app_bar.dart';
 import 'package:zeder/ui/features/SignUp/explainProofOfResidency/explainProofOfResidencyScreen.dart';
 import 'package:zeder/ui/features/home/Widgets/pop_up_explain_names_home_screen.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../LoadingButton.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'dart:io';
-import 'package:path/path.dart';
 
-class BodyGetUserCPF extends StatefulWidget{
-
-
-  const BodyGetUserCPF({Key? key,}) : super(key: key);
+class BodyGetUserCPF extends StatefulWidget {
+  const BodyGetUserCPF({
+    Key? key,
+  }) : super(key: key);
   @override
   _BodyGetUserCPFState createState() => _BodyGetUserCPFState();
 }
-class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
-  RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
+class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
+  RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
+  GetLocation getLocation = GetLocation();
   final FirebaseAuth auth = FirebaseAuth.instance;
   Future<String?> getUserId() async {
     final User? user = await auth.currentUser;
     final userId = user?.uid.toString();
     return userId;
   }
-  final firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
+
+  final firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
 
   File? _photo;
   final ImagePicker _picker = ImagePicker();
@@ -42,8 +49,7 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
       if (pickedFile != null) {
         _photo = File(pickedFile.path);
         uploadFile();
-      } else {
-      }
+      } else {}
     });
   }
 
@@ -66,7 +72,9 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
     final destination = 'PictureCPFWorker/$fileName';
 
     try {
-      final ref = firebase_storage.FirebaseStorage.instance.ref(destination).child('PictureCPFWorker/');
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('PictureCPFWorker/');
       await ref.putFile(_photo!);
     } catch (e) {
       print('error occurred');
@@ -74,21 +82,24 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
     return _photo!.path;
   }
 
-    Future<String> getUrlToImageFirebase() async {
-    Reference ref = storage.ref().child(basename(_photo!.path) + DateTime.now().toString());
+  Future<String> getUrlToImageFirebase() async {
+    Reference ref =
+        storage.ref().child(basename(_photo!.path) + DateTime.now().toString());
     await ref.putFile(File(_photo!.path));
     String imageUrl = await ref.getDownloadURL();
-     return imageUrl.toString();
+    return imageUrl.toString();
   }
+
   @override
   Widget build(BuildContext context) {
     final LogInSignUpProvider provider = context.watch<LogInSignUpProvider>();
     return Scaffold(
-      appBar: const DSAppBar(title: 'Documentos',),
+      appBar: DSAppBar(
+        title: getLocation.locationBR ? 'Documentos' : 'Documents',
+      ),
       body: SizedBox(
         width: double.infinity,
         child: Column(
-
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
@@ -102,46 +113,49 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
                         const SizedBox(
                           height: 20,
                         ),
-                        const DSTextTitleBoldSecondary(
-                          text: 'Clique no icone de imagem para escolher\numa imagem do seu RG,'
+                        DSTextTitleBoldSecondary(
+                          text: getLocation.locationBR
+                              ? 'Clique no icone de imagem para escolher\numa imagem do seu RG,'
+                              : 'Click on the image icon to choose\nan image of your ID,',
                         ),
                         const SizedBox(
-                           height: 20,
-                         ),
-                         Padding(
+                          height: 20,
+                        ),
+                        Padding(
                           padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
                           child: Stack(
                             children: [
-                               Center(
-                                  child:GestureDetector(
-                                    onTap: () {
-                                      _showPicker(context);
-                                    },
-                                      child: _photo != null
-                                          ? ClipRRect(
-                                              borderRadius: BorderRadius.circular(0),
-                                              child: Image.file(
-                                                _photo!,
-                                                width:250,
-                                                height: 323,
-                                                fit: BoxFit.fitHeight,
-                                              ),
-                                            )
-                                          : Container(
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(0)),
-                                                  width: 250,
-                                                  height: 323,
-                                                  child: Icon(
-                                                    Icons.camera_alt,
-                                                    size: 40,
-                                                    color: Colors.grey[600],
+                              Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _showPicker(context);
+                                  },
+                                  child: _photo != null
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(0),
+                                          child: Image.file(
+                                            _photo!,
+                                            width: 250,
+                                            height: 323,
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                        )
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(0)),
+                                          width: 250,
+                                          height: 323,
+                                          child: Icon(
+                                            Icons.camera_alt,
+                                            size: 40,
+                                            color: Colors.grey[600],
+                                          ),
                                         ),
-                                      ),
-
-                                  ),
                                 ),
+                              ),
                             ],
                           ),
                         ),
@@ -159,23 +173,22 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
         child: Form(
           key: provider.formKeyAuthenticationGetCPF,
           child: LoadingButton(
-            goNextScreen:() async {
+            goNextScreen: () async {
               final form = provider.formKeyAuthenticationGetCPF.currentState!;
-              if(await uploadFile() == null){
+              if (await uploadFile() == null) {
                 mostrarErroSelecioneUmaFoto(context);
               } else if (form.validate()) {
                 provider.cpfPicture = await getUrlToImageFirebase();
                 {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                    const ExplainProofOfResidencyScreen(),
-                  )
-                  );
+                    builder: (context) => const ExplainProofOfResidencyScreen(),
+                  ));
                 }
               }
               _btnController.reset();
             },
-            buttonText: "CONTINUAR (5/6)",
+            buttonText:
+                getLocation.locationBR ? "CONTINUAR (5/6)" : "CONTINUE (5/6)",
             controller: _btnController,
           ),
         ),
@@ -189,18 +202,18 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child:  Wrap(
+              child: Wrap(
                 children: <Widget>[
-                   ListTile(
-                      leading:  Icon(Icons.photo_library),
-                      title:  Text('Gallery'),
+                  ListTile(
+                      leading: Icon(Icons.photo_library),
+                      title: Text('Gallery'),
                       onTap: () {
                         imgFromGallery();
                         Navigator.of(context).pop();
                       }),
-                   ListTile(
-                    leading:  Icon(Icons.photo_camera),
-                    title:  Text('Camera'),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text('Camera'),
                     onTap: () {
                       imgFromCamera();
                       Navigator.of(context).pop();
@@ -212,9 +225,12 @@ class _BodyGetUserCPFState extends State<BodyGetUserCPF> {
           );
         });
   }
-  Future mostrarErroSelecioneUmaFoto(context) => showDialog(
-    context: context,
-    builder: (context) => PopUpExplainNameHomeScreen(title: "Por favor, selecione uma foto"),
-  );
-}
 
+  Future mostrarErroSelecioneUmaFoto(context) => showDialog(
+        context: context,
+        builder: (context) => PopUpExplainNameHomeScreen(
+            title: getLocation.locationBR
+                ? "Por favor, selecione uma foto"
+                : "Please, select a photo"),
+      );
+}

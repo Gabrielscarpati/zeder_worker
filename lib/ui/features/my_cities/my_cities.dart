@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zeder/design_system/parameters/colors.dart';
 import 'package:zeder/ui/features/my_cities/list_city.dart';
-import '../../../application/provider/tipo_servico_provider.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../device_type.dart';
-import '../my_service/list_service.dart';
 
 class MyCities extends StatefulWidget {
   const MyCities({Key? key}) : super(key: key);
@@ -19,8 +18,10 @@ class _MyCitiesState extends State<MyCities> {
     double screenWidth = MediaQuery.of(context).size.width;
     double padding;
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
-    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
-
+    deviceType == DeviceType.Desktop
+        ? padding = (screenWidth - 900) / 2
+        : padding = 8;
+    GetLocation getLocation = GetLocation();
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -29,42 +30,56 @@ class _MyCitiesState extends State<MyCities> {
             children: [
               SizedBox(
                 height: 140,
-                width: double.infinity, // Set the width to occupy the whole screen width
+                width: double
+                    .infinity, // Set the width to occupy the whole screen width
                 child: Image.asset(
                   'assets/cabecario.png',
-                  fit: BoxFit.cover, // Set the fit property to cover the whole space
+                  fit: BoxFit
+                      .cover, // Set the fit property to cover the whole space
                 ),
               ),
-               Padding(
-                 padding: EdgeInsets.only(right: padding, left: padding),
-                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
+              Padding(
+                padding: EdgeInsets.only(right: padding, left: padding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
                       height: 40,
                     ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         Navigator.pop(context);
                       },
-                      child: const Icon(Icons.arrow_back, color: Colors.white, size: 28,),
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 28,
+                      ),
                     ),
-                   Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Minhas cidades', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
+                        Text(
+                          getLocation.locationBR
+                              ? 'Minhas cidades'
+                              : 'My cities',
+                          style: TextStyle(
+                              color: DSColors.cardColor,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                     const Padding(
-                      padding: EdgeInsets.only( left: 16, right: 16),
-                      child:Divider(
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      child: Divider(
                         color: Colors.white,
                         thickness: 1,
                       ),
                     ),
                   ],
+                ),
               ),
-               ),
             ],
           ),
           const ListCity(),
@@ -74,20 +89,22 @@ class _MyCitiesState extends State<MyCities> {
   }
 }
 
-
 class CityControllter extends StatefulWidget {
   final TextEditingController cityController;
   final String hint;
   final IconData iconData;
-  const CityControllter({Key? key, required this.cityController, required this.hint, required this.iconData}) : super(key: key);
+  const CityControllter(
+      {Key? key,
+      required this.cityController,
+      required this.hint,
+      required this.iconData})
+      : super(key: key);
 
   @override
   State<CityControllter> createState() => _CityControllterState();
 }
 
 class _CityControllterState extends State<CityControllter> {
-
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -95,9 +112,7 @@ class _CityControllterState extends State<CityControllter> {
       child: SizedBox(
         height: 56,
         child: TextField(
-          onChanged: (value) {
-
-          },
+          onChanged: (value) {},
           textAlignVertical: TextAlignVertical.center,
           style: const TextStyle(
             fontSize: 16,
@@ -117,8 +132,11 @@ class _CityControllterState extends State<CityControllter> {
               fontSize: 16,
               color: DSColors.tertiary,
             ),
-
-            prefixIcon: Icon(widget.iconData,color: DSColors.tertiary,size: 36,),
+            prefixIcon: Icon(
+              widget.iconData,
+              color: DSColors.tertiary,
+              size: 36,
+            ),
           ),
           keyboardType: TextInputType.emailAddress,
         ),
@@ -126,4 +144,3 @@ class _CityControllterState extends State<CityControllter> {
     );
   }
 }
-

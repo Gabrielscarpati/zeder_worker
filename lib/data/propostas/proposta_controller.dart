@@ -1,24 +1,26 @@
 import 'package:zeder/domain/domain.dart';
+
+import '../../utils/flutter_get_Location.dart';
 import '../firebase/firebase_controller.dart';
 import '../shared/name_collections.dart';
 
 class PropostasController {
   final _firebase = FirebaseController();
   final _collection = NameCollections.propostasCollection;
+  GetLocation getLocation = GetLocation();
 
   Future<bool> cadastrarProposta(PropostaEntity proposta) async {
     try {
+      String id = await _firebase.cadastrarDado(
+        data: proposta,
+        collection: _collection,
+      );
 
-        String id = await _firebase.cadastrarDado(
-          data: proposta,
-          collection: _collection,
-        );
-
-        await _firebase.atualizarDado(
-          data: proposta.copyWith(id:id),
-          id: id,
-          collection: _collection,
-        );
+      await _firebase.atualizarDado(
+        data: proposta.copyWith(id: id),
+        id: id,
+        collection: _collection,
+      );
 
       return true;
     } catch (e, stackTrace) {
@@ -53,14 +55,16 @@ class PropostasController {
     }
   }
 
-  Future<List<PropostaEntity>> buscarPropostaComCondicao({required String cond, required String condName})async{
+  Future<List<PropostaEntity>> buscarPropostaComCondicao(
+      {required String cond, required String condName}) async {
     List<PropostaEntity> retorno = [];
     try {
-      final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
+      final dado = await _firebase.buscarDadoComCondicao(
+          collection: _collection, cond: cond, condName: condName);
       dado.forEach((element) {
         retorno.add(PropostaEntity.fromJson(element));
-       });
-     
+      });
+
       return retorno;
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);

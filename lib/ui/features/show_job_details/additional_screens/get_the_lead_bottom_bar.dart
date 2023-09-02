@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/show_job_details/additional_screens/adicionais_do_servico/adicionais_do_servico_screen.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
 
 import '../../../../application/provider/servico_provider.dart';
 import '../../../../domain/entities/servico_entity.dart';
@@ -20,7 +21,7 @@ class GetTheLeadBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ServicoProvider servicoProvider = context.watch<ServicoProvider>();
-
+    GetLocation getLocation = GetLocation();
     return SizedBox(
       height: allowGetLeads == true
           ? 70
@@ -39,7 +40,9 @@ class GetTheLeadBottomBar extends StatelessWidget {
                         children: [
                           CardChangeServiceDetails(
                             iconName: 'check-outline',
-                            title: 'Finalizar serviço',
+                            title: getLocation.locationBR
+                                ? 'Finalizar serviço'
+                                : 'Finish service',
                             onTap: () async {
                               await servicoProvider.confirmarFinalizarServico(
                                   context, servico);
@@ -47,7 +50,9 @@ class GetTheLeadBottomBar extends StatelessWidget {
                           ),
                           CardChangeServiceDetails(
                             iconName: 'close-circle-outline',
-                            title: 'Cancelar serviço',
+                            title: getLocation.locationBR
+                                ? 'Cancelar serviço'
+                                : 'Cancel Service',
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -61,7 +66,9 @@ class GetTheLeadBottomBar extends StatelessWidget {
                           ),
                           CardChangeServiceDetails(
                             iconName: 'format-list-bulleted',
-                            title: 'Adicionais do serviço',
+                            title: getLocation.locationBR
+                                ? 'Adicionais do serviço'
+                                : 'Additional to the service',
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -75,7 +82,9 @@ class GetTheLeadBottomBar extends StatelessWidget {
                           ),
                           CardChangeServiceDetails(
                             iconName: 'chat-alert-outline',
-                            title: 'Dispulta serviço',
+                            title: getLocation.locationBR
+                                ? 'Dispulta serviço'
+                                : 'Dispute service',
                             onTap: () {
                               if (servico.idDisputa == '') {
                                 Navigator.push(
@@ -88,7 +97,9 @@ class GetTheLeadBottomBar extends StatelessWidget {
                               } else {
                                 ShowSnackBar(context: context)
                                     .showErrorSnackBar(
-                                  message: 'A disputa já foi iniciada.',
+                                  message: getLocation.locationBR
+                                      ? 'A disputa já foi iniciada.'
+                                      : 'The dispute has already started.',
                                   color: DSColors.primary,
                                 );
                               }
@@ -103,7 +114,9 @@ class GetTheLeadBottomBar extends StatelessWidget {
                         children: [
                           CardChangeServiceDetails(
                             iconName: 'format-list-bulleted',
-                            title: 'Adicionais do serviço',
+                            title: getLocation.locationBR
+                                ? 'Adicionais do serviço'
+                                : 'Additional to the service',
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -117,7 +130,9 @@ class GetTheLeadBottomBar extends StatelessWidget {
                           ),
                           CardChangeServiceDetails(
                             iconName: 'chat-alert-outline',
-                            title: 'Dispulta serviço',
+                            title: getLocation.locationBR
+                                ? 'Dispulta serviço'
+                                : 'Dispute service',
                             onTap: () {
                               if (servico.idDisputa == '') {
                                 Navigator.push(
@@ -130,7 +145,9 @@ class GetTheLeadBottomBar extends StatelessWidget {
                               } else {
                                 ShowSnackBar(context: context)
                                     .showErrorSnackBar(
-                                  message: 'A disputa foi iniciada',
+                                  message: getLocation.locationBR
+                                      ? 'A disputa foi iniciada'
+                                      : 'The dispute has started',
                                   color: DSColors.primary,
                                 );
                               }
@@ -138,7 +155,9 @@ class GetTheLeadBottomBar extends StatelessWidget {
                           ),
                           CardChangeServiceDetails(
                             iconName: 'thumb-up-outline',
-                            title: 'Ver Avaliação do serviço',
+                            title: getLocation.locationBR
+                                ? 'Ver Avaliação do serviço'
+                                : 'See service rating',
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -158,14 +177,16 @@ class GetTheLeadBottomBar extends StatelessWidget {
               child: Center(
                 child: allowGetLeads == true
                     ? DSButtonLargePrimary(
-                        text: 'Pegar esse serviço',
+                        text: getLocation.locationBR
+                            ? 'Pegar esse serviço'
+                            : 'Get this service',
                         onPressed: () async {
                           await servicoProvider.confirmarPegarServico(
                               context, servico);
                         },
                       )
                     : DSButtonLargePrimary(
-                        text: 'Voltar',
+                        text: getLocation.locationBR ? 'Voltar' : 'Back',
                         onPressed: () {
                           Navigator.pop(context);
                         },

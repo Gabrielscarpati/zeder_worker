@@ -10,9 +10,9 @@ import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
 import '../../../services/firebase_messaging_service.dart';
 import '../../../services/notification_service.dart';
+import '../../../utils/flutter_get_Location.dart';
 import '../../device_type.dart';
 import '../../widgets/client/client_viewmodel.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -54,6 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    GetLocation getLocation = GetLocation();
+
     double screenWidth = MediaQuery.of(context).size.width;
     double padding;
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
@@ -95,7 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (BuildContext context,
                       AsyncSnapshot<List<ServicoEntity>> snapshot) {
                     if (snapshot.hasError) {
-                      return const Text('Algo deu errado');
+                      return Text(getLocation.locationBR
+                          ? 'Algo deu errado'
+                          : 'Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -147,7 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (BuildContext context,
                       AsyncSnapshot<List<ServicoEntity>> snapshot) {
                     if (snapshot.hasError) {
-                      return const Text('Algo deu errado');
+                      return Text(getLocation.locationBR
+                          ? 'Algo deu errado'
+                          : 'Something went wrong');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(

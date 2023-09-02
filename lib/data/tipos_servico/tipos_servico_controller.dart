@@ -1,10 +1,12 @@
 import '../../domain/entities/tipo_servico_entity.dart';
+import '../../utils/flutter_get_Location.dart';
 import '../firebase/firebase_controller.dart';
 import '../shared/name_collections.dart';
 
 class TiposServicoController {
   final _firebase = FirebaseController();
   final _collection = NameCollections.tiposServicoCollection;
+  GetLocation getLocation = GetLocation();
 
   Future<void> atualizarTiposServico(TipoServicoEntity servicos) async {
     try {
@@ -38,7 +40,7 @@ class TiposServicoController {
         collection: _collection,
       );
       List<TipoServicoEntity> servicos = [];
-      for(var eachDado in dado){
+      for (var eachDado in dado) {
         servicos.add(TipoServicoEntity.fromJson(eachDado));
       }
       return servicos;
@@ -47,11 +49,12 @@ class TiposServicoController {
     }
   }
 
-
-  Future<List<TipoServicoEntity>> buscarTiposServicoComCondicao(String cond, String condName)async{
+  Future<List<TipoServicoEntity>> buscarTiposServicoComCondicao(
+      String cond, String condName) async {
     List<TipoServicoEntity> retorno = [];
     try {
-      final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
+      final dado = await _firebase.buscarDadoComCondicao(
+          collection: _collection, cond: cond, condName: condName);
       dado.forEach((element) {
         retorno.add(TipoServicoEntity.fromJson(element));
       });
@@ -61,5 +64,4 @@ class TiposServicoController {
       return Future.error(e.toString(), stackTrace);
     }
   }
-
 }

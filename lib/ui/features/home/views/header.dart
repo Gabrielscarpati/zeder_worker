@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zeder/ui/features/home/views/show_worker_cities.dart';
 import 'package:zeder/ui/features/home/views/show_worker_services.dart';
-import '../../../../application/provider/servico_provider.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../widgets/client/client_viewmodel.dart';
 import '../../user_profile/view/user_profile_screen.dart';
 
@@ -15,6 +15,7 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
+  GetLocation getLocation = GetLocation();
   @override
   Widget build(BuildContext context) {
     List<String> nameParts = widget.client.nome.split(' ');
@@ -35,7 +36,9 @@ class _HeaderState extends State<Header> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Olá, $firstName',
+                    getLocation.locationBR
+                        ? 'Olá, $firstName'
+                        : 'Hi, $firstName',
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 22,
@@ -44,17 +47,22 @@ class _HeaderState extends State<Header> {
                   ),
                 ],
               ),
-
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               const ShowWorkerCities(),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               const ShowWorkerServices(),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
             ],
           ),
           GestureDetector(
               child: Padding(
-                padding: const EdgeInsets.only(top: 12,right: 4),
+                padding: const EdgeInsets.only(top: 12, right: 4),
                 child: CircleAvatar(
                   backgroundImage: NetworkImage(widget.client.profile_picture),
                   radius: 32,
@@ -63,10 +71,12 @@ class _HeaderState extends State<Header> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfilePage(user: widget.client,)),
+                  MaterialPageRoute(
+                      builder: (context) => ProfilePage(
+                            user: widget.client,
+                          )),
                 );
-              }
-          ),
+              }),
         ],
       ),
     );

@@ -1,15 +1,19 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../application/provider/worker_provider.dart';
 import '../../domain/entities/servico_entity.dart';
 import '../../infra/fetch_data_stream.dart';
 import '../../ui/widgets/cities/cities_viewmodel.dart.dart';
+import '../../utils/flutter_get_Location.dart';
 import '../firebase/firebase_controller.dart';
 import '../shared/name_collections.dart';
 
 class ServicoController {
   final _firebase = FirebaseController();
   final _collection = NameCollections.servicoCollection;
+  GetLocation getLocation = GetLocation();
 
   Future<bool> cadastrarServico(ServicoEntity servico) async {
     try {
@@ -38,7 +42,10 @@ class ServicoController {
     }
   }
 
-  Future<void> atualizarServicoMakeCurrent({required String id, required String idWorker,}) async {
+  Future<void> atualizarServicoMakeCurrent({
+    required String id,
+    required String idWorker,
+  }) async {
     Map<String, Object> data = {};
     data['dataPropostaAceita'] = Timestamp.now();
     data['idWorker'] = idWorker;
@@ -55,7 +62,9 @@ class ServicoController {
     }
   }
 
-  Future<void> atualizarServicoSetDone({required String id,}) async {
+  Future<void> atualizarServicoSetDone({
+    required String id,
+  }) async {
     Map<String, Object> data = {};
     data['concluded'] = true;
     try {
@@ -70,7 +79,9 @@ class ServicoController {
     }
   }
 
-  Future<void> atualizarCancelarServico({required String id,}) async {
+  Future<void> atualizarCancelarServico({
+    required String id,
+  }) async {
     Map<String, Object> data = {};
     data['idWorker'] = '';
     try {
@@ -85,7 +96,10 @@ class ServicoController {
     }
   }
 
-  Future<void> atualizarServicoIniciarDisputa({required String id, required String idDisputa,}) async {
+  Future<void> atualizarServicoIniciarDisputa({
+    required String id,
+    required String idDisputa,
+  }) async {
     Map<String, Object> data = {};
     data['idDisputa'] = idDisputa;
     data['emDisputa'] = true;
@@ -115,7 +129,7 @@ class ServicoController {
   }
 
   Future<List<ServicoEntity>> buscarServicoComCondicao(
-      {required String cond, required String condName }) async {
+      {required String cond, required String condName}) async {
     List<ServicoEntity> retorno = [];
     try {
       final dado = await _firebase.buscarDadoComCondicao(
@@ -131,15 +145,15 @@ class ServicoController {
     }
   }
 
-
   WorkerProvider workerProvider = WorkerProvider();
 
   Stream<List<ServicoEntity>> fetchWorkerServicesStreamWithParameter() {
     List<String> my_cities = [];
-    for(CitiesViewModel city in workerProvider.my_cities){
+    for (CitiesViewModel city in workerProvider.my_cities) {
       my_cities.add(city.id);
     }
-    return FetchDataStreamDocuments<ServicoEntity>().fetchStreamWithParametersPassingListParameters(
+    return FetchDataStreamDocuments<ServicoEntity>()
+        .fetchStreamWithParametersPassingListParameters(
       parameter: 'idCity',
       value: my_cities,
       collection: _collection,
@@ -151,7 +165,8 @@ class ServicoController {
   }
 
   Stream<List<ServicoEntity>> fetchNewServicesStreamWithParameter() {
-    return FetchDataStreamDocuments<ServicoEntity>().fetchStreamWithSingleParameter(
+    return FetchDataStreamDocuments<ServicoEntity>()
+        .fetchStreamWithSingleParameter(
       parameter: 'idWorker',
       value: '',
       collection: _collection,
@@ -281,8 +296,3 @@ class ServicoController {
     );
     return newServico;
   }*/
-
-
-
-
-

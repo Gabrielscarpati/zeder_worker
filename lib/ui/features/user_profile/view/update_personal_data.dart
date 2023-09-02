@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/design_system.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../device_type.dart';
 import '../../../widgets/botoes.dart';
 import '../../../widgets/client/client_viewmodel.dart';
@@ -13,19 +15,25 @@ class UpdatePersonalData extends StatefulWidget {
   @override
   _UpdatePersonalDataState createState() => _UpdatePersonalDataState();
 }
+
 class _UpdatePersonalDataState extends State<UpdatePersonalData> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double padding;
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
-    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
-
+    deviceType == DeviceType.Desktop
+        ? padding = (screenWidth - 900) / 2
+        : padding = 8;
+    GetLocation getLocation = GetLocation();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(56),
-        child: AppBarProfile(title: 'Atualize seus dados',
-            onTap: () {
+        child: AppBarProfile(
+          title: getLocation.locationBR
+              ? 'Atualize seus dados'
+              : 'Update your data',
+          onTap: () {
             Navigator.pop(context);
           },
         ),
@@ -36,7 +44,7 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
           child: Column(
             children: [
               profile_data_widget(
-                title: 'Nome',
+                title: getLocation.locationBR ? 'Nome' : 'Name',
                 iconName: 'account',
                 content: widget.user.nome,
                 onPressed: () {
@@ -52,7 +60,7 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
                 },
               ),
               profile_data_widget(
-                title: 'Telefone',
+                title: getLocation.locationBR ? 'Telefone' : 'Phone',
                 iconName: 'phone',
                 content: widget.user.phone,
                 onPressed: () {
@@ -60,7 +68,7 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
                 },
               ),
               profile_data_widget(
-                title: 'CPF',
+                title: getLocation.locationBR ? 'CPF' : 'SSN',
                 iconName: 'id-card',
                 content: widget.user.cpfCnpj,
                 onPressed: () {
@@ -73,7 +81,7 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  texto: 'Pronto',
+                  texto: getLocation.locationBR ? 'Pronto' : 'Done',
                 ),
               ),
             ],
@@ -88,10 +96,14 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
     required String iconName,
     required String content,
     required void Function() onPressed,
-    }){
+  }) {
+    GetLocation getLocation = GetLocation();
     return InkWell(
       onTap: () {
-        ShowSnackBar(context: context).showErrorSnackBar(message: 'Você ainda não pode atualizar essas informaçōes por questāo de seguraça',);
+        ShowSnackBar(context: context).showErrorSnackBar(
+            message: getLocation.locationBR
+                ? 'Você ainda não pode atualizar essas informaçōes por questāo de seguraça'
+                : 'You cannot update this information yet for security reasons');
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,22 +114,24 @@ class _UpdatePersonalDataState extends State<UpdatePersonalData> {
             height: 56,
             decoration: BoxDecoration(
               color: Colors.white, // Set the background color to white
-              borderRadius: BorderRadius.circular(10.0), // Set the border radius
+              borderRadius:
+                  BorderRadius.circular(10.0), // Set the border radius
             ),
-            child: Row(
-                children:[
-                  const SizedBox(width: 8),
-                  DSIconTertiary(iconName: iconName,),
-                  const SizedBox(width: 8),
-                  DSTextTitleTertiary(text: content),
-                ]
-            ),
+            child: Row(children: [
+              const SizedBox(width: 8),
+              DSIconTertiary(
+                iconName: iconName,
+              ),
+              const SizedBox(width: 8),
+              DSTextTitleTertiary(text: content),
+            ]),
           ),
           const SizedBox(height: 16),
         ],
       ),
     );
   }
+
   void navigateSecondPage(Widget editForm) {
     Route route = MaterialPageRoute(builder: (context) => editForm);
     Navigator.push(context, route);

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/ui/features/show_list_services_standard/show_list_services_standard_view.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../application/provider/worker_provider.dart';
 import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
@@ -11,37 +13,39 @@ class ShowNewServicesScreen extends StatefulWidget {
   State<ShowNewServicesScreen> createState() => _ShowNewServicesScreenState();
 }
 
-
 class _ShowNewServicesScreenState extends State<ShowNewServicesScreen> {
-
   late Stream<List<ServicoEntity>> servicosStream;
 
   @override
   void initState() {
     super.initState();
 
-    servicosStream =  ServicoController().fetchNewServicesStreamWithParameter();
+    servicosStream = ServicoController().fetchNewServicesStreamWithParameter();
   }
+
   @override
   Widget build(BuildContext context) {
-
+    GetLocation getLocation = GetLocation();
     return StreamBuilder<List<ServicoEntity>>(
       stream: servicosStream,
-      builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
         if (snapshot.hasError) {
-          return const Text('Algo deu errado');
+          return Text(getLocation.locationBR
+              ? 'Algo deu errado'
+              : 'Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: SizedBox(height: 50, width: 50,
-              child: CircularProgressIndicator())
-          );
+          return const Center(
+              child: SizedBox(
+                  height: 50, width: 50, child: CircularProgressIndicator()));
         }
         WorkerProvider workerProvider = WorkerProvider();
         List<ServicoEntity>? services = snapshot.data;
         List<ServicoEntity>? newServices = [];
         newServices.clear();
 
-        for(ServicoEntity service in services!) {
+        for (ServicoEntity service in services!) {
           bool isWorkerCity = false;
           bool isWorkerService = false;
 
@@ -51,7 +55,8 @@ class _ShowNewServicesScreenState extends State<ShowNewServicesScreen> {
             }
           }
           for (var myService in workerProvider.my_services) {
-            if (myService.servico ==  workerProvider.getServicesByID(id:service.idService)) {
+            if (myService.servico ==
+                workerProvider.getServicesByID(id: service.idService)) {
               isWorkerService = true;
             }
           }
@@ -63,8 +68,10 @@ class _ShowNewServicesScreenState extends State<ShowNewServicesScreen> {
 
         return ShowListServicesStandardView(
           servicos: newServices,
-          title: 'Novos Serviços',
-          noServicesFoundTitle: 'Não há nenhum serviço diponível agora,novos\n serviço podem aparecer a qualquer momento',
+          title: getLocation.locationBR ? 'Novos Serviços' : 'New Services',
+          noServicesFoundTitle: getLocation.locationBR
+              ? 'Não há nenhum serviço diponível agora,novos\n serviço podem aparecer a qualquer momento'
+              : 'There are no services available now, new services may appear at any time',
           allowGetLeads: true,
         );
       },
