@@ -47,7 +47,7 @@ class _TextFieldsSingUpState extends State<TextFieldsSingUp> {
                 ],*/
               ),
 
-              StandardController(
+              /*StandardController(
                 title: 'CPF',
                 hint: 'Digite apenas números',
                 nameController: provider.signUpCPF,
@@ -59,7 +59,7 @@ class _TextFieldsSingUpState extends State<TextFieldsSingUp> {
                   FilteringTextInputFormatter.digitsOnly,
                   CpfInputFormatter(),
                 ],
-              ),
+              ),*/
               StandardController(
                 title: 'Email',
                 hint: 'Email',
