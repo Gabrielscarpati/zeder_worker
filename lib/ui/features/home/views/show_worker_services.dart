@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/design_system/widgets/icons.dart';
+
 import '../../../../design_system/parameters/colors.dart';
+import '../../../../utils/flutter_get_Location.dart';
 import '../../my_service/select_service_screen.dart';
 
 class ShowWorkerServices extends StatefulWidget {
@@ -13,6 +15,8 @@ class ShowWorkerServices extends StatefulWidget {
 class _ShowWorkerServicesState extends State<ShowWorkerServices> {
   @override
   Widget build(BuildContext context) {
+    GetLocation getLocation = GetLocation();
+
     return Column(
       children: [
         SizedBox(
@@ -29,9 +33,17 @@ class _ShowWorkerServicesState extends State<ShowWorkerServices> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(child: Text("O que eu faço ", style: TextStyle(color: DSColors.primary, fontSize: 24, fontWeight: FontWeight.bold),)),
-                DSIconPrimary(iconName: 'briefcase'),
-                ]
+                SizedBox(
+                  child: Text(
+                    getLocation.locationBR ? "O que eu faço " : "What I do",
+                    style: const TextStyle(
+                        color: DSColors.primary,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const DSIconPrimary(iconName: 'briefcase'),
+              ],
             ),
           ),
         ),

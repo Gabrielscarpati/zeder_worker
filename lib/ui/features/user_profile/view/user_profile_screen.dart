@@ -7,17 +7,15 @@ import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/LoadingButton.dart';
 import 'package:zeder/ui/features/LogIn/viewLogIn.dart';
 import 'package:zeder/ui/features/user_profile/view/update_personal_data.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../../application/provider/adicionais_servico.dart';
 import '../../../../application/provider/disputa_provider.dart';
 import '../../../../application/provider/lead_provider.dart';
 import '../../../../application/provider/logInSignUpProvider.dart';
 import '../../../../application/provider/servico_provider.dart';
-import '../../../../application/provider/tipo_servico_provider.dart';
-import '../../../../main.dart';
 import '../../../device_type.dart';
-import '../../../widgets/botoes.dart';
 import '../../../widgets/client/client_viewmodel.dart';
-import '../../navigation_bar/navigation_bar.dart';
 import 'app_bar_profile.dart';
 import 'display_image.dart';
 
@@ -29,28 +27,35 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnController =
+      RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double padding;
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
-    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
+    deviceType == DeviceType.Desktop
+        ? padding = (screenWidth - 900) / 2
+        : padding = 8;
     final WorkerProvider workerProvider = context.read<WorkerProvider>();
-    final AdicionaisServicoProvider adicionaisServicoProvider = context.read<AdicionaisServicoProvider>();
+    final AdicionaisServicoProvider adicionaisServicoProvider =
+        context.read<AdicionaisServicoProvider>();
     final DisputaProvider disputaProvider = context.read<DisputaProvider>();
     final LeadProvider leadProvider = context.read<LeadProvider>();
-    final LogInSignUpProvider logInSignUpProvider = context.read<LogInSignUpProvider>();
+    final LogInSignUpProvider logInSignUpProvider =
+        context.read<LogInSignUpProvider>();
     final ServicoProvider servicoProvider = context.read<ServicoProvider>();
-
+    GetLocation getLocation = GetLocation();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
-        child: AppBarProfile(title: 'Perfil', onTap: () {
-          workerProvider.setPhotoFileNull();
-          Navigator.pop(context);
-         },
+        child: AppBarProfile(
+          title: getLocation.locationBR ? 'Perfil' : "Profile",
+          onTap: () {
+            workerProvider.setPhotoFileNull();
+            Navigator.pop(context);
+          },
         ),
       ),
       body: Padding(
@@ -67,22 +72,30 @@ class _ProfilePageState extends State<ProfilePage> {
                     text: widget.user.nome,
                   ),
                 ),
-                
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 16.0, bottom: 8.0, top: 8.0, right: 4.0),
-                      child: DSTextTitleBoldSecondary(text: 'Opcões'),
+                      padding: EdgeInsets.only(
+                          left: 16.0, bottom: 8.0, top: 8.0, right: 4.0),
+                      child: DSTextTitleBoldSecondary(
+                          text: getLocation.locationBR ? 'Opcões' : 'Options'),
                     ),
                   ],
                 ),
                 Container(
-                  color: DSColors.cardColor,
-                  child: Column(
-                    children: [
-                      profile_settings(field_value: 'Atualizar dados', editPage:  UpdatePersonalData(user: widget.user,), iconName: 'account'),
-                      /*Container(
+                    color: DSColors.cardColor,
+                    child: Column(
+                      children: [
+                        profile_settings(
+                            field_value: getLocation.locationBR
+                                ? 'Atualizar dados'
+                                : "Update data",
+                            editPage: UpdatePersonalData(
+                              user: widget.user,
+                            ),
+                            iconName: 'account'),
+                        /*Container(
                         width: double.infinity,
                         height: 2,
                          color: DSColors.tertiary,
@@ -99,57 +112,86 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 2,
                         color: DSColors.tertiary,
                       ),*/
-                    ],
-                  )
-                ),
-
+                      ],
+                    )),
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       InkWell(
-                        child:  Row(
+                        child: Row(
                           children: [
-                             Icon(
+                            Icon(
                               Icons.power_settings_new_outlined,
                               color: DSColors.primary,
                             ),
-                             SizedBox(width: 8),
-                             DSTextTitleBoldPrimary(text: 'Sair'),
+                            SizedBox(width: 8),
+                            DSTextTitleBoldPrimary(
+                                text: getLocation.locationBR
+                                    ? 'Sair'
+                                    : 'Log out'),
                           ],
                         ),
                         onTap: () async {
-
-                          if(adicionaisServicoProvider.formKeyAuthentication.currentState != null){
-                            adicionaisServicoProvider.formKeyAuthentication.currentState!.reset();
+                          if (adicionaisServicoProvider
+                                  .formKeyAuthentication.currentState !=
+                              null) {
+                            adicionaisServicoProvider
+                                .formKeyAuthentication.currentState!
+                                .reset();
                           }
-                          if(disputaProvider.disputaFormKey.currentState != null){
-                            disputaProvider.disputaFormKey.currentState!.reset();
+                          if (disputaProvider.disputaFormKey.currentState !=
+                              null) {
+                            disputaProvider.disputaFormKey.currentState!
+                                .reset();
                           }
-                          if(leadProvider.formKeyAuthenticationLead.currentState != null){
-                            leadProvider.formKeyAuthenticationLead.currentState!.reset();
+                          if (leadProvider
+                                  .formKeyAuthenticationLead.currentState !=
+                              null) {
+                            leadProvider.formKeyAuthenticationLead.currentState!
+                                .reset();
                           }
-                          if(logInSignUpProvider.formKeyAuthenticationLogin.currentState != null){
-                            logInSignUpProvider.formKeyAuthenticationLogin.currentState!.reset();
+                          if (logInSignUpProvider
+                                  .formKeyAuthenticationLogin.currentState !=
+                              null) {
+                            logInSignUpProvider
+                                .formKeyAuthenticationLogin.currentState!
+                                .reset();
                           }
-                          if(logInSignUpProvider.formKeyAuthenticationSignUp.currentState != null){
-                            logInSignUpProvider.formKeyAuthenticationSignUp.currentState!.reset();
+                          if (logInSignUpProvider
+                                  .formKeyAuthenticationSignUp.currentState !=
+                              null) {
+                            logInSignUpProvider
+                                .formKeyAuthenticationSignUp.currentState!
+                                .reset();
                           }
-                          if(logInSignUpProvider.formKeyAuthenticationGetCPF.currentState != null){
-                            logInSignUpProvider.formKeyAuthenticationGetCPF.currentState!.reset();
+                          if (logInSignUpProvider
+                                  .formKeyAuthenticationGetCPF.currentState !=
+                              null) {
+                            logInSignUpProvider
+                                .formKeyAuthenticationGetCPF.currentState!
+                                .reset();
                           }
-                          if(logInSignUpProvider.formKeyAuthenticationResidencia.currentState != null){
-                            logInSignUpProvider.formKeyAuthenticationResidencia.currentState!.reset();
+                          if (logInSignUpProvider
+                                  .formKeyAuthenticationResidencia
+                                  .currentState !=
+                              null) {
+                            logInSignUpProvider
+                                .formKeyAuthenticationResidencia.currentState!
+                                .reset();
                           }
-                          if(servicoProvider.cancelingFormKey.currentState != null){
-                            servicoProvider.cancelingFormKey.currentState!.reset();
+                          if (servicoProvider.cancelingFormKey.currentState !=
+                              null) {
+                            servicoProvider.cancelingFormKey.currentState!
+                                .reset();
                           }
                           FirebaseManager().signOut();
-                            Navigator.pushAndRemoveUntil(
-                                context, MaterialPageRoute(builder: (context) => const ViewLogin()
-                            ), (route) => false
-                          );
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ViewLogin()),
+                              (route) => false);
                         },
                       ),
                     ],
@@ -160,8 +202,8 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: LoadingButton(
-                  buttonText: 'Pronto',
-                  goNextScreen: () async {
+                buttonText: getLocation.locationBR ? 'Pronto' : 'Done',
+                goNextScreen: () async {
                   await workerProvider.updateUserImage(context: context);
                 },
                 controller: btnController,
@@ -173,7 +215,10 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget profile_settings({required String field_value, required Widget editPage, required String iconName}) =>
+  Widget profile_settings(
+          {required String field_value,
+          required Widget editPage,
+          required String iconName}) =>
       TextButton(
         onPressed: () {
           navigateSecondPage(editPage);
@@ -181,21 +226,16 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-                children: [
-                  Transform.scale(
-                    scale: 1.2,
-                      child: DSIconSmallTertiary(iconName: iconName)
-                  ),
+            Row(children: [
+              Transform.scale(
+                  scale: 1.2, child: DSIconSmallTertiary(iconName: iconName)),
               const SizedBox(width: 16),
               Expanded(
                   child: DSTextTitleSecondary(
-                    text: field_value,
-                  )
-              ),
+                text: field_value,
+              )),
               const DSIconLargeTertiary(iconName: 'chevron-right'),
-                ]
-            ),
+            ]),
           ],
         ),
       );

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:zeder/ui/features/show_list_services_standard/show_list_services_standard_view.dart';
+
 import '../../../data/firebase/firebase_controller.dart';
 import '../../../data/servico/servico_controller.dart';
 import '../../../domain/entities/servico_entity.dart';
+import '../../../utils/flutter_get_Location.dart';
 
 class ShowPastServicesScreen extends StatefulWidget {
   const ShowPastServicesScreen({Key? key}) : super(key: key);
@@ -11,28 +13,33 @@ class ShowPastServicesScreen extends StatefulWidget {
   State<ShowPastServicesScreen> createState() => _ShowPastServicesScreenState();
 }
 
-
 class _ShowPastServicesScreenState extends State<ShowPastServicesScreen> {
   late Stream<List<ServicoEntity>> servicosStream;
 
   @override
   void initState() {
     super.initState();
-    servicosStream = ServicoController().fetchWorkerServicesStreamWithParameter();
+    servicosStream =
+        ServicoController().fetchWorkerServicesStreamWithParameter();
   }
+
   @override
   Widget build(BuildContext context) {
+    GetLocation getLocation = GetLocation();
+
     return StreamBuilder<List<ServicoEntity>>(
       stream: servicosStream,
-      builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
-
+      builder:
+          (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
         if (snapshot.hasError) {
-          return const Text('Algo deu errado');
+          return Text(getLocation.locationBR
+              ? 'Algo deu errado'
+              : 'Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: SizedBox(height: 50, width: 50,
-              child: CircularProgressIndicator())
-          );
+          return const Center(
+              child: SizedBox(
+                  height: 50, width: 50, child: CircularProgressIndicator()));
         }
         List<ServicoEntity>? servicosList = snapshot.data;
         FirebaseController firebaseController = FirebaseController();
@@ -40,20 +47,24 @@ class _ShowPastServicesScreenState extends State<ShowPastServicesScreen> {
         List<ServicoEntity>? newPastServices = [];
         for (var element in servicosList!) {
           print(element.idWorker);
-            if(element.concluded == true && element.idWorker == firebaseController.getCurrentUser()!.uid && element.payed == true){
-              print('element.idWorker');
-              newPastServices.add(element);
-            }
+          if (element.concluded == true &&
+              element.idWorker == firebaseController.getCurrentUser()!.uid &&
+              element.payed == true) {
+            print('element.idWorker');
+            newPastServices.add(element);
           }
+        }
         return ShowListServicesStandardView(
           servicos: newPastServices,
-          title: 'Serviços Passados',
-          noServicesFoundTitle: "Você ainda não finalizou nenhum serviço ainda",
+          title: getLocation.locationBR ? 'Serviços Passados' : 'Past Services',
+          noServicesFoundTitle: getLocation.locationBR
+              ? "Você ainda não finalizou nenhum serviço ainda"
+              : "You haven't finished any service yet",
           allowGetLeads: false,
         );
       },
     );
-  /* StreamBuilder<List<ServicoEntity>>(
+    /* StreamBuilder<List<ServicoEntity>>(
       stream: servicosStream,
       builder: (BuildContext context, AsyncSnapshot<List<ServicoEntity>> snapshot) {
 

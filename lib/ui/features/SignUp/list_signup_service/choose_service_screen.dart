@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:zeder/application/provider/logInSignUpProvider.dart';
 import 'package:zeder/application/provider/tipo_servico_provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/SignUp/list_signup_service/standard_list_builder_sign_up_service.dart';
-import '../../../../application/provider/pesquisa_cidade_provider.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../../domain/entities/tipo_servico_entity.dart';
 import '../../../device_type.dart';
-import '../../../widgets/servico_do_app/servico_do_app_viewmodel.dart';
 import '../../LoadingButton.dart';
 import '../explainCPF/views/bodyExplainCPF.dart';
 
@@ -20,109 +19,136 @@ class ChooseServiceScreen extends StatefulWidget {
 }
 
 class _ChooseServiceScreenState extends State<ChooseServiceScreen> {
-  RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnController =
+      RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double padding;
     DeviceType deviceType = getDeviceType(MediaQuery.of(context).size.width);
-    deviceType == DeviceType.Desktop? padding = (screenWidth-900)/2 : padding = 8;
-
+    deviceType == DeviceType.Desktop
+        ? padding = (screenWidth - 900) / 2
+        : padding = 8;
+    GetLocation getLocation = GetLocation();
     final TipoServicoProvider _Provider = context.watch<TipoServicoProvider>();
     _Provider.getListaDeServicosViewModel();
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              SizedBox(
-                height: 220,
-                width: double.infinity, // Set the width to occupy the whole screen width
-                child: Image.asset(
-                  'assets/cabecario.png',
-                  fit: BoxFit.cover, // Set the fit property to cover the whole space
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                SizedBox(
+                  height: 220,
+                  width: double
+                      .infinity, // Set the width to occupy the whole screen width
+                  child: Image.asset(
+                    'assets/cabecario.png',
+                    fit: BoxFit
+                        .cover, // Set the fit property to cover the whole space
+                  ),
                 ),
-              ),
-               Padding(
-                 padding: EdgeInsets.only(right: padding, left: padding),
-                 child:  Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                     SizedBox(
-                      height: 40,
-                    ),
-                    InkWell(
-                      onTap: (){
-                        Navigator.pop(context);
-                      },
-                      child: const Icon(Icons.arrow_back, color: Colors.white, size: 28,),
-                    ),
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Eu faço esses serviços', style: TextStyle(color: DSColors.cardColor, fontSize: 22, fontWeight: FontWeight.bold),),
-                      ],
-                    ),
-                     Padding(
-                      padding: EdgeInsets.only( left: 16, right: 16),
-                      child:Divider(
-                        color: Colors.white,
-                        thickness: 1,
+                Padding(
+                  padding: EdgeInsets.only(right: padding, left: padding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 40,
                       ),
-                    ),
-                    // ServiceController(hint: "Digite o nome do servico", iconData: Icons.search,),
-                    CityControllter(hint: "Digite o nome do serviço", iconData: Icons.search,),
-                    ListBuilderSelectedServices(),
-                  ],
-              ),
-               ),
-            ],
-          ),
-          ListBuilderServices(servicos: _Provider.list_servicos_screen, paddig: padding,),
-        ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
-        child: Container(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              LoadingButton(
-
-                goNextScreen:() async {
-                  if(_Provider.selected_servicos.isEmpty){
-                    mostrarCompleteInfo(context);
-                  }
-                  else{//BodyExplainCPF
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const BodyExplainCPF()),
-                  );
-                  }
-                  btnController.reset();
-                },
-                buttonText: "CONTINUAR (3/6)",
-                controller: btnController,
-              ),
-            ],
-          ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            getLocation.locationBR
+                                ? 'Eu faço esses serviços'
+                                : "I perform these services",
+                            style: TextStyle(
+                                color: DSColors.cardColor,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16, right: 16),
+                        child: Divider(
+                          color: Colors.white,
+                          thickness: 1,
+                        ),
+                      ),
+                      CityControllter(
+                        hint: getLocation.locationBR
+                            ? "Digite o nome do serviço"
+                            : "Type service name",
+                        iconData: Icons.search,
+                      ),
+                      ListBuilderSelectedServices(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            ListBuilderServices(
+              servicos: _Provider.list_servicos_screen,
+              paddig: padding,
+            ),
+          ],
         ),
-      )
-    );
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Container(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                LoadingButton(
+                  goNextScreen: () async {
+                    if (_Provider.selected_servicos.isEmpty) {
+                      mostrarCompleteInfo(context);
+                    } else {
+                      //BodyExplainCPF
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const BodyExplainCPF()),
+                      );
+                    }
+                    btnController.reset();
+                  },
+                  buttonText: getLocation.locationBR
+                      ? "CONTINUAR (3/6)"
+                      : "CONTINUE (3/6)",
+                  controller: btnController,
+                ),
+              ],
+            ),
+          ),
+        ));
   }
+
   Future mostrarCompleteInfo(context) => showDialog(
-    context: context,
-    builder: (context) => PopUpSelectOneCity(),
-  );
+        context: context,
+        builder: (context) => PopUpSelectOneCity(),
+      );
 }
 
 class ListBuilderSelectedServices extends StatelessWidget {
-
-  const ListBuilderSelectedServices({Key? key,}) : super(key: key);
+  const ListBuilderSelectedServices({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,13 +158,18 @@ class ListBuilderSelectedServices extends StatelessWidget {
       height: 30,
       width: double.infinity,
       child: Padding(
-        padding: const EdgeInsets.only(right: 16, left: 16,),
+        padding: const EdgeInsets.only(
+          right: 16,
+          left: 16,
+        ),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: selectedServices.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.only(right: 8,),
+              padding: const EdgeInsets.only(
+                right: 8,
+              ),
               child: InkWell(
                 child: Container(
                   width: 162,
@@ -151,8 +182,12 @@ class ListBuilderSelectedServices extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      DSTextTitleBoldSecondary(text: selectedServices[index].name,),
-                      const DSIconSmallSecondary(iconName: 'closeCircle',),
+                      DSTextTitleBoldSecondary(
+                        text: selectedServices[index].name,
+                      ),
+                      const DSIconSmallSecondary(
+                        iconName: 'closeCircle',
+                      ),
                     ],
                   ),
                 ),
@@ -167,22 +202,26 @@ class ListBuilderSelectedServices extends StatelessWidget {
     );
   }
 }
+
 class PopUpSelectOneCity extends StatelessWidget {
   const PopUpSelectOneCity({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    GetLocation getLocation = GetLocation();
     return AlertDialog(
-      title: const Text('Selecione pelo menos um serviço!',
-        textAlign: TextAlign.center ,
-        style: TextStyle(color: DSColors.primary,
-            fontWeight: FontWeight.bold,
-            fontSize: 24),
+      title: Text(
+        getLocation.locationBR
+            ? 'Selecione pelo menos um serviço!'
+            : 'Select at least one service!',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: DSColors.primary, fontWeight: FontWeight.bold, fontSize: 24),
       ),
       actions: [
         DSButtonLargePrimary(
-            onPressed: () =>  Navigator.of(context).pop(),
-            text: "Ok",
+          onPressed: () => Navigator.of(context).pop(),
+          text: "Ok",
         )
       ],
     );
@@ -192,15 +231,14 @@ class PopUpSelectOneCity extends StatelessWidget {
 class CityControllter extends StatefulWidget {
   final String hint;
   final IconData iconData;
-  const CityControllter({Key? key, required this.hint, required this.iconData}) : super(key: key);
+  const CityControllter({Key? key, required this.hint, required this.iconData})
+      : super(key: key);
 
   @override
   State<CityControllter> createState() => _CityControllterState();
 }
 
 class _CityControllterState extends State<CityControllter> {
-
-
   @override
   Widget build(BuildContext context) {
     final TipoServicoProvider _Provider = context.watch<TipoServicoProvider>();
@@ -233,8 +271,11 @@ class _CityControllterState extends State<CityControllter> {
               fontSize: 16,
               color: DSColors.tertiary,
             ),
-
-            prefixIcon: Icon(widget.iconData,color: DSColors.tertiary,size: 36,),
+            prefixIcon: Icon(
+              widget.iconData,
+              color: DSColors.tertiary,
+              size: 36,
+            ),
           ),
           keyboardType: TextInputType.emailAddress,
         ),
@@ -242,4 +283,3 @@ class _CityControllterState extends State<CityControllter> {
     );
   }
 }
-

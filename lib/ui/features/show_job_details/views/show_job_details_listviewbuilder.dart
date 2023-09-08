@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:zeder/ui/features/show_job_details/views/show_job_details_Listtitle.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
 
 class ShowJobDetailsListviewbuilder extends StatefulWidget {
   final Map<dynamic, dynamic> servicoDetails;
@@ -15,12 +16,15 @@ class ShowJobDetailsListviewbuilder extends StatefulWidget {
 
 class _ShowJobDetailsListviewbuilderState
     extends State<ShowJobDetailsListviewbuilder> {
+  GetLocation getLocation = GetLocation();
   @override
   void initState() {
     super.initState();
     widget.servicoDetails['Descrição'] = widget.descricao == ""
-        ? " O cliente não fez uma descição para esse serviço. "
-        : " ${widget.descricao} "; // Add a new key-value pair
+        ? (getLocation.locationBR
+            ? "O cliente não fez uma descição para esse serviço."
+            : "The customer has not made a description for this service.")
+        : " ${widget.descricao} ";
   }
 
   @override

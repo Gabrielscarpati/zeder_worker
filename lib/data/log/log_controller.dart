@@ -1,23 +1,26 @@
 import 'package:zeder/domain/entities/log_entity.dart';
+
+import '../../utils/flutter_get_Location.dart';
 import '../firebase/firebase_controller.dart';
 import '../shared/name_collections.dart';
 
 class LogController {
   final _firebase = FirebaseController();
   final _collection = NameCollections.logCollection;
+  GetLocation getLocation = GetLocation();
 
   Future<bool> cadastrarLog(LogEntity log) async {
     try {
-       String id = await _firebase.cadastrarDado(
+      String id = await _firebase.cadastrarDado(
         data: log,
         collection: _collection,
       );
 
-       await _firebase.atualizarDado(
-         collection: _collection,
-         id: id,
-         data: log,
-       );
+      await _firebase.atualizarDado(
+        collection: _collection,
+        id: id,
+        data: log,
+      );
 
       return true;
     } catch (e, stackTrace) {
@@ -39,10 +42,8 @@ class LogController {
     }
   }
 
-
   Future<LogEntity> buscarLog(String logID) async {
     try {
-
       final dado = await _firebase.buscarDado(
         collection: _collection,
         id: logID,
@@ -55,23 +56,19 @@ class LogController {
     }
   }
 
-  Future<List<LogEntity>> buscarLogComCondicao(String cond, String condName )async{
+  Future<List<LogEntity>> buscarLogComCondicao(
+      String cond, String condName) async {
     List<LogEntity> retorno = [];
     try {
-      final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
+      final dado = await _firebase.buscarDadoComCondicao(
+          collection: _collection, cond: cond, condName: condName);
       dado.forEach((element) {
         retorno.add(LogEntity.fromJson(element));
-       });
-     
+      });
+
       return retorno;
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);
     }
   }
 }
-
-
-
-
-
-

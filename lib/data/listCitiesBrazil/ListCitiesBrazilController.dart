@@ -1,15 +1,17 @@
-import 'package:zeder/data/user/user_entity.dart';
 import 'package:zeder/domain/domain.dart';
+
+import '../../utils/flutter_get_Location.dart';
 import '../firebase/firebase_controller.dart';
 import '../shared/name_collections.dart';
 
 class ListCitiesBrazilController {
   final _firebase = FirebaseController();
   final _collection = NameCollections.listCitiesBrazil;
+  GetLocation getLocation = GetLocation();
 
   Future<bool> cadastrarCidade(CityEntity city) async {
     try {
-       await _firebase.atualizarDado(
+      await _firebase.atualizarDado(
         data: city,
         id: city.id,
         collection: _collection,
@@ -48,23 +50,19 @@ class ListCitiesBrazilController {
     }
   }
 
-  Future<List<CityEntity>> buscarCidadeComCondicao({ required String cond,required String condName})async{
+  Future<List<CityEntity>> buscarCidadeComCondicao(
+      {required String cond, required String condName}) async {
     List<CityEntity> retorno = [];
     try {
-      final dado = await _firebase.buscarDadoComCondicao(collection: _collection, cond: cond, condName: condName  );
+      final dado = await _firebase.buscarDadoComCondicao(
+          collection: _collection, cond: cond, condName: condName);
       dado.forEach((element) {
         retorno.add(CityEntity.fromJson(element));
-       });
-     
+      });
+
       return retorno;
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);
     }
   }
 }
-
-
-
-
-
-

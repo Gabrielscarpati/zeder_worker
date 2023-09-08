@@ -1,78 +1,79 @@
 import 'dart:io';
 import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../../core/framework/entity.dart';
 import '../../ui/features/SignUp/views/widgets/snackbars.dart';
 import '../../ui/features/navigation_bar/viewNavigationBarScren.dart';
+import '../../utils/flutter_get_Location.dart';
 
 class FirebaseController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final storageRef = FirebaseStorage.instance.ref();
-final auth = FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance;
+  GetLocation getLocation = GetLocation();
 
-// FUNCOES UTEIS PADRAO
-
-User? getCurrentUser(){
-  return auth.currentUser;
-}
-
-Future<void> SavePdfFile(File file, String id, ) async{
-  
-  try {
-    int number = Random().nextInt(100);
-    final fileRef = storageRef.child(id+"/"+number.toString() + ".pdf");
-    await fileRef.putData(file.readAsBytesSync());
-  } catch(e){
-    return Future.error(e, StackTrace.current);
+  User? getCurrentUser() {
+    return auth.currentUser;
   }
-}
 
-Future<List<String>> getFilesFromPath(String id) async{
-  List<String> files = [];
-  try {
-    final fileRef = storageRef.child(id);
-    final list = await fileRef.listAll();
-    for (var item in list.items) {
-      
-      final url = await item.getDownloadURL();
-      
-      files.add(url);
+  Future<void> SavePdfFile(
+    File file,
+    String id,
+  ) async {
+    try {
+      int number = Random().nextInt(100);
+      final fileRef = storageRef.child(id + "/" + number.toString() + ".pdf");
+      await fileRef.putData(file.readAsBytesSync());
+    } catch (e) {
+      return Future.error(e, StackTrace.current);
     }
-  } catch(e){
-    return Future.error(e, StackTrace.current);
   }
-  return files;
-}
 
-Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String path = '', String collection = ''})async{
+  Future<List<String>> getFilesFromPath(String id) async {
+    List<String> files = [];
+    try {
+      final fileRef = storageRef.child(id);
+      final list = await fileRef.listAll();
+      for (var item in list.items) {
+        final url = await item.getDownloadURL();
 
-  if (collection.isEmpty || id.isEmpty || path.isEmpty) {
+        files.add(url);
+      }
+    } catch (e) {
+      return Future.error(e, StackTrace.current);
+    }
+    return files;
+  }
+
+  Future<String> salvarImagemEReceberURL(Uint8List image,
+      {String id = '', String path = '', String collection = ''}) async {
+    if (collection.isEmpty || id.isEmpty || path.isEmpty) {
       return Future.error("Dados Inváidos para salvar", StackTrace.current);
     }
 
-  final imageRef = storageRef.child(id + "/"+path );
+    final imageRef = storageRef.child(id + "/" + path);
 
+    try {
+      // final blob = await image.readAsString();
+      await imageRef.putData(
+          image,
+          SettableMetadata(
+            contentType: "image/jpeg",
+          ));
 
-    try{
-     // final blob = await image.readAsString();
-       await imageRef.putData(image, SettableMetadata(
-      contentType: "image/jpeg",
-  ));
-
-  
       String url = await imageRef.getDownloadURL();
-      
-      
-      return url;  
-    } catch(e){
-        return Future.error(e, StackTrace.current);
-    }
-}
 
+      return url;
+    } catch (e) {
+      return Future.error(e, StackTrace.current);
+    }
+  }
 
   Future<List<Map<String, dynamic>>> buscarCollection(
       {String collection = ''}) async {
@@ -109,7 +110,8 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
     }
   }
 
-  Future<List<Map<String, dynamic>>> buscarTodosDados({required String collection}) async {
+  Future<List<Map<String, dynamic>>> buscarTodosDados(
+      {required String collection}) async {
     if (collection.isEmpty) {
       throw ArgumentError("Nome da coleção inválido");
     }
@@ -126,30 +128,32 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
     }
   }
 
-
-  Future<List<Map<String, dynamic>>> buscarDadoComCondicao({required String collection, required String condName,required String cond}) async {
-  if (cond.isEmpty || collection.isEmpty) {
+  Future<List<Map<String, dynamic>>> buscarDadoComCondicao(
+      {required String collection,
+      required String condName,
+      required String cond}) async {
+    if (cond.isEmpty || collection.isEmpty) {
       return Future.error("Dados Inváidos para buscar", StackTrace.current);
     }
     try {
       List<Map<String, dynamic>> res = [];
-      final response = await _db.collection(collection).where(condName, isEqualTo: cond).get();
+      final response = await _db
+          .collection(collection)
+          .where(condName, isEqualTo: cond)
+          .get();
 
       //final response = await _db.collection(collection).where(condName, isEqualTo: cond).get();
       for (var element in response.docs) {
         if (element.exists && element.data() != null) {
-        res.add(element.data());
+          res.add(element.data());
+        }
       }
-       }
 
-        return res;
-
-
+      return res;
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);
     }
   }
-
 
 /*  Future<void> atualizarDadoComCondicao(
       {String collection = '', String id = '', Entity? data}) async {
@@ -171,22 +175,27 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
     }
   }*/
 
-
-  Future<void> atualizarDado({String collection = '', String id = '', Entity? data}) async {
+  Future<void> atualizarDado(
+      {String collection = '', String id = '', Entity? data}) async {
     if (data == null || id.isEmpty || collection.isEmpty) {
       return Future.error("Dados Inváidos para atualizar", StackTrace.current);
     }
     try {
       var json = data.toJson();
       json["update_at"] = Timestamp.now();
-      await _db.collection(collection).doc(id).set(json, SetOptions(merge: true) );
+      await _db
+          .collection(collection)
+          .doc(id)
+          .set(json, SetOptions(merge: true));
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);
     }
   }
 
-
-  Future<void> atualizarDadosEspecificos({String collection = '', String id = '', Map<String, Object>? data}) async {
+  Future<void> atualizarDadosEspecificos(
+      {String collection = '',
+      String id = '',
+      Map<String, Object>? data}) async {
     if (data == null || id.isEmpty || collection.isEmpty) {
       return Future.error("Dados Inváidos para atualizar", StackTrace.current);
     }
@@ -198,14 +207,11 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
     }
   }
 
-  Future<void> deletarDado(
-      {String collection = '', String id = ''}) async {
+  Future<void> deletarDado({String collection = '', String id = ''}) async {
     if (id.isEmpty || collection.isEmpty) {
       return Future.error("Dados Inváidos para atualizar", StackTrace.current);
     }
     try {
-     
-    
       await _db.collection(collection).doc(id).delete();
     } catch (e, stackTrace) {
       return Future.error(e.toString(), stackTrace);
@@ -228,7 +234,8 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
 
   String getRandomGeneratedId() {
     const int AUTO_ID_LENGTH = 20;
-    const String AUTO_ID_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const String AUTO_ID_ALPHABET =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     const int maxRandom = AUTO_ID_ALPHABET.length;
     final Random randomGen = Random();
@@ -239,85 +246,100 @@ Future<String> salvarImagemEReceberURL(Uint8List image, {String id = '', String 
     }
     return buffer.toString();
   }
-
-
 }
-
 
 /////////////////////////  AUTH  /////////////////////////////
 
-class FirebaseManager{
-
+class FirebaseManager {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  GetLocation getLocation = GetLocation();
 
-  Future<String> getUserCurrentID() async{
+  Future<String> getUserCurrentID() async {
     return firebaseAuth.currentUser!.uid;
   }
 
-  Future<User?> registerUser ({required String email, required String password, required BuildContext context}) async {
+  Future<User?> registerUser(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
     try {
-      UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
-    } on FirebaseAuthException catch(e){
+    } on FirebaseAuthException catch (e) {
       print(e);
-    } catch (e){
+    } catch (e) {
       print(e);
     }
     return null;
   }
 
-  Future<User?> loginUser ({required String email, required String password, required BuildContext context}) async {
+  Future<User?> loginUser(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
     try {
-      UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
+      UserCredential userCredential = await firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const ViewNavegationBarScreen()),
+        MaterialPageRoute(
+            builder: (context) => const ViewNavegationBarScreen()),
       );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        ShowSnackBar(context: context).showErrorSnackBar(message: 'Não existe usuário com esse email.');
+        ShowSnackBar(context: context).showErrorSnackBar(
+            message: getLocation.locationBR
+                ? 'Não existe usuário com esse email.'
+                : 'There is no user with that email.');
       } else if (e.code == 'wrong-password') {
-        ShowSnackBar(context: context).showErrorSnackBar(message: 'Senha errada para esse email');
-      }else if (e.code == 'too-many-requests') {
-        ShowSnackBar(context: context).showErrorSnackBar(message: 'Espere um pouco e tente novamente');
+        ShowSnackBar(context: context).showErrorSnackBar(
+            message: getLocation.locationBR
+                ? 'Senha errada para esse email'
+                : 'Wrong password for that email.');
+      } else if (e.code == 'too-many-requests') {
+        ShowSnackBar(context: context).showErrorSnackBar(
+            message: getLocation.locationBR
+                ? 'Espere um pouco e tente novamente'
+                : 'Wait a little and try again.');
       }
     }
     return null;
   }
 
-   signOut()  {
+  signOut() {
     try {
-      return  firebaseAuth.signOut();
-
-    } catch(e){
+      return firebaseAuth.signOut();
+    } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-  Future resetPassword({required String email, required BuildContext context }) async{
+  Future resetPassword(
+      {required String email, required BuildContext context}) async {
     bool doesEmailExists = await checkIfEmailInUse(email);
-    if(!doesEmailExists){
-      ShowSnackBar(context: context).showErrorSnackBar(message: 'O email não está cadastrado.');
-    }
-    else{
+    if (!doesEmailExists) {
+      ShowSnackBar(context: context).showErrorSnackBar(
+          message: getLocation.locationBR
+              ? 'O email não está cadastrado.'
+              : 'The email is not registered.');
+    } else {
       await firebaseAuth.sendPasswordResetEmail(email: email);
     }
   }
 
   Future<bool> checkIfEmailInUse(String emailAddress) async {
     try {
-      List<String> list = await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
+      List<String> list =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
       if (list.isEmpty) {
         return false;
       } else {
         return true;
       }
-    }catch (error) {
+    } catch (error) {
       return true;
     }
   }

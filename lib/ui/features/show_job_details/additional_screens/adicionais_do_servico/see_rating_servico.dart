@@ -5,119 +5,157 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:zeder/application/provider/servico_provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/features/LoadingButton.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../../../design_system/widgets/DsFutureBuilder.dart';
 import '../../../../../design_system/widgets/text_card.dart';
 import '../../../../../domain/entities/avaliacao_prestador_entity.dart';
 import '../../../../../domain/entities/servico_entity.dart';
-import '../../../navigation_bar/viewNavigationBarScren.dart';
 
 class SeeRatingServico extends StatefulWidget {
   final ServicoEntity servicoViewModel;
-  const SeeRatingServico({Key? key, required this.servicoViewModel, }) : super(key: key);
+  const SeeRatingServico({
+    Key? key,
+    required this.servicoViewModel,
+  }) : super(key: key);
 
   @override
   State<SeeRatingServico> createState() => _SeeRatingServicoState();
 }
 
 class _SeeRatingServicoState extends State<SeeRatingServico> {
-  RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
+  RoundedLoadingButtonController btnController =
+      RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
     ServicoProvider provider = context.read<ServicoProvider>();
-
-
+    GetLocation getLocation = GetLocation();
     return Scaffold(
-      appBar: AppBar(title: const Text('Ver avaliação do serviço', style: TextStyle(fontSize: 18),), backgroundColor: DSColors.tertiary,),
+      appBar: AppBar(
+        title: Text(
+          getLocation.locationBR
+              ? 'Ver avaliação do serviço'
+              : "See service rating",
+          style: TextStyle(fontSize: 18),
+        ),
+        backgroundColor: DSColors.tertiary,
+      ),
       body: DSFutureBuilder<AvaliacaoPrestadorEntity>(
-        future: provider.getAvaliaCaoByServicoId(widget.servicoViewModel.id),
-        builder: (context, AsyncSnapshot<AvaliacaoPrestadorEntity> snapshot) {
-          AvaliacaoPrestadorEntity rating = snapshot.data!;
-          return Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const DSTextTitleBoldSecondary(text: 'Comentário'),
-                  const SizedBox(height: 12,),
-                  TextCard(
-                    text: rating.comentario,
-                  ),
-                  const SizedBox(height: 24,),
-                  const DSTextTitleBoldSecondary(text: 'Avaliação'),
-                  const SizedBox(height: 12,),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width-24.0,
-                    child: Card(
-                      color: DSColors.cardColor,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                      elevation: 10,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: DSColors.cardColor,
+          future: provider.getAvaliaCaoByServicoId(widget.servicoViewModel.id),
+          builder: (context, AsyncSnapshot<AvaliacaoPrestadorEntity> snapshot) {
+            AvaliacaoPrestadorEntity rating = snapshot.data!;
+            return Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DSTextTitleBoldSecondary(
+                      text: getLocation.locationBR ? 'Comentário' : 'Comment',
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextCard(
+                      text: rating.comentario,
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    DSTextTitleBoldSecondary(
+                      text: getLocation.locationBR ? 'Avaliação' : 'Rating',
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 24.0,
+                      child: Card(
+                        color: DSColors.cardColor,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const DSTextTitleSecondary(text: 'Sua avaliação de 1 a 5 foi:'),
-                              const SizedBox(height: 8,),
-
-                              IgnorePointer(
-                                child: RatingBar.builder(
-                                  itemBuilder: (BuildContext context, int index) => const Icon(
-                                    Icons.star,
-                                    color:Colors.amber ,
-                                  ),
-                                  itemCount: 5,
-                                  itemSize: 36.0,
-                                  minRating: 1,
-                                  initialRating: rating.nota.toDouble(),
-                                  updateOnDrag: true,
-                                  onRatingUpdate: (ratingValue) {
-                                  },
+                        elevation: 10,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: DSColors.cardColor,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                DSTextTitleSecondary(
+                                  text: getLocation.locationBR
+                                      ? 'Sua avaliação de 1 a 5 foi:'
+                                      : 'Your rating from 1 to 5 was:',
                                 ),
-                              ),
-                              const SizedBox(height: 8,),
-                               DSTextTitleSecondary(text: 'Sua nota foi: ${rating.nota.toString()}'),
-                            ],
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                IgnorePointer(
+                                  child: RatingBar.builder(
+                                    itemBuilder:
+                                        (BuildContext context, int index) =>
+                                            const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    itemCount: 5,
+                                    itemSize: 36.0,
+                                    minRating: 1,
+                                    initialRating: rating.nota.toDouble(),
+                                    updateOnDrag: true,
+                                    onRatingUpdate: (ratingValue) {},
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                DSTextTitleSecondary(
+                                  text: getLocation.locationBR
+                                      ? 'Sua nota foi: ${rating.nota.toString()}'
+                                      : 'Your rating was: ${rating.nota.toString()}',
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-
-                  const SizedBox(height: 20,),
-                ]
-            ),
-          );
-        },
-        error: 'Não há avaliação para\neste serviço ainda',
-        messageWhenEmpty: "Não há avaliação para\neste serviço ainda",
-          reloadScreen : const DSTextSubtitleBoldSecondary(text:  'Não há avaliação para\neste serviço ainda',)
-
-      ),
-     /* */
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ]),
+            );
+          },
+          error: getLocation.locationBR
+              ? 'Não há avaliação para\neste serviço ainda'
+              : 'There is no rating yet',
+          messageWhenEmpty: getLocation.locationBR
+              ? 'Não há avaliação para\neste serviço ainda'
+              : 'There is no rating yet',
+          reloadScreen: DSTextSubtitleBoldSecondary(
+            text: getLocation.locationBR
+                ? 'Não há avaliação para\neste serviço ainda'
+                : 'There is no rating yet',
+          )),
+      /* */
       bottomNavigationBar: Container(
-          height: 70,
-          color: DSColors.cardColor,
-          child: Center(
-            child:
-                LoadingButton(
-                  buttonText: 'Voltar',
-                  goNextScreen: () async {
-                    Navigator.pop(context);
-                  },
-                  controller: btnController,
-                ),
+        height: 70,
+        color: DSColors.cardColor,
+        child: Center(
+          child: LoadingButton(
+            buttonText: getLocation.locationBR ? 'Voltar' : 'Back',
+            goNextScreen: () async {
+              Navigator.pop(context);
+            },
+            controller: btnController,
           ),
+        ),
       ),
     );
   }
 }
-

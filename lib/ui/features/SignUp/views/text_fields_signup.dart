@@ -3,46 +3,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/ui/features/SignUp/views/widgets/widgetsForSignUp.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../../application/provider/logInSignUpProvider.dart';
 
 class TextFieldsSingUp extends StatefulWidget {
   const TextFieldsSingUp({Key? key}) : super(key: key);
-
 
   @override
   State<TextFieldsSingUp> createState() => _TextFieldsSingUpState();
 }
 
 class _TextFieldsSingUpState extends State<TextFieldsSingUp> {
-
   @override
   Widget build(BuildContext context) {
-
     final provider = context.read<LogInSignUpProvider>();
-
+    GetLocation getLocation = GetLocation();
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              StandardController(
-                title: 'Nome completo',
-                hint: 'Digite seu nome completo',
-                nameController: provider.signUpName,
-                validator: provider.validateName,
-                prefixIcon: Icons.person,
-                sufixIcon:  Icons.close,
-                deleteOrHide: 'delete',
-              ),
-              StandardController(
-                title: 'Telefone',
-                hint: 'Digite apenas números',
-                nameController: provider.signUpPhone,
-                validator: provider.validatePhone,
-                prefixIcon: Icons.phone,
-                sufixIcon:  Icons.close,
-                deleteOrHide: 'delete',
-                /*inputFormatters: [
+        children: [
+          StandardController(
+            title: getLocation.locationBR
+                ? 'Nome e sobrenome'
+                : 'Name and Last Name',
+            hint: getLocation.locationBR
+                ? 'Digite seu nome sobrenome'
+                : 'Type your name and last name',
+            nameController: provider.signUpName,
+            validator: provider.validateName,
+            prefixIcon: Icons.person,
+            sufixIcon: Icons.close,
+            deleteOrHide: 'delete',
+          ),
+          StandardController(
+            title: getLocation.locationBR ? 'Telefone' : 'Phone',
+            hint: getLocation.locationBR
+                ? 'Digite apenas números'
+                : 'Type only numbers',
+            nameController: provider.signUpPhone,
+            validator: provider.validatePhone,
+            prefixIcon: Icons.phone,
+            sufixIcon: Icons.close,
+            deleteOrHide: 'delete',
+            /*inputFormatters: [
                   TelefoneInputFormatter(),
                 ],*/
               ),

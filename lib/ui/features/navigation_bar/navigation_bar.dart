@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../design_system/parameters/colors.dart';
 import '../home/home_screen.dart';
 import '../show_list_services_standard/show_current_services_screen.dart';
@@ -31,38 +33,45 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    GetLocation getLocation = GetLocation();
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items:  <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home,
+            icon: Icon(
+              Icons.home,
               size: 40,
-              color: _selectedIndex==0? DSColors.primary: DSColors.tertiary ,),
-            label: 'Casa',
+              color: _selectedIndex == 0 ? DSColors.primary : DSColors.tertiary,
+            ),
+            label: getLocation.locationBR ? 'Casa' : 'Home',
             backgroundColor: DSColors.cardColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search,
                 size: 40,
-                color:  _selectedIndex==1? DSColors.primary: DSColors.tertiary),
-            label: 'Novos Serviços',
+                color:
+                    _selectedIndex == 1 ? DSColors.primary : DSColors.tertiary),
+            label: getLocation.locationBR ? 'Novos Serviços' : 'New Services',
             backgroundColor: DSColors.cardColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(MdiIcons.accountHardHat,
                 size: 40,
-                color: _selectedIndex==2? DSColors.primary: DSColors.tertiary),
-            label: 'Atuais',
+                color:
+                    _selectedIndex == 2 ? DSColors.primary : DSColors.tertiary),
+            label: getLocation.locationBR ? 'Atuais' : 'Current',
             backgroundColor: DSColors.cardColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(MdiIcons.folderClock,
                 size: 40,
-                color: _selectedIndex==3? DSColors.primary: DSColors.tertiary),
-            label: 'Serviços passados',
+                color:
+                    _selectedIndex == 3 ? DSColors.primary : DSColors.tertiary),
+            label:
+                getLocation.locationBR ? 'Serviços passados' : 'Past services',
             backgroundColor: DSColors.cardColor,
           ),
 
@@ -73,7 +82,6 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
             label: 'Chat',
             backgroundColor: DSColors.cardColor,
           ),*/
-
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: DSColors.primary,

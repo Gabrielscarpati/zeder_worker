@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:whatsapp/whatsapp.dart';
 import 'package:zeder/data/avaliacoes/avaliacao_controller.dart';
 import 'package:zeder/data/cancel/cancel_controller.dart';
 import 'package:zeder/data/firebase/firebase_controller.dart';
@@ -16,6 +14,8 @@ import '../../domain/entities/servico_entity.dart';
 import '../../ui/features/home/Widgets/pop_up_explain_names_home_screen.dart';
 import '../../ui/features/navigation_bar/navigation_bar.dart';
 import '../../ui/features/show_list_services_standard/show_past_services_screen.dart';
+import '../../utils/flutter_get_Location.dart';
+import '../../utils/ultils.dart';
 
 class ServicoProvider with ChangeNotifier {
   static final ServicoProvider provider = ServicoProvider._internal();
@@ -31,6 +31,7 @@ class ServicoProvider with ChangeNotifier {
   List<ServicoEntity> listLeadsNotAcceptedYet = [];
   List<ServicoEntity> listLeadsAccepted = [];
   ServicoController servicoController = ServicoController();
+  GetLocation getLocation = GetLocation();
 
   setServiceAsCurrent(ServicoEntity newService, BuildContext context) async {
     await servicoController.atualizarServicoMakeCurrent(
@@ -38,7 +39,9 @@ class ServicoProvider with ChangeNotifier {
     ShowSnackBar(
       context: context,
     ).showErrorSnackBar(
-      message: 'O serviço é seu agora',
+      message: getLocation.locationBR
+          ? 'O serviço é seu agora'
+          : 'Congrats! The service is yours now',
       color: DSColors.primary,
     );
   }
@@ -50,7 +53,9 @@ class ServicoProvider with ChangeNotifier {
     ShowSnackBar(
       context: context,
     ).showErrorSnackBar(
-      message: 'O serviço foi finalizado',
+      message: getLocation.locationBR
+          ? 'O serviço foi finalizado'
+          : 'The service was finished',
       color: DSColors.primary,
     );
     Navigator.pushReplacement(
@@ -73,21 +78,27 @@ class ServicoProvider with ChangeNotifier {
   Future showExplanationAllServices(context) => showDialog(
         context: context,
         builder: (context) => PopUpExplainNameHomeScreen(
-          title: "Esses são os serviços que você pode selecionar para realizar",
+          title: getLocation.locationBR
+              ? "Esses são os serviços que você pode selecionar para realizar"
+              : "These are the services you can select to perform",
         ),
       );
 
   Future showExplanationOpenServices(context) => showDialog(
         context: context,
         builder: (context) => PopUpExplainNameHomeScreen(
-          title: "Esses são os serviços que você\nestá trabalhando agora",
+          title: getLocation.locationBR
+              ? "Esses são os serviços que você\nestá trabalhando agora"
+              : "These are the services you\nare working on now",
         ),
       );
   Future confirmarPegarServico(context, ServicoEntity servicoEntity) =>
       showDialog(
         context: context,
         builder: (context) => DSPopUp(
-            title: 'Tem certeza que quer pegar esse serviço?',
+            title: getLocation.locationBR
+                ? 'Tem certeza que quer pegar esse serviço?'
+                : 'Are you sure you want to take this service?',
             onPressedYes: () async {
               await setServiceAsCurrent(servicoEntity, context);
               Navigator.push(
@@ -106,13 +117,17 @@ class ServicoProvider with ChangeNotifier {
       showDialog(
         context: context,
         builder: (context) => DSPopUp(
-            title: 'Tem certeza que quer finalizar esse serviço?',
+            title: getLocation.locationBR
+                ? 'Tem certeza que quer finalizar esse serviço?'
+                : 'Are you sure you want to finish this service?',
             onPressedYes: () async {
               await setServiceAsDone(servicoEntity, context);
               ShowSnackBar(
                 context: context,
               ).showErrorSnackBar(
-                message: 'O serviço foi finalizado',
+                message: getLocation.locationBR
+                    ? 'O serviço foi finalizado'
+                    : 'The service was finished',
                 color: DSColors.primary,
               );
               Navigator.pushReplacement(
@@ -126,11 +141,6 @@ class ServicoProvider with ChangeNotifier {
             }),
       );
 
-  /*
-                mandar email pra gente
-                whatsapp
-                botar o id no cancelamento
-                */
   CancelController cancelController = CancelController();
 
   Future confirmarCancelServico(context, ServicoEntity servicoEntity,
@@ -141,8 +151,9 @@ class ServicoProvider with ChangeNotifier {
       return showDialog(
         context: context,
         builder: (context) => DSPopUp(
-            title:
-                'O serviço ocorrerá em menos de 2 horas, se você cancelar será retirada uma taxa de cancelamento do seu próximo serviço!',
+            title: getLocation.locationBR
+                ? 'O serviço ocorrerá em menos de 2 horas, se você cancelar, será retirada uma taxa de cancelamento do seu próximo serviço!'
+                : 'The service will take place in less than 2 hours, if you cancel, a cancellation fee will be deducted from your next service!',
             onPressedYes: () async {
               if (cancelingFormKey.currentState!.validate()) {
                 CancelEntity newCancelEntity = CancelEntity(
@@ -158,7 +169,7 @@ class ServicoProvider with ChangeNotifier {
                 );
                 await cancelarServico(servicoEntity);
                 await cancelController.cadastrarCancel(newCancelEntity);
-                _sendEmail();
+                sendEmailNewServiceAvailable();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -167,7 +178,9 @@ class ServicoProvider with ChangeNotifier {
                 ShowSnackBar(
                   context: context,
                 ).showErrorSnackBar(
-                  message: 'O serviço foi cancelado',
+                  message: getLocation.locationBR
+                      ? 'O serviço foi cancelado'
+                      : 'The service was canceled',
                   color: DSColors.primary,
                 );
               } else {
@@ -186,7 +199,9 @@ class ServicoProvider with ChangeNotifier {
     return showDialog(
       context: context,
       builder: (context) => DSPopUp(
-          title: 'Tem certeza que quer cancelar esse serviço?',
+          title: getLocation.locationBR
+              ? 'Tem certeza que quer cancelar esse serviço?'
+              : 'Are you sure you want to cancel this service?',
           onPressedYes: () async {
             if (cancelingFormKey.currentState!.validate()) {
               CancelEntity newCancelEntity = CancelEntity(
@@ -210,7 +225,9 @@ class ServicoProvider with ChangeNotifier {
               ShowSnackBar(
                 context: context,
               ).showErrorSnackBar(
-                message: 'O serviço foi cancelado',
+                message: getLocation.locationBR
+                    ? 'O serviço foi cancelado'
+                    : 'The service was canceled',
                 color: DSColors.primary,
               );
             } else {
@@ -231,7 +248,9 @@ class ServicoProvider with ChangeNotifier {
 
   String? validateCanceling(String? value) {
     if (cancelingController.text.trim().isEmpty) {
-      return "Por favor, digite o motivo do cancelamento";
+      return getLocation.locationBR
+          ? "Por favor, digite o motivo do cancelamento"
+          : "Please enter the reason for the cancellation";
     } else {
       return null;
     }
@@ -251,18 +270,5 @@ class ServicoProvider with ChangeNotifier {
       return false;
     }
     return difference.inHours < 2;
-  }
-
-  WhatsApp whatsapp = WhatsApp();
-
-  Future<void> _sendEmail() async {
-    final Email email = Email(
-      body: '_suggestionController.text',
-      subject: 'Housie Site Future Job Suggestion',
-      recipients: ['zedderapp@gmail.com'],
-      isHTML: false,
-    );
-
-    await FlutterEmailSender.send(email);
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zeder/design_system/design_system.dart';
 import 'package:zeder/ui/widgets/proposta/proposta_list.dart';
+import 'package:zeder/utils/flutter_get_Location.dart';
+
 import '../../../application/provider/lead_provider.dart';
 import '../../../design_system/widgets/DsFutureBuilder.dart';
 import '../../../domain/entities/servico_entity.dart';
@@ -29,15 +31,20 @@ class _Propostas_serviceState extends State<Propostas_service> {
 
   @override
   Widget build(BuildContext context) {
-
+    GetLocation getLocation = GetLocation();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: DSColors.scaffoldBackground,
-        title:  Column(
+        title: Column(
           children: [
-            DSTextTitleSecondary(text:'Histórico de Proposta ',),
-            Padding(
-              padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
+            DSTextTitleSecondary(
+              text: getLocation.locationBR
+                  ? 'Histórico de Proposta '
+                  : ' Proposal History',
+            ),
+            const Padding(
+              padding:
+                  EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
               child: Divider(
                 thickness: 1,
                 color: DSColors.tertiary,
@@ -46,7 +53,6 @@ class _Propostas_serviceState extends State<Propostas_service> {
           ],
         ),
       ),
-
       body: /*FutureBuilder<PropostaViewModel?>(
         future: propostaFuture,
         builder: (context, snapshot) {
@@ -70,22 +76,25 @@ class _Propostas_serviceState extends State<Propostas_service> {
           }
         },
       ),*/
-      DSFutureBuilder<PropostaViewModel?>(
-        future: propostaFuture,
-        builder: (context, AsyncSnapshot<PropostaViewModel?> snapshot) {
-          PropostaViewModel? servicosList = snapshot.data;
-          return Padding(
-            padding: const EdgeInsets.only( left: 8.0, right: 8.0),
-            child: PropostaListTileHorizontal(
-              viewModel: servicosList!,
-              onTap: () {},
-            ),
-          );
-        },
-        error: 'Não há avaliação para\neste serviço ainda',
-        messageWhenEmpty: "Não há avaliação para\neste serviço ainda",
-        reloadScreen : ViewNavegationBarScreen()
-      ),
+          DSFutureBuilder<PropostaViewModel?>(
+              future: propostaFuture,
+              builder: (context, AsyncSnapshot<PropostaViewModel?> snapshot) {
+                PropostaViewModel? servicosList = snapshot.data;
+                return Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: PropostaListTileHorizontal(
+                    viewModel: servicosList!,
+                    onTap: () {},
+                  ),
+                );
+              },
+              error: getLocation.locationBR
+                  ? 'Não há avaliação para\neste serviço ainda'
+                  : 'There is no rating yet',
+              messageWhenEmpty: getLocation.locationBR
+                  ? "Não há avaliação para\neste serviço ainda"
+                  : 'There is no rating for\nthis service yet',
+              reloadScreen: ViewNavegationBarScreen()),
     );
   }
 }

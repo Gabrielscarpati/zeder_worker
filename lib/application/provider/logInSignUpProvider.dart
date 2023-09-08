@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:zeder/application/provider/pesquisa_cidade_provider.dart';
 import 'package:zeder/application/provider/tipo_servico_provider.dart';
+
 import '../../data/firebase/firebase_controller.dart';
 import '../../data/user/user_controller.dart';
 import '../../data/user/user_entity.dart';
@@ -17,10 +19,9 @@ import '../../ui/features/SignUp/views/widgets/popUpTermsAndConditions.dart';
 import '../../ui/features/SignUp/views/widgets/snackbars.dart';
 import '../../ui/features/navigation_bar/viewNavigationBarScren.dart';
 import '../../ui/widgets/cities/cities_viewmodel.dart.dart';
-import '../../ui/widgets/servico_do_app/servico_do_app_viewmodel.dart';
+import '../../utils/flutter_get_Location.dart';
 
 class LogInSignUpProvider with ChangeNotifier {
-
   static final LogInSignUpProvider provider = LogInSignUpProvider._internal();
 
   factory LogInSignUpProvider() {
@@ -29,18 +30,18 @@ class LogInSignUpProvider with ChangeNotifier {
   LogInSignUpProvider._internal();
 
   bool isChecked = false;
-  void updateIsCheck(){
+  void updateIsCheck() {
     isChecked = !isChecked;
   }
 
   Uint8List? image;
-   GlobalKey<FormState> formKeyAuthenticationLogin = GlobalKey<FormState>();
-   GlobalKey<FormState> formKeyAuthenticationSignUp = GlobalKey<FormState>();
-   GlobalKey<FormState> formKeyAuthenticationGetCPF = GlobalKey<FormState>();
-   GlobalKey<FormState> formKeyAuthenticationResidencia = GlobalKey<FormState>();
-
-
-  final RoundedLoadingButtonController btnController = RoundedLoadingButtonController();
+  GlobalKey<FormState> formKeyAuthenticationLogin = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyAuthenticationSignUp = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyAuthenticationGetCPF = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyAuthenticationResidencia = GlobalKey<FormState>();
+  GetLocation getLocation = GetLocation();
+  final RoundedLoadingButtonController btnController =
+      RoundedLoadingButtonController();
   TextEditingController resetPasswordEmail = TextEditingController();
   FirebaseManager firebaseManager = FirebaseManager();
   TextEditingController signUpName = TextEditingController();
@@ -54,8 +55,10 @@ class LogInSignUpProvider with ChangeNotifier {
   TextEditingController loginPassword = TextEditingController();
   String cpfPicture = "";
   String proofOfResidencyPicture = "";
-  GlobalKey<FormState> formKeyAuthenticationResetPassword = GlobalKey<FormState>();
-  RoundedLoadingButtonController bntControllerForgotPassword = RoundedLoadingButtonController();
+  GlobalKey<FormState> formKeyAuthenticationResetPassword =
+      GlobalKey<FormState>();
+  RoundedLoadingButtonController bntControllerForgotPassword =
+      RoundedLoadingButtonController();
 
   Future<void> selectImage() async {
     final ImagePicker _picker = ImagePicker();
@@ -64,13 +67,15 @@ class LogInSignUpProvider with ChangeNotifier {
       image = await img.readAsBytes();
     }
   }
+
   Future<String> getUserId() async {
     final User? user = await FirebaseAuth.instance.currentUser;
     final userId = user?.uid.toString();
     return userId!;
   }
 
-  Future<void> signupUser({required String? userId, required String profilePicture}) async {
+  Future<void> signupUser(
+      {required String? userId, required String profilePicture}) async {
     WorkerEntity new_user = WorkerEntity(
       id: userId!,
       nome: signUpName.text.trim(),
@@ -88,100 +93,100 @@ class LogInSignUpProvider with ChangeNotifier {
       numberRating3: 0,
       numberRating4: 0,
       numberRating5: 0,
-
+      dataCreated: DateTime.now(),
     );
     await WorkerController().cadastrarWorker(new_user);
 
     notifyListeners();
   }
 
-  List<String> getIdByCities(List<CitiesViewModel> lista_cidades){
+  List<String> getIdByCities(List<CitiesViewModel> lista_cidades) {
     List<String> cidadeNames = [];
-    for(var cidade in lista_cidades){
+    for (var cidade in lista_cidades) {
       cidadeNames.add(cidade.id);
     }
     return cidadeNames;
   }
 
-
-  List<String> getServicesIds(){
+  List<String> getServicesIds() {
     List<String> serviceIds = [];
-    List<TipoServicoEntity> servicos= TipoServicoProvider().selected_servicos;
-    for (var servico in servicos){
+    List<TipoServicoEntity> servicos = TipoServicoProvider().selected_servicos;
+    for (var servico in servicos) {
       serviceIds.add(getIdByServices(service: servico.name));
     }
     return serviceIds;
   }
 
-
   TipoServicoProvider tipoServicoProvider = TipoServicoProvider();
-  String getIdByServices({required String service}){
+  String getIdByServices({required String service}) {
     List<TipoServicoEntity> servicos = tipoServicoProvider.list_all_cservices;
-    for(TipoServicoEntity servico in servicos){
-      if(servico.name == service){
-        return servico.id  ;
+    for (TipoServicoEntity servico in servicos) {
+      if (servico.name == service) {
+        return servico.id;
       }
     }
     return "";
   }
 
-
   Future<void> checkConditionsSignUpUser(BuildContext context) async {
-      await FirebaseManager().registerUser(
-        email: provider.signUpEmail.text.trim(),
-        password: provider.signUpPassword.text.trim(),
-        context: context,
-      );
+    await FirebaseManager().registerUser(
+      email: provider.signUpEmail.text.trim(),
+      password: provider.signUpPassword.text.trim(),
+      context: context,
+    );
 
-      String profilePicture = await SaveImage(image: image!, path: 'userUrl', id: await getUserId()).saveAndGetUrl();
-      await provider.signupUser(userId: await getUserId(), profilePicture: profilePicture);
+    String profilePicture =
+        await SaveImage(image: image!, path: 'userUrl', id: await getUserId())
+            .saveAndGetUrl();
+    await provider.signupUser(
+        userId: await getUserId(), profilePicture: profilePicture);
 
-      Navigator.pushAndRemoveUntil(
-          context, MaterialPageRoute(builder: (context) => const ViewNavegationBarScreen()
-      ), (route) => false
-      );
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const ViewNavegationBarScreen()),
+        (route) => false);
     notifyListeners();
   }
 
   Future<void> goSelectCitiesScreen({required BuildContext context}) async {
     final form = provider.formKeyAuthenticationSignUp.currentState!;
 
-    if(provider.isChecked == false) {
+    if (provider.isChecked == false) {
       showDialog(
-          context: context,
-          builder: (context) => PopUpTermsAndConditions()
+          context: context, builder: (context) => PopUpTermsAndConditions());
+    } else if (await checkIfEmailInUse(provider.signUpEmail.text.trim()) ==
+        false) {
+      ShowSnackBar(context: context).showErrorSnackBar(
+        message: getLocation.locationBR
+            ? 'Esse email já foi cadastrado!'
+            : 'This email has already been registered!',
       );
-    }
-    else if( await checkIfEmailInUse(provider.signUpEmail.text.trim()) == false){
-      ShowSnackBar(context: context).showErrorSnackBar(message: 'Esse email já foi cadastrado!');
-    }
-    else if (form.validate()){
-      Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return const ChooseCityScreen();
-            },
-          )
-      );
+    } else if (form.validate()) {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) {
+          return const ChooseCityScreen();
+        },
+      ));
     }
   }
 
   Future<bool> checkIfEmailInUse(String emailAddress) async {
     try {
-      List<String> list = await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
+      List<String> list =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(emailAddress);
       if (list.isEmpty) {
         return true;
       } else {
         return false;
       }
-    }catch (error) {
+    } catch (error) {
       return true;
     }
   }
 
-  Future<void> loginUser(BuildContext context)async {
-
-    if(formKeyAuthenticationLogin.currentState!.validate()){
+  Future<void> loginUser(BuildContext context) async {
+    if (formKeyAuthenticationLogin.currentState!.validate()) {
       await FirebaseManager().loginUser(
         email: provider.loginEmail.text.trim(),
         password: provider.loginPassword.text.trim(),
@@ -194,62 +199,83 @@ class LogInSignUpProvider with ChangeNotifier {
 
   String? validateName(String? value) {
     if (signUpName.text.trim().isEmpty) {
-      return "Digite um nome válido";
+      return getLocation.locationBR
+          ? "Digite um nome válido"
+          : 'Type a valid name';
     } else {
       return null;
     }
   }
 
-  String? validatePhone(String? value) {//27999553466 11 numeros
-    if (value == null || value.trim().isEmpty || !RegExp(r'^\d{11}$').hasMatch(value.trim())) {
-      return "Digite apenas números, com o\nddd do estado";
+  String? validatePhone(String? value) {
+    //27999553466 11 numeros
+    if (value == null ||
+        value.trim().isEmpty ||
+        !RegExp(r'^\d{11}$').hasMatch(value.trim())) {
+      return getLocation.locationBR
+          ? "Digite apenas números, com o\nddd do estado"
+          : 'Type only numbers, with the\n state Code';
     } else {
       return null;
     }
   }
 
   String? validateEmail(String? value) {
-     if (!EmailValidator.validate(signUpEmail.text.trim())){
-       return  'Email inválido';
-     }
-     return null;
+    if (!EmailValidator.validate(signUpEmail.text.trim())) {
+      return getLocation.locationBR
+          ? 'Email inválido'
+          : 'Please enter a valid email';
+    }
+    return null;
   }
 
   String? validateEmailLogIn(String? value) {
-     if (!EmailValidator.validate(loginEmail.text.trim())){
-       return  'Email inválido';
-     }
-     return null;
+    if (!EmailValidator.validate(loginEmail.text.trim())) {
+      return getLocation.locationBR
+          ? 'Email inválido'
+          : 'Please enter a valid email';
+    }
+    return null;
   }
 
   String? validatePassword(String? value) {
-    if (signUpPassword.text.trim().isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$').hasMatch(signUpPassword.text.trim())) {
-      return "Sua senha precisa conter uma letra maiúscula,\nminúscula, um número e ter no mínimo 8 caracteres";
+    if (signUpPassword.text.trim().isEmpty ||
+        !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
+            .hasMatch(signUpPassword.text.trim())) {
+      return getLocation.locationBR
+          ? "Sua senha precisa conter uma letra maiúscula,\nminúscula, um número e ter no mínimo 8 caracteres"
+          : 'Your password must contain an uppercase letter,\nlowercase, a number and be at least 8 characters long';
     } else {
       return null;
     }
   }
 
   String? validatePasswordLogIn(String? value) {
-    if (loginPassword.text.trim().isEmpty || !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$').hasMatch(loginPassword.text.trim())) {
-      return "Sua senha precisa conter uma letra maiúscula,\nminúscula, um número e ter no mínimo 8 caracteres";
+    if (loginPassword.text.trim().isEmpty ||
+        !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
+            .hasMatch(loginPassword.text.trim())) {
+      return getLocation.locationBR
+          ? "Sua senha precisa conter uma letra maiúscula,\nminúscula, um número e ter no mínimo 8 caracteres"
+          : 'Your password must contain an uppercase letter,\nlowercase, a number and be at least 8 characters long';
     } else {
       return null;
     }
   }
-
 
   String? confirmPassword(String? value) {
     if (signUpPassword.text.trim() != signUpConfirmPassword.text.trim()) {
-      return "As senhas não coincidem";
+      return getLocation.locationBR
+          ? "As senhas não coincidem"
+          : "Passwords do not match";
     } else {
       return null;
     }
   }
 
-
   String? validateCPF(String? value) {
-    if ( RegExp(r"^([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})$").hasMatch(value!) == false ) {
+    if (RegExp(r"^([0-9]{3}[.]?[0-9]{3}[.]?[0-9]{3}[-]?[0-9]{2})$")
+            .hasMatch(value!) ==
+        false) {
       return 'O CPF não é válido';
     }
     if (value == null || value.isEmpty) {
@@ -259,9 +285,9 @@ class LogInSignUpProvider with ChangeNotifier {
     int Soma;
     int Resto;
     Soma = 0;
-    String strCPF  = "";
+    String strCPF = "";
 
-    List<String> res =  value.split(".");
+    List<String> res = value.split(".");
     res.forEach((element) {
       strCPF += element;
     });
@@ -273,40 +299,55 @@ class LogInSignUpProvider with ChangeNotifier {
     });
     if (value == "00000000000") return 'favor adicionar cpf';
 
-    for (int i=1; i<=9; i++) Soma = Soma + int.parse(strCPF.substring(i-1, i)) * (11 - i);
+    for (int i = 1; i <= 9; i++)
+      Soma = Soma + int.parse(strCPF.substring(i - 1, i)) * (11 - i);
     Resto = (Soma * 10) % 11;
 
-    if ((Resto == 10) || (Resto == 11))  Resto = 0;
-    if (Resto != int.parse(strCPF.substring(9, 10)) ) return 'O CPF não é válido';
+    if ((Resto == 10) || (Resto == 11)) Resto = 0;
+    if (Resto != int.parse(strCPF.substring(9, 10)))
+      return 'O CPF não é válido';
 
     Soma = 0;
-    for (int i = 1; i <= 10; i++) Soma = Soma + int.parse(strCPF.substring(i-1, i)) * (12 - i);
+    for (int i = 1; i <= 10; i++)
+      Soma = Soma + int.parse(strCPF.substring(i - 1, i)) * (12 - i);
     Resto = (Soma * 10) % 11;
 
-    if ((Resto == 10) || (Resto == 11))  Resto = 0;
-    if (Resto != int.parse(strCPF.substring(10, 11) ) ) return 'O CPF não é válido';
+    if ((Resto == 10) || (Resto == 11)) Resto = 0;
+    if (Resto != int.parse(strCPF.substring(10, 11)))
+      return 'O CPF não é válido';
 
     return null;
   }
 
+  /* return getLocation.locationBR
+          ? "Digite um Email válido"
+          : 'Please enter a valid email';*/
+
   String? validateEmailResetPassword(String? value) {
     String email = resetPasswordEmail.text.trim();
     if (!EmailValidator.validate(email)) {
-      return "Digite um Email válido";
+      return getLocation.locationBR
+          ? "Digite um Email válido"
+          : 'Please enter a valid email';
     } else {
       return null;
     }
   }
 
   Future<void> resetPassword({required BuildContext context}) async {
-    if(formKeyAuthenticationResetPassword.currentState!.validate()){
-        await firebaseManager.resetPassword(
-            email: resetPasswordEmail.text.trim(), context: context);
-        ShowSnackBar(context: context).showErrorSnackBar(
-            message: 'Um link foi mandado para o seu email para resetar sua senha.', color: DSColors.primary);
+    if (formKeyAuthenticationResetPassword.currentState!.validate()) {
+      await firebaseManager.resetPassword(
+          email: resetPasswordEmail.text.trim(), context: context);
+      ShowSnackBar(context: context).showErrorSnackBar(
+          message: getLocation.locationBR
+              ? 'Um link foi enviado para o seu email para resetar sua senha.'
+              : "A link has been sent to your email to reset your password.",
+          color: DSColors.primary);
     }
   }
-
 }
 
-
+/*GetLocation getLocation = GetLocation();
+return getLocation.locationBR
+? "Adicione uma descrição!"
+: "Add a decription!";*/
